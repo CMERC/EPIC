@@ -1,0 +1,66 @@
+#import "./fragments/ObservePost.gql"
+
+mutation ObservePostCreate($data: ObservePostCreateInput!) {
+  createObservePost(data: $data) {
+    ...ObservePostFields
+  }
+}
+
+mutation ObservePostDelete($id: ObservePostWhereUniqueInput!) {
+  deleteObservePost(where: $id) {
+    id
+  }
+}
+
+query ObservePostsRead(
+  $where: ObservePostWhereInput
+  $skip: Int
+  $first: Int
+  $after: String
+  $orderBy: ObservePostOrderByInput
+) {
+  observePosts(
+    where: $where
+    skip: $skip
+    first: $first
+    after: $after
+    orderBy: $orderBy
+  ) {
+    ...ObservePostFields
+  }
+}
+
+query ObservePostRead($where: ObservePostWhereUniqueInput!) {
+  observePost(where: $where) {
+    ...ObservePostFields
+  }
+}
+
+mutation ObservePostUpdate(
+  $data: ObservePostUpdateInput!
+  $where: ObservePostWhereUniqueInput!
+) {
+  updateObservePost(data: $data, where: $where) {
+    id
+  }
+}
+
+subscription ObservePostSubscription($where: ObservePostSubscriptionWhereInput) {
+  observePost(where: $where) {
+    mutation
+    node {
+    ...ObservePostFields
+    }
+    previousValues {
+      id
+    }
+  }
+}
+
+query ObservePostsCount($where: ObservePostWhereInput, $skip: Int) {
+  observePostsConnection(where: $where, skip: $skip) {
+    aggregate {
+      count
+    }
+  }
+}

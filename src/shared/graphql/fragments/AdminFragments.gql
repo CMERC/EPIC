@@ -1,0 +1,77 @@
+fragment RoleFields on AppRole {
+      id
+      name
+      displayName
+      users {
+        id
+        user { id name email } 
+        roles { id name displayName  }
+      }
+}
+
+
+fragment AppUserFields on AppUser {
+    id
+    name
+    email
+    isSuper
+    inviteAccepted
+    emailConfirmed
+    lastLogin
+    joinedAt
+    deletedAt
+    role {
+      id
+      user { id name email } 
+      roles { id name displayName  }
+    }
+}
+fragment UserFields on User {
+    id
+    name
+    email
+    isSuper
+    inviteAccepted
+    emailConfirmed
+    lastLogin
+    joinedAt
+    deletedAt
+   
+}
+fragment UserRoleFields on AppUserRole {
+    id
+    user { ...UserFields }
+    roles { ...RoleFields }
+}
+
+fragment WorkspaceFields on AppWorkspace {
+  id
+  name
+  displayName
+  timeZone
+  members { ...UserFields }
+  status
+  updatedAt
+  createdAt
+}
+
+fragment WorkspaceFieldsNoMembers on AppCurrentUserWorkspace {
+  id
+  name
+  displayName
+  timeZone
+  status
+  updatedAt
+  createdAt
+}
+
+fragment WorkspaceQueryFields on AppWorkspaceMembers {
+  id
+  name
+  displayName
+  timeZone
+  members(where: $members_where, first: $members_first, skip: $members_skip, orderBy: $members_orderBy) { ...AppUserFields }
+  status
+  updatedAt
+  createdAt
+}

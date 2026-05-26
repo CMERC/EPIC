@@ -1,0 +1,10 @@
+fragment FileFields on MediaFile {
+    id
+    name
+    createTime
+    createdAt
+    updateTime
+    updatedAt
+    contentType
+    url
+}

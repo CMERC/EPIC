@@ -1,0 +1,65 @@
+#import "./fragments/PlanParticipant.gql"
+
+mutation PlanParticipantPlannersCreate($data: PlanParticipantPlannerCreateInput!) {
+  createPlanParticipantPlanner(data: $data) {
+      ...PlannerFields
+  }
+}
+
+mutation PlanParticipantPlannersDelete($id: PlanParticipantPlannerWhereUniqueInput!) {
+  deletePlanParticipantPlanner(where: $id) {
+    id
+  }
+}
+
+query PlanParticipantPlannersRead(
+  $where: PlanParticipantPlannerWhereInput
+  $skip: Int
+  $first: Int
+  $after: String
+  $orderBy: PlanParticipantPlannerOrderByInput
+) {
+  planParticipantPlanners(
+    where: $where
+    skip: $skip
+    first: $first
+    after: $after
+    orderBy: $orderBy
+  ) {
+      ...PlannerFields
+  }
+}
+
+query PlanParticipantPlannerRead($where: PlanParticipantPlannerWhereUniqueInput!) {
+  planParticipantPlanner(where: $where) {
+      ...PlannerFields
+  }
+}
+
+mutation PlanParticipantPlannersUpdate(
+  $data: PlanParticipantPlannerUpdateInput!
+  $where: PlanParticipantPlannerWhereUniqueInput!
+) {
+  updatePlanParticipantPlanner(data: $data, where: $where) {
+      ...PlannerFields
+  }
+}
+subscription PlanParticipantPlannerSubscription($where: PlanParticipantPlannerSubscriptionWhereInput) {
+  planParticipantPlanner(where: $where) {
+    mutation
+    node {
+      ...PlannerFields
+    }
+    previousValues {
+      id
+    }
+  }
+}
+
+query PlanParticipantPlannersCounts($where: PlanParticipantPlannerWhereInput, $skip: Int) {
+  planParticipantPlannersConnection(where: $where, skip: $skip) {
+    aggregate {
+      count
+    }
+  }
+}

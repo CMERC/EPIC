@@ -1,0 +1,851 @@
+# App Data
+type AppWorkspace {
+  id: ID! @id
+  name: String! @unique
+  displayName: String!
+  timeZone: String
+  members: [User!]!
+  isTemplate: Boolean @default(value: false)
+  status: AppWorkspaceStatus @default(value: Deploying)
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+enum AppWorkspaceStatus {
+  Available
+  Deploying
+  Archived
+}
+
+type AppListSetting {
+  id: ID! @id
+  name: String @unique
+  status: AppListSettingStatus! @default(value: ACTIVE)
+}
+
+enum AppList {
+  PLAN
+  MEDIA
+  NOTEBOOK
+  WEB
+  OBSERVE
+  MAP
+  CHAT
+  RESOURCES
+  LEARN
+  ADMIN
+  EMAIL
+  COMMAND
+  DEV
+}
+enum AppListSettingStatus {
+  ACTIVE
+  INACTIVE
+}
+
+# auth
+type User {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  email: String! @unique
+  password: String!
+  name: String!
+  inviteToken: String
+  inviteAccepted: Boolean! @default(value: true)
+  emailConfirmed: Boolean! @default(value: true)
+  emailConfirmToken: String
+  resetToken: String
+  resetExpires: DateTime
+  deletedAt: DateTime
+  lastLogin: DateTime
+  joinedAt: DateTime!
+  isSuper: Boolean! @default(value: false)
+  role: AppUserRole @relation(name: "UserRole", onDelete: CASCADE, link: TABLE)
+  sessionId: String
+}
+
+type AuthToken {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  token: String
+  user: User @relation(link: INLINE)
+}
+
+type AppUserRole {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  user: User! @relation(name: "UserRole")
+  roles: [AppRole!]!
+}
+
+type AppRole {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  name: AppAvailableRoles! @unique
+  displayName: String
+  users: [AppUserRole!]!
+}
+
+enum AppAvailableRoles {
+  USER
+  AUTHOR
+  EDITOR
+  ADMIN
+}
+
+# Activity Data
+type ActivityStream {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  summary: String!
+  actor: String!
+  type: String!
+  referenceID: String!
+  url: String
+  name: String
+  content: String
+}
+
+
+# Media Data
+type MediaNetwork {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  name: String! @unique
+  description: String
+  personas: [MediaPersona!]!
+  location: Location @relation(link: TABLE)
+  avatar: MediaFile @relation(link: TABLE)
+}
+
+type MediaPersona {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  name: String!
+  role: String
+  attributes: [KeyValue!]!
+  relatesTo: [MediaPersonaEdge!]!
+    @relation(name: "PersonaStart", onDelete: CASCADE)
+  relatesFrom: [MediaPersonaEdge!]!
+    @relation(name: "PersonaEnd", onDelete: CASCADE)
+  profiles: [MediaProfile!]!
+  location: Location @relation(link: TABLE)
+  description: String
+  avatar: MediaFile @relation(link: TABLE)
+}
+
+type MediaPersonaEdge {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  name: String
+  start: MediaPersona! @relation(name: "PersonaStart", link: TABLE)
+  end: MediaPersona! @relation(name: "PersonaEnd", link: TABLE)
+}
+
+type KeyValue {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  key: String!
+  value: String!
+}
+
+type MediaProfile {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  service: MediaService! @relation(link: TABLE)
+  username: String!
+  name: String
+  description: String
+  banner: MediaBanner @relation(link: TABLE)
+  avatar: MediaFile @relation(link: TABLE)
+  location: Location @relation(link: TABLE)
+  url: String
+  createdTime: DateTime
+  isUserGenerated: Boolean
+  language: String
+  posts: [MediaPost!]! @relation(name: "ProfilePosts", onDelete: CASCADE, link: TABLE)
+  counts: Json @default(value: "{}")
+}
+
+type MediaService {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  name: String! @unique
+  displayName: String!
+  type: MediaServiceType @default(value: SOCIALMEDIA)
+  description: String
+  banner: MediaBanner @relation(link: TABLE)
+  avatar: MediaFile @relation(link: TABLE)
+  icon: String
+  color: String
+  template: String
+}
+
+enum MediaServiceType {
+  SOCIALMEDIA
+  NEWS
+  BLOG
+  VIDEO
+  FORUM
+  CHAT
+  OTHER
+}
+
+type MediaPost {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  createTime: DateTime
+  updateTime: DateTime
+  isPublished: Boolean! @default(value: false)
+  publishTime: DateTime
+  title: String!
+  text: String!
+  url: String
+  isUserGenerated: Boolean
+  profiles: [MediaProfile!]! @relation(name: "ProfilePosts")
+  location: Location @relation(link: TABLE)
+  parent: MediaPost @relation(name: "Comments", onDelete: SET_NULL, link: TABLE)
+  comments: [MediaPost!]! @relation(name: "Comments", onDelete: CASCADE)
+  mediaFile: MediaFile @relation(link: TABLE)
+  counts: Json @default(value: "{}")
+}
+
+# Other Data
+type Location {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  geojson: Json @default(value: "{}")
+  geohash: String
+}
+
+type MediaFile {
+  id: ID! @id
+  name: String!
+  secret: String @unique
+  contentType: String!
+  size: Int
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  createTime: DateTime
+  updateTime: DateTime
+  url: Json @default(value: "{}")
+}
+
+type MediaBanner {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  mediaFile: MediaFile @relation(link: TABLE)
+}
+
+type NoteFolder {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  name: String! @unique
+  files: [NoteFile!]! @relation(name: "FilesInFolder" onDelete: CASCADE) 
+  parent: NoteFolder @relation(name: "FoldersInFolder", onDelete: SET_NULL, link: TABLE)
+  folders: [NoteFolder!]! @relation(name: "FoldersInFolder" onDelete: CASCADE)
+  color: String
+}
+
+type NoteFile {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  file: MediaFile! @relation(name: "MediaFileInFile" onDelete: CASCADE, link: TABLE)
+  folder: NoteFolder @relation(name: "FilesInFolder", link: TABLE)
+}
+
+type NoteBook {
+  id: ID! @id
+  title: String! @default(value: "Untitled Notebook")
+  isTemplate: Boolean! @default(value: false)
+  sections: [NoteSection!]! @relation(name: "NoteSections", onDelete: CASCADE)
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  icon: String
+  color: String
+}
+
+type NoteSection {
+  id: ID! @id
+  title: String! @default(value: "Untitled Section")
+  pages: [NotePage!]! @relation(name: "NotePages", onDelete: CASCADE)
+  book: NoteBook @relation(name: "NoteSections", link: TABLE)  
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+type NotePage {
+  id: ID! @id
+  title: String! @default(value: "Untitled Page")
+  text: String
+  media: MediaFile @relation(link: TABLE)
+  section: NoteSection @relation(name: "NotePages", link: TABLE)
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+type MapInt {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  key: String! @unique
+  value: Int!
+  attributes: MediaNoiseLevel! @relation(name: "MediaNoiseLevelFeeds", link: TABLE)
+}
+
+type MediaMarkovSource {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  key: String! @unique
+  sourceText: String!
+  attributes: MediaNoiseLevel! @relation(name: "MediaNoiseLevelSources", link: TABLE)
+}
+
+type MediaNoiseLevel {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  postRate: Int!
+  name: String! @unique
+  feeds: [MapInt!]! @relation(name: "MediaNoiseLevelFeeds")
+  markovSources: [MediaMarkovSource!]! @relation(name: "MediaNoiseLevelSources")
+  bounding: Location @relation(link: TABLE)
+  filterTags: String
+}
+
+# Plan
+type PlanEvent {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  name: String!
+  type: String
+  method: String
+  startDate: DateTime
+  endDate: DateTime
+  locations: [Location!]! # geojson:{name:'trainingArea'/'trainingSite'/'primaryTarget'}
+  description: String
+  injects: [PlanInject!]! @relation(name: "PlanEventName")
+  color: String
+  organization: PlanOrganization @relation(link: TABLE)
+  exerciseGuidance: String
+}
+
+type PlanInject {
+  id: ID! @id
+  number: Int @unique
+  title: String!
+  description: String
+  mitigation: String
+  type: String
+  method: PlanMethod @relation(link: TABLE)
+  owner: PlanInjectOwner @relation(link: TABLE)
+  trigger: String
+  response: String
+  responseDate: DateTime
+  remarks: String
+  status: PlanLabel @relation(link: TABLE)
+  attachments: [MediaFile!]!
+  deletedAt: DateTime
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  events: PlanEvent @relation(name: "PlanEventName", link: TABLE)
+  startDate: DateTime
+  from: String
+  to: String
+  objectives: [PlanTrainingObjective!]! @relation(name: "PlanInjectObjectives", link: TABLE)
+  location: Location @relation(link: TABLE)
+}
+
+type PlanMethod {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  name: String!
+  icon: String
+  color: String
+  key: String @unique
+}
+
+type PlanLabelGroup {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  title: String!
+  groupLabels: [PlanLabel!]!
+  key: String @unique
+}
+
+type PlanLabel {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  title: String! @unique
+  description: String
+  color: String
+}
+
+type PlanMeeting {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  name: String
+  location: String
+  startDate: DateTime
+  endDate: DateTime
+}
+
+type PlanFundingSource {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  primarySource: String
+  subSource: String
+  amount: Float
+}
+
+type PlanExerciseObjective {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  title: String
+  exerciseObjective: String
+  measurePerformance: String
+  measureEffectiveness: String
+}
+
+type PlanParticipant {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  name: String
+  serviceType: PlanParticipantServiceType @relation(link: TABLE)
+  service: PlanParticipantService @relation(link: TABLE)
+  commandAgency: PlanParticipantCommandAgency @relation(link: TABLE)
+  homeStation: String
+  bedDown: String
+  totalAudience: String
+  icon: String
+  participantType: PlanParticipantType @relation(link: TABLE)
+  planners: [PlanParticipantPlanner!]! @relation(name: "ParticipantPlannerName", onDelete: CASCADE)
+  fundings: [PlanParticipantFundingSource!]! @relation(name: "ParticipantFundingName", onDelete: CASCADE)
+  platforms: [PlanParticipantPlatform!]! @relation(name: "ParticipantPlatformName")
+  trainingObjectives: [PlanTrainingObjective!]!
+    @relation(name: "PlanTrainingObjectiveName", onDelete: CASCADE)
+}
+
+type PlanTrainingObjective  {
+  id: ID! @id
+  platform: PlanParticipantPlatform @relation(link: TABLE)
+  jmet: PlanJmet @relation(link: TABLE)
+  requestedMethod: Json @default(value: "{}")
+  trainedMethod: Json @default(value: "{}")
+  priority: Json @default(value: "{}")
+  requestedMethodType: PlanRequestedMethodType
+  trainedMethodType: PlanTrainedMethodType
+  priorityLevel: PlanPriorityLevel
+  requiredRuns: String
+  classification: String
+  task: String
+  condition: String
+  standard: String
+  exerciseObjective: [PlanExerciseObjective!]!
+  accreditedTask: [PlanAccreditedTask!]!
+  commandTrainingPriority: [PlanCommandPriority!]!
+  jointStaffTrainingPriority: [PlanJointStaffTrainingPriority!]!
+  participant: PlanParticipant @relation(name: "PlanTrainingObjectiveName", link: TABLE)
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  assessments: [PlanAssessment!]! @relation(name: "PlanTrainingAssessments", onDelete: CASCADE, link: TABLE)
+  injects: [PlanInject!]! @relation(name: "PlanInjectObjectives")
+  measures: [PlanMeasure!]! @relation(name: "PlanTrainingObjectiveMeasure", onDelete: CASCADE, link: TABLE)
+}
+
+type PlanAccreditedTask {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  jmet: PlanJmet @relation(link: TABLE)
+}
+
+type PlanCommandPriority {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  title: String
+  description: String
+}
+
+type PlanPriorityLevel {
+  id: ID! @id
+  title: String
+  color: String
+  key: String @unique
+}
+
+type PlanTrainedMethodType {
+  id: ID! @id
+  title: String
+  key: String @unique
+}
+
+type PlanRequestedMethodType {
+  id: ID! @id
+  title: String
+  key: String @unique
+}
+
+
+type PlanJmet {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  levelWar: String
+  taskNumber: String
+  taskTitle: String
+  key: String @unique
+  description: String
+}
+
+type PlanOrganization {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  name: String
+  group: String
+  key: String @unique
+}
+type ChatMessage {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  text: String!
+  author: String!
+  room: ChatRoom! @relation(name: "RoomMessage", link: TABLE)
+}
+
+type ChatRoom {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  title: String!
+  messages: [ChatMessage!]! @relation(name: "RoomMessage", onDelete: CASCADE)
+}
+
+enum EmailStatus {
+  UNREAD
+  READ
+}
+
+enum EmailFolder {
+  INBOX
+  SENT
+  ARCHIVE
+  SPAM
+  DELETED
+}
+
+type EmailMessage @model {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  to: String!
+  from: String!
+  subject: String
+  content: String
+  attachments: [MediaFile!]!
+  status: EmailStatus @default(value: UNREAD)
+  folder: EmailFolder
+  mailbox: EmailMailbox! @relation(name: "MailboxMessage", link: TABLE)
+}
+
+type EmailMailbox {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  owner: String! @unique
+  messages: [EmailMessage!]! @relation(name: "MailboxMessage", onDelete: CASCADE)
+}
+
+type ObservePost {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  text: String!
+  author: String!
+  location: Location @relation(link: TABLE)
+  attachments: [MediaFile!]! @relation(name: "ObservePostAttachments", onDelete: CASCADE, link: TABLE)
+}
+
+type PlanParticipantFundingSource {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  primarySource: String
+  subSource: String
+  amount: Float
+  participant: PlanParticipant! @relation(name: "ParticipantFundingName", link: TABLE)
+}
+
+type PlanParticipantPlanner {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  name: String
+  email: String
+  phoneNumber: String
+  isPrimary: Boolean
+  participant: PlanParticipant! @relation(name: "ParticipantPlannerName", link: TABLE)
+}
+
+type PlanPlatform {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  title: String
+  type: String
+  key: String @unique
+}
+
+type PlanParticipantPlatform {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  bedDown: String
+  audience: String
+  platform: PlanPlatform @relation(link: TABLE)
+  participant: PlanParticipant @relation(name: "ParticipantPlatformName", link: TABLE)
+}
+
+type PlanJointStaffTrainingPriority {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  title: String
+  description: String
+  key: String @unique
+}
+
+type PlanAssessment {
+  id: ID! @id
+  complete: Boolean @default(value: false)
+  status: PlanEvaluationTrainingStatus @default(value: UNTRAINED)
+  reason: PlanReason @relation(link: TABLE)
+  comment: String
+  measureData: [PlanMeasureData!]! @relation(name: "PlanAssessmentMeasureData", onDelete: CASCADE, link: TABLE)  
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+enum PlanEvaluationTrainingStatus {
+  UNTRAINED
+  PARTIALLY
+  TRAINED
+}
+
+type PlanReason {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  title: String
+  key: String @unique
+}
+
+type PlanParticipantService {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  title: String @unique
+  key: String @unique
+}
+
+type PlanParticipantServiceType {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  title: String @unique
+  key: String @unique
+}
+
+type PlanParticipantCommandAgency {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  title: String @unique
+  key: String @unique
+}
+
+type PlanParticipantType {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  title: String @unique
+  key: String @unique
+}
+
+type PlanInjectOwner {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  title: String @unique
+  key: String @unique
+}
+
+enum MapType {
+  MAP
+  SATELLITE
+  SATELLITEWITHLABELS
+}
+
+type MapLayer {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  title: String!
+  type: MapType @default(value: SATELLITE)
+  geojson: Json @default(value: "{}")
+}
+
+type PlanCustomReport {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  title: String!
+  start: DateTime
+  end: DateTime
+  source: String
+}
+
+type PlanFeedbackRequest {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  start: DateTime
+  end: DateTime
+  feedbacks: [PlanFeedback!]!
+}
+
+type PlanFeedback {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  status: PlanRequestStatus! @default(value: DRAFT)
+  evaluation: PlanEvaluation @relation(name: "Evaluations", onDelete: CASCADE, link: TABLE)
+  lessonsLearned: [PlanLessonsLearned!]! @relation(name: "LessonsLearned", onDelete: CASCADE, link: TABLE)
+  metrics: PlanMetric @relation(name: "Metrics", onDelete: CASCADE, link: TABLE)
+  qualifications: [PlanFeedbackQualification!]! @relation(name: "Qualifications", onDelete: CASCADE, link: TABLE)
+  tasks: [PlanFeedbackTask!]! @relation(name: "FeedbackTasks", onDelete: CASCADE, link: TABLE)
+}
+
+enum PlanRequestStatus {
+  DRAFT
+  PROCESSED
+  SENT
+  DELIVERED
+  SUBMITTED
+}
+
+type PlanEvaluation {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  trainingObjectives: PlanTrainingObjective @relation(name: "PlanEvaluationTO", onDelete: CASCADE)
+  complete: Boolean! @default(value: false)
+  status: PlanEvaluationTrainingStatus! @default(value: UNTRAINED)
+  reason: PlanReason @relation(link: TABLE)
+  comment: String
+  remark: String
+  email: String
+  measureData: [PlanMeasureData!]! @relation(name: "PlanEvaluationMeasureData", onDelete: CASCADE, link: TABLE)
+}
+
+type PlanLessonsLearned @relation(name: "LessonsLearned") {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  potentialOPR: String 
+  classification: String @default(value: "unclassified")
+  title: String
+  observation: String
+  discussion: String
+  recommendation: String
+  implications: String
+  eventDescription: String
+  comments: String
+}
+
+type PlanMetric @relation(name: "Metrics") {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  flightHours: Int
+  numOfStories: Int
+  numOfPassesngers: Int
+  cargoWeight: Float
+  fuelPassed: Float
+  milesTraveled: Float
+  gallonsGasUsed: Float
+}
+
+type PlanFeedbackQualification @relation(name: "Qualifications") {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  qualification: PlanQualification! @relation(link: TABLE)
+  numberCompleted: Int
+}
+
+type PlanQualification {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  title: String! @unique
+}
+
+type PlanFeedbackTask @relation(name: "FeedbackTasks") {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  task: PlanMissionTask! @relation(link: TABLE)
+  numberCompleted: Float
+}
+
+type PlanMissionTask {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  title: String! @unique
+  participantType: PlanParticipantType! @relation(link: TABLE)
+}
+
+type PlanMeasure {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  title: String!
+}
+
+type PlanMeasureData {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  measure: PlanMeasure @relation(name: "PlanMeasureToPlanMeasureData", onDelete: CASCADE, link: TABLE)
+  value: String
+}

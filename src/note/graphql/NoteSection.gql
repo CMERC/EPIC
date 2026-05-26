@@ -1,0 +1,45 @@
+#import "./fragments/NoteBook.gql"
+
+mutation NoteSectionCreate($data: NoteSectionCreateInput!) {
+  createNoteSection(data: $data) {
+      ...NoteSectionFields
+  }
+}
+
+mutation NoteSectionDelete($id: NoteSectionWhereUniqueInput!) {
+  deleteNoteSection(where: $id) {
+    id
+  }
+}
+
+query NoteSectionsRead(
+  $where: NoteSectionWhereInput
+  $skip: Int
+  $first: Int
+  $after: String
+) {
+  noteSections(where: $where, skip: $skip, first: $first, after: $after) {
+      ...NoteSectionFields
+  }
+}
+
+mutation NoteSectionUpdate(
+  $data: NoteSectionUpdateInput!
+  $where: NoteSectionWhereUniqueInput!
+) {
+  updateNoteSection(data: $data, where: $where) {
+      ...NoteSectionFields
+  }
+}
+
+query NoteSectionsCounts(
+  $where: NoteSectionWhereInput
+  $skip: Int
+  $first: Int
+) {
+  noteSectionsConnection(where: $where, skip: $skip, first: $first) {
+    aggregate {
+      count
+    }
+  }
+}

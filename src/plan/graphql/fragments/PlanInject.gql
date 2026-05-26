@@ -1,0 +1,278 @@
+#import "@/shared/graphql/fragments/Location.gql"
+#import "@/plan/graphql/fragments/PlanMethod.gql"
+#import "@/plan/graphql/fragments/PlanInjectOwner.gql"
+#import "@/plan/graphql/fragments/PlanLabel.gql"
+#import "@/shared/graphql/fragments/MediaFile.gql"
+#import "./PlanMeasure.gql"
+#import "./PlanAssessment.gql"
+#import "./PlanPlatform.gql"
+#import "./PlanAccreditedTask.gql"
+#import "./PlanPriorityLevel.gql"
+#import "./PlanRequestedMethodType.gql"
+#import "./PlanTrainedMethodType.gql"
+
+fragment InjectFields on PlanInject {
+    id
+    title
+    location { ...LocationFields }
+    description
+    mitigation
+    type
+    method { ...MethodFields }
+    number
+    owner { ...InjectOwnerFields }
+    trigger
+    response
+    responseDate
+    remarks
+    status { ...LabelFields }
+    attachments { ...FileFields }
+    deletedAt
+    createdAt
+    updatedAt
+    events { ...EventFieldsWithoutInject }
+    start: startDate
+    end: startDate
+    startDate
+    from
+    to
+    objectives {...InjectFieldsTO}
+}
+
+fragment InjectList on PlanInject {
+    id
+    title
+    location { ...LocationFields }
+    description
+    mitigation
+    type
+    method { ...MethodFields }
+    number
+    owner { ...InjectOwnerFields }
+    trigger
+    response
+    responseDate
+    remarks
+    status { ...LabelFields }
+    attachments { ...FileFields }
+    deletedAt
+    createdAt
+    updatedAt
+    events { ...InjectEventSlim }
+    start: startDate
+    end: startDate
+    startDate
+    from
+    to
+    objectives { 
+      id 
+      participant { ...InjectParticipantSlim } 
+      platform { ...PlanTrainingObjPlatformFields }
+      jmet { ...JMETFields }
+      trainedMethodType {...TrainedMethodTypeFields}
+      measures { ...PlanMeasureFields }
+    }
+}
+
+fragment InjectEventSlim on PlanEvent {
+  id
+  name 
+  color
+}
+
+fragment InjectParticipantSlim on PlanParticipant {
+    id
+    title: name
+    name
+}
+
+fragment OrgFields on PlanOrganization {
+    id
+    name
+    group
+    key
+}
+
+fragment EventFieldsWithoutInject on PlanEvent {
+    id
+    name
+    type
+    method
+    startDate
+    endDate
+    locations {id geojson geohash}
+    description
+    color
+    organization { ...OrgFields }
+    exerciseGuidance
+}
+
+fragment JMETFields on PlanJmet {
+      id
+      levelWar
+      taskNumber
+      taskTitle
+      description
+      key
+}
+
+fragment JSTPFields on PlanJointStaffTrainingPriority {
+      id
+      title
+      description
+}
+
+fragment ExerciseObjectiveFields on PlanExerciseObjective {
+  id
+  title
+  exerciseObjective
+  measurePerformance
+  measureEffectiveness
+}
+
+fragment CommandPriorityFields on PlanCommandPriority {
+    id
+    title
+    description
+}
+
+fragment InjectFieldsTO on PlanTrainingObjective {
+  id
+  platform { ...PlanTrainingObjPlatformFields }
+  jmet { ...JMETFields }
+  requestedMethod
+  trainedMethod
+  priority
+  priorityLevel { ...PlanPriorityLevelFields }
+  requestedMethodType {...RequestedMethodTypeFields}
+  trainedMethodType {...TrainedMethodTypeFields}
+  requiredRuns
+  classification
+  task
+  condition
+  standard
+  exerciseObjective { ...ExerciseObjectiveFields }
+  accreditedTask { ...TaskFields }
+  commandTrainingPriority { ...CommandPriorityFields }
+  jointStaffTrainingPriority { ...JSTPFields }
+  participant { ...PlanInjectTrainingObjParticipantFields }
+  assessments { ...PlanAssessmentFields }
+  createdAt
+  updatedAt
+  injects(where: { deletedAt: null }, orderBy: number_ASC ) { 
+    id 
+    number 
+    title 
+    description 
+    mitigation 
+    type 
+    method {id name icon color key} 
+    owner {id title key} 
+    trigger 
+    response 
+    responseDate
+    remarks
+    status {id title description color}
+    attachments {id name secret contentType size createdAt updatedAt createTime updateTime url}
+    deletedAt
+    events {id name type method}
+    startDate
+    from
+    to
+    location {id geojson geohash} 
+    }  
+  measures { ...PlanMeasureFields }
+} 
+
+fragment PlanTrainingObjPlatformFields on PlanParticipantPlatform {
+  id
+  bedDown
+  audience
+  platform { id title type }
+}
+
+fragment PlanInjectTrainingObjParticipantFields on PlanParticipant {
+    id
+    title: name
+    name
+    service { ...InjectParticipantServiceFields }
+    serviceType  { ...ServiceTypeFields }
+    commandAgency { ...CommandAgencyFields }
+    homeStation
+    bedDown
+    totalAudience
+    icon
+    participantType { ...TrainingObjParticipantTypeFields }
+    planners (orderBy: isPrimary_DESC) { ...PlanTrainingObjParticipantPlannerFields }
+    fundings { ...PlanTrainingObjFundingFields }
+    platforms { ...PlanTrainingObjParticipantPlatformFields }
+}
+
+fragment PlanTrainingObjParticipantPlannerFields on PlanParticipantPlanner {
+      id
+      email
+      name
+      phoneNumber
+      isPrimary
+}
+
+fragment PlanTrainingObjParticipantPlatformFields on PlanParticipantPlatform {
+  id
+  bedDown
+  audience
+  platform { ...PlatformFields }
+}
+
+fragment TrainingObjParticipantTypeFields on PlanParticipantType {
+  id
+  title
+  key
+}
+
+fragment PlanTrainingObjPlatformFields on PlanParticipantPlatform {
+  id
+  bedDown
+  audience
+  platform { id title type }
+}
+
+fragment InjectParticipantServiceFields on PlanParticipantService {
+  id
+  title
+  key
+}
+
+fragment ServiceTypeFields on PlanParticipantServiceType {
+  id
+  title
+  key
+}
+
+fragment CommandAgencyFields on PlanParticipantCommandAgency {
+  id
+  title
+  key
+}
+
+fragment PlanTrainingObjFundingFields on PlanParticipantFundingSource {
+      id
+      primarySource
+      subSource
+      amount
+}
+
+
+fragment InjectCalendar on PlanInject {
+    id
+    title
+    type
+    number
+    responseDate
+    deletedAt
+    createdAt
+    updatedAt
+    start: startDate
+    end: startDate
+    startDate
+    status {id title description color}
+}

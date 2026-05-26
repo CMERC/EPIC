@@ -1,0 +1,40 @@
+#import "./fragments/AdminFragments.gql"
+
+query AppUsersRead(
+  $where: AppUserWhereUniqueInput
+  $orderBy: AppUserOrderByInput
+  $skip: Int
+  $after: String
+  $before: String
+  $first: Int
+  $last: Int
+) {
+  appUsers(
+    where: $where
+    orderBy: $orderBy
+    skip: $skip
+    after: $after
+    before: $before
+    first: $first
+    last: $last
+  ) {
+   ...AppUserFields
+  }
+}
+
+mutation AppUserDelete($where: AppUserWhereUniqueInput!) {
+  deleteAppUser(where: $where) {
+    id
+  }
+}
+
+query GetAppUserInviteLink(
+  $where: AppUserWhereUniqueInput
+) {
+  getAppUserInviteLink(
+    where: $where
+  ) {
+    id
+    url
+  }
+}

@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 122.27 122.27">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #00b2e3;
+      }
+
+      .cls-2 {
+        fill: #fff;
+      }
+    </style>
+  </defs>
+  <g id="Group_250" data-name="Group 250" transform="translate(-621.863 -207.631)">
+    <rect id="Rectangle_1731" data-name="Rectangle 1731" class="cls-1" width="122.27" height="122.27" rx="38" transform="translate(621.863 207.631)"/>
+    <path id="share-alt-solid" class="cls-2" d="M48.125,43.75a13.068,13.068,0,0,0-8.174,2.857L25.939,37.849a13.2,13.2,0,0,0,0-5.7l14.012-8.757a13.1,13.1,0,1,0-4.639-7.419L21.3,24.732a13.125,13.125,0,1,0,0,20.537l14.012,8.757A13.126,13.126,0,1,0,48.125,43.75Z" transform="translate(652 235.077)"/>
+  </g>
+</svg>

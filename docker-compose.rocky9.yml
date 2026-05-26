@@ -1,0 +1,186 @@
+name: epic-modernized
+
+networks:
+  public: {}
+  backend: {}
+
+volumes:
+  mysql_data: {}
+  minio_data: {}
+  redis_data: {}
+
+services:
+  caddy:
+    image: caddy:2.8-alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      APP_DOMAIN: ${APP_DOMAIN:-localhost}
+    volumes:
+      - ./docker/caddy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./data/caddy:/data
+      - ./data/caddy_config:/config
+    depends_on:
+      client:
+        condition: service_healthy
+      server:
+        condition: service_healthy
+      minio:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost/healthcheck >/dev/null || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    networks: [public, backend]
+
+  client:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        VUE_APP_UNSPLASH_ACCESS_KEY: ${VUE_APP_UNSPLASH_ACCESS_KEY:-}
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1/ >/dev/null || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    networks: [backend]
+
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    env_file: ./server/.env.rocky9
+    environment:
+      NODE_ENV: production
+      PORT: 4000
+      PRISMA_ENDPOINT: http://prisma:4466/default/default
+      DATABASE_URL: mysql://root:prisma@mysql:3306/graphcool
+      WORKSPACE_ENDPOINT: http://prisma:4466/default/
+      REDIS_ENDPOINT: redis://redis:6379
+      S3_ENDPOINT: http://minio:9000
+      S3_EXTERNAL_ENDPOINT: http://${APP_DOMAIN:-localhost}/files
+      S3_BUCKET: epic
+      S3_ACCESS_KEY_ID: ${MINIO_ROOT_USER:-epicminio}
+      S3_SECRET_ACCESS_KEY: ${MINIO_ROOT_PASSWORD:-epicminio123456}
+      FAKER_GRAPHQL_ENDPOINT: http://graphql-faker:9002/graphql
+      DISABLE_SCHEDULER: ${DISABLE_SCHEDULER:-true}
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:4000/healthcheck >/dev/null || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 90s
+    depends_on:
+      prisma:
+        condition: service_started
+      redis:
+        condition: service_healthy
+      minio:
+        condition: service_healthy
+    networks: [backend]
+
+  prisma:
+    image: prismagraphql/prisma:1.34.10
+    restart: unless-stopped
+    environment:
+      PRISMA_CONFIG: |
+        port: 4466
+        databases:
+          default:
+            connector: mysql
+            active: true
+            host: mysql
+            port: 3306
+            user: root
+            password: prisma
+            managementSchema: graphcool
+    ulimits:
+      nofile:
+        soft: 65536
+        hard: 65536
+    depends_on:
+      mysql:
+        condition: service_started
+    networks: [backend]
+
+  mysql:
+    image: mysql:5.7
+    restart: unless-stopped
+    command: ["--character-set-server=utf8mb4", "--collation-server=utf8mb4_unicode_ci", "--max_allowed_packet=256M"]
+    environment:
+      MYSQL_ROOT_PASSWORD: prisma
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -p$${MYSQL_ROOT_PASSWORD} --silent"]
+      interval: 30s
+      timeout: 10s
+      retries: 10
+      start_period: 60s
+    networks: [backend]
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+    networks: [backend]
+
+  minio:
+    image: minio/minio:RELEASE.2025-04-22T22-12-26Z
+    restart: unless-stopped
+    command: server /data --console-address :9001
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER:-epicminio}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:-epicminio123456}
+    volumes:
+      - minio_data:/data
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:9000/minio/health/ready"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+    networks: [backend]
+
+  create-minio-bucket:
+    image: minio/mc:RELEASE.2025-04-16T18-13-26Z
+    depends_on:
+      minio:
+        condition: service_healthy
+    entrypoint: >
+      /bin/sh -c "
+      until /usr/bin/mc alias set local http://minio:9000 ${MINIO_ROOT_USER:-epicminio} ${MINIO_ROOT_PASSWORD:-epicminio123456}; do sleep 2; done;
+      /usr/bin/mc mb --ignore-existing local/epic;
+      exit 0;"
+    networks: [backend]
+
+  graphql-faker:
+    image: apisguru/graphql-faker:latest
+    restart: unless-stopped
+    command: ["/workdir/schema.faker.graphql", "--port", "9002"]
+    volumes:
+      - ./server/database:/workdir:ro
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:9002/graphql', res => process.exit(res.statusCode < 500 ? 0 : 1)).on('error', () => process.exit(1))"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+    networks: [backend]

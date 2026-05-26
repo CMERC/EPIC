@@ -1,0 +1,13 @@
+fragment EmailFields on EmailMessage {
+    id
+    createdAt
+    to
+    from
+    subject
+    content
+    attachments {
+      id
+    }
+    status
+    folder
+}

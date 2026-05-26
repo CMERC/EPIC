@@ -1,0 +1,66 @@
+#import "./fragments/NoteBook.gql"
+
+mutation NoteBookCreate($data: NoteBookCreateInput!) {
+  createNoteBook(data: $data) {
+    id
+  }
+}
+
+mutation NoteBookDelete($where: NoteBookWhereUniqueInput!) {
+  deleteNoteBook(where: $where) {
+    id
+  }
+}
+
+query NoteBookRead(
+  $where: NoteBookWhereUniqueInput!
+) {
+  noteBook(where: $where) {
+      ...NotebookFields
+  }
+}
+
+query NoteBookEditRead(
+  $where: NoteBookWhereUniqueInput!
+) {
+  noteBook(where: $where) {
+      ...NotebookEditFields
+  }
+}
+
+query NoteBooksRead(
+  $where: NoteBookWhereInput
+  $skip: Int
+  $first: Int
+  $after: String
+) {
+  noteBooks(where: $where, skip: $skip, first: $first, after: $after) {
+      ...NotebookFields
+  }
+}
+
+mutation NoteBookUpdate($data: NoteBookUpdateInput!, $where: NoteBookWhereUniqueInput!) {
+  updateNoteBook(data: $data, where: $where) {
+    title
+  }
+}
+
+query NoteBooksCounts($where: NoteBookWhereInput, $skip: Int, $first: Int) {
+  noteBooksConnection(where: $where, skip: $skip, first: $first) {
+    aggregate {
+      count
+    }
+  }
+}
+
+subscription NoteBookSubscription {
+  noteBook {
+    mutation
+    node {
+      ...NotebookFields
+    }
+    previousValues {
+      id
+    }
+  }
+}

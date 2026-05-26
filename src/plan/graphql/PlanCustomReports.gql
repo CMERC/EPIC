@@ -1,0 +1,75 @@
+#import "./fragments/PlanCustomReport.gql"
+
+mutation PlanCustomReportsCreate($data: PlanCustomReportCreateInput!) {
+  createPlanCustomReport(data: $data) {
+      ...CustomReportFields
+  }
+}
+
+mutation PlanCustomReportsDelete($id: PlanCustomReportWhereUniqueInput!) {
+  deletePlanCustomReport(where: $id) {
+    id
+  }
+}
+
+query PlanCustomReportsRead(
+  $where: PlanCustomReportWhereInput
+  $skip: Int
+  $first: Int
+  $after: String
+  $orderBy: PlanCustomReportOrderByInput
+) {
+  planCustomReports(
+    where: $where
+    skip: $skip
+    first: $first
+    after: $after
+    orderBy: $orderBy
+  ) {
+      ...CustomReportFields
+  }
+}
+
+query PlanCustomReportRead($where: PlanCustomReportWhereUniqueInput!) {
+  planCustomReport(where: $where) {
+      ...CustomReportFields
+  }
+}
+
+mutation PlanCustomReportsUpsert(
+  $where: PlanCustomReportWhereUniqueInput! 
+  $create: PlanCustomReportCreateInput!
+  $update: PlanCustomReportUpdateInput!) {
+      upsertPlanCustomReport(create: $create, update: $update, where: $where) {
+    ...CustomReportFields
+  }
+  }
+
+mutation PlanCustomReportsUpdate(
+  $data: PlanCustomReportUpdateInput!
+  $where: PlanCustomReportWhereUniqueInput!
+) {
+  updatePlanCustomReport(data: $data, where: $where) {
+      ...CustomReportFields
+  }
+}
+
+subscription PlanCustomReportSubscription($where: PlanCustomReportSubscriptionWhereInput) {
+  planCustomReport(where: $where) {
+    mutation
+    node {
+      ...CustomReportFields
+    }
+    previousValues {
+      id
+    }
+  }
+}
+
+query PlanCustomReportsCounts($where: PlanCustomReportWhereInput, $skip: Int) {
+  planCustomReportsConnection(where: $where, skip: $skip) {
+    aggregate {
+      count
+    }
+  }
+}

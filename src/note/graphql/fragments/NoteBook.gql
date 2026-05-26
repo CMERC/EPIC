@@ -1,0 +1,37 @@
+#import "@/shared/graphql/fragments/MediaFile.gql"
+
+fragment NotebookFields on NoteBook {
+      id
+      title
+      createdAt
+      updatedAt
+      color
+      icon
+      sections { ...NoteSectionFields }
+}
+
+fragment NoteSectionFields on NoteSection {
+    id
+    title
+    createdAt
+    updatedAt
+    pages { ...NotePageFields }
+}
+
+fragment NotePageFields on NotePage {
+  id
+  title
+  text
+  media { ...FileFields }
+  createdAt
+  updatedAt
+}
+
+fragment NotebookEditFields on NoteBook {
+      id
+      title
+      createdAt
+      updatedAt
+      color
+      icon
+}

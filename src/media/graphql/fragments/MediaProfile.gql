@@ -1,0 +1,42 @@
+#import "@/shared/graphql/fragments/MediaFile.gql"
+#import "./MediaService.gql"
+#import "@/shared/graphql/fragments/Location.gql"
+
+fragment ProfileFields on MediaProfile {
+    id
+    service { ...MediaServiceFields }
+    username
+    name
+    description
+    banner { id mediaFile { ...FileFields } }
+    avatar { ...FileFields }
+    location { ...LocationFields }
+    url
+    createdTime
+    isUserGenerated
+    language
+    counts
+}
+
+fragment ProfileList  on MediaProfile {
+    id
+    service { ...MediaServiceFields }
+    username
+    name
+    description
+    banner { id mediaFile { ...FileFields } }
+    avatar { ...FileFields }
+    url
+    createdTime
+    isUserGenerated
+}
+
+fragment ProfileSelect on MediaProfile {
+    id
+    service { ...MediaServiceFields }
+    username
+    name
+    avatar { ...FileFields }
+    createdTime
+    isUserGenerated
+}

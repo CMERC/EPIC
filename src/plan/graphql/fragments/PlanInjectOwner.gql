@@ -1,0 +1,6 @@
+
+fragment InjectOwnerFields on PlanInjectOwner{
+    id
+    title
+    key
+}

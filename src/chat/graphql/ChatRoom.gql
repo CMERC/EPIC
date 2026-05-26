@@ -1,0 +1,43 @@
+#import "./fragments/ChatRoom.gql"
+
+query ChatRoomsRead(
+  $where: ChatRoomWhereInput
+  $skip: Int
+  $first: Int
+  $after: String
+  $orderBy: ChatRoomOrderByInput
+) {
+  chatRooms(
+    where: $where
+    skip: $skip
+    first: $first
+    after: $after
+    orderBy: $orderBy
+  ) {
+    ...RoomFields
+  }
+}
+
+mutation ChatRoomCreate($data: ChatRoomCreateInput!) {
+  createChatRoom(data: $data) {
+    ...RoomFields
+  }
+}
+
+mutation ChatRoomDelete($id: ChatRoomWhereUniqueInput!) {
+  deleteChatRoom(where: $id) {
+    id
+  }
+}
+
+subscription ChatRoomSubscription($where: ChatRoomSubscriptionWhereInput) {
+  chatRoom(where: $where) {
+    mutation
+    node {
+    ...RoomFields
+    }
+    previousValues {
+      id
+    }
+  }
+}

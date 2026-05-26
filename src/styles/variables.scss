@@ -1,0 +1,254 @@
+$family-sans-serif: "Open Sans", sans-serif;
+$roboto: "Roboto", sans-serif;
+$family-monospace: "Courier New", Courier, monospace;
+$grey: #8c9b9d;
+$grey-light: #a9afb7;
+$grey-lighter: #dee2e5;
+$orange: #e67e22;
+$yellow: #f1b70e;
+$green: #2ecc71;
+$turquoise: #1abc9c;
+$cyan: #3399dc;
+$blue: #3498db;
+$purple: #8e44ad;
+$red: #e74c3c;
+$white-ter: #ecf0f1;
+$primary: #34495e !default;
+$yellow-invert: #fff;
+
+$body-size: clamp(14px, 2.5vw, 16px);
+
+//variable overrides
+
+$subtitle-color: darken($grey, 20);
+$text: $primary;
+$text-light: lighten($primary, 10);
+$text-strong: darken($primary, 5);
+
+$alpha: 1!important;
+$tooltip-max-width: 45rem;
+$notification-padding: 1.25rem;
+$notification-padding-ltr: 1.25rem;
+$notification-padding-rtl: 1.25rem;
+$timeline-content-padding: 1em 0 0 3em;
+$modal-z: 4000;
+
+//controls and buttons
+$gap: 32px;
+$section-padding: 2rem 1.5rem;
+$radius-small: 3px;
+$radius: 0.4em;
+$radius-large: 8px;
+$control-radius: $radius;
+$input-radius: $radius;
+$input-border-color: darken($grey-lighter, 3);
+$control-height: 2.25em;
+$control-border-width: 1px;
+$button-border-width: 1px;
+$control-padding-vertical: calc(0.375em - #{$control-border-width});
+$control-padding-horizontal: calc(0.625em - #{$control-border-width});
+$button-padding-vertical: calc(0.375em - #{$button-border-width});
+$button-padding-horizontal: 0.75em;
+$button-color: $primary;
+$button-hover-color: darken($primary, 5); // primary-dark
+$button-focus: darken($primary, 5); // primary-dark
+$button-active-color: darken($primary, 5); // primary-dark
+
+//Blocks and Elments
+$box-color: $primary;
+$box-background-color: $white-ter;
+$box-shadow:	0 2px 3px rgba(10,10,10,.1), 0 0 0 1px rgba(10,10,10,.1);
+$card-color: $primary;
+$card-footer-border-top: 2px solid $grey-lighter;
+$card-background-color: lighten($grey-lighter, 5);
+$card-footer-item: $primary;
+$card-shadow:	0 2px 3px rgba(10,10,10,.1), 0 0 0 1px rgba(10,10,10,.1);
+$panel-shadow: 0 2px 3px rgba(10,10,10,.1), 0 0 0 1px rgba(10,10,10,.1);
+$footer-background-color: $white-ter;
+
+$breadcrumb-item-color: darken($blue, 15);
+$breadcrumb-item-active-color: $button-active-color;
+$tabs-link-active-border-bottom-color: darken($blue, 10);
+$tabs-toggle-link-active-background-color: $primary;
+$tabs-toggle-link-active-border-color:$primary;
+$tabs-link-active-color: darken($primary, 10);
+$tabs-toggle-link-radius: 0px;
+$navbar-dropdown-arrow: $primary;
+$navbar-burger-color: $white-ter;
+
+
+//Customized colors for Apps
+$now: #6383a7;
+$now-invert: findColorInvert($now);
+$now-dark: darken($blue, 10);
+$now-dark-invert: findColorInvert($now-dark);
+$link: $blue;
+$link-invert: findColorInvert($link);
+$link-dark: darken($link, 10);
+$link-dark-invert: findColorInvert($link-dark);
+$link-hover: darken($link, 10);
+$link-focus: darken($link, 10);
+$link-active: darken($link, 10);
+$info: $cyan;
+$info-invert: findColorInvert($info);
+$info-dark: darken($info, 10);
+$info-dark-invert: findColorInvert($info-dark);
+$orange: #ff4612;
+$orange-invert: findColorInvert($orange);
+$orange-dark: darken($orange, 10);
+$orange-dark-invert: findColorInvert($orange-dark);
+$base: $grey-darker;
+$base-invert: findColorInvert($base);
+$media: #007d9e;
+$media-invert: findColorInvert($media);
+$media-dark: darken($media, 10);
+$media-dark-invert: findColorInvert($media-dark);
+$plan: #038172;
+$plan-invert: findColorInvert($plan);
+$plan-dark: darken($plan, 10);
+$plan-dark-invert: findColorInvert($plan-dark);
+$builder: #535353;
+$builder-invert: findColorInvert($builder);
+$builder-dark: darken($builder, 10);
+$builder-dark-invert: findColorInvert($builder-dark);
+$email: #2775aa;
+$email-invert: findColorInvert($email);
+$email-dark: darken($email, 10);
+$email-dark-invert: findColorInvert($email-dark);
+$chat: #00475a;
+$chat-invert: findColorInvert($chat);
+$chat-dark: darken($chat, 10);
+$chat-dark-invert: findColorInvert($chat-dark);
+$web: #fff;
+$web-invert: findColorInvert($web);
+$web-dark: darken($web, 10);
+$web-dark-invert: findColorInvert($web-dark);
+$dev: #535353;
+$dev-invert: findColorInvert($dev);
+$dev-dark: darken($dev, 10);
+$dev-dark-invert: findColorInvert($dev-dark);
+$admin: #7b3636;
+$admin-invert: findColorInvert($admin);
+$admin-dark: darken($admin, 10);
+$admin-dark-invert: findColorInvert($admin-dark);
+$note: #355294;
+$note-invert: findColorInvert($note);
+$note-dark: darken($note, 10);
+$note-dark-invert: findColorInvert($note-dark);
+$map: #508750;
+$map-invert: findColorInvert($map);
+$map-dark: darken($map, 10);
+$map-dark-invert: findColorInvert($map-dark);
+$observe: #eee;
+$observe-invert: findColorInvert($observe);
+$observe-dark: darken($observe, 10);
+$observe-dark-invert: findColorInvert($observe-dark);
+$activity: #eee;
+$activity-invert: findColorInvert($activity);
+$activity-dark: darken($activity, 10);
+$activity-dark-invert: findColorInvert($activity-dark);
+
+$drafts: #3498db;
+$drafts-invert: findColorInvert($drafts);
+$drafts-dark: darken($drafts, 10);
+$drafts-dark-invert: findColorInvert($drafts-dark);
+$scheduled: #f1b70e;
+$scheduled-invert: findColorInvert($scheduled);
+$scheduled-dark: darken($scheduled, 10);
+$scheduled-dark-invert: findColorInvert($scheduled-dark);
+$published: #2ecc71;
+$published-invert: findColorInvert($published);
+$published-dark: darken($published, 10);
+$published-dark-invert: findColorInvert($published-dark);
+$posts: #196f3d;
+$posts-invert: findColorInvert($posts);
+$posts-dark: darken($posts, 10);
+$posts-dark-invert: findColorInvert($posts-dark);
+$posted: #6b6b6b;
+$posted-invert: findColorInvert($posted);
+$posted-dark: darken($posted, 10);
+$posted-dark-invert: findColorInvert($posted-dark);
+$profiles: #34495e;
+$profiles-invert: findColorInvert($profiles);
+$profiles-dark: darken($profiles, 10);
+$profiles-dark-invert: findColorInvert($profiles-dark);
+$personas: #71647b;
+$personas-invert: findColorInvert($personas);
+$personas-dark: darken($personas, 10);
+$personas-dark-invert: findColorInvert($personas-dark);
+$networks: #ac9eb5;
+$networks-invert: findColorInvert($networks);
+$networks-dark: darken($networks, 10);
+$networks-dark-invert: findColorInvert($networks-dark);
+$sites: #9988a4;
+$sites-invert: findColorInvert($sites);
+$sites-dark: darken($sites, 10);
+$sites-dark-invert: findColorInvert($sites-dark);
+$difficulty: #acacac;
+$difficulty-invert: findColorInvert($difficulty);
+$difficulty-dark: darken($difficulty, 10);
+$difficulty-dark-invert: findColorInvert($difficulty-dark);
+$high: $red;
+$high-invert: findColorInvert($red);
+$medium: #fe8801;
+$medium-invert: findColorInvert($orange);
+$low: $yellow;
+$low-invert: findColorInvert($orange);
+
+@import "~bulma/sass/utilities/derived-variables";
+$customColors: (
+  "orange": ( $orange, $orange-invert, $orange-dark, $orange-dark-invert),
+  "base": ( $base, $base-invert ),
+  "chat": ($chat,$chat-invert, $chat-dark,$chat-dark-invert  ),
+  "text-chat": ($chat,$chat-invert, $chat-dark,$chat-dark-invert  ),
+  "email": ($email,$email-invert, $email-dark,$email-dark-invert  ),
+  "text-email": ($email,$email-invert, $email-dark,$email-dark-invert  ),
+  "media": ($media,$media-invert, $media-dark,$media-dark-invert  ),
+  "text-media": ($media,$media-invert, $media-dark, $media-dark-invert  ),
+  "plan": ($plan,$plan-invert, $plan-dark,$plan-dark-invert  ),
+  "text-plan": ($plan,$plan-invert,$plan-dark,$plan-dark-invert   ),
+  "builder": ($builder,$builder-invert, $builder-dark,$builder-dark-invert  ),
+  "text-builder": ($builder,$builder-invert, $builder-dark,$builder-dark-invert  ),
+  "web": ($web,$web-invert, $web-dark,$web-dark-invert  ),
+  "text-web": ($web,$web-invert, $web-dark,$web-dark-invert  ),
+  "dev": ($dev,$dev-invert, $dev-dark,$dev-dark-invert  ),
+  "text-dev": ($dev,$dev-invert, $dev-dark,$dev-dark-invert   ),
+  "admin": ($admin,$admin-invert, $admin-dark,$admin-dark-invert  ),
+  "text-admin": ($admin,$admin-invert, $admin-dark,$admin-dark-invert  ),
+  "note": ($note,$note-invert, $note-dark,$note-dark-invert  ),
+  "text-note": ($note,$note-invert, $note-dark,$note-dark-invert  ),
+  "map": ($map, $map-invert, $map-dark,$map-dark-invert  ),
+  "text-map": ($map,$map-invert, $map-dark,$map-dark-invert  ),
+  "observe": ($observe,$observe-invert, $observe-dark,$observe-dark-invert  ),
+  "text-observe": ($observe,$observe-invert, $observe-dark,$observe-dark-invert  ),
+  "activity": ($activity,$activity-invert, $activity-dark,$activity-dark-invert   ),
+  "text-activity": ($activity,$activity-invert, $activity-dark,$activity-dark-invert  ),
+  "posts": ($posts,$posts-invert, $posts-dark,$posts-dark-invert  ),
+  "text-posts": ($posts,$posts-invert, $posts-dark,$posts-dark-invert  ),
+  "published": ($published,$published-invert, $published-dark,$published-dark-invert  ),
+  "text-published": ($published,$published-invert, $published-dark,$published-dark-invert  ),
+  "drafts": ($drafts,$drafts-invert, $drafts-dark,$drafts-dark-invert  ),
+  "text-drafts": ($drafts,$drafts-invert, $drafts-dark,$drafts-dark-invert  ),
+  "scheduled": ($scheduled,$scheduled-invert, $scheduled-dark,$scheduled-dark-invert   ),
+  "text-scheduled": ($scheduled,$scheduled-invert, $scheduled-dark,$scheduled-dark-invert  ),
+  "profiles": ($profiles,$profiles-invert, $profiles-dark,$profiles-dark-invert  ),
+  "text-profiles": ($profiles,$profiles-invert, $profiles-dark,$profiles-dark-invert  ),
+  "posted": ($posted,$posted-invert, $posted-dark,$posted-dark-invert  ),
+  "text-posted": ($posted,$posted-invert, $posted-dark,$posted-dark-invert  ),
+  "personas": ($personas,$personas-invert, $personas-dark,$personas-dark-invert   ),
+  "text-personas": ($personas,$personas-invert, $personas-dark,$personas-dark-invert  ),
+  "networks": ($networks,$networks-invert, $networks-dark,$networks-dark-invert  ),
+  "text-networks": ($networks,$networks-invert, $networks-dark,$networks-dark-invert  ),
+  "sites": ($sites,$sites-invert, $sites-dark,$sites-dark-invert  ),
+  "text-sites": ($sites,$sites-invert, $sites-dark,$sites-dark-invert  ),
+  "info": ($info,$info-invert, $info-dark,$info-dark-invert  ),
+  "text-info": ($info,$info-invert, $info-dark,$info-dark-invert  ),
+  "difficulty": ($difficulty,$difficulty-invert, $difficulty-dark,$difficulty-dark-invert  ),
+  "text-difficulty": ($difficulty,$difficulty-invert, $difficulty-dark,$difficulty-dark-invert  ),
+  "now": ($now,$now-invert, $now-dark,$now-dark-invert  ),
+  "text-now": ($now,$now-invert, $now-dark,$now-dark-invert  ),
+  "High": ($high,$high-invert  ),
+  "Medium": ($medium,$medium-invert  ),
+  "Low": ($low,$low-invert  ),
+);
+$colors: map-merge($colors, $customColors);

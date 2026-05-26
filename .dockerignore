@@ -1,0 +1,15 @@
+.git
+.cache
+.npm
+coverage
+dist
+node_modules
+server/node_modules
+server/src/generated
+cypress/screenshots
+cypress/videos
+*.log
+*.tar
+*.tar.gz
+data/caddy
+data/caddy_config

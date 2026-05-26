@@ -1,0 +1,11 @@
+fragment RoomFields on ChatRoom {
+    id
+    createdAt
+    title
+    messages 
+    {
+        id
+        text
+        author
+    }
+}

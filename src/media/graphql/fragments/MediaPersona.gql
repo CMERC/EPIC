@@ -1,0 +1,49 @@
+#import "./MediaProfile.gql"
+#import "@/shared/graphql/fragments/MediaFile.gql"
+#import "@/shared/graphql/fragments/Location.gql"
+
+
+fragment PersonaRelatesFields on MediaPersona {
+  id
+  name
+  avatar { id name url }
+}
+
+fragment PersonaFields on MediaPersona {
+  id
+  name
+  role
+  description
+  attributes { id key value
+  }
+  relatesTo {
+    id
+    name
+    start { ...PersonaRelatesFields }
+    end { ...PersonaRelatesFields }
+  }
+  relatesFrom {
+    id
+    name
+    start { ...PersonaRelatesFields }
+    end { ...PersonaRelatesFields }
+  }
+  avatar { ...FileFields }
+  profiles(orderBy: name_ASC ) { ...ProfileFields }
+  location { ...LocationFields }
+}
+
+fragment PersonaSlim on MediaPersona {
+  id
+  name
+  role
+  description
+  avatar { ...FileFields }
+  profiles(orderBy: name_ASC ) { ...ProfileSlim }
+  location { ...LocationFields }
+}
+
+fragment ProfileSlim on MediaProfile {
+  id 
+  name
+}

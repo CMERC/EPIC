@@ -1,0 +1,514 @@
+# import * from "./generated/prisma.graphql"
+# import Mutation.* from "../node_modules/graphql-authentication/schema.graphql"
+scalar Upload
+type Query {
+  # Admin
+  appWorkspacePublic(where: AppWorkspaceWhereUniqueInput!): AppWorkspacePublic
+  currentUser: AppUser
+  currentUserWorkspaces(
+    where: AppWorkspaceWhereInput
+    orderBy: AppWorkspaceOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [AppCurrentUserWorkspace]!
+  getWorkspaceMembers(
+    where: AppWorkspaceWhereInput
+    orderBy: AppWorkspaceOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+    members_first: Int
+    members_skip: Int
+    members_orderBy: UserOrderByInput
+    members_where: UserWhereInput
+  ): [AppWorkspaceMembers]!
+  appUsers(
+    where: AppUserWhereUniqueInput
+    orderBy: AppUserOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [AppUser]
+  mapLocationName(latitude: Float, longitude: Float): MapLocationData
+  getCobraIncidentsByUser(username: String, password: String): CobraData
+  getCobraAuthorization(username: String, password: String): CobraAuthorization
+
+  # Media
+  mediaPostWithComments(
+    where: MediaPostWhereInput
+    orderBy: MediaPostOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+    comments_first: Int
+    comments_skip: Int
+    comments_orderBy: MediaPostOrderByInput
+    comments_where: MediaPostWhereInput
+  ): [MediaPostWithCommentsFiltered]!
+  mediaFeeds(
+    where: MediaPostWhereInput
+    orderBy: MediaPostOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [MediaPost]!
+  mediaSearchPublic(
+    data: PublicMediaSearchWhereInput
+    orderBy: MediaPostOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [MediaPost]!
+  mediaPostsPublic(
+    data: PublicMediaPostWhereInput
+    orderBy: MediaPostOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [MediaPost]!
+  mediaPostPublic(data: PublicMediaPostWhereInput): MediaPost
+  mediaPostsPublicConnection(
+    data: PublicMediaPostWhereInput
+    orderBy: MediaPostOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): MediaPostConnection
+  mediaProfilesPublic(
+    data: PublicMediaProfileWhereInput
+    orderBy: MediaProfileOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [MediaProfile]!
+  mediaProfilesPublicConnection(
+    data: PublicMediaProfileWhereInput
+    orderBy: MediaProfileOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): MediaProfileConnection
+  mediaServicePublic(data: PublicMediaServiceWhereUniqueInput): MediaService
+  mediaPostsTrackConnection(
+    data: MediaPostsTrackWhereInput
+  ): MediaPostTrackCount
+  mediaPostsTrack(
+    data: MediaPostsTrackWhereInput
+    orderBy: MediaPostOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [MediaPostTrack]
+  mediaPostsTrackInjectsReport(data: MediaPostsTrackWhereInput): PlanReport
+  getRandomData(where: RandomDataInput): RandomData
+
+  # Plan
+  getPlanReport(where: PlanReportInput): PlanReport
+  planInjectsSearch(
+    query: String
+    event: String
+    orderBy: PlanInjectOrderByInput
+    skip: Int
+    first: Int
+  ): [PlanInject]!
+  planInjectsSearchCount(query: String, event: String): PlanInjectConnection!
+  getAppUserInviteLink(where: AppUserWhereUniqueInput): AppUserInviteLink
+  planFeedbacksPublic(
+    data: PublicPlanFeedbackWhereInput
+    orderBy: PlanFeedbackOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [PlanFeedback]!
+  planReasonsPublic(
+    data: PublicPlanReasonWhereInput
+    orderBy: PlanReasonOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [PlanReason]!
+  planMissionTasksPublic(
+    data: PublicPlanMissionTaskWhereInput
+    orderBy: PlanMissionTaskOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [PlanMissionTask]!
+  planQualificationsPublic(
+    data: PublicPlanQualificationWhereInput
+    orderBy: PlanQualificationOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [PlanQualification]!
+  downloadPlanInjects(where: DownloadPlanInjectInput!): String
+}
+
+type Mutation {
+  # Admin
+  requestAppWorkspace: String
+  deleteAppUser(where: AppUserWhereUniqueInput!): User
+  composeEmailMessage(data: EmailMessageComposeInput!): EmailMessage!
+  assignUserToWorkspace(
+    data: AppWorkspaceUpdateMembersInput!
+    where: AppWorkspaceWhereUniqueInput!
+  ): AppWorkspace
+  logoutCurrentUser: Boolean
+  singleUpload(file: Upload!): MediaFile!
+  # Plan
+  feedbackRequest(email: String, feedbackUrl: String): Boolean
+  updatePlanFeedbackPublic(data: PublicPlanFeedbackUpdateInput!): PlanFeedback
+  createPlanMissionTaskPublic(
+    data: PublicPlanMissionTaskCreateInput!
+  ): PlanMissionTask!
+  createPlanQualificationPublic(
+    data: PublicPlanQualificationCreateInput!
+  ): PlanQualification!
+  createPlanReasonPublic(data: PublicPlanReasonCreateInput!): PlanReason!
+  duplicatePlanInject(where: PlanInjectWhereUniqueInput!): PlanInject
+  # Map Layer
+  duplicateMapLayer(where: MapLayerWhereUniqueInput!): MapLayer
+  # Activity
+  createActivityStreamComment(data: ActivityStreamCreateInput!): ActivityStream!
+  # Cobra Activity
+  pushInjectToCobraMultiLog(data: Json): Json
+  pushInjectToCobraRequestManager(data: CobraRequestResourcePayload): CobraRequestResource
+}
+
+type Subscription {
+  currentUserWorkspace(
+    where: AppWorkspaceSubscriptionWhereInput
+  ): AppWorkspaceSubscriptionPayload
+  appWorkspacePub(
+    where: AppWorkspaceSubscriptionWhereInput
+  ): AppWorkspaceSubscriptionPayload
+  # Plan
+  planInjectsSearch(
+    query: String
+    event: String
+    orderBy: String
+  ): PlanInjectSubscriptionPayload
+  # Media
+  mediaFeed(
+    where: MediaPostSubscriptionWhereInput
+  ): MediaPostSubscriptionPayload
+}
+# Admin Types
+type AppUserInviteLink {
+  id: String
+  url: String
+}
+type AppWorkspacePublic {
+  id: ID!
+  name: String!
+  displayName: String!
+  timeZone: String
+}
+type AppUser {
+  id: ID!
+  email: String!
+  name: String!
+  inviteAccepted: Boolean!
+  emailConfirmed: Boolean!
+  deletedAt: DateTime
+  lastLogin: DateTime
+  joinedAt: DateTime!
+  isSuper: Boolean!
+  role: AppUserRole
+}
+
+type AppCurrentUserWorkspace {
+  id: ID!
+  name: String!
+  displayName: String!
+  timeZone: String
+  status: AppWorkspaceStatus
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+type AppWorkspaceMembers {
+  id: ID!
+  name: String!
+  displayName: String!
+  timeZone: String
+  members(
+    where: UserWhereInput
+    orderBy: UserOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [AppUser!]
+  status: AppWorkspaceStatus
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+# Map Types
+type MapLocationCoordinates {
+  latitude: Float
+  longitude: Float
+}
+type MapLocationName {
+  id: String
+  name: String
+}
+type MapLocationData {
+  id: String
+  name: String
+  formatted: String
+  country: MapLocationName
+  admin1: MapLocationName
+  admin2: MapLocationName
+  coordinates: MapLocationCoordinates
+}
+# Media Types
+type RandomData {
+  data: Json
+}
+type MediaPostTrack {
+  id: String
+  node: MediaPost
+  views: Int
+  visitors: Int
+}
+type MediaPostTrackCount {
+  count: Int!
+  views: Int!
+  visitors: Int!
+}
+
+type MediaPostWithCommentsFiltered {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  createTime: DateTime
+  updateTime: DateTime
+  isPublished: Boolean!
+  publishTime: DateTime
+  title: String!
+  text: String!
+  url: String
+  isUserGenerated: Boolean
+  profiles: [MediaProfile!]
+  location: Location
+  parent: MediaPost
+  comments(
+    where: MediaPostWhereInput
+    orderBy: MediaPostOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [MediaPost!]
+  mediaFile: MediaFile
+  counts: Json
+}
+
+# Plan Types
+type PlanReport {
+  data: [PlanReportAxisData]
+  total: String
+}
+type PlanReportAxisData {
+  x: [String]
+  y: [String]
+  text: [String]
+  name: String
+  textposition: String
+  marker: Json
+  type: String
+  orientation: String
+  # pie chart
+  labels: [String]
+  values: [String]
+}
+
+# Cobra Types
+type CobraData {
+  data: Json
+}
+
+type CobraAuthorization {
+  access_token: String
+  error: Json
+}
+
+type CobraRequestResource {
+  status: Int
+  error: Json
+}
+# Admin Inputs
+input AppWorkspaceUpdateMembersInput {
+  connect: UserWhereUniqueInput!
+}
+input AppUserWhereUniqueInput {
+  AND: [AppUserWhereUniqueInput!]
+  OR: [AppUserWhereUniqueInput!]
+  id: ID
+  id_not_in: [ID!]
+  name_contains: String
+  email_contains: String
+}
+enum AppUserOrderByInput {
+  id_ASC
+  id_DESC
+  email_ASC
+  email_DESC
+  password_ASC
+  password_DESC
+  name_ASC
+  name_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+  lastLogin_DESC
+  lastLogin_ASC
+}
+input EmailMessageComposeInput {
+  to: String!
+  from: String!
+  subject: String
+  content: String
+  status: EmailStatus
+  folder: EmailFolder
+  attachments: MediaFileCreateManyInput
+}
+
+# Media Inputs
+input MediaPostsTrackWhereInput {
+  workspace: String
+}
+input PublicMediaSearchWhereInput {
+  query: String
+  siteType: MediaServiceType
+  contentType: String
+  service: String
+  workspace: String
+}
+input PublicMediaPostWhereInput {
+  workspace: String
+  post: MediaPostWhereInput
+}
+input PublicMediaProfileWhereInput {
+  profile: MediaProfileWhereInput
+  workspace: String
+}
+input PublicMediaServiceWhereUniqueInput {
+  service: MediaServiceWhereUniqueInput
+  workspace: String
+}
+input TimerInput {
+  start: String
+  status: String
+}
+input MediaFeedsWhereInput {
+  point_radius: Json
+  boundinBox: Json
+  language: String
+  profiles_every: MediaProfileWhereInput
+  profiles_some: MediaProfileWhereInput
+  profiles_none: MediaProfileWhereInput
+  createTime: DateTime
+}
+input RandomDataInput {
+  type: String
+}
+
+# Plan Inputs
+input PlanReportInput {
+  type: String
+  dataSourceType: String
+  evaluationType: String
+  startDate: String
+  endDate: String
+}
+input PublicPlanFeedbackWhereInput {
+  feedback: PlanFeedbackWhereInput
+  workspace: String
+}
+input PublicPlanFeedbackUpdateInput {
+  feedback: PlanFeedbackUpdateInput
+  where: PlanFeedbackWhereUniqueInput!
+  workspace: String
+}
+input PublicPlanMissionTaskCreateInput {
+  planMissionTask: PlanMissionTaskCreateInput!
+  workspace: String
+}
+input PublicPlanReasonWhereInput {
+  planReason: PlanReasonWhereInput
+  workspace: String
+}
+input PublicPlanMissionTaskWhereInput {
+  planMissionTask: PlanMissionTaskWhereInput
+  workspace: String
+}
+input PublicPlanQualificationWhereInput {
+  planQualification: PlanQualificationWhereInput
+  workspace: String
+}
+input PublicPlanQualificationCreateInput {
+  planQualification: PlanQualificationCreateInput!
+  workspace: String
+}
+input PublicPlanReasonCreateInput {
+  planReason: PlanReasonCreateInput!
+  workspace: String
+}
+input DownloadPlanInjectInput {
+  query: String
+  event: String
+  orderBy: PlanInjectOrderByInput
+  fileType: DownloadFileTypeInput
+}
+enum DownloadFileTypeInput {
+  csv
+  pdf
+}
+
+#Cobra Inputs
+input CobraRequestResourcePayload {
+  token: String
+  incidentName: String
+  details: String
+  title: String
+  requestType: Int
+  organization: String
+  status: Int
+  priority: Int
+}

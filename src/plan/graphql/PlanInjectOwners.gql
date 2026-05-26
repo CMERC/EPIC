@@ -1,0 +1,75 @@
+#import "./fragments/PlanInjectOwner.gql"
+
+mutation PlanInjectOwnersCreate($data: PlanInjectOwnerCreateInput!) {
+  createPlanInjectOwner(data: $data) {
+    ...InjectOwnerFields
+  }
+}
+
+mutation PlanInjectOwnersDelete($id: PlanInjectOwnerWhereUniqueInput!) {
+  deletePlanInjectOwner(where: $id) {
+    id
+  }
+}
+
+query PlanInjectOwnersRead(
+  $where: PlanInjectOwnerWhereInput
+  $skip: Int
+  $first: Int
+  $after: String
+  $orderBy: PlanInjectOwnerOrderByInput
+) {
+  planInjectOwners(
+    where: $where
+    skip: $skip
+    first: $first
+    after: $after
+    orderBy: $orderBy
+  ) {
+        ...InjectOwnerFields
+  }
+}
+
+mutation PlanInjectOwnersUpsert(
+  $where: PlanInjectOwnerWhereUniqueInput! 
+  $create: PlanInjectOwnerCreateInput!
+  $update: PlanInjectOwnerUpdateInput!) {
+      upsertPlanInjectOwner(create: $create, update: $update, where: $where) {
+    ...InjectOwnerFields
+  }
+  }
+
+query PlanInjectOwnerRead($where: PlanInjectOwnerWhereUniqueInput!) {
+  planInjectOwner(where: $where) {
+    ...InjectOwnerFields
+  }
+}
+
+mutation PlanInjectOwnersUpdate(
+  $data: PlanInjectOwnerUpdateInput!
+  $where: PlanInjectOwnerWhereUniqueInput!
+) {
+  updatePlanInjectOwner(data: $data, where: $where) {
+    ...InjectOwnerFields
+  }
+}
+
+subscription PlanInjectOwnersSubscription($where: PlanInjectOwnerSubscriptionWhereInput) {
+  planInjectOwner(where: $where) {
+    mutation
+    node {
+    ...InjectOwnerFields
+    }
+    previousValues {
+      id
+    }
+  }
+}
+
+query PlanInjectOwnersCounts($where: PlanInjectOwnerWhereInput, $skip: Int) {
+  planInjectOwnersConnection(where: $where, skip: $skip) {
+    aggregate {
+      count
+    }
+  }
+}

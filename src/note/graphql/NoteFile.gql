@@ -1,0 +1,41 @@
+#import "./fragments/NoteFile.gql"
+
+mutation NoteFileCreate($data: NoteFileCreateInput!) {
+  createNoteFile(data: $data) {
+  ...NoteFileFields
+  }
+}
+
+mutation NoteFileDelete($id: NoteFileWhereUniqueInput!) {
+  deleteNoteFile(where: $id) {
+    id
+  }
+}
+
+query NoteFilesRead(
+  $where: NoteFileWhereInput
+  $skip: Int
+  $first: Int
+  $after: String
+) {
+  noteFiles(where: $where, skip: $skip, first: $first, after: $after) {
+  ...NoteFileFields
+  }
+}
+
+mutation NoteFileUpdate(
+  $data: NoteFileUpdateInput!
+  $where: NoteFileWhereUniqueInput!
+) {
+  updateNoteFile(data: $data, where: $where) {
+  id
+  }
+}
+
+query NoteFilesCounts($where: NoteFileWhereInput, $skip: Int, $first: Int) {
+  noteFilesConnection(where: $where, skip: $skip, first: $first) {
+    aggregate {
+      count
+    }
+  }
+}

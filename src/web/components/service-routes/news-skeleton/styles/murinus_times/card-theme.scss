@@ -1,0 +1,99 @@
+//import variables
+$body-background-color: #fff;
+$panel-background-color: #fff;
+$font-color: #000;
+$title-font-color: #000;
+$font-family: '"Playfair Display",Georgia,serif';
+$divider-color: #ccc;
+//Styles
+.service-card-header {
+  background-color: #ccc;
+  text-align: center;
+  margin-bottom: 0px;
+  .service-title {
+    display: none;
+  }
+  .service-logo {
+    max-height: 300px;
+    content: url("./styles/murinus_times/banner_logo.jpg");
+    display: inline-block;
+  } //panel in the header
+  .panel {
+    border: none;
+    margin-bottom: 0px;
+  }
+}
+
+.u-text-muted {
+  color: #ca2017 !important;
+  font-family: $font-family;
+  line-height: 1em;
+}
+
+.card-body {
+  padding: 20px;
+  margin: 30px;
+  margin-top: 0px;
+  .card-post-body {
+    margin-top: 0px;
+  }
+  .panel {
+    border: 1px solid $divider-color;
+    background-color: $panel-background-color;
+    .service-post-media {
+      width: 100%;
+    }
+    .service-post-content {
+      width: 100%;
+      .card__title {
+        border-bottom: 1px solid #ccc;
+        font-family: $font-family;
+        font-size: 1.5em;
+      }
+      .card__content {
+        line-height: 170%;
+        margin-bottom: 1.5em;
+        font-family: "Georgia", serif;
+        font-size: 1.05em;
+      }
+    }
+  }
+}
+
+.objectImageUrl {
+  max-width: 100%;
+}
+
+.right-nav {
+  .right-nav-panel * {
+    color: #ca2017;
+    text-align: left;
+    hr {
+      border-top: 1px solid $divider-color;
+    }
+  }
+  .panel {
+    border: none;
+  }
+}
+
+.banner-row {
+  display: none;
+}
+
+.btn {
+  background-color: transparent;
+  border: none;
+  color: #000;
+  text-decoration: underline;
+  color: #ca2017;
+}
+
+.service-font {
+  font-family: $font-family;
+  font-size: 1.05em;
+}
+
+.archive-content {
+  display: none;
+}

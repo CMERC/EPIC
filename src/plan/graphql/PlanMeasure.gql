@@ -1,0 +1,75 @@
+#import "./fragments/PlanMeasure.gql"
+
+mutation PlanMeasuresCreate($data: PlanMeasureCreateInput!) {
+  createPlanMeasure(data: $data) {
+      ...ReasonFields
+  }
+}
+
+mutation PlanMeasuresDelete($id: PlanMeasureWhereUniqueInput!) {
+  deletePlanMeasure(where: $id) {
+    id
+  }
+}
+
+query PlanMeasuresRead(
+  $where: PlanMeasureWhereInput
+  $skip: Int
+  $first: Int
+  $after: String
+  $orderBy: PlanMeasureOrderByInput
+) {
+  planMeasures(
+    where: $where
+    skip: $skip
+    first: $first
+    after: $after
+    orderBy: $orderBy
+  ) {
+      ...ReasonFields
+  }
+}
+
+query PlanMeasureRead($where: PlanMeasureWhereUniqueInput!) {
+  planMeasure(where: $where) {
+      ...ReasonFields
+  }
+}
+
+mutation PlanMeasuresUpsert(
+  $where: PlanMeasureWhereUniqueInput! 
+  $create: PlanMeasureCreateInput!
+  $update: PlanMeasureUpdateInput!) {
+      upsertPlanMeasure(create: $create, update: $update, where: $where) {
+    ...ReasonFields
+  }
+  }
+
+mutation PlanMeasuresUpdate(
+  $data: PlanMeasureUpdateInput!
+  $where: PlanMeasureWhereUniqueInput!
+) {
+  updatePlanMeasure(data: $data, where: $where) {
+      ...ReasonFields
+  }
+}
+
+subscription PlanMeasureSubscription($where: PlanMeasureSubscriptionWhereInput) {
+  planMeasure(where: $where) {
+    mutation
+    node {
+      ...ReasonFields
+    }
+    previousValues {
+      id
+    }
+  }
+}
+
+query PlanMeasuresCounts($where: PlanMeasureWhereInput, $skip: Int) {
+  planMeasuresConnection(where: $where, skip: $skip) {
+    aggregate {
+      count
+    }
+  }
+}

@@ -1,0 +1,29 @@
+.serviceNav {
+  padding-left: 10%;
+  padding-right: 10%;
+  padding-top: 10px;
+  height: auto;
+  img {
+    max-height: 50px;
+  }
+}
+
+.profile-list-container {
+  text-align: center;
+  .profile-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    .profile-list-item {
+      background: #fff;
+      width: 300px;
+      height: 250px;
+      margin: 20px;
+      padding: 20px;
+    }
+  }
+}
+
+  img {
+    object-fit: cover!important;
+  }

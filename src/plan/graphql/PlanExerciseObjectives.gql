@@ -1,0 +1,66 @@
+#import "./fragments/PlanExerciseObjective.gql"
+
+mutation PlanExerciseObjectivesCreate($data: PlanExerciseObjectiveCreateInput!) {
+  createPlanExerciseObjective(data: $data) {
+    ...ExerciseObjectiveFields
+  }
+}
+
+mutation PlanExerciseObjectivesDelete($id:PlanExerciseObjectiveWhereUniqueInput!) {
+  deletePlanExerciseObjective(where: $id) {
+    id
+  }
+}
+
+query PlanExerciseObjectivesRead(
+  $where: PlanExerciseObjectiveWhereInput
+  $skip: Int
+  $first: Int
+  $after: String
+  $orderBy: PlanExerciseObjectiveOrderByInput
+) {
+  planExerciseObjectives(
+    where: $where
+    skip: $skip
+    first: $first
+    after: $after
+    orderBy: $orderBy
+  ) {
+    ...ExerciseObjectiveFields
+  }
+}
+
+query PlanExerciseObjectiveRead($where: PlanExerciseObjectiveWhereUniqueInput!) {
+  planExerciseObjective(where: $where) {
+    ...ExerciseObjectiveFields
+  }
+}
+
+mutation PlanExerciseObjectivesUpdate(
+  $data: PlanExerciseObjectiveUpdateInput!
+  $where: PlanExerciseObjectiveWhereUniqueInput!
+) {
+  updatePlanExerciseObjective(data: $data, where: $where) {
+    ...ExerciseObjectiveFields
+  }
+}
+
+subscription PlanExerciseObjectiveSubscription($where: PlanExerciseObjectiveSubscriptionWhereInput) {
+  planExerciseObjective(where: $where) {
+    mutation
+    node {
+    ...ExerciseObjectiveFields
+    }
+    previousValues {
+      id
+    }
+  }
+}
+
+query PlanExerciseObjectivesCounts($where: PlanExerciseObjectiveWhereInput, $skip: Int) {
+  planExerciseObjectivesConnection(where: $where, skip: $skip) {
+    aggregate {
+      count
+    }
+  }
+}

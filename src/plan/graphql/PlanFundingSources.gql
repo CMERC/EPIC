@@ -1,0 +1,66 @@
+#import "./fragments/PlanFundingSource.gql"
+
+mutation PlanFundingSourcesCreate($data: PlanFundingSourceCreateInput!) {
+  createPlanFundingSource(data: $data) {
+    ...FundingFields
+  }
+}
+
+mutation PlanFundingSourcesDelete($id: PlanFundingSourceWhereUniqueInput!) {
+  deletePlanFundingSource(where: $id) {
+    ...FundingFields
+  }
+}
+
+query PlanFundingSourcesRead(
+  $where: PlanFundingSourceWhereInput
+  $skip: Int
+  $first: Int
+  $after: String
+  $orderBy: PlanFundingSourceOrderByInput
+) {
+  planFundingSources(
+    where: $where
+    skip: $skip
+    first: $first
+    after: $after
+    orderBy: $orderBy
+  ) {
+    ...FundingFields
+  }
+}
+
+query PlanFundingSourceRead($where: PlanFundingSourceWhereUniqueInput!) {
+  planFundingSource(where: $where) {
+    ...FundingFields
+  }
+}
+
+mutation PlanFundingSourcesUpdate(
+  $data: PlanFundingSourceUpdateInput!
+  $where: PlanFundingSourceWhereUniqueInput!
+) {
+  updatePlanFundingSource(data: $data, where: $where) {
+    ...FundingFields
+  }
+}
+
+subscription PlanFundingSourceSubscription($where: PlanFundingSourceSubscriptionWhereInput) {
+  planFundingSource(where: $where) {
+    mutation
+    node {
+    ...FundingFields
+    }
+    previousValues {
+      id
+    }
+  }
+}
+
+query PlanFundingSourcesCounts($where: PlanFundingSourceWhereInput, $skip: Int) {
+  planFundingSourcesConnection(where: $where, skip: $skip) {
+    aggregate {
+      count
+    }
+  }
+}

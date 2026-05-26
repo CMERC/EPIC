@@ -1,0 +1,41 @@
+#import "./fragments/NoteBook.gql"
+
+mutation NotePageCreate($data: NotePageCreateInput!) {
+  createNotePage(data: $data) {
+  ...NotePageFields
+  }
+}
+
+mutation NotePageDelete($id: NotePageWhereUniqueInput!) {
+  deleteNotePage(where: $id) {
+    id
+  }
+}
+
+query NotePagesRead(
+  $where: NotePageWhereInput
+  $skip: Int
+  $first: Int
+  $after: String
+) {
+  notePages(where: $where, skip: $skip, first: $first, after: $after) {
+  ...NotePageFields
+  }
+}
+
+mutation NotePageUpdate(
+  $data: NotePageUpdateInput!
+  $where: NotePageWhereUniqueInput!
+) {
+  updateNotePage(data: $data, where: $where) {
+    title
+  }
+}
+
+query NotePagesCounts($where: NotePageWhereInput, $skip: Int, $first: Int) {
+  notePagesConnection(where: $where, skip: $skip, first: $first) {
+    aggregate {
+      count
+    }
+  }
+}

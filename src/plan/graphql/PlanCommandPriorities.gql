@@ -1,0 +1,66 @@
+#import "./fragments/PlanCommandPriority.gql"
+
+mutation PlanCommandPrioritiesCreate($data: PlanCommandPriorityCreateInput!) {
+  createPlanCommandPriority(data: $data) {
+    ...CommandPriorityFields
+  }
+}
+
+mutation PlanCommandPrioritiesDelete($id: PlanCommandPriorityWhereUniqueInput!) {
+  deletePlanCommandPriority(where: $id) {
+    id
+  }
+}
+
+query PlanCommandPrioritiesRead(
+  $where: PlanCommandPriorityWhereInput
+  $skip: Int
+  $first: Int
+  $after: String
+  $orderBy: PlanCommandPriorityOrderByInput
+) {
+  planCommandPriorities(
+    where: $where
+    skip: $skip
+    first: $first
+    after: $after
+    orderBy: $orderBy
+  ) {
+    ...CommandPriorityFields
+  }
+}
+
+query PlanCommandPriorityRead($where: PlanCommandPriorityWhereUniqueInput!) {
+  planCommandPriority(where: $where) {
+    ...CommandPriorityFields
+  }
+}
+
+mutation PlanCommandPrioritiesUpdate(
+  $data: PlanCommandPriorityUpdateInput!
+  $where: PlanCommandPriorityWhereUniqueInput!
+) {
+  updatePlanCommandPriority(data: $data, where: $where) {
+    id
+  }
+}
+
+subscription PlanCommandPrioritySubscription($where: PlanCommandPrioritySubscriptionWhereInput) {
+  planCommandPriority(where: $where) {
+    mutation
+    node {
+    ...CommandPriorityFields
+    }
+    previousValues {
+      id
+    }
+  }
+}
+
+query PlanCommandPrioritiesCounts($where: PlanCommandPriorityWhereInput, $skip: Int) {
+  planCommandPrioritiesConnection(where: $where, skip: $skip) {
+    aggregate {
+      count
+    }
+  }
+}

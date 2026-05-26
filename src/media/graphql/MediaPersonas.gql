@@ -1,0 +1,112 @@
+#import "./fragments/MediaPersona.gql"
+
+mutation MediaPersonasCreate($data: MediaPersonaCreateInput!) {
+  createMediaPersona(data: $data) {
+    ...PersonaFields
+  }
+}
+
+mutation MediaPersonasDelete($where: MediaPersonaWhereUniqueInput!) {
+  deleteMediaPersona(where: $where) {
+    ...PersonaFields
+  }
+}
+
+query MediaPersonasRead(
+  $where: MediaPersonaWhereInput
+  $skip: Int
+  $first: Int
+  $after: String
+  $orderBy: MediaPersonaOrderByInput
+) {
+  mediaPersonae(
+    where: $where
+    skip: $skip
+    first: $first
+    after: $after
+    orderBy: $orderBy
+  ) {
+    ...PersonaFields
+  }
+}
+
+query MediaPersonasList(
+  $where: MediaPersonaWhereInput
+  $skip: Int
+  $first: Int
+  $after: String
+  $orderBy: MediaPersonaOrderByInput
+) {
+  mediaPersonae(
+    where: $where
+    skip: $skip
+    first: $first
+    after: $after
+    orderBy: $orderBy
+  ) {
+    ...PersonaSlim
+  }
+}
+
+query MediaPersonaRead($where: MediaPersonaWhereUniqueInput!) {
+  mediaPersona(where: $where) {
+        ...PersonaFields
+  }
+}
+
+subscription MediaPersonaSubscription {
+  mediaPersona {
+    mutation
+    node {
+      ...PersonaFields
+      }
+    previousValues {
+      id
+    }
+  }
+}
+
+mutation MediaPersonasUpdate(
+  $data: MediaPersonaUpdateInput!
+  $where: MediaPersonaWhereUniqueInput!
+) {
+  updateMediaPersona(data: $data, where: $where) {
+      ...PersonaFields
+  }
+}
+
+mutation MediaPersonasUpdateProfile(
+  $data: MediaPersonaUpdateInput!
+  $where: MediaPersonaWhereUniqueInput!
+) {
+  updateMediaPersona(data: $data, where: $where) {
+    profiles {
+      id
+    }
+  }
+}
+
+query MediaPersonasCounts($where: MediaPersonaWhereInput) {
+  mediaPersonaeConnection(where: $where) {
+    aggregate {
+      count
+    }
+  }
+}
+
+mutation MediaPersonasEdgeCreate($data: MediaPersonaEdgeCreateInput!) {
+  createMediaPersonaEdge(data: $data) {
+    id
+    name
+    start { ...PersonaRelatesFields }
+    end { ...PersonaRelatesFields }
+  }
+}
+
+mutation MediaPersonasEdgeDelete($where: MediaPersonaEdgeWhereUniqueInput!) {
+  deleteMediaPersonaEdge(where: $where) {
+    id
+    name
+  }
+}
+

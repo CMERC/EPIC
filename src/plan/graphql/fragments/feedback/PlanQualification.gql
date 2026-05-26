@@ -1,0 +1,4 @@
+fragment PlanQualificationFields on PlanQualification {
+  id
+  title
+}

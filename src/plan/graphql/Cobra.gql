@@ -1,0 +1,30 @@
+#import "./fragments/Cobra.gql"
+query CobraIncidentsByUser(
+  $username: String
+  $password: String
+) {
+  getCobraIncidentsByUser(
+    username: $username
+    password: $password
+  ) {
+    ...CobraIncident
+  }
+}
+
+query GetCobraAuthorization(
+  $username: String
+  $password: String
+) {
+  getCobraAuthorization(
+    username: $username
+    password: $password
+  ) {
+    ...CobraAuth
+  }
+}
+
+mutation PushInjectToCobraRequestManager($data: CobraRequestResourcePayload!) {
+  pushInjectToCobraRequestManager(data: $data) {
+    ...InjectToCobraRequestManager
+  }
+}

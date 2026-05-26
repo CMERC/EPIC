@@ -1,0 +1,8 @@
+#import "@/shared/graphql/fragments/MediaFile.gql"
+
+mutation SingleUpload($file: Upload!) {
+  singleUpload(file: $file){
+    ...FileFields
+  }
+}
+

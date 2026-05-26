@@ -1,0 +1,75 @@
+#import "./fragments/PlanParticipant.gql"
+
+mutation PlanParticipantCommandAgenciesCreate($data: PlanParticipantCommandAgencyCreateInput!) {
+  createPlanParticipantCommandAgency(data: $data) {
+    ...CommandAgencyFields
+  }
+}
+
+mutation PlanParticipantCommandAgenciesDelete($id: PlanParticipantCommandAgencyWhereUniqueInput!) {
+  deletePlanParticipantCommandAgency(where: $id) {
+    id
+  }
+}
+
+query PlanParticipantCommandAgenciesRead(
+  $where: PlanParticipantCommandAgencyWhereInput
+  $skip: Int
+  $first: Int
+  $after: String
+  $orderBy: PlanParticipantCommandAgencyOrderByInput
+) {
+  planParticipantCommandAgencies(
+    where: $where
+    skip: $skip
+    first: $first
+    after: $after
+    orderBy: $orderBy
+  ) {
+    ...CommandAgencyFields
+  }
+}
+
+query PlanParticipantCommandAgencyRead($where: PlanParticipantCommandAgencyWhereUniqueInput!) {
+  planParticipantCommandAgency(where: $where) {
+    ...CommandAgencyFields
+  }
+}
+
+mutation PlanParticipantCommandAgenciesUpsert(
+  $where: PlanParticipantCommandAgencyWhereUniqueInput! 
+  $create: PlanParticipantCommandAgencyCreateInput!
+  $update: PlanParticipantCommandAgencyUpdateInput!) {
+    upsertPlanParticipantCommandAgency(create: $create, update: $update, where: $where) {
+      ...CommandAgencyFields
+    }
+  }
+
+mutation PlanParticipantCommandAgenciesUpdate(
+  $data: PlanParticipantCommandAgencyUpdateInput!
+  $where: PlanParticipantCommandAgencyWhereUniqueInput!
+) {
+  updatePlanParticipantCommandAgency(data: $data, where: $where) {
+    ...CommandAgencyFields
+  }
+}
+
+subscription PlanParticipantCommandAgencySubscription($where: PlanParticipantCommandAgencySubscriptionWhereInput) {
+  planParticipantCommandAgency(where: $where) {
+    mutation
+    node {
+      ...CommandAgencyFields
+    }
+    previousValues {
+      id
+    }
+  }
+}
+
+query PlanParticipantCommandAgenciesCounts($where: PlanParticipantCommandAgencyWhereInput, $skip: Int) {
+  planParticipantCommandAgenciesConnection(where: $where, skip: $skip) {
+    aggregate {
+      count
+    }
+  }
+}

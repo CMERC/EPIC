@@ -1,0 +1,14 @@
+fragment JMETFields on PlanJmet {
+      id
+      levelWar
+      taskNumber
+      taskTitle
+      description
+      key
+}
+
+
+fragment JMETSlim on PlanJmet {
+      id
+      description
+}

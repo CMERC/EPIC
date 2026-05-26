@@ -1,0 +1,4 @@
+fragment PlanMeasureFields on PlanMeasure {
+  id
+  title
+}

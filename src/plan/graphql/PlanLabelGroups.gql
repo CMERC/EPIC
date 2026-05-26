@@ -1,0 +1,68 @@
+#import "./fragments/PlanLabelGroup.gql"
+
+mutation PlanLabelGroupsCreate($data: PlanLabelGroupCreateInput!) {
+  createPlanLabelGroup(data: $data) {
+      ...LabelGroupFields
+  }
+}
+
+mutation PlanLabelGroupsDelete($id: PlanLabelGroupWhereUniqueInput!) {
+  deletePlanLabelGroup(where: $id) {
+    id
+  }
+}
+
+query PlanLabelGroupsRead(
+  $where: PlanLabelGroupWhereInput
+  $skip: Int
+  $first: Int
+  $after: String
+  $orderBy: PlanLabelGroupOrderByInput
+) {
+  planLabelGroups(
+    where: $where
+    skip: $skip
+    first: $first
+    after: $after
+    orderBy: $orderBy
+  ) {
+      ...LabelGroupFields
+  }
+}
+
+query PlanLabelGroupRead($where: PlanLabelGroupWhereUniqueInput!) {
+  planLabelGroup(where: $where) {
+      ...LabelGroupFields
+  }
+}
+
+mutation PlanLabelGroupsUpdate(
+  $data: PlanLabelGroupUpdateInput!
+  $where: PlanLabelGroupWhereUniqueInput!
+) {
+  updatePlanLabelGroup(data: $data, where: $where) {
+      ...LabelGroupFields
+  }
+}
+
+subscription PlanLabelGroupSubscription(
+  $where: PlanLabelGroupSubscriptionWhereInput
+) {
+  planLabelGroup(where: $where) {
+    mutation
+    node {
+      ...LabelGroupFields
+    }
+    previousValues {
+      id
+    }
+  }
+}
+
+query PlanLabelGroupsCounts($where: PlanLabelGroupWhereInput, $skip: Int) {
+  planLabelGroupsConnection(where: $where, skip: $skip) {
+    aggregate {
+      count
+    }
+  }
+}

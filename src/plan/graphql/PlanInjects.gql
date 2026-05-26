@@ -1,0 +1,201 @@
+#import "./fragments/PlanInject.gql"
+
+mutation PlanInjectsCreate($data: PlanInjectCreateInput!) {
+  createPlanInject(data: $data) {
+    ...InjectFields
+  }
+}
+
+mutation PlanInjectsDelete($id: PlanInjectWhereUniqueInput!) {
+  deletePlanInject(where: $id) {
+    id
+  }
+}
+
+mutation DuplicatePlanInject($where: PlanInjectWhereUniqueInput!) {
+  duplicatePlanInject(where: $where) {
+    id
+    number
+  }
+}
+
+query DownloadPlanInjects($where: DownloadPlanInjectInput!) {
+  downloadPlanInjects(where: $where)
+}
+
+query PlanInjectsRead(
+  $where: PlanInjectWhereInput
+  $skip: Int
+  $first: Int
+  $after: String
+  $orderBy: PlanInjectOrderByInput
+) {
+  planInjects(
+    where: $where
+    skip: $skip
+    first: $first
+    after: $after
+    orderBy: $orderBy
+  ) {
+      ...InjectFields
+  }
+}
+
+query PlanInjectsList(
+  $where: PlanInjectWhereInput
+  $skip: Int
+  $first: Int
+  $after: String
+  $orderBy: PlanInjectOrderByInput
+) {
+  planInjects(
+    where: $where
+    skip: $skip
+    first: $first
+    after: $after
+    orderBy: $orderBy
+  ) {
+        ...InjectList
+  }
+}
+
+query InjectTracker(
+  $orderBy: PlanInjectOrderByInput,
+	$trainingObjectiveId: ID) {
+  planInjects(
+    where: { 
+      deletedAt: null,
+      AND: [
+        {
+          objectives_some: {
+            OR: [
+              { id: $trainingObjectiveId }
+            ]
+          }              
+        }
+      ]}
+  orderBy: $orderBy) {
+    id
+    title
+    number
+  }
+}
+
+query MSELTracker(
+  $orderBy: PlanInjectOrderByInput,
+	$eventName: String) {
+  planInjects(
+    where: { 
+      deletedAt: null,
+      OR: [
+        {
+          events_some: {
+        OR: [
+          {name_contains: $eventName}
+        ]  
+        }
+        }
+      ]}
+  orderBy: $orderBy) {
+    ...InjectFields
+  }
+}
+
+query PlanInjectsSearch(
+  $query: String,
+  $event: String, 
+  $orderBy: PlanInjectOrderByInput, $first: Int, $skip: Int) {
+  planInjectsSearch(query: $query, orderBy: $orderBy, event: $event, first:$first, skip:$skip) {
+    ...InjectList
+  }
+  }
+
+
+query PlanInjectRead($where: PlanInjectWhereUniqueInput!) {
+  planInject(where: $where) {
+    ...InjectFields
+  }
+}
+
+mutation PlanInjectsUpdate(
+  $data: PlanInjectUpdateInput!
+  $where: PlanInjectWhereUniqueInput!
+) {
+  updatePlanInject(data: $data, where: $where) {
+    ...InjectFields
+  }
+}
+
+subscription PlanInjectsSubscription($where: PlanInjectSubscriptionWhereInput) {
+  planInject(where: $where) {
+    mutation
+    node {
+    ...InjectFields
+    }
+    previousValues {
+      id
+    }
+  }
+}
+
+subscription PlanInjectsSearchSubscription($query: String, $event: String) {
+  planInjectsSearch(query: $query, event: $event) {
+    mutation
+    node {
+    ...InjectList
+    }
+    previousValues {
+      id
+    }
+  }
+}
+
+query PlanInjectsCounts($where: PlanInjectWhereInput, $skip: Int) {
+  planInjectsConnection(where: $where, skip: $skip) {
+    aggregate {
+      count
+    }
+  }
+}
+
+query PlanInjectsSearchCount(
+  $query: String,
+  $event: String) {
+  planInjectsSearchCount(query: $query, event: $event) {
+        aggregate {
+      count
+    }
+  }
+  }
+
+query PlanInjectsCalendarRead(
+  $where: PlanInjectWhereInput
+  $skip: Int
+  $first: Int
+  $after: String
+  $orderBy: PlanInjectOrderByInput
+) {
+  planInjects(
+    where: $where
+    skip: $skip
+    first: $first
+    after: $after
+    orderBy: $orderBy
+  ) {
+    ...InjectCalendar
+  }
+}
+
+subscription PlanInjectsCalendarSubscription(
+  $where: PlanInjectSubscriptionWhereInput
+) {
+  planInject(where: $where) {
+    mutation
+    node {
+    ...InjectCalendar
+    }
+    previousValues {
+      id
+    }
+  }
+}

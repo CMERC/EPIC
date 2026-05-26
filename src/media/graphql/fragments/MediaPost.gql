@@ -1,0 +1,126 @@
+#import "./MediaProfile.gql"
+#import "@/shared/graphql/fragments/Location.gql"
+
+fragment PostFields on MediaPost {
+  id
+  createdAt
+  updatedAt
+  createTime
+  isPublished
+  publishTime
+  title
+  text
+  mediaFile { ...FileFields }
+  url
+  isUserGenerated
+  parent { ...ParentPostFields }
+  profiles { ...ProfileFields }
+  location { ...LocationFields }
+  comments(orderBy: updatedAt_ASC) { ...CommentPostFields}
+  counts
+}
+
+fragment PostFieldsCommentsWhere on MediaPostWithCommentsFiltered {
+  id
+  createdAt
+  updatedAt
+  createTime
+  isPublished
+  publishTime
+  title
+  text
+  mediaFile { ...FileFields }
+  url
+  isUserGenerated
+  parent { ...ParentPostFields }
+  profiles { ...ProfileFields }
+  location { ...LocationFields }
+  comments(where: $comments_where, first: $comments_first, skip: $comments_skip, orderBy: $comments_orderBy) { ...CommentPostFields}
+  counts
+}
+
+fragment PublicPostFields on MediaPost {
+  id
+  createdAt
+  updatedAt
+  createTime
+  isPublished
+  publishTime
+  title
+  text
+  mediaFile { ...FileFields }
+  url
+  isUserGenerated
+  parent { ...ParentPostFields }
+  profiles { ...ProfileFields }
+  location { ...LocationFields }
+  comments(where: {isPublished: true}, orderBy: updatedAt_ASC) { ...CommentPostFields}
+  counts
+}
+
+fragment PostFieldsCalendar on MediaPost {
+    id
+    isPublished
+    publishTime
+    createTime
+    start: createTime
+    end: createTime
+    title: text
+    text
+}
+
+fragment PostFieldsWithComments on MediaPost {
+  id
+  createdAt
+  updatedAt
+  createTime
+  isPublished
+  publishTime
+  title
+  text
+  mediaFile { ...FileFields }
+  url
+  isUserGenerated
+  parent { ...ParentPostFields }
+  profiles { ...ProfileFields }
+  location { ...LocationFields }
+  comments(orderBy: updatedAt_ASC) { ...CommentPostFields }
+  counts
+}
+
+fragment ParentPostFields on MediaPost {
+  id
+  createdAt
+  updatedAt
+  createTime
+  isPublished
+  publishTime
+  title
+  text
+  mediaFile { ...FileFields }
+  url
+  isUserGenerated
+  profiles { ...ProfileFields }
+  location { ...LocationFields }
+  comments(orderBy: updatedAt_ASC) { id }
+  counts
+}
+
+fragment CommentPostFields on MediaPost {
+  id
+  createdAt
+  updatedAt
+  createTime
+  isPublished
+  publishTime
+  title
+  text
+  parent { ...ParentPostFields }
+  mediaFile { ...FileFields }
+  url
+  isUserGenerated
+  profiles { ...ProfileFields }
+  location { ...LocationFields }
+  counts
+}
+

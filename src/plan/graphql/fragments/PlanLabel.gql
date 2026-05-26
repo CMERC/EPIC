@@ -1,0 +1,6 @@
+fragment LabelFields on PlanLabel {
+  id
+  title
+  description
+  color
+}

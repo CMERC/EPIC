@@ -1,0 +1,89 @@
+.section {
+  background: #e6e6e6;
+  font-family: "Open Sans", sans-serif;
+  .post-section {
+    margin-top: 20px;
+    .card {
+      background: #fff;
+      margin-bottom: 25px;
+      border-radius: 3px;
+      border: 1px solid #e6ecf0;
+      cursor: pointer;
+      text-align: left;
+      box-shadow: initial;
+    }
+  }
+  .post-footer-buttons {
+    justify-content: center;
+  }
+  .box {
+    border-radius: 0;
+  }
+  .profile-banner {
+    width: 100%;
+    margin-top: -20px;
+    img {
+      object-fit: cover;
+      width: 100%;
+      max-height: 320px;
+    }
+  }
+  .mt-10 {
+    margin-top: 10px;
+  }
+  .fb-btns {
+    background-color: #4267b2;
+  }
+
+}
+
+.commentArea {
+  border-top: 1px solid lightgrey;
+  .field,
+  figure {
+    padding-top: 0.45rem;
+  }
+}
+
+.post-footer-buttons {
+  border-bottom: 2px solid #dee2e5;
+  border-top: none;
+  .button {
+    background-color: transparent;
+  }
+}
+
+.stats-area {
+  margin: 0 10px;
+  border-bottom: 2px solid #dee2e5;
+  .level-item:last-child {
+    margin-right: 0.75rem;
+  }
+}
+
+.comment {
+  & + & {
+    border-top: none;
+  }
+  &:not(:last-child) {
+    margin: 0;
+  }
+  &:hover {
+    cursor: pointer;
+  }
+  .card-image * {
+    min-height: 128px;
+    max-height:128px;
+    width: auto;
+  }
+  .content {
+    p.commentBubble {
+      border-radius: 0.65rem;
+      padding: 0.65rem;
+      background-color: #dee2e5;
+      .commentAuthor {
+        margin-right: 0.5rem;
+      }
+    }
+  }
+}

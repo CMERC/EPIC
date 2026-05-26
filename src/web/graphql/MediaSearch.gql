@@ -1,0 +1,19 @@
+#import "@/media/graphql/fragments/MediaPost.gql"
+
+query MediaSearchPublic( 
+  $data: PublicMediaSearchWhereInput!,
+  $skip: Int
+  $first: Int
+  $after: String
+  $orderBy: MediaPostOrderByInput
+) {
+  mediaSearchPublic(
+    data: $data
+    skip: $skip
+    first: $first
+    after: $after
+    orderBy: $orderBy
+  ) {
+  ...PostFields
+  }
+}

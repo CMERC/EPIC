@@ -1,0 +1,17 @@
+query GetPlanReport($where: PlanReportInput) {
+  getPlanReport(where: $where) {
+    data {
+      x
+      y
+      text
+      type
+      textposition
+      name
+      marker
+      orientation
+      labels
+      values
+    }
+    total
+  }
+}

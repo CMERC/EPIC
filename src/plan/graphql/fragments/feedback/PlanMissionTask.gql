@@ -1,0 +1,4 @@
+fragment PlanMissionTaskFields on PlanMissionTask {
+  id
+  title
+}

@@ -1,0 +1,98 @@
+{
+    "standardIdentity1Default": [
+        {
+            "index": 0,
+            "name": "Reality"
+        },
+        {
+            "index": 1,
+            "name": "Exercise"
+        },
+        {
+            "index": 2,
+            "name": "Simulation"
+        }
+    ],
+    "standardIdentity2Default": [
+        {
+            "code": 0,
+            "index": 0,
+            "name": "Pending",
+            "sidc": "10001000000000000000"
+        },
+        {
+            "code": 1,
+            "index": 1,
+            "name": "Unknown",
+            "sidc": "10011000000000000000"
+        },
+        {
+            "code": 2,
+            "index": 2,
+            "name": "Assumed Friend",
+            "sidc": "10021000000000000000"
+        },
+        {
+            "code": 3,
+            "index": 3,
+            "name": "Friend",
+            "sidc": "10031000000000000000"
+        },
+        {
+            "code": 4,
+            "index": 4,
+            "name": "Neutral",
+            "sidc": "10041000000000000000"
+        },
+        {
+            "code": 5,
+            "index": 5,
+            "name": "Suspect/Joker",
+            "sidc": "10051000000000000000"
+        },
+        {
+            "code": 6,
+            "index": 6,
+            "name": "Hostile/Faker",
+            "sidc": "10061000000000000000"
+        }
+    ],
+    "statusDefault": [
+        {
+            "code": 0,
+            "index": 0,
+            "name": "Present",
+            "sidc": "10031000000000000000"
+        },
+        {
+            "code": 1,
+            "index": 1,
+            "name": "Planned/Anticipated/Suspect",
+            "sidc": "10031010000000000000"
+        },
+        {
+            "code": 2,
+            "index": 2,
+            "name": "Present/Fully capable",
+            "sidc": "10031020000000000000"
+        },
+        {
+            "code": 3,
+            "index": 3,
+            "name": "Present/Damaged",
+            "sidc": "10031030000000000000"
+        },
+        {
+            "code": 4,
+            "index": 4,
+            "name": "Present/Destroyed",
+            "sidc": "10031040000000000000"
+        },
+        {
+            "code": 5,
+            "index": 5,
+            "name": "Present/Full to capacity",
+            "sidc": "10031050000000000000"
+        }
+    ]
+}

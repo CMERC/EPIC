@@ -1,0 +1,87 @@
+$body-background-color: #000;
+$panel-background-color: #fff;
+.service-title {
+  display: none;
+}
+
+.service-card-header {
+  text-align: center;
+  margin-bottom: 0px;
+}
+
+.card-body {
+  padding: 20px;
+  margin: 30px;
+  margin-top: 0px;
+  background-color: rgba(1, 166, 243, 0.712);
+}
+
+.card-post-body {
+  margin-top: 0px;
+  background-color: $panel-background-color;
+}
+
+.panel {
+  background-color: $panel-background-color;
+}
+
+.service-logo {
+  content: url("./styles/unhcr/logo.png");
+  width: 300px;
+}
+
+.right-nav-content-posts {
+  color: #0071bb;
+}
+
+.right-nav-content-comments {
+  display: none;
+}
+
+.right-nav-content-archives {
+  display: none;
+}
+
+hr {
+  display: none;
+}
+
+.banner-row {
+  display: none;
+}
+
+.btn {
+  background-color: transparent;
+  border: none;
+  color: #000;
+  text-decoration: underline;
+  color: #0071bb;
+}
+
+.card-holder-panel {
+  background: #fff;
+}
+
+.service-font {
+  font-family: "Roboto", sans-serif;
+  font-size: 16px;
+  font-weight: 200;
+  letter-spacing: 0.5px;
+  line-height: 22.8571px;
+}
+
+.archive-content {
+  display: none;
+}
+.content-title-section {
+  color: #fff;
+  background: #fff;
+  opacity: 0.9;
+  padding: 15px;
+}
+.content-title {
+  font-family: Oswald, sans-serif;
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 38.4px;
+}

@@ -1,0 +1,75 @@
+#import "./fragments/PlanMeasureData.gql"
+
+mutation PlanMeasureDatasCreate($data: PlanMeasureDataCreateInput!) {
+  createPlanMeasureData(data: $data) {
+      ...PlanMeasureDataFields
+  }
+}
+
+mutation PlanMeasureDatasDelete($id: PlanMeasureDataWhereUniqueInput!) {
+  deletePlanMeasureData(where: $id) {
+    id
+  }
+}
+
+query PlanMeasureDatasRead(
+  $where: PlanMeasureDataWhereInput
+  $skip: Int
+  $first: Int
+  $after: String
+  $orderBy: PlanMeasureDataOrderByInput
+) {
+  planMeasureDatas(
+    where: $where
+    skip: $skip
+    first: $first
+    after: $after
+    orderBy: $orderBy
+  ) {
+      ...PlanMeasureDataFields
+  }
+}
+
+query PlanMeasureDataRead($where: PlanMeasureDataWhereUniqueInput!) {
+  planMeasureData(where: $where) {
+      ...PlanMeasureDataFields
+  }
+}
+
+mutation PlanMeasureDatasUpsert(
+  $where: PlanMeasureDataWhereUniqueInput! 
+  $create: PlanMeasureDataCreateInput!
+  $update: PlanMeasureDataUpdateInput!) {
+      upsertPlanMeasureData(create: $create, update: $update, where: $where) {
+    ...PlanMeasureDataFields
+  }
+  }
+
+mutation PlanMeasureDatasUpdate(
+  $data: PlanMeasureDataUpdateInput!
+  $where: PlanMeasureDataWhereUniqueInput!
+) {
+  updatePlanMeasureData(data: $data, where: $where) {
+      ...PlanMeasureDataFields
+  }
+}
+
+subscription PlanMeasureDataSubscription($where: PlanMeasureDataSubscriptionWhereInput) {
+  planMeasureData(where: $where) {
+    mutation
+    node {
+      ...PlanMeasureDataFields
+    }
+    previousValues {
+      id
+    }
+  }
+}
+
+query PlanMeasureDatasCounts($where: PlanMeasureDataWhereInput, $skip: Int) {
+  planMeasureDatasConnection(where: $where, skip: $skip) {
+    aggregate {
+      count
+    }
+  }
+}

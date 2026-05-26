@@ -1,0 +1,5 @@
+fragment CommandPriorityFields on PlanCommandPriority {
+    id
+    title
+    description
+}

@@ -1,0 +1,7 @@
+#import "./PlanQualification.gql"
+
+fragment PlanFeedbackQualificationFields on PlanFeedbackQualification {
+ id
+ qualification { ...PlanQualificationFields }
+ numberCompleted
+}

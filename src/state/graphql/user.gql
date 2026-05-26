@@ -1,0 +1,50 @@
+### Queries
+
+query LocalGetSelf {
+  user @client {
+    ...UserMainFields
+  }
+}
+
+query GetCurrentPosition($timeout: Int) {
+    currentPosition(timeout: $timeout) @client {
+      coords {
+        latitude
+        longitude
+      }
+    }
+  }
+
+  query connected {
+  connected @client
+}
+
+### Mutations
+
+mutation LocalSetSelf($user: User!) {
+  setSelf(user: $user) @client
+}
+
+mutation ConnectedSet ($value: Boolean!) {
+  connectedSet (value: $value) @client
+}
+
+### Fragments
+
+fragment UserMainFields on AppUser {
+  id
+  name
+  email
+  isSuper
+  role {
+    id
+    roles {
+      id
+      name
+    }
+  }
+}
+
+mutation LogoutCurrentUser {
+  logoutCurrentUser
+}

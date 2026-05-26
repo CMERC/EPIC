@@ -1,0 +1,93 @@
+#import "./fragments/PlanOrganization.gql"
+
+mutation PlanOrganizationsCreate($data: PlanOrganizationCreateInput!) {
+  createPlanOrganization(data: $data) {
+    ...OrgFields
+  }
+}
+
+mutation PlanOrganizationsDelete($id: PlanOrganizationWhereUniqueInput!) {
+  deletePlanOrganization(where: $id) {
+    id
+  }
+}
+
+query PlanOrganizationsRead(
+  $where: PlanOrganizationWhereInput
+  $skip: Int
+  $first: Int
+  $after: String
+  $orderBy: PlanOrganizationOrderByInput
+) {
+  planOrganizations(
+    where: $where
+    skip: $skip
+    first: $first
+    after: $after
+    orderBy: $orderBy
+  ) {
+    ...OrgFields
+  }
+}
+
+query PlanOrganizationRead($where: PlanOrganizationWhereUniqueInput!) {
+  planOrganization(where: $where) {
+    ...OrgFields
+  }
+}
+
+mutation PlanOrganizationsUpdate(
+  $data: PlanOrganizationUpdateInput!
+  $where: PlanOrganizationWhereUniqueInput!
+) {
+  updatePlanOrganization(data: $data, where: $where) {
+    ...OrgFields
+  }
+}
+
+mutation PlanOrganizationsUpsert(
+  $where: PlanOrganizationWhereUniqueInput! 
+  $create: PlanOrganizationCreateInput!
+  $update: PlanOrganizationUpdateInput!) {
+      upsertPlanOrganization(create: $create, update: $update, where: $where) {
+    ...OrgFields
+  }
+  }
+
+query PlanOrganizationsSearch(
+  $query: String, 
+  $orderBy: PlanOrganizationOrderByInput) {
+  planOrganizations(
+    where: {
+      OR: [
+        { name_contains: $query },
+        { group_contains: $query }
+      ]
+    }
+    orderBy: $orderBy)
+    {
+    ...OrgFields
+    }
+}
+
+
+
+subscription PlanOrganizationSubscription($where: PlanOrganizationSubscriptionWhereInput) {
+  planOrganization(where: $where) {
+    mutation
+    node {
+    ...OrgFields
+    }
+    previousValues {
+      id
+    }
+  }
+}
+
+query PlanOrganizationsCounts($where: PlanOrganizationWhereInput, $skip: Int) {
+  planOrganizationsConnection(where: $where, skip: $skip) {
+    aggregate {
+      count
+    }
+  }
+}

@@ -1,0 +1,5 @@
+fragment ReasonFields on PlanReason {
+  id
+  title
+  key
+}

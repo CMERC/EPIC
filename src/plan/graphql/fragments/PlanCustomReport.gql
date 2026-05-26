@@ -1,0 +1,7 @@
+fragment CustomReportFields on PlanCustomReport {
+  id
+  title
+  start
+  end
+  source
+}

@@ -1,0 +1,74 @@
+#import "./fragments/PlanPriorityLevel.gql"
+
+mutation PlanPriorityLevelsCreate($data: PlanPriorityLevelCreateInput!) {
+  createPlanPriorityLevel(data: $data) {
+      ...PlanPriorityLevelFields
+  }
+}
+
+mutation PlanPriorityLevelsDelete($id: PlanPriorityLevelWhereUniqueInput!) {
+  deletePlanPriorityLevel(where: $id) {
+    id
+  }
+}
+query PlanPriorityLevelsRead(
+  $where: PlanPriorityLevelWhereInput
+  $skip: Int
+  $first: Int
+  $after: String
+  $orderBy: PlanPriorityLevelOrderByInput
+) {
+  planPriorityLevels(
+    where: $where
+    skip: $skip
+    first: $first
+    after: $after
+    orderBy: $orderBy
+  ) {
+      ...PlanPriorityLevelFields
+  }
+}
+
+query PlanPriorityLevelRead($where: PlanPriorityLevelWhereUniqueInput!) {
+  planPriorityLevel(where: $where) {
+      ...PlanPriorityLevelFields
+  }
+}
+
+mutation PlanPriorityLevelsUpsert(
+  $where: PlanPriorityLevelWhereUniqueInput! 
+  $create: PlanPriorityLevelCreateInput!
+  $update: PlanPriorityLevelUpdateInput!) {
+    upsertPlanPriorityLevel(create: $create, update: $update, where: $where) {
+      ...PlanPriorityLevelFields
+    }
+  }
+
+mutation PlanPriorityLevelsUpdate(
+  $data: PlanPriorityLevelUpdateInput!
+  $where: PlanPriorityLevelWhereUniqueInput!
+) {
+  updatePlanPriorityLevel(data: $data, where: $where) {
+    id
+  }
+}
+
+subscription PlanPriorityLevelsSubscription($where: PlanPriorityLevelSubscriptionWhereInput) {
+  planPriorityLevel(where: $where) {
+    mutation
+    node {
+      ...PlanPriorityLevelFields
+    }
+    previousValues {
+      id
+    }
+  }
+}
+
+query PlanPriorityLevelsCounts($where: PlanPriorityLevelWhereInput, $skip: Int) {
+  planPriorityLevelsConnection(where: $where, skip: $skip) {
+    aggregate {
+      count
+    }
+  }
+}

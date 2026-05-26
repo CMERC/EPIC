@@ -1,0 +1,12 @@
+#import "@/shared/graphql/fragments/Location.gql"
+#import "@/shared/graphql/fragments/MediaFile.gql"
+
+
+fragment ObservePostFields on ObservePost {
+    id
+    createdAt
+    text
+    author
+    location { ...LocationFields }
+    attachments { ...FileFields }
+}

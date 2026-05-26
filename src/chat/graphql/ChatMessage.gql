@@ -1,0 +1,66 @@
+#import "./fragments/ChatMessage.gql"
+
+mutation ChatMessageCreate($data: ChatMessageCreateInput!) {
+  createChatMessage(data: $data) {
+    ...MessageFields
+  }
+}
+
+mutation ChatMessageDelete($id: ChatMessageWhereUniqueInput!) {
+  deleteChatMessage(where: $id) {
+    id
+  }
+}
+
+query ChatMessagesRead(
+  $where: ChatMessageWhereInput
+  $skip: Int
+  $first: Int
+  $after: String
+  $orderBy: ChatMessageOrderByInput
+) {
+  chatMessages(
+    where: $where
+    skip: $skip
+    first: $first
+    after: $after
+    orderBy: $orderBy
+  ) {
+    ...MessageFields
+  }
+}
+
+query ChatMessageRead($where: ChatMessageWhereUniqueInput!) {
+  chatMessage(where: $where) {
+    ...MessageFields
+  }
+}
+
+mutation ChatMessageUpdate(
+  $data: ChatMessageUpdateInput!
+  $where: ChatMessageWhereUniqueInput!
+) {
+  updateChatMessage(data: $data, where: $where) {
+    id
+  }
+}
+
+subscription ChatMessageSubscription($where: ChatMessageSubscriptionWhereInput) {
+  chatMessage(where: $where) {
+    mutation
+    node {
+    ...MessageFields
+    }
+    previousValues {
+      id
+    }
+  }
+}
+
+query ChatMessagesCount($where: ChatMessageWhereInput, $skip: Int) {
+  chatMessagesConnection(where: $where, skip: $skip) {
+    aggregate {
+      count
+    }
+  }
+}

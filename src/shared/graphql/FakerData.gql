@@ -1,0 +1,5 @@
+query GetRandomData($where: RandomDataInput) {
+  getRandomData(where: $where) {
+    data
+  }
+}

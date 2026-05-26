@@ -1,0 +1,67 @@
+#import "../fragments/feedback/PlanMissionTask.gql"
+
+mutation PlanMissionTaskCreate($data: PlanMissionTaskCreateInput!) {
+  createPlanMissionTask(data: $data) {
+      ...PlanMissionTaskFields
+  }
+}
+
+mutation PlanMissionTaskDelete($id: PlanMissionTaskWhereUniqueInput!) {
+  deletePlanMissionTask(where: $id) {
+    id
+  }
+}
+
+query PlanMissionTasksRead(
+  $where: PlanMissionTaskWhereInput
+  $skip: Int
+  $first: Int
+  $after: String
+  $orderBy: PlanMissionTaskOrderByInput
+) {
+  planMissionTasks(
+    where: $where
+    skip: $skip
+    first: $first
+    after: $after
+    orderBy: $orderBy
+  ) {
+      ...PlanMissionTaskFields
+  }
+}
+
+query PlanMissionTaskRead($where: PlanMissionTaskWhereUniqueInput!) {
+  planMissionTask(where: $where) {
+      ...PlanMissionTaskFields
+  }
+}
+
+mutation PlanMissionTasksUpdate(
+  $data: PlanMissionTaskUpdateInput!
+  $where: PlanMissionTaskWhereUniqueInput!
+) {
+  updatePlanMissionTask(data: $data, where: $where) {
+    id
+  }
+}
+
+subscription PlanMissionTaskSubscription(
+  $where: PlanMissionTaskSubscriptionWhereInput
+) {
+  planMissionTask(where: $where) {
+    mutation
+    node {
+      ...PlanMissionTaskFields
+    }
+    previousValues {
+      id
+    }
+  }
+}
+query PlanMissionTasksCounts($where: PlanMissionTaskWhereInput, $skip: Int) {
+  planMissionTasksConnection(where: $where, skip: $skip) {
+    aggregate {
+      count
+    }
+  }
+}

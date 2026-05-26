@@ -1,0 +1,75 @@
+#import "./fragments/PlanParticipant.gql"
+
+mutation PlanParticipantTypesCreate($data: PlanParticipantTypeCreateInput!) {
+  createPlanParticipantType(data: $data) {
+    ...ParticipantTypeFields
+  }
+}
+
+mutation PlanParticipantTypesDelete($id: PlanParticipantTypeWhereUniqueInput!) {
+  deletePlanParticipantType(where: $id) {
+    id
+  }
+}
+
+query PlanParticipantTypesRead(
+  $where: PlanParticipantTypeWhereInput
+  $skip: Int
+  $first: Int
+  $after: String
+  $orderBy: PlanParticipantTypeOrderByInput
+) {
+  planParticipantTypes(
+    where: $where
+    skip: $skip
+    first: $first
+    after: $after
+    orderBy: $orderBy
+  ) {
+    ...ParticipantTypeFields
+  }
+}
+
+query PlanParticipantTypeRead($where: PlanParticipantTypeWhereUniqueInput!) {
+  planParticipantType(where: $where) {
+    ...ParticipantTypeFields
+  }
+}
+
+mutation PlanParticipantTypesUpsert(
+  $where: PlanParticipantTypeWhereUniqueInput! 
+  $create: PlanParticipantTypeCreateInput!
+  $update: PlanParticipantTypeUpdateInput!) {
+    upsertPlanParticipantType(create: $create, update: $update, where: $where) {
+      ...ParticipantTypeFields
+    }
+  }
+
+mutation PlanParticipantTypesUpdate(
+  $data: PlanParticipantTypeUpdateInput!
+  $where: PlanParticipantTypeWhereUniqueInput!
+) {
+  updatePlanParticipantType(data: $data, where: $where) {
+    ...ParticipantTypeFields
+  }
+}
+
+subscription PlanParticipantTypeSubscription($where: PlanParticipantTypeSubscriptionWhereInput) {
+  planParticipantType(where: $where) {
+    mutation
+    node {
+      ...ParticipantTypeFields
+    }
+    previousValues {
+      id
+    }
+  }
+}
+
+query PlanParticipantTypesCounts($where: PlanParticipantTypeWhereInput, $skip: Int) {
+  planParticipantTypesConnection(where: $where, skip: $skip) {
+    aggregate {
+      count
+    }
+  }
+}

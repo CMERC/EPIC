@@ -1,0 +1,107 @@
+$body-background-color: #000;
+$panel-background-color: #fff;
+.service-card-header {
+  background-color: #ccc;
+  text-align: left;
+  margin: 30px;
+  margin-bottom: 0px;
+}
+
+.archive-content {
+  display: block;
+  text-align: center;
+  font-size: 12px;
+}
+
+.archive-title {
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.card-body {
+  padding: 20px;
+  margin: 30px;
+  margin-top: 0px;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.card-post-body {
+  margin-top: 0px;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.panel {
+  background-color: $panel-background-color;
+}
+
+.service-title {
+  color: #fff;
+  text-align: left;
+  background: #000;
+  padding: 15px;
+}
+
+.service-logo {
+  display: none;
+}
+
+.right-nav-content-posts {
+  color: #000;
+}
+
+.right-nav-content-comments {
+  color: #000;
+}
+
+.right-nav-content-archives {
+  color: #000;
+}
+
+hr {
+  border-top: 1px solid #000;
+}
+
+.banner-row {
+  display: none;
+}
+
+.btn {
+  background-color: #f36f36;
+  border: 1px solid #000;
+  display: inline-block;
+}
+
+.card-holder-panel {
+  background-color: #b29292;
+  background: url("./styles/eagle_club_air_soft_club/background.jpg");
+  background-position: center;
+  background-size: contain;
+  background-attachment: fixed;
+}
+
+.service-font {
+  font-family: "Product Sans", Arial, sans-serif;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.content-title-section {
+  color: #fff;
+  background: #fff;
+  opacity: 0.9;
+  padding: 15px;
+}
+.service-title {
+  font-family: "Roboto", sans-serif;
+  font-weight: 700;
+  text-align: left;
+  text-transform: uppercase;
+  height: 128px;
+}
+
+.service-footer {
+  background: url("./styles/eagle_club_air_soft_club/logo_approved.png")
+    no-repeat;
+  background-position: center;
+  height: 256px;
+}

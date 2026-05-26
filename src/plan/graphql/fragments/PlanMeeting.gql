@@ -1,0 +1,18 @@
+fragment MeetingFields on PlanMeeting {
+    id
+    name
+    location
+    startDate
+    endDate
+}
+
+
+fragment MeetingCalendarFields on PlanMeeting {
+    id
+    title: name
+    name
+    start: startDate
+    startDate
+    end: endDate
+    endDate
+}

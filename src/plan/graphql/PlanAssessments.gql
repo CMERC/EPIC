@@ -1,0 +1,67 @@
+#import "./fragments/PlanAssessment.gql"
+
+mutation PlanAssessmentCreate($data: PlanAssessmentCreateInput!) {
+  createPlanAssessment(data: $data) {
+      ...PlanAssessmentFields
+  }
+}
+
+mutation PlanAssessmentDelete($id: PlanAssessmentWhereUniqueInput!) {
+  deletePlanAssessment(where: $id) {
+    id
+  }
+}
+
+query PlanAssessmentsRead(
+  $where: PlanAssessmentWhereInput
+  $skip: Int
+  $first: Int
+  $after: String
+  $orderBy: PlanAssessmentOrderByInput
+) {
+  planAssessments(
+    where: $where
+    skip: $skip
+    first: $first
+    after: $after
+    orderBy: $orderBy
+  ) {
+      ...PlanAssessmentFields
+  }
+}
+
+query PlanAssessmentRead($where: PlanAssessmentWhereUniqueInput!) {
+  planAssessment(where: $where) {
+      ...PlanAssessmentFields
+  }
+}
+
+mutation PlanAssessmentsUpdate(
+  $data: PlanAssessmentUpdateInput!
+  $where: PlanAssessmentWhereUniqueInput!
+) {
+  updatePlanAssessment(data: $data, where: $where) {
+    id
+  }
+}
+
+subscription PlanAssessmentSubscription(
+  $where: PlanAssessmentSubscriptionWhereInput
+) {
+  planAssessment(where: $where) {
+    mutation
+    node {
+      ...PlanAssessmentFields
+    }
+    previousValues {
+      id
+    }
+  }
+}
+query PlanAssessmentsCounts($where: PlanAssessmentWhereInput, $skip: Int) {
+  planAssessmentsConnection(where: $where, skip: $skip) {
+    aggregate {
+      count
+    }
+  }
+}

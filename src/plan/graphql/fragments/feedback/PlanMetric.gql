@@ -1,0 +1,10 @@
+fragment PlanMetricFields on PlanMetric {
+  id
+  flightHours
+  numOfStories
+  numOfPassesngers
+  cargoWeight
+  fuelPassed
+  milesTraveled
+  gallonsGasUsed
+}

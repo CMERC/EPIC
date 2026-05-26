@@ -1,0 +1,7 @@
+fragment ExerciseObjectiveFields on PlanExerciseObjective {
+  id
+  title
+  exerciseObjective
+  measurePerformance
+  measureEffectiveness
+}

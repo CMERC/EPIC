@@ -1,0 +1,19 @@
+#import "./MediaProfile.gql"
+#import "@/shared/graphql/fragments/MediaFile.gql"
+#import "./MediaPersona.gql"
+
+fragment NetworkFields on MediaNetwork {
+    id
+    name
+    description
+    personas { ...PersonaFields }
+    avatar { ...FileFields }
+}
+
+fragment NetworkSlim on MediaNetwork {
+    id
+    name
+    description
+    personas { ...PersonaSlim }
+    avatar { ...FileFields }
+}

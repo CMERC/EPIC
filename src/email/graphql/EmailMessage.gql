@@ -1,0 +1,67 @@
+#import "./fragments/EmailMessage.gql"
+
+mutation EmailMessageCompose($data: EmailMessageComposeInput!) {
+  composeEmailMessage(data: $data) {
+      ...EmailFields
+  }
+}
+
+mutation EmailMessageDelete($id: EmailMessageWhereUniqueInput!) {
+  deleteEmailMessage(where: $id) {
+    id
+  }
+}
+
+query EmailMessagesRead(
+  $where: EmailMessageWhereInput
+  $skip: Int
+  $first: Int
+  $after: String
+  $orderBy: EmailMessageOrderByInput
+) {
+  emailMessages(
+    where: $where
+    skip: $skip
+    first: $first
+    after: $after
+    orderBy: $orderBy
+  ) {
+      ...EmailFields
+  }
+}
+
+query EmailMessageRead($where: EmailMessageWhereUniqueInput!) {
+  emailMessage(where: $where) {
+      ...EmailFields
+  }
+}
+
+mutation EmailMessageUpdate(
+  $data: EmailMessageUpdateInput!
+  $where: EmailMessageWhereUniqueInput!
+) {
+  updateEmailMessage(data: $data, where: $where) {
+    id
+  }
+}
+
+subscription EmailMessageSubscription(
+  $where: EmailMessageSubscriptionWhereInput) {
+  emailMessage(where: $where) {
+    mutation
+    node {
+      ...EmailFields
+    }
+    previousValues {
+      id
+    }
+  }
+}
+
+query EmailMessagesCount($where: EmailMessageWhereInput, $skip: Int) {
+  emailMessagesConnection(where: $where, skip: $skip) {
+    aggregate {
+      count
+    }
+  }
+}

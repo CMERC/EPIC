@@ -1,0 +1,7 @@
+.git
+coverage
+node_modules
+*.log
+*.tar
+*.tar.gz
+*docker-compose*

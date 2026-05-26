@@ -1,0 +1,75 @@
+#import "./fragments/PlanMethod.gql"
+
+mutation PlanMethodsCreate($data: PlanMethodCreateInput!) {
+  createPlanMethod(data: $data) {
+    ...MethodFields
+  }
+}
+
+mutation PlanMethodsDelete($id: PlanMethodWhereUniqueInput!) {
+  deletePlanMethod(where: $id) {
+    id
+  }
+}
+
+query PlanMethodsRead(
+  $where: PlanMethodWhereInput
+  $skip: Int
+  $first: Int
+  $after: String
+  $orderBy: PlanMethodOrderByInput
+) {
+  planMethods(
+    where: $where
+    skip: $skip
+    first: $first
+    after: $after
+    orderBy: $orderBy
+  ) {
+        ...MethodFields
+  }
+}
+
+mutation PlanMethodsUpsert(
+  $where: PlanMethodWhereUniqueInput! 
+  $create: PlanMethodCreateInput!
+  $update: PlanMethodUpdateInput!) {
+      upsertPlanMethod(create: $create, update: $update, where: $where) {
+    ...MethodFields
+  }
+  }
+
+query PlanMethodRead($where: PlanMethodWhereUniqueInput!) {
+  planMethod(where: $where) {
+    ...MethodFields
+  }
+}
+
+mutation PlanMethodsUpdate(
+  $data: PlanMethodUpdateInput!
+  $where: PlanMethodWhereUniqueInput!
+) {
+  updatePlanMethod(data: $data, where: $where) {
+    id
+  }
+}
+
+subscription PlanMethodsSubscription($where: PlanMethodSubscriptionWhereInput) {
+  planMethod(where: $where) {
+    mutation
+    node {
+    ...MethodFields
+    }
+    previousValues {
+      id
+    }
+  }
+}
+
+query PlanMethodsCounts($where: PlanMethodWhereInput, $skip: Int) {
+  planMethodsConnection(where: $where, skip: $skip) {
+    aggregate {
+      count
+    }
+  }
+}

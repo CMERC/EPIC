@@ -1,0 +1,137 @@
+$body-background-color: #000;
+$panel-background-color: #fff;
+$font-family: '"PT Serif", Georgia, Times, "Times New Roman", serif';
+.service-card-header {
+  background-color: white;
+  text-align: center;
+  margin: 30px;
+  margin-bottom: 0px;
+}
+
+.archive-content {
+  display: block;
+  text-align: center;
+  font-size: 12px;
+  color: #000;
+}
+
+.archive-title {
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.card-body {
+  padding: 20px;
+  margin: 30px;
+  margin-top: 0px;
+  background-color: rgba(0, 0, 0, 0.3);
+  & .card {
+    background-color: white;
+    border-radius: 0;
+    padding: 10px;
+    margin: 20px;
+    & .level {
+      border-top: 1px solid #ddd;
+      padding-top: 5px;
+    }
+  }
+}
+
+.card-post-body {
+  margin-top: 0px;
+  background-color: #87a3bf;
+  margin: 10px;
+  & .card {
+    background-color: white;
+    border-radius: 0;
+    padding: 10px;
+    margin: 20px;
+    & .level {
+      border-top: 1px solid #ddd;
+      padding-top: 5px;
+    }
+  }
+}
+
+.panel {
+  background-color: $panel-background-color;
+}
+
+.service-title {
+  color: #87a3bf;
+  text-align: left;
+  background: #fff;
+  padding: 15px;
+  font-size: 28px;
+}
+
+.service-subtitle:before {
+  content: "What You should Know";
+  text-align: left;
+  background: #000;
+  color: #fff;
+}
+
+.service-logo {
+  content: url("./styles/global_news_network/logo.png");
+}
+.right-nav {
+  background-color: white;
+  padding: 20px;
+  ul li {
+    text-align: left;
+  }
+}
+
+.right-nav-content-posts {
+  display: none;
+}
+
+.right-nav-content-comments {
+  display: none;
+}
+
+.right-nav-content-archives {
+  color: #1161b1;
+  font-family: $font-family;
+  font-size: 1rem;
+}
+
+hr {
+  display: none;
+}
+
+.banner-row {
+  display: none;
+}
+
+.button {
+  background-color: #87a3bf;
+  border: 1px solid #000;
+  display: inline-block;
+}
+
+.card-holder-panel {
+  background-color: #87a3bf;
+  background-attachment: fixed;
+}
+
+.service-font {
+  font-family: $font-family;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.content-title-section {
+  color: #fff;
+  background: #fff;
+  opacity: 0.9;
+  padding: 15px;
+}
+
+.content-title {
+  font-family: "Oswald", Helvetica, Arial, sans-serif;
+  font-size: 2.375rem;
+  margin-bottom: 20px;
+  font-weight: 400;
+}

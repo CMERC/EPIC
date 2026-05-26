@@ -1,0 +1,259 @@
+#import "./fragments/MediaPost.gql"
+
+query MediaPostsWithComments(
+  $where: MediaPostWhereInput!
+  $data1: MediaPostWhereUniqueInput!
+) {
+  mediaPosts(where: $where) {
+    ...PublicPostFields
+  }
+  mediaPost(where: $data1) {
+    ...PublicPostFields
+  }
+}
+
+
+mutation MediaPostsCreate($data: MediaPostCreateInput!) {
+  createMediaPost(data: $data) {
+    ...PostFields
+  }
+}
+
+mutation MediaPostsDelete($id: MediaPostWhereUniqueInput!) {
+  deleteMediaPost(where: $id) {
+    id
+  }
+}
+
+query MediaPostsRead(
+  $where: MediaPostWhereInput
+  $skip: Int
+  $first: Int
+  $after: String
+  $orderBy: MediaPostOrderByInput
+) {
+  mediaPosts(
+    where: $where
+    skip: $skip
+    first: $first
+    after: $after
+    orderBy: $orderBy
+  ) {
+    ...PostFields
+  }
+}
+
+query MediaPostReadWithComments(
+  $where: MediaPostWhereInput!
+  $comments_first: Int
+  $comments_skip: Int
+  $comments_orderBy: MediaPostOrderByInput
+  $comments_where: MediaPostWhereInput) {
+  mediaPostWithComments(where: $where) {
+    ...PostFieldsCommentsWhere
+  }
+}
+
+query PublicMediaPostsRead(
+  $where: PublicMediaPostWhereInput!
+  $skip: Int
+  $first: Int
+  $after: String
+  $orderBy: MediaPostOrderByInput
+) {
+  mediaPostsPublic(
+    data: $where
+    skip: $skip
+    first: $first
+    after: $after
+    orderBy: $orderBy
+  ) {
+    ...PublicPostFields
+  }
+}
+query PublicMediaPostsWithComments(
+  $where: PublicMediaPostWhereInput!
+  $data1: PublicMediaPostWhereInput!
+) {
+  mediaPostsPublic(data: $where) {
+    ...PublicPostFields
+  }
+  mediaPostPublic(data: $data1) {
+    ...PublicPostFields
+  }
+}
+query MediaPostRead($where: MediaPostWhereUniqueInput!) {
+  mediaPost(where: $where) {
+    ...PostFieldsWithComments
+  }
+}
+
+mutation MediaPostsUpdate(
+  $data: MediaPostUpdateInput!
+  $where: MediaPostWhereUniqueInput!
+) {
+  updateMediaPost(data: $data, where: $where) {
+    id
+  }
+}
+
+query MediaFeeds($where: MediaPostWhereInput!, $first: Int, $after: String) {
+  mediaFeeds(where: $where, first: $first, after: $after) {
+    id
+    createTime
+    title
+    text
+    url
+    profiles {
+      service {
+          id
+          name
+          displayName
+          type
+          icon
+          color
+      }
+      name
+      username
+      url
+    }
+    location {
+      geojson
+    }
+  }
+}
+
+subscription MediaFeedSubscription {
+  mediaFeed {
+    mutation
+    node {
+      ...PostFields
+    }
+    previousValues {
+      id
+    }
+  }
+}
+
+subscription MediaPostsSubscription($where: MediaPostSubscriptionWhereInput) {
+  mediaPost(where: $where) {
+    mutation
+    node {
+      ...PostFields
+    }
+    previousValues {
+      id
+    }
+  }
+}
+
+subscription MediaPostsCalendarSubscription($where: MediaPostSubscriptionWhereInput) {
+  mediaPost(where: $where) {
+    mutation
+    node {
+      ...PostFieldsCalendar
+    }
+    previousValues {
+      id
+    }
+  }
+}
+
+query allMediaPostsCounts($query: String) {
+  allPosts: mediaPostsConnection(
+    where: {
+      isUserGenerated: true 
+      OR: [
+        { text_contains: $query },
+        { title_contains: $query} 
+      ]
+      }
+      ) {
+    aggregate {
+      count
+    }
+  }
+  publishedPosts: mediaPostsConnection(
+    where: {
+      isPublished: true,
+      isUserGenerated: true 
+      OR: [
+        { text_contains: $query },
+        { title_contains: $query} 
+      ]
+    }
+  ) {
+    aggregate {
+      count
+    }
+  }
+  scheduledPosts: mediaPostsConnection(
+    where: {
+      isPublished: false,
+      publishTime_not: null
+      isUserGenerated: true 
+          OR: [
+        { text_contains: $query },
+        { title_contains: $query} 
+      ]
+    }
+  ) {
+    aggregate {
+      count
+    }
+  }
+  draftPosts: mediaPostsConnection(
+    where: {
+      isPublished: false, 
+      publishTime: null
+      isUserGenerated: true 
+          OR: [
+        { text_contains: $query },
+        { title_contains: $query} 
+      ]
+    }
+  ) {
+    aggregate {
+      count
+    }
+  }
+    noisePosts: mediaPostsConnection(
+      where: {
+        isUserGenerated: false,
+        isPublished: true,
+        publishTime_not: null
+            OR: [
+        {text_contains: $query },
+        { title_contains: $query} 
+      ]
+      }
+    ) {
+    aggregate {
+      count
+    }
+  }
+}
+
+query MediaPostsCounts($where: MediaPostWhereInput, $skip: Int) {
+  mediaPostsConnection(where: $where, skip: $skip) {
+    aggregate {
+      count
+    }
+  }
+}
+
+query PublicMediaPostsCounts($where: PublicMediaPostWhereInput, $skip: Int) {
+  mediaPostsPublicConnection(data: $where, skip: $skip) {
+    aggregate {
+      count
+    }
+  }
+}
+query MediaPostsCalendarRead(
+  $where: MediaPostWhereInput
+  $orderBy: MediaPostOrderByInput
+) {
+  mediaPosts(where: $where, orderBy: $orderBy) {
+    ...PostFieldsCalendar
+  }
+}

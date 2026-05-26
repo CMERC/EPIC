@@ -1,0 +1,10 @@
+fragment MessageFields on ChatMessage {
+    id
+    createdAt
+    text
+    author
+    room {
+        id 
+        title
+        }
+    }

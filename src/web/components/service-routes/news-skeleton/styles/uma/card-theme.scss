@@ -1,0 +1,62 @@
+$body-background-color: #ccc;
+$panel-background-color: #fff;
+.app {
+  background-color: peru !important;
+}
+
+.service-card-header {
+  background-color: #ccc;
+  margin: 10px;
+  border-bottom: 1px solid #000;
+}
+
+.card-body {
+  padding: 20px;
+  margin: 10px;
+  background-color: $body-background-color;
+}
+
+.panel {
+  background-color: $panel-background-color;
+}
+
+.service-font {
+  font-family: Georgia, serif;
+  font-size: 17.8px;
+  line-height: 26.775px;
+}
+
+.banner-row {
+  height: 350px;
+}
+
+.service-logo {
+  background: url("./styles/uma/logo.png") no-repeat;
+  background-position: center;
+  height: 128px;
+}
+.service-title {
+  color: rgb(204, 70, 70);
+  text-align: left;
+  text-transform: uppercase;
+}
+.service-banner {
+  content: url("./styles/uma/banner.jpg");
+  overflow: hidden;
+  width: 100%;
+  background-repeat: no-repeat;
+  max-height: 100%;
+  background-size: cover;
+  margin-right: -30px;
+  background-attachment: fixed;
+}
+
+.right-nav-panel {
+  display: none;
+}
+
+.content-title {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 44.2px;
+  font-weight: 700;
+}

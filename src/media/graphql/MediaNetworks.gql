@@ -1,0 +1,96 @@
+#import "./fragments/MediaNetwork.gql"
+
+mutation MediaNetworksCreate($data: MediaNetworkCreateInput!) {
+  createMediaNetwork(data: $data) {
+    ...NetworkFields
+  }
+}
+
+mutation MediaNetworksDelete($id: MediaNetworkWhereUniqueInput!) {
+  deleteMediaNetwork(where: $id) {
+    ...NetworkFields
+  }
+}
+
+query MediaNetworksRead(
+  $where: MediaNetworkWhereInput
+  $skip: Int
+  $first: Int
+  $after: String
+  $orderBy: MediaNetworkOrderByInput
+) {
+  mediaNetworks(
+    where: $where
+    skip: $skip
+    first: $first
+    after: $after
+    orderBy: $orderBy
+  ) {
+        ...NetworkFields
+  }
+}
+
+query MediaNetworksList(
+  $where: MediaNetworkWhereInput
+  $skip: Int
+  $first: Int
+  $after: String
+  $orderBy: MediaNetworkOrderByInput
+) {
+  mediaNetworks(
+    where: $where
+    skip: $skip
+    first: $first
+    after: $after
+    orderBy: $orderBy
+  ) {
+        ...NetworkSlim
+  }
+}
+
+query MediaNetworkRead($where: MediaNetworkWhereUniqueInput!) {
+  mediaNetwork(where: $where) {
+    ...NetworkFields
+  }
+}
+
+subscription MediaNetworksSubscription {
+  mediaNetwork {
+    mutation
+    node {
+      ...NetworkFields    
+}
+    previousValues {
+      id
+    }
+  }
+}
+
+mutation MediaNetworksUpdate(
+  $data: MediaNetworkUpdateInput!
+  $where: MediaNetworkWhereUniqueInput!
+) {
+  updateMediaNetwork(data: $data, where: $where) {
+        ...NetworkFields
+  }
+}
+
+mutation MediaNetworksUpdatePersonas(
+  $data: MediaNetworkUpdateInput!
+  $where: MediaNetworkWhereUniqueInput!
+) {
+  updateMediaNetwork(data: $data, where: $where) {
+    personas {
+      id
+    }
+  }
+}
+
+query MediaNetworksCounts($where: MediaNetworkWhereInput) {
+  mediaNetworksConnection(where: $where) {
+    aggregate {
+      count
+    }
+  }
+}
+

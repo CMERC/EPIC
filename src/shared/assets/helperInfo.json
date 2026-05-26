@@ -1,0 +1,974 @@
+{
+  "data": {
+    "epic.home": {
+      "title": "EPIC Ready",
+      "content": {
+        "text": "<p>EPIC Ready is an online, collaborative planning and training app with customizable features that support various exercise scenarios. The app allows users to customize, track, and manage their training programs within a secure environment. Begin creating a training scenario by selecting Exercise Details, which is located under the Prepare tab.</p>",
+        "link": {
+          "href": "https://help.epicready.com/getting-started",
+          "title": "More Help"
+        }
+      }
+    },
+    "note.home": {
+      "title": "Notebook",
+      "content": {
+        "text": "<p>Create collaborative notebooks to organize your workspace content. Give the notebook a title, color, and icon as unique identifiers. Select Create Notebook to start customizing a unique, collaborative Notebook. Stay organized by adding the Title, Icon, and Color to the Notebook.</p><p>Click the &quot;New&quot; button to create folders or upload files, which include photos, videos, pdfs, etc.</p>",
+        "link": {
+          "href": "https://help.epicready.com/notebook/epic-notebook",
+          "title": "More Help"
+        }
+      }
+    },
+    "note.folder": {
+      "title": "Folders and File Uploads",
+      "content": {
+        "text": "<p>Select the &quot;New&quot; button to create a folder or upload files, which include photos, videos, pdfs, etc.</p>",
+        "link": {
+          "href": "https://help.epicready.com/notebook/epic-notebook",
+          "title": "More Help"
+        }
+      }
+    },
+    "note.view": {
+      "title": "Notebook View",
+      "content": {
+        "text": "<p>Notebook sections appear above the pages associated with the section. Select the title of the page to view the entire page. Edit your notebook by choosing the Edit button, which is located at the top of the page.</p>",
+        "link": {
+          "href": "https://help.epicready.com/notebook/epic-notebook",
+          "title": "More Help"
+        }
+      }
+    },
+    "note.edit": {
+      "title": "Customize Notebook",
+      "content": {
+        "text": "<p>Click the more options icon, which is located on the right-hand side of the screen to Edit Title, Add Section, and Delete Notebook. Add additional sections and pages within a specified section by selecting the more options icon beside the section name. Remember to save your progress by clicking the Save button, and the Save and Close button.</p>",
+        "link": {
+          "href": "https://help.epicready.com/notebook/epic-notebook",
+          "title": "More Help"
+        }
+      }
+    },
+    "chat.home": {
+      "title": "Chat",
+      "content": {
+        "text": "<p>Select a Room to begin composing a message. Rooms can be created by clicking the + plus sign, which is located at the bottom left-hand side of the screen. Once selected, type in the title of the room. Next, begin typing in your message and click the paper airplane arrow to send the message</p>",
+        "link": {
+          "href": "https://help.epicready.com/chat/quick-reference-guide",
+          "title": "More Help"
+        }
+      }
+    },
+    "plan.general": {
+      "title": "EPIC Plan",
+      "content": {
+        "text": "<p>The navigation panel displays 4 main sections for planning: Prepare, Train, Assess, and Reports. The dashboard presents the Exercise Details, MSEL Recent, and Calendar. These displays allow users to have quick access to critical sections for planning a training exercise.</p>",
+        "link": {
+          "href": "https://help.epicready.com/plan/quick-reference-guide",
+          "title": "More Help"
+        }
+      }
+    },
+    "plan.train": {
+      "title": "MSEL Timeline",
+      "content": {
+        "text": "<p>View the progress of a MSEL Inject within a specific Event. Begin by selecting the All Events drop-down. A complete MSEL is green, which means that the MSEL was injected and completed. A yellow status means that the MSEL is incomplete. Update a MSEL inject by first selecting the name of the MSEL. Once the window populates, update the status, edit the inject, or view and edit Training Objectives here.</p>",
+        "link": {
+          "href": "https://help.epicready.com/plan/train#msel-timeline",
+          "title": "More Help"
+        }
+      }
+    },
+    "plan.train.dash": {
+      "title": "Train Dashboard",
+      "content": {
+        "text": "<p>The train dashboard presents the MSEL Inject graph, Calendar, and Training Objective graphs. These displays allow users to quickly view critical sections for managing a training exercise.</p>",
+        "link": {
+          "href": "https://help.epicready.com/plan/train",
+          "title": "More Help"
+        }
+      }
+    },
+    "plan.inject.calendar": {
+      "title": "MSEL Calendar",
+      "content": {
+        "text": "<p>Monitor the status of the MSEL Injects. Status Labels, chosen in the Status Boards section of Settings, simplify the process of tracking MSEL Statuses. Select Create MSEL Inject to add a new MSEL Inject.</p>",
+        "link": {
+          "href": "https://help.epicready.com/getting-started/settings#status-labels",
+          "title": "More Help"
+        }
+      }
+    },
+    "plan.inject.detail": {
+      "title": "Plan Inject Detail",
+      "content": {
+        "text": "<p>To create a MSEL Inject, the user must enter a title; however, all other information can be completed as needed. The Plan Label designates the planning status of each inject.</p>",
+        "link": {
+          "href": "https://help.epicready.com/plan/prepare#msel",
+          "title": "More Help"
+        }
+      }
+    },
+    "plan.inject.description": {
+      "title": "Plan Inject Description & Measures",
+      "content": {
+        "text": "<p>The MSEL Inject's Description is the trigger, which is information that drives an Anticipated Response from the training audience.  The trigger can be sent via email, phone call, white card, media, etc.  To support the inject, users can upload a file, or copy and paste the permalink of an associated EPIC Media post.</p>",
+        "link": {
+          "href": "https://help.epicready.com/plan/prepare#2-trigger-and-response",
+          "title": "More Help"
+        }
+      }
+    },
+    "plan.inject.location": {
+      "title": "MSEL Inject Location",
+      "content": {
+        "text": "<p>Set the location for your MSEL Inject anywhere on the map by clicking the location icon. Below the name of the location, the latitude and longitude will be listed. View the map as a traditional Map or Satellite. Select OK to save the location of the MSEL Inject or Cancel to return to the previous page.</p>",
+        "link": {
+          "href": "https://help.epicready.com/plan/prepare#3-location",
+          "title": "More Help"
+        }
+      }
+    },
+    "plan.inject.objectives": {
+      "title": "Objectives & Methods",
+      "content": {
+        "text": "<p>Assign a training objective to the MSEL inject from the Available Training Objectives table. Then select the Training Method for each of the assigned training objectives.</p>",
+        "link": {
+          "href": "https://help.epicready.com/plan/prepare#4-participant-objectives",
+          "title": "More Help"
+        }
+      }
+    },
+    "plan.inject.review": {
+      "title": "MSEL Inject Review",
+      "content": {
+        "text": "<p>Review the content of any inject. Update a section by clicking the stepper that you wish to edit. Upon creation, the inject will be assigned a unique identification number.</p>",
+        "link": {
+          "href": "https://help.epicready.com/plan/prepare#6-review-msel-inject",
+          "title": "More Help"
+        }
+      }
+    },
+    "plan.prepare.dash": {
+      "title": "Prepare Dashboard",
+      "content": {
+        "text": "<p>The prepare dashboard presents the Exercise Details, MSEL Inject graph, and Calendar. These displays allow users to quickly view critical sections for planning a training exercise.</p>",
+        "link": {
+          "href": " https://help.epicready.com/plan/prepare",
+          "title": "More Help"
+        }
+      }
+    },
+    "plan.prepare.injects": {
+      "title": "Plan Injects",
+      "content": {
+        "text": "<p>Monitor the status of MSEL Injects. Status Labels, chosen in the Status Boards section of Settings, simplify the process of tracking MSEL Statuses. Select Create MSEL Inject to add a new MSEL Inject or click the drop-down to Manage Boards. Filter MSEL Injects from the Events drop-down.</p>",
+        "link": {
+          "href": "https://help.epicready.com/getting-started/settings#status-labels",
+          "title": "More Help"
+        }
+      }
+    },
+    "plan.prepare.viewinject": {
+      "title": "View Inject",
+      "content": {
+        "text": "<p>View Inject Details, Status, and Activity Log. The Activity Log shows the workspace user and the time that they edited that inject. Click the more options icon to edit the MSEL Inject.</p>",
+        "link": {
+          "href": "https://help.epicready.com/plan/prepare#view-msel-inject",
+          "title": "More Help"
+        }
+      }
+    },
+    "plan.prepare.exercisedetails": {
+      "title": "Exercise Details",
+      "content": {
+        "text": "<p>Create the training environment for your training exercise by determining the focus of the exercise and training objectives. In this section, add the exercise details, plan meetings, funding sources, objectives, and tasks and priorities. Select Edit Guidance to begin creating exercise details.</p>",
+        "link": {
+          "href": "https://help.epicready.com/plan/prepare#exercise",
+          "title": "More Help"
+        }
+      }
+    },
+    "plan.prepare.participants": {
+      "title": "Participants",
+      "content": {
+        "text": "<p>Add participants to your training scenario and exercises. These details are used for future objectives and to create a participant training group. The Participants section contains the list of participants, participant platforms, participant planners, contacts, training objectives, and funding sources. Select Create Participant, add the name and press Save. Then, follow the numbered stepper.</p>",
+        "link": {
+          "href": "https://help.epicready.com/plan/prepare#participants",
+          "title": "More Help"
+        }
+      }
+    },
+    "plan.prepare.participantdetails": {
+      "title": "Participant Details and Training Objectives",
+      "content": {
+        "text": "<p>This page shows details regarding the participant and their associated training objectives. On the Details tab, select the more options icon to edit or delete the participant. Click the Training Objectives tab to view and create training objectives for the selected participant.</p>",
+        "link": {
+          "href": "https://help.epicready.com/plan/prepare#participants",
+          "title": "More Help"
+        }
+      }
+    },
+    "plan.prepare.trainingobjective": {
+      "title": "Training Objectives",
+      "content": {
+        "text": "<p>Create Training Objectives for participants in the training exercise. Begin adding Training Objectives by selecting Create Training Objective. Once completed, Training Objectives appear in this list. Select the arrow associated with the Training Objective to view additional details.</p>",
+        "link": {
+          "href": "https://help.epicready.com/plan/prepare#training-objectives",
+          "title": "More Help"
+        }
+      }
+    },
+    "plan.prepare.event": {
+      "title": "Events",
+      "content": {
+        "text": "<p>Events, which have a unique Master Scenario Events List (MSEL) of injects, allow users to develop scenarios within exercises. MSELs drive the event forward to support the training objectives that are associated with participants. Begin creating an event by selecting Create Event and completing the missing information.</p>",
+        "link": {
+          "href": "https://help.epicready.com/plan/prepare#create-event",
+          "title": "More Help"
+        }
+      }
+    },
+    "plan.prepare.eventdetails": {
+      "title": "Event Details",
+      "content": {
+        "text": "<p>Manage the event and associated MSEL Injects. Select Add MSEL Inject or Edit Event to add important details to the event. Access the tools to Edit Inject, Remove From Event, or Delete Inject by clicking the more options icon, which is located on the right-hand side of the MSEL Inject.</p>",
+        "link": {
+          "href": "https://help.epicready.com/plan/prepare#edit-event",
+          "title": "More Help"
+        }
+      }
+    },
+    "plan.event": {
+      "title": "Plan Event",
+      "content": {
+        "text": "<p>Events allow users to develop scenarios within exercises. Events have a unique Master Scenario Events List of injects that drive the event forward to support the participant’s training objectives.</p><p>Give the event a unique name and color to easily distinguish specific events, select the Overall Method from the drop-down, add the Start Date and End Date, and type in additional details in the Scenario and Remarks boxes.</p>",
+        "link": {
+          "href": "https://help.epicready.com/plan/prepare#create-event",
+          "title": "More Help"
+        }
+      }
+    },
+    "plan.reports": {
+      "title": "Analytics",
+      "content": {
+        "text": "<p>Select the Source type of the data you would like to view. Every plot has a navigation menu that is only visible when the mouse is hovering over that plot. Some plots have drop-downs associated with them. Select the drop-down to view custom plots. Plots are unique to the workspace and report on whether or not a training objective was completed, the effectiveness of the training, funding allocation, etc.</p>",
+        "link": {
+          "href": "https://help.epicready.com/plan/reports#analytics",
+          "title": "More Help"
+        }
+      }
+    },
+    "plan.reports.custom": {
+      "title": "Custom Reports",
+      "content": {
+        "text": "<p>Custom reports provide comprehensive details regarding your training exercise. Select the Create Report button, fill in the missing details, and click the Save button to generate your custom report. Double click the row or click the more options icon, which is located on the right-hand side of the page, to view the report.</p>",
+        "link": {
+          "href": "https://help.epicready.com/plan/reports#custom",
+          "title": "More Help"
+        }
+      }
+    },
+    "plan.exercisedetails": {
+      "title": "Exercise Details",
+      "content": {
+        "text": "<p>Under Commander's Guidance, state the strategic objective.</p>",
+        "link": {
+          "href": "https://help.epicready.com/plan/prepare#1-exercise-details",
+          "title": "More Help"
+        }
+      }
+    },
+    "plan.exerciseplanningmeetings": {
+      "title": "Planning Meetings",
+      "content": {
+        "text": "<p>Schedule your Planning Meetings to support the development of your exercise.</p><p>If following the Joint Exercise Life Cycle, you may enter those events here or name your own planning meetings.</p>",
+        "link": {
+          "href": "https://help.epicready.com/plan/prepare#2-planning-meetings",
+          "title": "More Help"
+        }
+      }
+    },
+    "plan.exercisefundingsources": {
+      "title": "Funding Sources",
+      "content": {
+        "text": "<p>Select Funding Sources, Sub-sources, and Amounts here. The Primary Source is the main source of funding received for the exercise.</p>",
+        "link": {
+          "href": "https://help.epicready.com/plan/prepare#3-funding-sources",
+          "title": "More Help"
+        }
+      }
+    },
+    "plan.exerciseobjectives": {
+      "title": "Exercise Objectives",
+      "content": {
+        "text": "<p>Create SMART Exercise Objectives that are specific, measurable, achievable, relevant and time-bound. Only the Title has to be filled out to move to the next step. Planners may return to the previous step and edit as needed.</p>",
+        "link": {
+          "href": "https://help.epicready.com/plan/prepare#4-objectives",
+          "title": "More Help"
+        }
+      }
+    },
+    "plan.exerciseinviteplanners": {
+      "title": "Invite Planners",
+      "content": {
+        "text": "<p>Invite planners that are collaborating on this exercise.</p>",
+        "link": {
+          "href": "https://help.epicready.com/plan/prepare#exercise",
+          "title": "More Help"
+        }
+      }
+    },
+    "plan.exercisetaskspriorities": {
+      "title": "Tasks & Priorities",
+      "content": {
+        "text": "<p>Select Add Acredited Task. Choose Accredited Task and hit Save or Cancel.</p><p>Choose the Add Command Priority button. Fill in the Title and Description. Once completed, select Save or Cancel.</p>",
+        "link": {
+          "href": "https://help.epicready.com/plan/prepare#5-tasks-and-priorities",
+          "title": "More Help"
+        }
+      }
+    },
+    "plan.exercisereview": {
+      "title": "Review",
+      "content": {
+        "text": "<p>Review your exercise details and complete any remaining sections.</p><p>Sections in red have an error and need review.</p>",
+        "link": {
+          "href": "https://help.epicready.com/plan/prepare#6-review",
+          "title": "More Help"
+        }
+      }
+    },
+    "plan.participant.details": {
+      "title": "Participant Details",
+      "content": {
+        "text": "<p>Input details regarding the participant. For each participant, enter the Name, Service or Department, Command or Agency, Participant Type, Home Station, Select an Icon, and Total Training Audience.</p>",
+        "link": {
+          "href": "https://help.epicready.com/plan/prepare#participants",
+          "title": "More Help"
+        }
+      }
+    },
+    "plan.participant.platforms": {
+      "title": "Participant Platforms",
+      "content": {
+        "text": "<p>Add all platforms for the participant. Platforms can be modified in the Plan section of Settings. Select the platform from the fixed drop-down and add the Bed-down location. Then click Save to continue or Cancel to return to the previous page.</p>",
+        "link": {
+          "href": "https://help.epicready.com/plan/prepare#2-add-platforms",
+          "title": "More Help"
+        }
+      }
+    },
+    "plan.participant.planners": {
+      "title": "Participant Planners",
+      "content": {
+        "text": "<p>Select the email of the user that is planning for this participant. Selecting the email adds the user to the participant platform. To designate a primary point of contact, select the Primary Contact checkbox for that user. Only users who are added to this exercise can be selected. If a user does not appear on the list, ensure they have an account and have been given access to the exercise workspace.</p>",
+        "link": {
+          "href": "https://help.epicready.com/plan/prepare#3-add-planners",
+          "title": "More Help"
+        }
+      }
+    },
+    "plan.participant.fundingsources": {
+      "title": "Funding Sources",
+      "content": {
+        "text": "<p>Add the sources and funding amount for the participant. This should align with the funding sources for this exercise.</p>",
+        "link": {
+          "href": "https://help.epicready.com/plan/prepare#4-add-funding",
+          "title": "More Help"
+        }
+      }
+    },
+    "plan.participant.review": {
+      "title": "Review",
+      "content": {
+        "text": "<p>Review the participant details for accuracy. Return to any section to edit by selecting the numbered step that correlates with the area you need to modify.</p>",
+        "link": {
+          "href": "https://help.epicready.com/plan/prepare#5-review",
+          "title": "More Help"
+        }
+      }
+    },
+    "plan.trainingobjectivesdetails": {
+      "title": "Training Objective Details",
+      "content": {
+        "text": "<p>Select the participant platform for the Training Objective and fill in the details as desired. Most details are predetermined by the participant previously chosen.</p>",
+        "link": {
+          "href": "https://help.epicready.com/plan/prepare#1-details",
+          "title": "More Help"
+        }
+      }
+    },
+    "plan.trainingobjectivesmeasure": {
+      "title": "Training Objective Measures",
+      "content": {
+        "text": "<p>Describe the task, conditions, and standards for the training objective. These details are used when evaluating and providing feedback. To see examples, click the More Help button.</p>",
+        "link": {
+          "href": "https://help.epicready.com/plan/prepare/training-objective-example",
+          "title": "More Help"
+        }
+      }
+    },
+    "plan.trainingobjectivesassociations": {
+      "title": "Training Objective Associations",
+      "content": {
+        "text": "<p>Add further data that the Training Objective supports. View Exercise Objective details at anytime by clicking on View Exercise Details. The dropdowns of the Training Objective Associations have predetermined options. Add all necessary details on the Training Objective Measures page.</p>",
+        "link": {
+          "href": "https://help.epicready.com/plan/prepare#3-associations",
+          "title": "More Help"
+        }
+      }
+    },
+    "plan.trainingobjectivesreview": {
+      "title": "Training Objective Review",
+      "content": {
+        "text": "<p>Review the Training Objective information. To return or edit any section, click the edit button next to that section, or the numbered step along the top of the page.</p>",
+        "link": {
+          "href": "https://help.epicready.com/plan/prepare#4-review",
+          "title": "More Help"
+        }
+      }
+    },
+    "plan.overview": {
+      "title": "Overview",
+      "content": {
+        "text": "<p>This page displays a list of all Training Objectives. Press the arrow associated with the Participant to view details and the related Assessment and Feedback Lists. Select Create Assessment to create an objective assessment, such as for an observer controller. Click Create Feedback to create a Self Assessment for a participant. Next to the Participant, there is an Inject Count and Assessment Count. Accurately assess a Training Objective by creating Assessment Counts equal to the Inject Count.</p>",
+        "link": {
+          "href": "https://help.epicready.com/plan/assess#overview",
+          "title": "More Help"
+        }
+      }
+    },
+    "plan.assessment": {
+      "title": "Assess List",
+      "content": {
+        "text": "<p>This page lists assessments and their training objective status. In this section, edit  or delete forms. Select Create Assessment to begin completing the assessment. Double click the assessment to view its details.</p>",
+        "link": {
+          "href": "https://help.epicready.com/plan/assess#assess-list",
+          "title": "More Help"
+        }
+      }
+    },
+    "plan.assessment.feedback.trainingObj": {
+      "title": "Training Objectives",
+      "content": {
+        "text": "<p>Select the status and effectiveness of the training objective. Depending on the answers selected, a drop-down may appear that prompts the user to expand on the effectiveness of the scenario. For example, if the status was incomplete, another drop-down would populate asking for a reason. Assessment Reasons can be modified in the Plan section of Settings.</p>",
+        "link": {
+          "href": "https://help.epicready.com/plan/",
+          "title": "More Help"
+        }
+      }
+    },
+    "plan.assessment.feedback.metrics": {
+      "title": "Metrics",
+      "content": {
+        "text": "<p>Input the details missing in the text boxes. Add additional syllabus events or another task. Save details as a draft to complete later or continue through the stepper.</p>",
+        "link": {
+          "href": "https://help.epicready.com/plan/",
+          "title": "More Help"
+        }
+      }
+    },
+    "plan.assessment.feedback.lessonsLearned": {
+      "title": "Lessons Learned",
+      "content": {
+        "text": "<p>Fill in the text boxes with details about the training objective. Save details as a draft to complete later or continue through the stepper.</p>",
+        "link": {
+          "href": "https://help.epicready.com/plan/",
+          "title": "More Help"
+        }
+      }
+    },
+    "plan.assessment.feedback.review": {
+      "title": "Review",
+      "content": {
+        "text": "<p>Review the feedback information. To return or edit any section, click the numbered step along the top of the page. Feedback can be saved as a draft or saved and completed.</p>",
+        "link": {
+          "href": "https://help.epicready.com/plan/",
+          "title": "More Help"
+        }
+      }
+    },
+    "plan.feedback": {
+      "title": "Feedback",
+      "content": {
+        "text": "<p>Select Create Feedback to begin assessing your training exercise. First click the Participant, an associated Training Objective, and then press Save. Select the status and effectiveness of the training objective. Depending on the answers selected, a drop-down may appear that prompts the user to expand the effectiveness of the scenario. For example, if the status was incomplete, another drop-down would populate asking for a reason. Assessment Reasons can be modified in the Plan section of Settings.</p>",
+        "link": {
+          "href": "https://help.epicready.com/plan/assess#feedback",
+          "title": "More Help"
+        }
+      }
+    },
+    "plan.collect": {
+      "title": "Collect",
+      "content": {
+        "text": "<p>The Collect page allows Admins and Editors to bulk request feedback and monitor what has been submitted.</p>",
+        "link": {
+          "href": "https://help.epicready.com/plan/assess#collect",
+          "title": "More Help"
+        }
+      }
+    },
+    "media.general": {
+      "title": "EPIC Media",
+      "content": {
+        "text": "<p>EPIC Media is a platform in which procedures and tools for collecting and analyzing publicly available information (PAI) can be practiced and refined. Online exercise activities remain strictly within the exercise environment and personally identifiable information (PII) is replaced with artificial information, simulating a realistic environment. Enhance a training scenario by creating realistic posts, profiles, personas, networks, and sites. Begin constructing a simulated online media environment by choosing the Personas tab.</p>",
+        "link": {
+          "href": "https://help.epicready.com/media/epic-media-quick-reference-guide",
+          "title": "More Help"
+        }
+      }
+    },
+    "media.posts": {
+      "title": "Posts",
+      "content": {
+        "text": "<p>Create customized posts using text, emojis, images, time, date, and location. These customization features help the user create more realistic posts (injects) for the training audience. To begin, select the Create Post button.</p>",
+        "link": {
+          "href": "https://help.epicready.com/media/posts#generate-posts",
+          "title": "More Help"
+        }
+      }
+    },
+    "media.calendar": {
+      "title": "Calendar",
+      "content": {
+        "text": "<p>View created posts from the past, present, or future by selecting the desired month. Click on any posts you would like to view on the calendar. The user may see their posts in a day, week, month, and list view. </p>",
+        "link": {
+          "href": "https://help.epicready.com/media/posts/calendar",
+          "title": "More Help"
+        }
+      }
+    },
+    "media.profiles": {
+      "title": "Profiles",
+      "content": {
+        "text": "<p>The Profiles tab enables the user to build, design, and edit profiles. Select which service the profile links to and customize profiles by creating an original name, username, profile description, avatar, and banner.</p><p>Use the search bar to find a specific profile to modify. Organize the order of the profiles by selecting the drop-down at the top of the Profiles page.</p>",
+        "link": {
+          "href": "https://help.epicready.com/media/profiles",
+          "title": "More Help"
+        }
+      }
+    },
+    "media.editprofiles": {
+      "title": "Edit Profiles",
+      "content": {
+        "text": "<p>Modify the Name, Description, Data, Avatar, and Banner for this Profile. Users are unable to alter the Site and Username.</p>",
+        "link": {
+          "href": "https://help.epicready.com/media/profiles#edit-profiles",
+          "title": "More Help"
+        }
+      }
+    },
+    "media.profileposts": {
+      "title": "View Profile",
+      "content": {
+        "text": "<p>View Drafts, Scheduled, Published, or All posts on the selected profile's page.</p>",
+        "link": {
+          "href": "https://help.epicready.com/media/profiles#generate-and-view-posts-from-profiles",
+          "title": "More Help"
+        }
+      }
+    },
+    "media.sites": {
+      "title": "Sites",
+      "content": {
+        "text": "<p>There are 5 preset Sites. Establish services (e.g. social media platforms, blogs, news, or video sites) by selecting Create Site. Enter the Name, select Site Type, Icon, and Icon Color to make your site distinguishable.</p>",
+        "link": {
+          "href": "https://help.epicready.com/media/sites",
+          "title": "More Help"
+        }
+      }
+    },
+    "media.analytics": {
+      "title": "Analytics",
+      "content": {
+        "text": "<p>View the total views and total unique visitors for each post.</p>",
+        "link": {
+          "href": "https://help.epicready.com/media/posts/analytics",
+          "title": "More Help"
+        }
+      }
+    },
+    "media.noise": {
+      "title": "Noise",
+      "content": {
+        "text": "<p>The Noise tab supports a scraping feature to pull publicly available information (PAI) content from the Internet for injection as haystack/noise.</p>",
+        "link": {
+          "href": "https://help.epicready.com/media/posts/noise",
+          "title": "More Help"
+        }
+      }
+    },
+    "media.networks": {
+      "title": "Networks",
+      "content": {
+        "text": "<p>Adding a network allows the user to create a network of linked personas. Each network serves as a hub for the personas in the training scenario. To begin, select Create Network.</p>",
+        "link": {
+          "href": "https://help.epicready.com/media/networks",
+          "title": "More Help"
+        }
+      }
+    },
+    "media.networksview": {
+      "title": "Network view",
+      "content": {
+        "text": "<p>Add personas to a network by selecting the Add Persona button. From this section, easily create a quick persona or choose from your preexisting list of personas. Select the more options icon beside a persona to edit or remove them. Click the more options icon next to the name of the network to edit the network (i.e. edit the name, description, and avatar) or delete the network.</p>",
+        "link": {
+          "href": "https://help.epicready.com/media/networks",
+          "title": "More Help"
+        }
+      }
+    },
+    "media.networksedit": {
+      "title": "Edit Network",
+      "content": {
+        "text": "<p>Type in the Name of the Network, create a detailed Description, and add an Avatar to the Network. Click Save to save the network details. Add personas to a Network by selecting the Add Persona button. Easily create a quick persona or choose from your preexisting list of personas.</p>",
+        "link": {
+          "href": "https://help.epicready.com/media/networks",
+          "title": "More Help"
+        }
+      }
+    },
+    "media.personas": {
+      "title": "Personas",
+      "content": {
+        "text": "<p>Create and customize personas for a network. By using this feature, the user can link personas together to establish a criminal organization or terrorist group. Select Create Persona to begin.</p><p> Use Default Attributes by filling in attributes to create more complex personas. Use Blank Persona by filling in a name and choosing media for the persona. Add any attribute by choosing Add Attribute. Quick Create Persona by filling in the name of the persona.</p>",
+        "link": {
+          "href": "https://help.epicready.com/media/personas",
+          "title": "More Help"
+        }
+      }
+    },
+    "media.personasview": {
+      "title": "View Persona",
+      "content": {
+        "text": "<p>View, edit, and remove all profiles from a persona at any time.</p>",
+        "link": {
+          "href": "https://help.epicready.com/media/personas#persona-attributes",
+          "title": "More Help"
+        }
+      }
+    },
+    "settings.general": {
+      "title": "User Settings",
+      "content": {
+        "text": "<p>Change your Name by filling in where it says Name and then click Save. Your initial icon will change colors every time you update your name. Change your Password by selecting the Change Password button and follow the reset instructions.</p>",
+        "link": {
+          "href": "https://help.epicready.com/getting-started/settings#general",
+          "title": "More Help"
+        }
+      }
+    },
+    "settings.apps": {
+      "title": "Application Settings",
+      "content": {
+        "text": "<p>Customize which applications appear the home page and application launcher by setting each as active or inactive. Making an application inactive will not affect any data within that application.</p>",
+        "link": {
+          "href": "https://help.epicready.com/epic-settings/workspace",
+          "title": "More Help"
+        }
+      }
+    },
+    "settings.workspace": {
+      "title": "Workspace Members",
+      "content": {
+        "text": "<p>Anyone can invite a new or current user to the workspace by typing in their email address. Admins may select a role for the new user by clicking the Select Role for User drop-down.</p>",
+        "link": {
+          "href": "https://help.epicready.com/getting-started/settings#workspace",
+          "title": "More Help"
+        }
+      }
+    },
+    "settings.timezone": {
+      "title": "Time Zone",
+      "content": {
+        "text": "<p>Set a unified time zone for your workspace by selecting the Set Time Zone button. When a time zone is set, all users within a workspace view a unified time zone. If a time zone is not chosen, or is reset to local time, each user will see the time zone set from their device, which may be different across users.</p>",
+        "link": {
+          "href": "https://help.epicready.com/getting-started/settings#time-zone",
+          "title": "More Help"
+        }
+      }
+    },
+    "settings.jmets": {
+      "title": "Plan JMETs",
+      "content": {
+        "text": "<p>JMETS are included in the app and are used in the Training Objectives and Accredited Tasks section of Plan. Create a JMET in the workspace by clicking the button at the top of the screen. Then fill in the details and select Save. Edit or Delete a JMET by select the more options icon on the right-hand side of the JMET. Select the Level of War, Task Number, or Task Title to change the viewing order of the JMETs.</p>",
+        "link": {
+          "href": "https://help.epicready.com/getting-started/settings#jmets",
+          "title": "More Help"
+        }
+      }
+    },
+    "settings.organizations": {
+      "title": "Plan Organizations",
+      "content": {
+        "text": "<p>Organizations are included in the app but users may create, edit, or delete an Organization. Users will need to select Organizations in the Exercise Details section of EPIC Plan. Create an Organization by clicking the button on the top of the screen. Fill in the Name and Group, then click Save. Edit or Delete an Organization by selecting the more options icon on the right-hand side of the Organization.</p>",
+        "link": {
+          "href": "https://help.epicready.com/getting-started/settings#organizations",
+          "title": "More Help"
+        }
+      }
+    },
+    "settings.platforms": {
+      "title": "Plan Platforms",
+      "content": {
+        "text": "<p>Platforms are included in the app and are used when choosing a Participant Platform in Plan. Users can create, edit, or delete them on the Settings page. Fill in the Title and Type, then click Save. Edit or Delete Platforms by selecting the more options icon on the right-hand side of the Platform.</p>",
+        "link": {
+          "href": "https://help.epicready.com/getting-started/settings#platforms",
+          "title": "More Help"
+        }
+      }
+    },
+    "settings.priorities": {
+      "title": "Plan Joint Staff Training Priorities",
+      "content": {
+        "text": "<p>Joint Staff Training Priorities are included in the app but users can create, edit, or delete them on the Settings page. These are associated with Training Objectives. Create a Joint Staff Training Priority by selecting the button on the top of the screen. Add the Title and Description, then click Save. Edit or Delete a Joint Staff Training Priority by selecting the more options icon on the right-hand side of the Joint Staff Training Priority.</p>",
+        "link": {
+          "href": "https://help.epicready.com/getting-started/settings#joint-staff-training-priorities",
+          "title": "More Help"
+        }
+      }
+    },
+    "settings.labels": {
+      "title": "Plan Status Labels",
+      "content": {
+        "text": "<p>Document the status of a MSEL inject with Status Labels that are included in the app. Status Labels are managed in this section. Create Status Labels in your workspace by selecting the button the top left-hand side of the page. Fill in the required details and press Save. Edit or Delete a Status Label by selecting the more options icon on the right-hand side of the Status Label.</p>",
+        "link": {
+          "href": "https://help.epicready.com/getting-started/settings#status-labels",
+          "title": "More Help"
+        }
+      }
+    },
+    "settings.boards": {
+      "title": "Plan Status Boards",
+      "content": {
+        "text": "<p>Manage MSEL Status Boards within this section. Select Create MSEL Status Board to begin. Next, fill in the Title and select the Status from the Status List. Users may add multiple statuses to one Status Board. Select Save to continue, or Cancel to return to the previous screen.</p>",
+        "link": {
+          "href": "https://help.epicready.com/getting-started/settings#status-boards",
+          "title": "More Help"
+        }
+      }
+    },
+    "settings.reasons": {
+      "title": "Plan Assessment Reasons",
+      "content": {
+        "text": "<p>Create an assessment reason by choosing the button on the top left-hand side of the page. Fill in the Title and press Save. Reasons explain the ineffectiveness of training objectives and are used in the Assessment tab of Plan.</p>",
+        "link": {
+          "href": "https://help.epicready.com/getting-started/settings#assessment-reasons",
+          "title": "More Help"
+        }
+      }
+    },
+    "settings.method": {
+      "title": "Inject Method",
+      "content": {
+        "text": "<p>Inject Methods are used when creating a MSEL Inject. Inject Methods are preset but can be modified to include additional methods by selecting Create Method. Easily identify the Inject Method by adding a unique name, icon, and color. Delete or Edit an Inject Method by selecting the more option icon.</p>",
+        "link": {
+          "href": "https://help.epicready.com/getting-started/settings#inject-method",
+          "title": "More Help"
+        }
+      }
+    },
+    "settings.participanttype": {
+      "title": "Participant Types",
+      "content": {
+        "text": "<p>Participant Types are preset and are selected in the Participant section of Plan, and impact the Feedback and Reports sections of the application. Create, edit, or delete Participants at any time to meet the specific criteria of your training exercise. Create a Participant Type by selecting the Create Participant Type button, or click the more options icon beside the name of the Participant Type to edit or delete it.</p>",
+        "link": {
+          "href": "https://help.epicready.com/getting-started/settings#participant-types",
+          "title": "More Help"
+        }
+      }
+    },
+    "settings.servicedepartment": {
+      "title": "Service/Department",
+      "content": {
+        "text": "<p>Service/Departments are preset and used in the Participant section of Plan. Create, edit, or delete a Service/Department to meet the specific criteria of your training exercise. Make a Service/Department by selecting the Create Service/Department button, or click the more options icon beside the name of the Service/Department to edit or delete it.</p>",
+        "link": {
+          "href": "https://help.epicready.com/getting-started/settings#service-department",
+          "title": "More Help"
+        }
+      }
+    },
+    "settings.servicedepartmenttype": {
+      "title": "Service/Department Types",
+      "content": {
+        "text": "<p>Service/Department Types are preset and used in the Participant section of Plan. Create, edit, or delete Service/Department Types to meet the specific criteria of your training exercise. Make a Service/Department Type by selecting the Create Service/Department Type button, or click the more options icon beside the name of the Service/Department Type to edit or delete it.</p>",
+        "link": {
+          "href": "https://help.epicready.com/getting-started/settings#service-department-types",
+          "title": "More Help"
+        }
+      }
+    },
+    "settings.commandagency": {
+      "title": "Command/Agency",
+      "content": {
+        "text": "<p>The Command/Agencies are preset and used in the Participant section of Plan.  Create, edit, or delete a Command/Agency to meet the specific criteria of your training exercise. Make a Command/Agency by selecting the Create Command/Agency button, or click the more options icon beside the name of the Command/Agency to edit or delete it.</p>",
+        "link": {
+          "href": "https://help.epicready.com/getting-started/settings#command-agency",
+          "title": "More Help"
+        }
+      }
+    },
+    "settings.injectowner": {
+      "title": "Inject Owner",
+      "content": {
+        "text": "<p>Inject Owners are used in the first step when creating a MSEL Inject. Inject Owners are preset but can be modified to include additional owners by selecting Create Owner. Delete or Edit an Inject Owner by selecting the more options icon.</p>",
+        "link": {
+          "href": "https://help.epicready.com/getting-started/settings#inject-owner",
+          "title": "More Help"
+        }
+      }
+    },
+    "settings.priorityLevels": {
+      "title": "Training Priority",
+      "content": {
+        "text": "<p>Training Priorities are used when creating or editing a Training Objective. Training Priorities are preset but can be modified to include additional priorities by selecting Create Training Priority. Easily identify the Training Priority by adding a unique name and color. Delete or Edit a Training Priority by selecting the more option icon.</p>",
+        "link": {
+          "href": "https://help.epicready.com/epic-settings/plan",
+          "title": "More Help"
+        }
+      }
+    },
+    "settings.userroles": {
+      "title": "User Roles",
+      "content": {
+        "text": "<table><tr><th nowrap>User Type</th><th>Role</th></tr><tr><td nowrap>User</td><td>Training Participant</td></tr><tr><td nowrap>Author</td><td>Training Participant and/or Role Player</td></tr><tr><td nowrap>Editor</td><td>Participant Planner</td></tr><tr><td nowrap>Admin</td><td>Primary Exercise Planner</td></tr></table>",
+        "link": {
+          "href": "https://help.epicready.com/getting-started/settings#user-roles",
+          "title": "More Help"
+        }
+      }
+    },
+    "web.general": {
+      "title": "Media Site View",
+      "content": {
+        "text": "<p>This page shows posts from a site. Clicking a post will expand the content into a full page. Selecting the back button will return you to the previous screen.</p>",
+        "link": {
+          "href": "https://help.epicready.com/web/posts",
+          "title": "More Help"
+        }
+      }
+    },
+    "web.search": {
+      "title": "Search",
+      "content": {
+        "text": "<p>Type in keywords to search for posts. Once a search is made and a new page populates, refine search results by selecting a category.</p>",
+        "link": {
+          "href": "https://help.epicready.com/web/search",
+          "title": "More Help"
+        }
+      }
+    },
+    "web.searchresults": {
+      "title": "Search Results",
+      "content": {
+        "text": "<p>Refine search results by selecting a category. Click on any post to see it in its entirety, and then select the name of the user to analyze their profile. Press the back button to return to the previous page.</p>",
+        "link": {
+          "href": "https://help.epicready.com/web/quick-reference",
+          "title": "More Help"
+        }
+      }
+    },
+    "map.general": {
+      "title": "EPIC Map",
+      "content": {
+        "text": "<p>EPIC Map is a unique platform used to create a realistic training experience by displaying data into a map view. Users can click Create Map and design the training environment, enhancing preparedness for training events and, ultimately, mission readiness. View addresses or significant landmarks in Globe to better understand complex environments world-wide. Under Media Posts users can track the locations of noise and injects from EPIC Media.</p>",
+        "link": {
+          "href": "https://help.epicready.com/map/quick-reference-guide",
+          "title": "More Help"
+        }
+      }
+    },
+    "map.create": {
+      "title": "Create Map",
+      "content": {
+        "text": "<p>Enhance training exercises by first preparing for a realistic exercise through the creation of a map for planners can reference. The navigation panel consists of the Save button, Select (to edit icons or maneuver throughout the map), Marker (to draw lines), Shape (to draw polygons), Location (icon), Text (to label areas within a map), Symbol (to add MilSymbols), and Settings (to change the title, map view, and the option to delete the map).</p>",
+        "link": {
+          "href": "https://help.epicready.com/map/create-map",
+          "title": "More Help"
+        }
+      }
+    },
+    "map.monitor": {
+      "title": "Media Posts",
+      "content": {
+        "text": "<p>View injects and noise generated in EPIC Media. Select All, Noise, or Inject to view posts in specific categories. Click the plus sign to zoom in, or the minus sign to zoom out.</p>",
+        "link": {
+          "href": "https://help.epicready.com/map/media-posts",
+          "title": "More Help"
+        }
+      }
+    },
+    "map.globe": {
+      "title": "Globe",
+      "content": {
+        "text": "<p>Choose the Map Type you would like to view by clicking the drop-down, which is located on the right-hand side of the page, and selecting the desired view. Zoom in/out by clicking the plus and minus buttons, which are located on the left-hand side of the screen.</p>",
+        "link": {
+          "href": "https://help.epicready.com/map/globe",
+          "title": "More Help"
+        }
+      }
+    },
+    "email.general": {
+      "title": "Email",
+      "content": {
+        "text": "<p>Click the Compose button to begin writing an email within the EPIC Ready application. Communicate with the training audience within your network. EPIC Email works like any other email service, but remains within the EPIC Ready suit of applications.</p>",
+        "link": {
+          "href": "https://help.epicready.com/email/quick-reference-guide",
+          "title": "More Help"
+        }
+      }
+    },
+    "activity.home": {
+      "title": "Activity Home",
+      "content": {
+        "text": "<p>View MSEL inject activity in chronological order from members of your workspace. Click the name of the MSEL inject to view more details.</p>",
+        "link": {
+          "href": "https://help.epicready.com/activity",
+          "title": "More Help"
+        }
+      }
+    },
+    "observe.home": {
+      "title": "Home",
+      "content": {
+        "text": "<p>View observation posts in chronological order from members of your workspace.</p>",
+        "link": {
+          "href": "https://help.epicready.com/epic-observe/home",
+          "title": "More Help"
+        }
+      }
+    },
+    "observe.profile": {
+      "title": "Profile",
+      "content": {
+        "text": "<p>View all of the observation posts you created. Hover over a post to access the X button to delete.</p>",
+        "link": {
+          "href": "https://help.epicready.com/epic-observe/profile",
+          "title": "More Help"
+        }
+      }
+    },
+    "observe.post": {
+      "title": "Create Post",
+      "content": {
+        "text": "<p>Record observations in real-time by adding message content, uploading pictures and videos, and enabling location. Capture images and videos within the application while on a mobile device. Tie your observations to a specific location by allowing location sharing.</p>",
+        "link": {
+          "href": "https://help.epicready.com/epic-observe/post",
+          "title": "More Help"
+        }
+      }
+    },
+    "dev.userroles": {
+      "title": "User Roles",
+      "content": {
+        "text": "<table><tr><th nowrap>User Type</th><th>Role</th></tr><tr><td nowrap>User</td><td>Training Participant</td></tr><tr><td nowrap>Author</td><td>Training Participant and/or Role Player</td></tr><tr><td nowrap>Editor</td><td>Participant Planner</td></tr><tr><td nowrap>Admin</td><td>Primary Exercise Planner</td></tr><tr><td nowrap>Guest</td><td>View news, posts, and profiles on EPIC Web</td></tr></table>",
+        "link": {
+          "href": "https://help.epicready.com/getting-started/settings#user-roles",
+          "title": "More Help"
+        }
+      }
+    }
+  }
+}

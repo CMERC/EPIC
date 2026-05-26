@@ -1,0 +1,14 @@
+fragment TaskFields on PlanAccreditedTask {
+    id
+    jmet { ...JMETFields }
+}
+
+
+fragment JMETFields on PlanJmet {
+      id
+      levelWar
+      taskNumber
+      taskTitle
+      description
+      key
+}

@@ -1,0 +1,17 @@
+#import "./PlanReason.gql"
+#import "./PlanMeasureData.gql"
+#import "./PlanTrainingObjective.gql"
+
+fragment EvaluationFields on PlanEvaluation {
+  id
+  createdAt
+  updatedAt
+  trainingObjectives { ...TrainingObjectiveFields }
+  complete
+  status
+  reason { ...ReasonFields }
+  comment
+  remark
+  email
+  measureData { ...PlanMeasureDataFields }
+}

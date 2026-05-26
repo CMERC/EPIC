@@ -1,0 +1,6 @@
+fragment OrgFields on PlanOrganization {
+    id
+    name
+    group
+    key
+}

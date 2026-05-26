@@ -1,0 +1,10 @@
+query MapLocationName($latitude: Float $longitude: Float) {
+  mapLocationName(latitude: $latitude, longitude: $longitude) {
+    id
+    name
+    formatted
+    country {id name}
+    admin1 {id name}
+    admin2 {id name}
+  }
+}

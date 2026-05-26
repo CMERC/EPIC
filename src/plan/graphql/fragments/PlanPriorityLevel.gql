@@ -1,0 +1,6 @@
+fragment PlanPriorityLevelFields on PlanPriorityLevel {
+    id
+    title
+    color 
+    key
+}

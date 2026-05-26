@@ -1,0 +1,12 @@
+fragment PlanLessonsLearnedFields on PlanLessonsLearned {
+  id
+  potentialOPR
+  classification
+  title
+  observation
+  discussion
+  recommendation
+  implications
+  eventDescription
+  comments
+}

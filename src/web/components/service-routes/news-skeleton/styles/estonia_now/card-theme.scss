@@ -1,0 +1,86 @@
+$body-background-color: #000;
+$panel-background-color: #fff;
+.service-title {
+  display: none;
+}
+
+.service-card-header {
+  text-align: center;
+  margin-bottom: 0px;
+}
+
+.card-body {
+  padding: 20px;
+  margin: 30px;
+  margin-top: 0px;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.card-post-body {
+  margin-top: 0px;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.panel {
+  background-color: $panel-background-color;
+}
+
+.service-logo {
+  content: url("./styles/estonia_now/logo.png");
+  width: 300px;
+}
+
+.right-nav-content-posts {
+  color: #f00;
+}
+
+.right-nav-content-comments {
+  color: #f00;
+}
+
+.right-nav-content-archives {
+  color: #f00;
+}
+
+hr {
+  border-top: 1px solid #000;
+}
+
+.banner-row {
+  display: none;
+}
+
+.btn {
+  background-color: #f00;
+  border: 1px solid #000;
+}
+
+.card-holder-panel {
+  background: #fff url("./styles/estonia_now/background.jpg") no-repeat right
+    top;
+  background-size: 100%;
+}
+
+.service-font {
+  font-family: "Roboto", sans-serif;
+  font-size: 16px;
+  font-weight: 200;
+  letter-spacing: 0.5px;
+  line-height: 22.8571px;
+}
+
+.archive-content {
+  display: none;
+}
+.content-title-section {
+  color: #fff;
+  background: #fff;
+  opacity: 0.9;
+  padding: 15px;
+}
+.content-title {
+  font-family: Oswald, sans-serif;
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 38.4px;
+}

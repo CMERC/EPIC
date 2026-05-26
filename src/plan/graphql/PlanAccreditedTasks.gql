@@ -1,0 +1,80 @@
+#import "./fragments/PlanAccreditedTask.gql"
+
+mutation PlanAccreditedTasksCreate($data: PlanAccreditedTaskCreateInput!) {
+  createPlanAccreditedTask(data: $data) {
+      ...TaskFields
+  }
+}
+
+mutation PlanAccreditedTasksDelete($id: PlanAccreditedTaskWhereUniqueInput!) {
+  deletePlanAccreditedTask(where: $id) {
+    id
+  }
+}
+query PlanAccreditedTasksRead(
+  $where: PlanAccreditedTaskWhereInput
+  $skip: Int
+  $first: Int
+  $after: String
+  $orderBy: PlanAccreditedTaskOrderByInput
+) {
+  planAccreditedTasks(
+    where: $where
+    skip: $skip
+    first: $first
+    after: $after
+    orderBy: $orderBy
+  ) {
+      ...TaskFields
+  }
+}
+
+query PlanAccreditedTaskRead($where: PlanAccreditedTaskWhereUniqueInput!) {
+  planAccreditedTask(where: $where) {
+      ...TaskFields
+  }
+}
+
+mutation PlanAccreditedTasksUpdate(
+  $data: PlanAccreditedTaskUpdateInput!
+  $where: PlanAccreditedTaskWhereUniqueInput!
+) {
+  updatePlanAccreditedTask(data: $data, where: $where) {
+    id
+  }
+}
+
+subscription PlanAccreditedTaskSubscription($where: PlanAccreditedTaskSubscriptionWhereInput) {
+  planAccreditedTask(where: $where) {
+    mutation
+    node {
+      ...TaskFields
+    }
+    previousValues {
+      id
+    }
+  }
+}
+
+query PlanAccreditedTasksCounts($where: PlanAccreditedTaskWhereInput, $skip: Int) {
+  planAccreditedTasksConnection(where: $where, skip: $skip) {
+    aggregate {
+      count
+    }
+  }
+}
+
+query PlanAccreditedTasksCalendarRead(
+  $where: PlanAccreditedTaskWhereInput
+  $orderBy: PlanAccreditedTaskOrderByInput
+) {
+  planAccreditedTasks(where: $where, orderBy: $orderBy) {
+    id
+    jmet{
+      id
+      levelWar
+      taskNumber
+      title: taskTitle
+    }
+  }
+}

@@ -1,0 +1,8 @@
+
+#import "./PlanMissionTask.gql"
+
+fragment PlanFeedbackTaskFields on PlanFeedbackTask {
+ id
+ task { ...PlanMissionTaskFields }
+ numberCompleted
+}

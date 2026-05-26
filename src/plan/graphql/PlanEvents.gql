@@ -1,0 +1,122 @@
+#import "./fragments/PlanEvent.gql"
+mutation PlanEventsCreate($data: PlanEventCreateInput!) {
+  createPlanEvent(data: $data) {
+    ...EventFields
+  }
+}
+
+mutation PlanEventsDelete($id: PlanEventWhereUniqueInput!) {
+  deletePlanEvent(where: $id) {
+    id
+  }
+}
+
+query PlanEventsRead(
+  $where: PlanEventWhereInput
+  $skip: Int
+  $first: Int
+  $after: String
+  $orderBy: PlanEventOrderByInput
+) {
+  planEvents(
+    where: $where
+    skip: $skip
+    first: $first
+    after: $after
+    orderBy: $orderBy
+  ) {
+    ...EventFields
+  }
+}
+
+query PlanEventsList(
+  $where: PlanEventWhereInput
+  $skip: Int
+  $first: Int
+  $after: String
+  $orderBy: PlanEventOrderByInput
+) {
+  planEvents(
+    where: $where
+    skip: $skip
+    first: $first
+    after: $after
+    orderBy: $orderBy
+  ) {
+    ...EventSlim
+  }
+}
+
+query PlanEventsSelector(
+  $where: PlanEventWhereInput
+  $skip: Int
+  $first: Int
+  $after: String
+  $orderBy: PlanEventOrderByInput
+) {
+  planEvents(
+    where: $where
+    skip: $skip
+    first: $first
+    after: $after
+    orderBy: $orderBy
+  ) {
+    ...EventSelectFields
+  }
+}
+
+query PlanEventRead($where: PlanEventWhereUniqueInput!) {
+  planEvent(where: $where) {
+    ...EventFields
+  }
+}
+
+mutation PlanEventsUpdate(
+  $data: PlanEventUpdateInput!
+  $where: PlanEventWhereUniqueInput!
+) {
+  updatePlanEvent(data: $data, where: $where) {
+    ...EventFields
+  }
+}
+
+subscription PlanEventSubscription($where: PlanEventSubscriptionWhereInput) {
+  planEvent(where: $where) {
+    mutation
+    node {
+    ...EventFields
+    }
+    previousValues {
+      id
+    }
+  }
+}
+
+query PlanEventsCounts($where: PlanEventWhereInput, $skip: Int) {
+  planEventsConnection(where: $where, skip: $skip) {
+    aggregate {
+      count
+    }
+  }
+}
+
+query PlanEventsCalendarRead(
+  $where: PlanEventWhereInput
+  $orderBy: PlanEventOrderByInput
+) {
+  planEvents(where: $where, orderBy: $orderBy) {
+    ...EventCalendarFields
+  }
+}
+
+subscription PlanEventCalendarSubscription($where: PlanEventSubscriptionWhereInput) {
+  planEvent(where: $where) {
+    mutation
+    node {
+      ...EventCalendarFields
+    }
+    previousValues {
+      id
+    }
+  }
+}

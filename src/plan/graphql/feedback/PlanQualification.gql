@@ -1,0 +1,67 @@
+#import "../fragments/feedback/PlanQualification.gql"
+
+mutation PlanQualificationCreate($data: PlanQualificationCreateInput!) {
+  createPlanQualification(data: $data) {
+      ...PlanQualificationFields
+  }
+}
+
+mutation PlanQualificationDelete($id: PlanQualificationWhereUniqueInput!) {
+  deletePlanQualification(where: $id) {
+    id
+  }
+}
+
+query PlanQualificationsRead(
+  $where: PlanQualificationWhereInput
+  $skip: Int
+  $first: Int
+  $after: String
+  $orderBy: PlanQualificationOrderByInput
+) {
+  planQualifications(
+    where: $where
+    skip: $skip
+    first: $first
+    after: $after
+    orderBy: $orderBy
+  ) {
+      ...PlanQualificationFields
+  }
+}
+
+query PlanQualificationRead($where: PlanQualificationWhereUniqueInput!) {
+  planQualification(where: $where) {
+      ...PlanQualificationFields
+  }
+}
+
+mutation PlanQualificationsUpdate(
+  $data: PlanQualificationUpdateInput!
+  $where: PlanQualificationWhereUniqueInput!
+) {
+  updatePlanQualification(data: $data, where: $where) {
+    id
+  }
+}
+
+subscription PlanQualificationSubscription(
+  $where: PlanQualificationSubscriptionWhereInput
+) {
+  planQualification(where: $where) {
+    mutation
+    node {
+      ...PlanQualificationFields
+    }
+    previousValues {
+      id
+    }
+  }
+}
+query PlanQualificationsCounts($where: PlanQualificationWhereInput, $skip: Int) {
+  planQualificationsConnection(where: $where, skip: $skip) {
+    aggregate {
+      count
+    }
+  }
+}

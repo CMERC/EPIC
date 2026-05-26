@@ -1,0 +1,221 @@
+#import "./fragments/AdminFragments.gql"
+
+mutation AppWorkspaceCreate($data: AppWorkspaceCreateInput!) {
+  createAppWorkspace(data: $data) {
+    ...WorkspaceFields
+  }
+}
+mutation AppWorkspaceDelete($name: AppWorkspaceWhereUniqueInput!) {
+  deleteAppWorkspace(where: $name) {
+    ...WorkspaceFields
+  }
+}
+
+query GetWorkspaceMembers(
+  $where: AppWorkspaceWhereInput
+  $orderBy: AppWorkspaceOrderByInput
+  $skip: Int
+  $after: String
+  $before: String
+  $first: Int
+  $last: Int
+  $members_first: Int
+  $members_skip: Int
+  $members_orderBy: UserOrderByInput
+  $members_where: UserWhereInput
+){
+  getWorkspaceMembers(
+    where: $where
+    orderBy: $orderBy
+    skip: $skip
+    after: $after
+    before: $before
+    first: $first
+    last: $last
+  ) {
+      ...WorkspaceQueryFields
+  }
+}
+
+query AppUserWorkspaces(
+  $where: AppWorkspaceWhereInput
+  $orderBy: AppWorkspaceOrderByInput
+  $skip: Int
+  $after: String
+  $before: String
+  $first: Int
+  $last: Int
+) {
+  currentUserWorkspaces(
+    where: $where
+    orderBy: $orderBy
+    skip: $skip
+    after: $after
+    before: $before
+    first: $first
+    last: $last
+  ) {
+      ...WorkspaceFieldsNoMembers
+  }
+}
+
+query AppUserWorkspacesCounts(
+  $where: AppWorkspaceWhereInput
+  $skip: Int
+  $after: String
+  $before: String
+  $first: Int
+  $last: Int
+) {
+  currentUserWorkspaces(
+    where: $where
+    skip: $skip
+    after: $after
+    before: $before
+    first: $first
+    last: $last
+  ) {
+      ...WorkspaceFieldsNoMembers
+  }
+}
+
+query GetWorkspaceMembersCount(
+  $where: AppWorkspaceWhereInput
+  $orderBy: AppWorkspaceOrderByInput
+  $skip: Int
+  $after: String
+  $before: String
+  $first: Int
+  $last: Int
+  $members_first: Int
+  $members_skip: Int
+  $members_orderBy: UserOrderByInput
+  $members_where: UserWhereInput
+){
+  getWorkspaceMembers(
+    where: $where
+    orderBy: $orderBy
+    skip: $skip
+    after: $after
+    before: $before
+    first: $first
+    last: $last
+  ) {
+      ...WorkspaceQueryFields
+  }
+}
+
+query AppWorkspacesRead(
+  $where: AppWorkspaceWhereInput
+  $orderBy: AppWorkspaceOrderByInput
+  $skip: Int
+  $after: String
+  $before: String
+  $first: Int
+  $last: Int
+) {
+  appWorkspaces(
+    where: $where
+    orderBy: $orderBy
+    skip: $skip
+    after: $after
+    before: $before
+    first: $first
+    last: $last
+  ) {
+      ...WorkspaceFields
+  }
+}
+
+query AppWorkspaceRead(
+  $where: AppWorkspaceWhereUniqueInput!
+) {
+  appWorkspace(
+    where: $where
+  ) {
+      ...WorkspaceFields
+  }
+}
+
+
+query AppWorkspacePublicRead(
+  $where: AppWorkspaceWhereUniqueInput!
+) {
+  appWorkspacePublic(
+    where: $where
+  ) {
+      id
+      name
+      displayName
+      timeZone
+  }
+}
+
+mutation AppWorkspaceUpdate(
+  $data: AppWorkspaceUpdateInput!
+  $where: AppWorkspaceWhereUniqueInput!
+) {
+  updateAppWorkspace(data: $data, where: $where) {
+      ...WorkspaceFields
+  }
+}
+
+mutation AppWorkspaceAssignUser(
+  $data: AppWorkspaceUpdateMembersInput!
+  $where: AppWorkspaceWhereUniqueInput!
+) {
+  assignUserToWorkspace(data: $data, where: $where) {
+      ...WorkspaceFields
+  }
+}
+subscription AppWorkspacesSubscription($where: AppWorkspaceSubscriptionWhereInput) {
+  appWorkspace(where: $where) {
+    mutation
+    node {
+      ...WorkspaceFields
+    }
+    previousValues {
+      id
+    }
+  }
+}
+
+subscription AppUserWorkspacesSubscription($where: AppWorkspaceSubscriptionWhereInput) {
+  currentUserWorkspace(where: $where) {
+    mutation
+    node {
+      ...WorkspaceFields
+    }
+    previousValues {
+      id
+    }
+  }
+}
+
+subscription AppWorkspacesPublicSubscription($where: AppWorkspaceSubscriptionWhereInput) {
+  appWorkspacePub(where: $where) {
+    mutation
+    node {
+      ...WorkspaceFields
+    }
+    previousValues {
+      id
+    }
+  }
+}
+
+query AppWorkspacesCounts(
+  $where: AppWorkspaceWhereInput
+  $skip: Int
+  $first: Int
+) {
+  appWorkspacesConnection(where: $where, skip: $skip, first: $first) {
+    aggregate {
+      count
+    }
+  }
+}
+
+mutation RequestAppWorkspace {
+  requestAppWorkspace
+}

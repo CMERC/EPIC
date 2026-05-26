@@ -1,0 +1,7 @@
+#import "./PlanMeasure.gql"
+
+fragment PlanMeasureDataFields on PlanMeasureData {
+  id
+  measure {...PlanMeasureFields}
+  value
+}

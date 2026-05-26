@@ -1,0 +1,62 @@
+fragment ActivityStreamFields on ActivityStream {
+  id
+  createdAt
+  updatedAt
+  summary
+  actor
+  type
+  referenceID
+  url
+  name
+  content
+}
+
+query ActivityStreamsRead(
+  $where: ActivityStreamWhereInput
+  $orderBy: ActivityStreamOrderByInput
+  $skip: Int
+  $after: String
+  $before: String
+  $first: Int
+  $last: Int
+) {
+  activityStreams(
+    where: $where
+    orderBy: $orderBy
+    skip: $skip
+    after: $after
+    before: $before
+    first: $first
+    last: $last
+  ) 
+  {
+    ...ActivityStreamFields
+  }
+}
+
+
+subscription ActivityStreamSubscription($where: ActivityStreamSubscriptionWhereInput) {
+  activityStream(where: $where) {
+    mutation
+    node {
+      ...ActivityStreamFields
+    }
+    previousValues {
+      id
+    }
+  }
+}
+
+query ActivityStreamsCount($where: ActivityStreamWhereInput, $skip: Int) {
+  activityStreamsConnection(where: $where, skip: $skip) {
+    aggregate {
+      count
+    }
+  }
+}
+
+mutation ActivityStreamCommentCreate($data: ActivityStreamCreateInput!) {
+  createActivityStreamComment(data: $data) {
+    ...ActivityStreamFields
+  }
+}

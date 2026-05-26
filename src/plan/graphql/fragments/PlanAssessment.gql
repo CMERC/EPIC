@@ -1,0 +1,13 @@
+#import "@/plan/graphql/fragments/PlanReason.gql"
+#import "./PlanMeasureData.gql"
+
+fragment PlanAssessmentFields on PlanAssessment {
+  id
+  complete
+  status
+  reason { ...ReasonFields }
+  comment
+  measureData { ...PlanMeasureDataFields }
+  createdAt
+  updatedAt
+}

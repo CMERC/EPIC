@@ -1,0 +1,103 @@
+#import "@/plan/graphql/fragments/PlanFeedback.gql"
+#import "@/plan/graphql/fragments/PlanReason.gql"
+#import "@/plan/graphql/fragments/feedback/PlanMissionTask.gql"
+#import "@/plan/graphql/fragments/feedback/PlanQualification.gql"
+
+
+query PublicPlanFeedbacksRead(
+  $where: PublicPlanFeedbackWhereInput
+  $skip: Int
+  $first: Int
+  $after: String
+  $orderBy: PlanFeedbackOrderByInput
+) {
+  planFeedbacksPublic(
+    data: $where
+    skip: $skip
+    first: $first
+    after: $after
+    orderBy: $orderBy
+  ) {
+    ...PlanFeedbackFields
+  }
+}
+
+mutation PublicPlanFeedbacksUpdate(
+  $data: PublicPlanFeedbackUpdateInput!
+) {
+  updatePlanFeedbackPublic(data: $data) {
+    id
+  }
+}
+
+query PublicPlanReasonsRead(
+  $where: PublicPlanReasonWhereInput
+  $skip: Int
+  $first: Int
+  $after: String
+  $orderBy: PlanReasonOrderByInput
+) {
+  planReasonsPublic(
+    data: $where
+    skip: $skip
+    first: $first
+    after: $after
+    orderBy: $orderBy
+  ) {
+      ...ReasonFields
+  }
+}
+
+query PublicPlanMissionTasksRead(
+  $where: PublicPlanMissionTaskWhereInput
+  $skip: Int
+  $first: Int
+  $after: String
+  $orderBy: PlanMissionTaskOrderByInput
+) {
+  planMissionTasksPublic(
+    data: $where
+    skip: $skip
+    first: $first
+    after: $after
+    orderBy: $orderBy
+  ) {
+      ...PlanMissionTaskFields
+  }
+}
+
+mutation PublicPlanMissionTaskCreate($data: PublicPlanMissionTaskCreateInput!) {
+  createPlanMissionTaskPublic(data: $data) {
+      ...PlanMissionTaskFields
+  }
+}
+
+query PublicPlanQualificationsRead(
+  $where: PublicPlanQualificationWhereInput
+  $skip: Int
+  $first: Int
+  $after: String
+  $orderBy: PlanQualificationOrderByInput
+) {
+  planQualificationsPublic(
+    data: $where
+    skip: $skip
+    first: $first
+    after: $after
+    orderBy: $orderBy
+  ) {
+      ...PlanQualificationFields
+  }
+}
+
+mutation PublicPlanQualificationCreate($data: PublicPlanQualificationCreateInput!) {
+  createPlanQualificationPublic(data: $data) {
+      ...PlanQualificationFields
+  }
+}
+
+mutation PublicPlanReasonCreate($data: PublicPlanReasonCreateInput!) {
+  createPlanReasonPublic(data: $data) {
+      ...ReasonFields
+  }
+}

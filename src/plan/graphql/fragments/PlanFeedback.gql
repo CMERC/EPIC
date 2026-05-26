@@ -1,0 +1,33 @@
+#import "./PlanTrainingObjective.gql"
+#import "./PlanReason.gql"
+#import "./feedback/PlanLessonsLearned.gql"
+#import "./feedback/PlanMetric.gql"
+#import "./feedback/PlanFeedbackQualification.gql"
+#import "./feedback/PlanFeedbackTask.gql"
+#import "./PlanMeasureData.gql"
+
+fragment PlanFeedbackFields on PlanFeedback {
+  id
+  createdAt
+  updatedAt
+  status
+  evaluation { ...PlanEvaluationFields }
+  lessonsLearned { ...PlanLessonsLearnedFields }
+  metrics { ...PlanMetricFields }
+  qualifications { ...PlanFeedbackQualificationFields }
+  tasks { ...PlanFeedbackTaskFields }
+}
+
+fragment PlanEvaluationFields on PlanEvaluation {
+  id
+  createdAt
+  updatedAt
+  trainingObjectives { ...TrainingObjectiveFields }
+  complete
+  status
+  reason { ...ReasonFields }
+  comment
+  remark
+  email
+  measureData { ...PlanMeasureDataFields }
+}

@@ -1,0 +1,27 @@
+0.0.0.0
+gzip
+proxy /graphql server:4000 {
+    websocket
+    transparent
+}
+proxy /files minio:9000 {
+    transparent
+}
+proxy /minio minio:9000 {
+    transparent
+}
+# This is a catch-all, tries for a file, then a dir, followed by index.html
+rewrite {
+    to {path} {path}/ /
+}
+# Do not cache service worker https://developers.google.com/web/tools/workbox/guides/service-worker-checklist
+header /service-worker.js {
+  Cache-Control "no-cache"
+  Pragma "no-cache"
+  Expires "-1"
+}
+header /index.html {
+  Cache-Control "no-cache"
+  Pragma "no-cache"
+  Expires "-1"
+}

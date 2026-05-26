@@ -1,0 +1,6 @@
+fragment FundingFields on PlanFundingSource {
+    id
+    primarySource
+    subSource
+    amount
+}

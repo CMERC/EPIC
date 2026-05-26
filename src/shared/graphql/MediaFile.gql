@@ -1,0 +1,41 @@
+#import "./fragments/MediaFile.gql"
+
+mutation MediaFileCreate($data: MediaFileCreateInput!) {
+  createMediaFile(data: $data) {
+    ...FileFields
+  }
+}
+
+mutation MediaFileDelete($id: MediaFileWhereUniqueInput!) {
+  deleteMediaFile(where: $id) {
+    ...FileFields
+  }
+}
+
+query MediaFilesRead(
+  $data: MediaFileWhereInput
+  $skip: Int
+  $first: Int
+  $after: String
+) {
+  mediaFiles(where: $data, skip: $skip, first: $first, after: $after) {
+    ...FileFields
+  }
+}
+
+mutation MediaFileUpdate(
+  $data: MediaFileUpdateInput!
+  $where: MediaFileWhereUniqueInput!
+) {
+  updateMediaFile(data: $data, where: $where) {
+    ...FileFields
+  }
+}
+
+query MediaFilesCounts($where: MediaFileWhereInput, $skip: Int, $first: Int) {
+  mediaFilesConnection(where: $where, skip: $skip, first: $first) {
+    aggregate {
+      count
+    }
+  }
+}

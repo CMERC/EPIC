@@ -1,0 +1,65 @@
+#import "./fragments/AppListSetting.gql"
+mutation AppListSettingsCreate($data: AppListSettingCreateInput!) {
+  createAppListSetting(data: $data) {
+      ...AppListSettingFields
+  }
+}
+
+mutation AppListSettingsDelete($id: AppListSettingWhereUniqueInput!) {
+  deleteAppListSetting(where: $id) {
+    id
+  }
+}
+
+query AppListSettingsRead(
+  $where: AppListSettingWhereInput
+  $skip: Int
+  $first: Int
+  $after: String
+  $orderBy: AppListSettingOrderByInput
+) {
+  appListSettings(
+    where: $where
+    skip: $skip
+    first: $first
+    after: $after
+    orderBy: $orderBy
+  ) {
+      ...AppListSettingFields
+  }
+}
+
+query AppListSettingRead($where: AppListSettingWhereUniqueInput!) {
+  appListSetting(where: $where) {
+      ...AppListSettingFields
+  }
+}
+
+mutation AppListSettingsUpdate(
+  $data: AppListSettingUpdateInput!
+  $where: AppListSettingWhereUniqueInput!
+) {
+  updateAppListSetting(data: $data, where: $where) {
+      ...AppListSettingFields
+  }
+}
+
+subscription AppListSettingSubscription($where: AppListSettingSubscriptionWhereInput) {
+  appListSetting(where: $where) {
+    mutation
+    node {
+      ...AppListSettingFields
+    }
+    previousValues {
+      id
+    }
+  }
+}
+
+query AppListSettingsCounts($where: AppListSettingWhereInput, $skip: Int) {
+  appListSettingsConnection(where: $where, skip: $skip) {
+    aggregate {
+      count
+    }
+  }
+}

@@ -1,0 +1,65 @@
+#import "./fragments/PlanParticipant.gql"
+
+mutation PlanParticipantPlatformsCreate($data: PlanParticipantPlatformCreateInput!) {
+  createPlanParticipantPlatform(data: $data) {
+    ...ParticipantPlatformFields
+  }
+}
+
+mutation PlanParticipantPlatformsDelete($id: PlanParticipantPlatformWhereUniqueInput!) {
+  deletePlanParticipantPlatform(where: $id) {
+    id
+  }
+}
+
+query PlanParticipantPlatformsRead(
+  $where: PlanParticipantPlatformWhereInput
+  $skip: Int
+  $first: Int
+  $after: String
+  $orderBy: PlanParticipantPlatformOrderByInput
+) {
+  planParticipantPlatforms(
+    where: $where
+    skip: $skip
+    first: $first
+    after: $after
+    orderBy: $orderBy
+  ) {
+    ...ParticipantPlatformFields
+  }
+}
+
+query PlanParticipantPlatformRead($where: PlanParticipantPlatformWhereUniqueInput!) {
+  planParticipantPlatform(where: $where) {
+    ...ParticipantPlatformFields
+  }
+}
+
+mutation PlanParticipantPlatformsUpdate(
+  $data: PlanParticipantPlatformUpdateInput!
+  $where: PlanParticipantPlatformWhereUniqueInput!
+) {
+  updatePlanParticipantPlatform(data: $data, where: $where) {
+    ...ParticipantPlatformFields
+  }
+}
+subscription PlanParticipantPlatformSubscription($where: PlanParticipantPlatformSubscriptionWhereInput) {
+  planParticipantPlatform(where: $where) {
+    mutation
+    node {
+    ...ParticipantPlatformFields
+    }
+    previousValues {
+      id
+    }
+  }
+}
+
+query PlanParticipantPlatformsCounts($where: PlanParticipantPlatformWhereInput, $skip: Int) {
+  planParticipantPlatformsConnection(where: $where, skip: $skip) {
+    aggregate {
+      count
+    }
+  }
+}

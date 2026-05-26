@@ -1,0 +1,120 @@
+//import variables
+$body-background-color: #fff;
+$panel-background-color: #fff;
+$font-color: #000;
+$title-font-color: #000;
+$font-family: '"Oswald", sans-serif';
+$divider-color: #ccc;
+//Styles
+body .app__body {
+  background-color: $body-background-color !important;
+}
+
+.app {
+  background-color: $body-background-color !important;
+}
+
+.service-card-header {
+  background-color: #000;
+  text-align: center;
+  margin-bottom: 0px;
+  padding-top: 30px;
+  .service-title {
+    display: none;
+  }
+  .service-logo {
+    content: url("./styles/the_messenger/logo.png");
+    width: 300px;
+  } //panel in the header
+  .panel {
+    border: none;
+    margin-bottom: 0px;
+  }
+}
+
+.u-text-muted {
+  font-size: 13px;
+  color: #ababab !important;
+  text-transform: uppercase;
+}
+
+.l-col-8,
+.l-col-6 {
+  width: 100vw;
+}
+
+.l-col-16 {
+  width: 90%;
+}
+
+.card-body {
+  margin: 0px;
+  padding-top: 20px;
+  border-top: 20px solid #000;
+  .card-post-body {
+    margin-top: 0px;
+  }
+  .panel {
+    border: 1px solid $divider-color;
+    background-color: $panel-background-color;
+    width: 95vw;
+    .service-media-container {
+      display: none;
+    }
+    .service-post-media {
+      display: none;
+    }
+    .service-post-content {
+      width: 95vw;
+      padding: 5px;
+      display: inline-block;
+      .card__title {
+        font-family: "Oswald", sans-serif;
+        font-size: 1.5em;
+      }
+      .card__content {
+        line-height: 170%;
+        margin-bottom: 1.5em;
+        font-family: "Georgia", serif;
+        font-size: 1.05em;
+      }
+    }
+  }
+}
+
+.objectImageUrl {
+  max-width: 100%;
+}
+
+.right-nav-container {
+  display: none;
+}
+
+.banner-row {
+  display: none;
+}
+
+.btn {
+  background: #ff3209;
+  color: #fff;
+  display: block;
+  font-size: 14px;
+  font-weight: bold;
+  line-height: 1.2;
+  padding: 6px 15px;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.service-font {
+  font-family: $font-family;
+  font-size: 1.05em;
+}
+
+.archive-content {
+  display: none;
+}
+
+.card-holder-panel {
+  border-bottom: 50px solid #000;
+}

@@ -1,0 +1,91 @@
+$body-background-color: #000;
+$panel-background-color: #fff;
+$font-family: 'font-family: "Open Sans", Helvetica, Arial, sans-serif';
+.service-card-header {
+  background-color: #249ccc;
+  text-align: center;
+  margin: 30px;
+  margin-bottom: 0px;
+}
+
+.archive-content {
+  display: none;
+}
+
+.card-body {
+  padding: 20px;
+  margin: 30px;
+  margin-top: 0px;
+  background-color: #249ccc;
+}
+
+.card-post-body {
+  margin-top: 0px;
+  background-color: #fff;
+  // margin: 10px;
+}
+
+.panel {
+  background-color: $panel-background-color;
+}
+
+.service-title {
+  display: none;
+}
+
+.service-logo {
+  content: url("./styles/latvian_news_outlet/logo.png");
+}
+
+.right-nav-content-posts {
+  color: #000;
+  font-family: $font-family;
+  font-size: 1rem;
+}
+
+.right-nav-content-comments {
+  display: none;
+}
+
+.right-nav-content-archives {
+  display: none;
+}
+
+hr {
+  display: none;
+}
+
+.banner-row {
+  display: none;
+}
+
+.btn {
+  background-color: #249ccc;
+  border: 1px solid #000;
+  display: inline-block;
+}
+
+.card-holder-panel {
+  background-color: #fff;
+  background-attachment: fixed;
+}
+
+.service-font {
+  font-family: $font-family;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.content-title-section {
+  color: #fff;
+  background: #fff;
+  opacity: 0.9;
+  padding: 15px;
+}
+
+.content-title {
+  font-family: "Open Sans", Helvetica, Arial, sans-serif;
+  font-size: 2.375rem;
+  margin-bottom: 20px;
+  font-weight: 400;
+}

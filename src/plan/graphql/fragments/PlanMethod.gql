@@ -1,0 +1,7 @@
+
+fragment MethodFields on PlanMethod {
+    id
+    name
+    icon
+    color
+}

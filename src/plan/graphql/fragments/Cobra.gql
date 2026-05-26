@@ -1,0 +1,13 @@
+fragment CobraIncident on CobraData {
+data
+}
+
+fragment CobraAuth on CobraAuthorization {
+  access_token
+  error
+  }
+
+fragment InjectToCobraRequestManager on CobraRequestResource {
+  status
+  error
+}

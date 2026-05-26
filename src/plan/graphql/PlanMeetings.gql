@@ -1,0 +1,102 @@
+#import "./fragments/PlanMeeting.gql"
+
+mutation PlanMeetingsCreate($data: PlanMeetingCreateInput!) {
+  createPlanMeeting(data: $data) {
+    ...MeetingFields
+  }
+}
+
+mutation PlanMeetingsDelete($id: PlanMeetingWhereUniqueInput!) {
+  deletePlanMeeting(where: $id) {
+    id
+  }
+}
+
+query PlanMeetingsRead(
+  $where: PlanMeetingWhereInput
+  $skip: Int
+  $first: Int
+  $after: String
+  $orderBy: PlanMeetingOrderByInput
+) {
+  planMeetings(
+    where: $where
+    skip: $skip
+    first: $first
+    after: $after
+    orderBy: $orderBy
+  ) {
+    ...MeetingFields
+  }
+}
+
+query PlanMeetingsCalendarRead(
+  $where: PlanMeetingWhereInput
+  $skip: Int
+  $first: Int
+  $after: String
+  $orderBy: PlanMeetingOrderByInput
+) {
+  planMeetings(
+    where: $where
+    skip: $skip
+    first: $first
+    after: $after
+    orderBy: $orderBy
+  ) {
+    ...MeetingCalendarFields
+  }
+}
+
+
+
+query PlanMeetingRead($where: PlanMeetingWhereUniqueInput!) {
+  planMeeting(where: $where) {
+    ...MeetingFields
+  }
+}
+
+mutation PlanMeetingsUpdate(
+  $data: PlanMeetingUpdateInput!
+  $where: PlanMeetingWhereUniqueInput!
+) {
+  updatePlanMeeting(data: $data, where: $where) {
+    ...MeetingFields
+  }
+}
+
+subscription PlanMeetingSubscription(
+  $where: PlanMeetingSubscriptionWhereInput
+) {
+  planMeeting(where: $where) {
+    mutation
+    node {
+    ...MeetingFields
+    }
+    previousValues {
+      id
+    }
+  }
+}
+
+subscription PlanMeetingCalendarSubscription(
+  $where: PlanMeetingSubscriptionWhereInput
+) {
+  planMeeting(where: $where) {
+    mutation
+    node {
+    ...MeetingCalendarFields
+    }
+    previousValues {
+      id
+    }
+  }
+}
+
+query PlanMeetingsCounts($where: PlanMeetingWhereInput, $skip: Int) {
+  planMeetingsConnection(where: $where, skip: $skip) {
+    aggregate {
+      count
+    }
+  }
+}

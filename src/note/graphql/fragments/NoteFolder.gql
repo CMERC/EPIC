@@ -1,0 +1,32 @@
+#import "./NoteFile.gql"
+
+fragment NoteFolderFields on NoteFolder {
+  id
+  name
+  createdAt
+  updatedAt
+  files { ...NoteFileFields }
+  folders { ...NestedNoteFolderFields }
+  parent  {
+    id
+    name
+    color
+  }
+  color
+}
+
+fragment NestedNoteFolderFields on NoteFolder {
+  id
+  name
+  color
+  folders {
+    id
+    name
+    color
+  }
+  parent {
+    id
+    name
+    color
+  }
+}

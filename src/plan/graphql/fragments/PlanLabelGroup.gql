@@ -1,0 +1,10 @@
+fragment LabelGroupFields on PlanLabelGroup {
+      id
+      title
+      groupLabels {
+        id
+        title
+        description
+        color
+      }
+}

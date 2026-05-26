@@ -1,0 +1,105 @@
+mutation Login($email: String!, $password: String!) {
+  login(email: $email, password: $password) {
+    token
+    user {
+      email
+      name
+      inviteAccepted
+      emailConfirmed
+      deletedAt
+      lastLogin
+      joinedAt
+      isSuper
+    }
+  }
+}
+
+query CurrentUser {
+  currentUser {
+    id
+    email
+    name
+    isSuper
+    role {
+      id
+      roles {
+        id
+        name
+      }
+    }
+  }
+}
+
+mutation Signup($data: SignupInput!) {
+  signup(data: $data) {
+    token
+    user {
+      email
+      name
+      inviteAccepted
+      emailConfirmed
+      deletedAt
+      lastLogin
+      joinedAt
+      isSuper
+    }
+  }
+}
+
+mutation SignupByInvite($data: SignupByInviteInput!) {
+  signupByInvite(data: $data) {
+    token
+    user {
+      email
+      name
+      inviteAccepted
+      emailConfirmed
+      deletedAt
+      lastLogin
+      joinedAt
+      isSuper
+    }
+  }
+}
+
+mutation InviteUser($data: InviteUserInput!) {
+  inviteUser(data: $data) {
+    id
+  }
+}
+
+mutation ConfirmEmail($email: String!, $emailConfirmToken: String!) {
+  confirmEmail(email: $email, emailConfirmToken: $emailConfirmToken) {
+    token
+  }
+}
+
+mutation ChangePassword($oldPassword: String!, $newPassword: String!) {
+  changePassword(oldPassword: $oldPassword, newPassword: $newPassword) {
+    id
+  }
+}
+
+mutation UpdateCurrentUser($data: UserUpdateInput!) {
+  updateCurrentUser(data: $data) {
+    id
+    email
+    name
+  }
+}
+
+mutation TriggerPasswordReset($email: String!) {
+  triggerPasswordReset(email: $email) {
+    ok
+  }
+}
+
+mutation PasswordReset(
+  $email: String!
+  $resetToken: String!
+  $password: String!
+) {
+  passwordReset(email: $email, resetToken: $resetToken, password: $password) {
+    id
+  }
+}

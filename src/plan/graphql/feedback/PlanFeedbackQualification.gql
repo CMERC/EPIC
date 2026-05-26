@@ -1,0 +1,67 @@
+#import "../fragments/feedback/PlanFeedbackQualification.gql"
+
+mutation PlanFeedbackQualificationCreate($data: PlanFeedbackQualificationCreateInput!) {
+  createPlanFeedbackQualification(data: $data) {
+      ...PlanFeedbackQualificationFields
+  }
+}
+
+mutation PlanFeedbackQualificationDelete($id: PlanFeedbackQualificationWhereUniqueInput!) {
+  deletePlanFeedbackQualification(where: $id) {
+    id
+  }
+}
+
+query PlanFeedbackQualificationsRead(
+  $where: PlanFeedbackQualificationWhereInput
+  $skip: Int
+  $first: Int
+  $after: String
+  $orderBy: PlanFeedbackQualificationOrderByInput
+) {
+  planFeedbackQualifications(
+    where: $where
+    skip: $skip
+    first: $first
+    after: $after
+    orderBy: $orderBy
+  ) {
+      ...PlanFeedbackQualificationFields
+  }
+}
+
+query PlanFeedbackQualificationRead($where: PlanFeedbackQualificationWhereUniqueInput!) {
+  planFeedbackQualification(where: $where) {
+      ...PlanFeedbackQualificationFields
+  }
+}
+
+mutation PlanFeedbackQualificationsUpdate(
+  $data: PlanFeedbackQualificationUpdateInput!
+  $where: PlanFeedbackQualificationWhereUniqueInput!
+) {
+  updatePlanFeedbackQualification(data: $data, where: $where) {
+    id
+  }
+}
+
+subscription PlanFeedbackQualificationSubscription(
+  $where: PlanFeedbackQualificationSubscriptionWhereInput
+) {
+  planFeedbackQualification(where: $where) {
+    mutation
+    node {
+      ...PlanFeedbackQualificationFields
+    }
+    previousValues {
+      id
+    }
+  }
+}
+query PlanFeedbackQualificationsCounts($where: PlanFeedbackQualificationWhereInput, $skip: Int) {
+  planFeedbackQualificationsConnection(where: $where, skip: $skip) {
+    aggregate {
+      count
+    }
+  }
+}

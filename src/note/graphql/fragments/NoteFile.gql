@@ -1,0 +1,12 @@
+#import "@/shared/graphql/fragments/MediaFile.gql"
+
+fragment NoteFileFields on NoteFile {
+  id
+  createdAt
+  updatedAt      
+  file { ...FileFields }
+  folder {
+    id
+    name
+  }
+}

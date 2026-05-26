@@ -1,0 +1,49 @@
+.navTop {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.0975);
+}
+.serviceNav {
+  height: 76px;
+  vertical-align: middle;
+}
+.navLogo {
+  width: 100px;
+}
+.contentMain {
+  max-width: 960px;
+}
+.card {
+  margin-bottom: 0px;
+  border: 1px solid #e6ecf0;
+  cursor: pointer;
+  text-align: left;
+  background-color: #e6ecf0;
+  box-shadow: initial;
+  border-radius: initial;
+}
+.post-content-container {
+  display: flex;
+  margin: 20px;
+  min-width: 400px;
+  min-height: 400px;
+  background: #fff;
+  justify-content: space-around;
+  .post-media {
+    img {
+      height: 100%;
+      width: 100%;
+    }
+  }
+  .post-content {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+}
+.content-image {
+  object-fit: cover;
+  margin: 0;
+  padding: 0.5vw;
+}
+.content-count {
+  padding: 0 1rem;
+}

@@ -1,0 +1,67 @@
+#import "../fragments/feedback/PlanFeedbackTask.gql"
+
+mutation PlanFeedbackTaskCreate($data: PlanFeedbackTaskCreateInput!) {
+  createPlanFeedbackTask(data: $data) {
+      ...PlanFeedbackTaskFields
+  }
+}
+
+mutation PlanFeedbackTaskDelete($id: PlanFeedbackTaskWhereUniqueInput!) {
+  deletePlanFeedbackTask(where: $id) {
+    id
+  }
+}
+
+query PlanFeedbackTasksRead(
+  $where: PlanFeedbackTaskWhereInput
+  $skip: Int
+  $first: Int
+  $after: String
+  $orderBy: PlanFeedbackTaskOrderByInput
+) {
+  planFeedbackTasks(
+    where: $where
+    skip: $skip
+    first: $first
+    after: $after
+    orderBy: $orderBy
+  ) {
+      ...PlanFeedbackTaskFields
+  }
+}
+
+query PlanFeedbackTaskRead($where: PlanFeedbackTaskWhereUniqueInput!) {
+  planFeedbackTask(where: $where) {
+      ...PlanFeedbackTaskFields
+  }
+}
+
+mutation PlanFeedbackTasksUpdate(
+  $data: PlanFeedbackTaskUpdateInput!
+  $where: PlanFeedbackTaskWhereUniqueInput!
+) {
+  updatePlanFeedbackTask(data: $data, where: $where) {
+    id
+  }
+}
+
+subscription PlanFeedbackTaskSubscription(
+  $where: PlanFeedbackTaskSubscriptionWhereInput
+) {
+  planFeedbackTask(where: $where) {
+    mutation
+    node {
+      ...PlanFeedbackTaskFields
+    }
+    previousValues {
+      id
+    }
+  }
+}
+query PlanFeedbackTasksCounts($where: PlanFeedbackTaskWhereInput, $skip: Int) {
+  planFeedbackTasksConnection(where: $where, skip: $skip) {
+    aggregate {
+      count
+    }
+  }
+}

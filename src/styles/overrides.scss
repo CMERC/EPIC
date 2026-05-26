@@ -1,0 +1,45 @@
+//Bulma overrides
+//added for link text blue, but normal links/text is-primary
+
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+a, a:hover {
+    color: $primary
+  }
+  
+  a.navbar-item:focus, a.navbar-item:focus-within, 
+  a.navbar-item:hover, a.navbar-item.is-active, 
+  .navbar-link:focus, .navbar-link:focus-within, 
+  .navbar-link:hover, .navbar-link.is-active 
+  {  color: $primary }
+  
+  .select:not(.is-multiple):not(.is-loading)::after {
+    border-color: $primary
+  }
+  
+  .input:focus, .taginput .taginput-container.is-focusable:focus, 
+  .textarea:focus, .select select:focus, .is-focused.input, 
+  .taginput .is-focused.taginput-container.is-focusable, 
+  .is-focused.textarea, .select select.is-focused, .input:active, 
+  .taginput .taginput-container.is-focusable:active, .textarea:active, 
+  .select select:active, .is-active.input, .taginput .is-active.taginput-container.is-focusable, 
+  .is-active.textarea, .select select.is-active {
+    border-color: $primary
+  }
+  
+  .tabs li.is-active a {
+    border-bottom-color: $primary;
+  }
+  
+  .pagination-link.is-current {
+    background-color: $primary;
+    border-color: $primary;
+  }
+
+  .settings a.navbar-item.is-active:not(:focus):not(:hover), .settings .navbar-link.is-active:not(:focus):not(:hover) {
+    color: $white;
+    background-color: $grey-darker
+  }
+  

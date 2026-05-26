@@ -1,0 +1,170 @@
+version: "3"
+
+networks:
+  http_network:
+    external: false
+  local_prisma:
+    external: false
+
+services:
+  traefik:
+    image: traefik:alpine
+    container_name: traefik
+    restart: ${RESTART_MODE}
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8080:8080"
+    labels:
+      - traefik.enable=true
+      - traefik.frontend.rule=Host:${APP_DOMAIN}
+      - traefik.frontend.rule=Host:traefik.${APP_DOMAIN}
+      - traefik.port=8080
+      - traefik.docker.network=http_network
+    volumes:
+      - //var/run/docker.sock:/var/run/docker.sock:ro
+      - ./traefik/traefik.toml:/traefik.toml:ro
+      - ./traefik/acme:/etc/traefik/acme
+    networks:
+      - http_network
+
+  client:
+    build: .
+    container_name: client
+    restart: ${RESTART_MODE}
+    ports:
+      - "2015:2015"
+    env_file: "./.env"
+    volumes:
+      - ./dist:/srv:ro
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=http_network
+      - traefik.port=2015
+      - traefik.frontend.priority=1
+      - traefik.frontend.rule=Host:${APP_DOMAIN}
+    networks:
+      - http_network
+
+  server:
+    build: ./server
+    container_name: server
+    depends_on:
+      - prisma
+      - redis
+    restart: ${RESTART_MODE}
+    environment:
+      - NODE_ENV=production
+    env_file: "./server/.env"
+    ports:
+      - "4000:4000"
+      - "3000:3000"
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=http_network
+      - traefik.backend=server
+      - traefik.graphql.frontend.priority=100
+      - traefik.graphql.frontend.rule=PathPrefix:/graphql
+      - traefik.link.frontend.rule=PathPrefix:/link
+      - traefik.healthcheck.frontend.rule=PathPrefix:/healthcheck
+      - traefik.port=4000
+    external_links:
+      - prisma:prisma.localhost
+      - minio:minio.localhost
+      - redis:redis.localhost
+    networks:
+      - http_network
+      - local_prisma
+
+  whoami:
+    image: emilevauge/whoami
+    container_name: whoami
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=http_network
+      - traefik.backend=whoami
+      - traefik.frontend.rule=PathPrefixStrip:/whoami
+      - traefik.port=80
+    networks:
+      - http_network
+
+  prisma:
+    image: prismagraphql/prisma:1.34.10
+    container_name: prisma
+    depends_on:
+      - db
+    restart: ${RESTART_MODE}
+    ports:
+      - "4466:4466"
+    environment:
+      PRISMA_CONFIG: |
+        port: 4466
+        # uncomment the next line and provide the env var PRISMA_MANAGEMENT_API_SECRET=my-secret to activate cluster security
+        # managementApiSecret: my-secret
+        databases:
+          default:
+            connector: mysql
+            active: true
+            host: db
+            port: 3306
+            user: root
+            password: prisma
+            managementSchema: graphcool
+    networks:
+      - local_prisma
+
+  db:
+    image: mysql:5.7
+    container_name: db
+    restart: ${RESTART_MODE}
+    environment:
+      MYSQL_ROOT_PASSWORD: prisma
+    volumes:
+      - ./data/db:/var/lib/mysql
+    networks:
+      - local_prisma
+
+  minio:
+    image: minio/minio
+    container_name: minio
+    restart: ${RESTART_MODE}
+    volumes:
+      - ./data/minio:/data
+    ports:
+      - "9000:9000"
+    environment:
+      MINIO_ACCESS_KEY: 87NCVJ7D1GAGN7YTVCV4
+      MINIO_SECRET_KEY: A4uT5NSj5dF8KI6VUxITuhnzgyVae/kIGPYzXRzt
+    command: server /data
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=http_network
+      - traefik.backend=minio
+      - traefik.frontend.priority=100
+      - traefik.frontend.rule=PathPrefix:/files,/minio
+      - traefik.port=9000
+    networks:
+      - http_network
+
+  redis:
+    image: redis:alpine
+    container_name: redis
+    restart: ${RESTART_MODE}
+    volumes:
+      - ./data/redis:/data
+    command: ["redis-server", "--appendonly", "yes"]
+    ports:
+      - "6379:6379"
+    networks:
+      - http_network
+
+  graphql-faker:
+    image: apisguru/graphql-faker
+    container_name: graphql-faker
+    restart: ${RESTART_MODE}
+    ports:
+      - "9002:9002"
+    volumes:
+      - ./server/database:/workdir
+    networks:
+      - http_network

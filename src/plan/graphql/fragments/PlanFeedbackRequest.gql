@@ -1,0 +1,10 @@
+
+#import "./PlanFeedback.gql"
+
+fragment FeedbackRequestFields on PlanFeedbackRequest {
+  id
+  createdAt
+  start
+  end
+  feedbacks  { ...PlanFeedbackFields }
+}

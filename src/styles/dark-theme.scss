@@ -1,0 +1,249 @@
+$dark-bg: #111827;
+$dark-surface: #172033;
+$dark-surface-2: #1f2937;
+$dark-surface-3: #263447;
+$dark-border: #3b4658;
+$dark-text: #edf2f7;
+$dark-muted: #b7c2d0;
+$dark-link: #7dd3fc;
+$dark-accent: #fbbf24;
+
+html.theme-dark,
+body.theme-dark {
+  background: $dark-bg;
+  color: $dark-text;
+}
+
+.theme-dark {
+  background: $dark-bg;
+  color: $dark-text;
+  color-scheme: dark;
+  min-height: 100vh;
+
+  a,
+  a:hover {
+    color: $dark-link;
+  }
+
+  .has-text-black,
+  .has-text-dark,
+  .has-text-grey-darker,
+  .has-text-grey-dark,
+  .title,
+  .subtitle,
+  .label,
+  .content,
+  .table,
+  .menu-label,
+  .modal-card-title,
+  .card-header-title {
+    color: $dark-text !important;
+  }
+
+  .has-text-grey,
+  .has-text-grey-light,
+  .help,
+  .breadcrumb li.is-active a,
+  .pagination-previous,
+  .pagination-next,
+  .pagination-link {
+    color: $dark-muted !important;
+  }
+
+  .section,
+  .hero,
+  .box,
+  .card,
+  .panel,
+  .message,
+  .modal-card,
+  .modal-card-head,
+  .modal-card-body,
+  .modal-card-foot,
+  .dropdown-content,
+  .navbar-dropdown,
+  .tabs.is-boxed a,
+  .tile.is-child,
+  .notification:not(.is-primary):not(.is-info):not(.is-success):not(.is-warning):not(.is-danger) {
+    background-color: $dark-surface;
+    color: $dark-text;
+    border-color: $dark-border;
+  }
+
+  .card-header,
+  .card-footer,
+  .panel-heading,
+  .panel-block,
+  .media,
+  .table td,
+  .table th,
+  hr,
+  .navbar-divider {
+    border-color: $dark-border;
+  }
+
+  .panel-heading,
+  .table thead th,
+  .table tfoot th,
+  .modal-card-head,
+  .modal-card-foot,
+  .card-header,
+  .card-footer {
+    background-color: $dark-surface-2;
+  }
+
+  .table,
+  .table thead,
+  .table tbody,
+  .table tfoot {
+    background-color: $dark-surface;
+    color: $dark-text;
+  }
+
+  .table.is-striped tbody tr:not(.is-selected):nth-child(even) {
+    background-color: $dark-surface-2;
+  }
+
+  .table tbody tr:hover,
+  .table.is-hoverable tbody tr:not(.is-selected):hover {
+    background-color: $dark-surface-3;
+  }
+
+  .input,
+  .textarea,
+  .select select,
+  .taginput .taginput-container,
+  .multiselect__tags,
+  .multiselect__input,
+  .multiselect__single,
+  .multiselect__content-wrapper,
+  .dropdown-trigger .button {
+    background-color: $dark-surface-2;
+    border-color: $dark-border;
+    color: $dark-text;
+  }
+
+  .input::placeholder,
+  .textarea::placeholder {
+    color: $dark-muted;
+  }
+
+  .button:not(.is-primary):not(.is-info):not(.is-success):not(.is-warning):not(.is-danger):not(.is-link) {
+    background-color: $dark-surface-2;
+    border-color: $dark-border;
+    color: $dark-text;
+
+    &:hover,
+    &:focus {
+      background-color: $dark-surface-3;
+      border-color: lighten($dark-border, 12%);
+      color: $dark-text;
+    }
+  }
+
+  .tag:not(.is-primary):not(.is-info):not(.is-success):not(.is-warning):not(.is-danger):not(.is-link) {
+    background-color: $dark-surface-3;
+    color: $dark-text;
+  }
+
+  .navbar,
+  .navbar-menu,
+  .navbar-brand {
+    background-color: #0f172a;
+    color: $dark-text;
+  }
+
+  .navbar-item,
+  .navbar-link {
+    color: $dark-text;
+
+    &:focus,
+    &:focus-within,
+    &:hover,
+    &.is-active {
+      background-color: $dark-surface-2;
+      color: $dark-link;
+    }
+  }
+
+  .navbar-link:not(.is-arrowless)::after {
+    border-color: $dark-link;
+  }
+
+  .theme-toggle {
+    color: $dark-accent;
+
+    &:hover,
+    &:focus {
+      background-color: $dark-surface-2;
+      color: lighten($dark-accent, 10%);
+    }
+  }
+
+  .tabs a,
+  .breadcrumb a,
+  .pagination-link,
+  .pagination-next,
+  .pagination-previous,
+  .menu-list a {
+    color: $dark-muted;
+  }
+
+  .tabs li.is-active a,
+  .menu-list a.is-active,
+  .pagination-link.is-current {
+    background-color: $dark-surface-3;
+    border-color: $dark-link;
+    color: $dark-text;
+  }
+
+  .ql-toolbar,
+  .ql-container,
+  .ql-editor,
+  .ql-picker,
+  .ql-picker-options {
+    background-color: $dark-surface-2;
+    border-color: $dark-border !important;
+    color: $dark-text;
+  }
+
+  .ql-stroke {
+    stroke: $dark-text;
+  }
+
+  .ql-fill {
+    fill: $dark-text;
+  }
+
+  .datepicker,
+  .datepicker .dropdown-content,
+  .datepicker-table,
+  .datepicker-table .datepicker-cell,
+  .timepicker,
+  .timepicker .dropdown-content {
+    background-color: $dark-surface;
+    color: $dark-text;
+  }
+
+  .datepicker-table .datepicker-cell:hover,
+  .datepicker-table .datepicker-cell.is-today {
+    background-color: $dark-surface-3;
+    color: $dark-text;
+  }
+
+  .multiselect__option--highlight,
+  .multiselect__option--selected.multiselect__option--highlight {
+    background: $dark-surface-3;
+    color: $dark-text;
+  }
+}
+
+@media screen and (max-width: 1023px) {
+  .theme-dark {
+    .navbar.is-fixed-top .navbar-menu,
+    .navbar.is-fixed-top-touch .navbar-menu,
+    .navbar .navbar-menu {
+      background-color: #0f172a;
+    }
+  }
+}

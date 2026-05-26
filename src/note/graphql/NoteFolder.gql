@@ -1,0 +1,60 @@
+#import "./fragments/NoteFolder.gql"
+
+mutation NoteFolderCreate($data: NoteFolderCreateInput!) {
+  createNoteFolder(data: $data) {
+  ...NoteFolderFields
+  }
+}
+
+mutation NoteFolderDelete($id: NoteFolderWhereUniqueInput!) {
+  deleteNoteFolder(where: $id) {
+    id
+  }
+}
+
+query NoteFoldersRead(
+  $where: NoteFolderWhereInput
+  $skip: Int
+  $first: Int
+  $after: String
+) {
+  noteFolders(where: $where, skip: $skip, first: $first, after: $after) {
+  ...NoteFolderFields
+  }
+}
+query NoteFolderRead(
+  $where: NoteFolderWhereUniqueInput!
+) {
+  noteFolder(where: $where) {
+  ...NoteFolderFields
+  }
+}
+mutation NoteFolderUpdate(
+  $data: NoteFolderUpdateInput!
+  $where: NoteFolderWhereUniqueInput!
+) {
+  updateNoteFolder(data: $data, where: $where) {
+    id
+    name
+  }
+}
+
+query NoteFoldersCounts($where: NoteFolderWhereInput, $skip: Int, $first: Int) {
+  noteFoldersConnection(where: $where, skip: $skip, first: $first) {
+    aggregate {
+      count
+    }
+  }
+}
+
+# subscription NoteFoldersSubscription($where: NoteFolderWhereInput) {
+#   noteFolder(where: $where) {
+#     mutation
+#     node {
+#       ...NoteFolderFields
+#     }
+#     previousValues {
+#       id
+#     }
+#   }
+# }

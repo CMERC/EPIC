@@ -1,0 +1,132 @@
+#import "./fragments/MediaProfile.gql"
+
+mutation MediaProfilesCreate($data: MediaProfileCreateInput!) {
+  createMediaProfile(data: $data) {
+...ProfileFields
+  }
+}
+
+mutation MediaProfilesDelete($id: MediaProfileWhereUniqueInput!) {
+  deleteMediaProfile(where: $id) {
+    id
+  }
+}
+
+query MediaProfilesRead(
+  $where: MediaProfileWhereInput
+  $skip: Int
+  $first: Int
+  $after: String
+  $orderBy: MediaProfileOrderByInput
+) {
+  mediaProfiles(
+    where: $where
+    skip: $skip
+    first: $first
+    after: $after
+    orderBy: $orderBy
+  ) {
+    ...ProfileFields
+  }
+}
+
+query MediaProfilesSlim(
+  $where: MediaProfileWhereInput
+  $skip: Int
+  $first: Int
+  $after: String
+  $orderBy: MediaProfileOrderByInput
+) {
+  mediaProfiles(
+    where: $where
+    skip: $skip
+    first: $first
+    after: $after
+    orderBy: $orderBy
+  ) {
+    ...ProfileList
+  }
+}
+
+query MediaProfilesSelect(
+  $where: MediaProfileWhereInput
+  $skip: Int
+  $first: Int
+  $after: String
+  $orderBy: MediaProfileOrderByInput
+) {
+  mediaProfiles(
+    where: $where
+    skip: $skip
+    first: $first
+    after: $after
+    orderBy: $orderBy
+  ) {
+    ...ProfileSelect
+  }
+}
+
+query MediaProfileRead($where: MediaProfileWhereUniqueInput!) {
+  mediaProfile(where: $where) {
+    ...ProfileFields
+  }
+}
+
+subscription MediaProfilesSlimSubscription(
+  $where: MediaProfileSubscriptionWhereInput
+) {
+  mediaProfile(where: $where) {
+    mutation
+    node {
+    ...ProfileList
+    }
+    previousValues {
+      id
+    }
+  }
+}
+
+subscription MediaProfilesSelectSubscription(
+  $where: MediaProfileSubscriptionWhereInput
+) {
+  mediaProfile(where: $where) {
+    mutation
+    node {
+    ...ProfileSelect
+    }
+    previousValues {
+      id
+    }
+  }
+}
+
+subscription MediaProfilesSubscription(
+  $where: MediaProfileSubscriptionWhereInput
+) {
+  mediaProfile(where: $where) {
+    mutation
+    node {
+    ...ProfileFields
+    }
+    previousValues {
+      id
+    }
+  }
+}
+
+mutation MediaProfilesUpdate(
+  $data: MediaProfileUpdateInput!
+  $where: MediaProfileWhereUniqueInput!
+) {
+  updateMediaProfile(data: $data, where: $where) {
+    ...ProfileFields
+  }
+}
+
+query MediaProfileCounts($where: MediaProfileWhereInput) {
+  mediaProfilesConnection(where: $where) {
+    aggregate {
+      count
+    }
+  }
+}

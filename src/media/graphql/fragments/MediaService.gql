@@ -1,0 +1,11 @@
+
+fragment MediaServiceFields on MediaService {
+    id
+    name
+    displayName
+    type
+    description
+    icon
+    color
+    template
+}

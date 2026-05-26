@@ -1,0 +1,56 @@
+#import "./fragments/AdminFragments.gql"
+
+mutation AppUserRolesUpdate(
+  $data: AppUserRoleUpdateInput!
+  $where: AppUserRoleWhereUniqueInput!
+) {
+  updateAppUserRole(data: $data, where: $where) {
+    ...UserRoleFields
+  }
+}
+
+mutation UpsertAppUserRole(
+  $create: AppUserRoleCreateInput!
+  $update: AppUserRoleUpdateInput!
+  $where: AppUserRoleWhereUniqueInput!
+) {
+  upsertAppUserRole(create: $create, update: $update, where: $where) {
+    ...UserRoleFields
+  }
+}
+
+query AppUserRolesRead(
+  $where: AppUserRoleWhereInput
+  $orderBy: AppUserRoleOrderByInput
+  $skip: Int
+  $after: String
+  $before: String
+  $first: Int
+  $last: Int
+) {
+  appUserRoles(
+    where: $where
+    orderBy: $orderBy
+    skip: $skip
+    after: $after
+    before: $before
+    first: $first
+    last: $last
+  ) {
+    ...UserRoleFields
+  }
+}
+
+mutation AppUserRolesDelete($where: AppUserRoleWhereUniqueInput!) {
+  deleteAppUserRole(where: $where) {
+    id
+  }
+}
+
+query AppUserRolesCounts($where: AppUserRoleWhereInput, $skip: Int) {
+  appUserRolesConnection(where: $where, skip: $skip) {
+    aggregate {
+      count
+    }
+  }
+}

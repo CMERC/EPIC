@@ -1,0 +1,113 @@
+#import "./fragments/PlanTrainingObjective.gql"
+
+mutation PlanTrainingObjectivesCreate(
+  $data: PlanTrainingObjectiveCreateInput!
+) {
+  createPlanTrainingObjective(data: $data) {
+    ...TrainingObjectiveFields
+  }
+}
+
+mutation PlanTrainingObjectivesDelete(
+  $id: PlanTrainingObjectiveWhereUniqueInput!
+) {
+  deletePlanTrainingObjective(where: $id) {
+    id
+  }
+}
+
+query PlanTrainingObjectivesRead(
+  $where: PlanTrainingObjectiveWhereInput
+  $skip: Int
+  $first: Int
+  $after: String
+  $orderBy: PlanTrainingObjectiveOrderByInput
+) {
+  planTrainingObjectives(
+    where: $where
+    skip: $skip
+    first: $first
+    after: $after
+    orderBy: $orderBy
+  ) {
+    ...TrainingObjectiveFields
+  }
+}
+
+query PlanTrainingObjectivesList(
+  $where: PlanTrainingObjectiveWhereInput
+  $skip: Int
+  $first: Int
+  $after: String
+  $orderBy: PlanTrainingObjectiveOrderByInput
+) {
+  planTrainingObjectives(
+    where: $where
+    skip: $skip
+    first: $first
+    after: $after
+    orderBy: $orderBy
+  ) {
+    ...TrainingObjectiveSlim
+  }
+}
+
+query PlanTrainingObjectivesAssessList(
+  $where: PlanTrainingObjectiveWhereInput
+  $skip: Int
+  $first: Int
+  $after: String
+  $orderBy: PlanTrainingObjectiveOrderByInput
+) {
+  planTrainingObjectives(
+    where: $where
+    skip: $skip
+    first: $first
+    after: $after
+    orderBy: $orderBy
+  ) {
+    ...TrainingObjectiveAssessSlim
+  }
+}
+
+query PlanTrainingObjectiveRead(
+  $where: PlanTrainingObjectiveWhereUniqueInput!
+) {
+  planTrainingObjective(where: $where) {
+    ...TrainingObjectiveFields
+  }
+}
+
+mutation PlanTrainingObjectivesUpdate(
+  $data: PlanTrainingObjectiveUpdateInput!
+  $where: PlanTrainingObjectiveWhereUniqueInput!
+) {
+  updatePlanTrainingObjective(data: $data, where: $where) {
+    ...TrainingObjectiveFields
+  }
+}
+
+subscription PlanTrainingObjectiveSubscription(
+  $where: PlanTrainingObjectiveSubscriptionWhereInput
+) {
+  planTrainingObjective(where: $where) {
+    mutation
+    node {
+      ...TrainingObjectiveFields
+    }
+    previousValues {
+      id
+    }
+  }
+}
+
+query PlanTrainingObjectiveCounts(
+  $where: PlanTrainingObjectiveWhereInput
+  $skip: Int
+) {
+  planTrainingObjectivesConnection(where: $where, skip: $skip) {
+    aggregate {
+      count
+    }
+  }
+}

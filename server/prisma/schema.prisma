@@ -1,0 +1,851 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model ActivityStream {
+  id          String   @id @db.Char(25)
+  createdAt   DateTime
+  updatedAt   DateTime
+  summary     String   @db.MediumText
+  actor       String   @db.MediumText
+  type        String   @db.MediumText
+  referenceID String   @db.MediumText
+  url         String?  @db.MediumText
+  name        String?  @db.MediumText
+  content     String?  @db.MediumText
+}
+
+model AppListSetting {
+  id     String  @id @db.Char(25)
+  name   String? @unique(map: "name_UNIQUE", length: 191) @db.MediumText
+  status String
+}
+
+model AppRole {
+  id          String        @id @db.Char(25)
+  createdAt   DateTime
+  updatedAt   DateTime
+  name        String        @unique(map: "name_UNIQUE")
+  displayName String?       @db.MediumText
+  AppUserRole AppUserRole[]
+}
+
+model AppUserRole {
+  id        String    @id @db.Char(25)
+  createdAt DateTime
+  updatedAt DateTime
+  AppRole   AppRole[]
+  User      User[]    @relation("UserRole")
+}
+
+model AppWorkspace {
+  id          String   @id @db.Char(25)
+  name        String   @unique(map: "name_UNIQUE", length: 191) @db.MediumText
+  displayName String   @db.MediumText
+  timeZone    String?  @db.MediumText
+  isTemplate  Boolean?
+  status      String?
+  createdAt   DateTime
+  updatedAt   DateTime
+  User        User[]
+}
+
+model AuthToken {
+  id        String   @id @db.Char(25)
+  createdAt DateTime
+  updatedAt DateTime
+  token     String?  @db.MediumText
+  user      String?  @db.Char(25)
+  User      User?    @relation(fields: [user], references: [id], onUpdate: Restrict, map: "AuthToken_ibfk_1")
+
+  @@index([user], map: "user")
+}
+
+model ChatMessage {
+  id        String     @id @db.Char(25)
+  createdAt DateTime
+  updatedAt DateTime
+  text      String     @db.MediumText
+  author    String     @db.MediumText
+  ChatRoom  ChatRoom[] @relation("RoomMessage")
+}
+
+model ChatRoom {
+  id          String        @id @db.Char(25)
+  createdAt   DateTime
+  updatedAt   DateTime
+  title       String        @db.MediumText
+  ChatMessage ChatMessage[] @relation("RoomMessage")
+}
+
+model EmailMailbox {
+  id           String         @id @db.Char(25)
+  createdAt    DateTime
+  updatedAt    DateTime
+  owner        String         @unique(map: "owner_UNIQUE", length: 191) @db.MediumText
+  EmailMessage EmailMessage[] @relation("MailboxMessage")
+}
+
+model EmailMessage {
+  id           String         @id @db.Char(25)
+  createdAt    DateTime
+  updatedAt    DateTime
+  to           String         @db.MediumText
+  from         String         @db.MediumText
+  subject      String?        @db.MediumText
+  content      String?        @db.MediumText
+  status       String?
+  folder       String?
+  MediaFile    MediaFile[]
+  EmailMailbox EmailMailbox[] @relation("MailboxMessage")
+}
+
+model KeyValue {
+  id           String         @id @db.Char(25)
+  createdAt    DateTime
+  updatedAt    DateTime
+  key          String         @db.MediumText
+  value        String         @db.MediumText
+  MediaPersona MediaPersona[]
+}
+
+model Location {
+  id              String            @id @db.Char(25)
+  createdAt       DateTime
+  updatedAt       DateTime
+  geojson         String?           @db.MediumText
+  geohash         String?           @db.MediumText
+  MediaNetwork    MediaNetwork[]
+  MediaNoiseLevel MediaNoiseLevel[]
+  MediaPersona    MediaPersona[]
+  MediaPost       MediaPost[]
+  MediaProfile    MediaProfile[]
+  ObservePost     ObservePost[]
+  PlanEvent       PlanEvent[]
+  PlanInject      PlanInject[]
+}
+
+model MapInt {
+  id              String            @id @db.Char(25)
+  createdAt       DateTime
+  updatedAt       DateTime
+  key             String            @unique(map: "key_UNIQUE", length: 191) @db.MediumText
+  value           Int
+  MediaNoiseLevel MediaNoiseLevel[] @relation("MediaNoiseLevelFeeds")
+}
+
+model MapLayer {
+  id        String   @id @db.Char(25)
+  createdAt DateTime
+  updatedAt DateTime
+  title     String   @db.MediumText
+  type      String?
+  geojson   String?  @db.MediumText
+}
+
+model MediaBanner {
+  id           String         @id @db.Char(25)
+  createdAt    DateTime
+  updatedAt    DateTime
+  MediaFile    MediaFile[]
+  MediaProfile MediaProfile[]
+  MediaService MediaService[]
+}
+
+model MediaFile {
+  id           String         @id @db.Char(25)
+  name         String         @db.MediumText
+  secret       String?        @unique(map: "secret_UNIQUE", length: 191) @db.MediumText
+  contentType  String         @db.MediumText
+  size         Int?
+  createdAt    DateTime
+  updatedAt    DateTime
+  createTime   DateTime?
+  updateTime   DateTime?
+  url          String?        @db.MediumText
+  EmailMessage EmailMessage[]
+  MediaBanner  MediaBanner[]
+  NoteFile     NoteFile[]     @relation("MediaFileInFile")
+  MediaNetwork MediaNetwork[]
+  MediaPersona MediaPersona[]
+  MediaPost    MediaPost[]
+  MediaProfile MediaProfile[]
+  MediaService MediaService[]
+  NotePage     NotePage[]
+  PlanInject   PlanInject[]
+  ObservePost  ObservePost[]  @relation("ObservePostAttachments")
+}
+
+model MediaMarkovSource {
+  id              String            @id @db.Char(25)
+  createdAt       DateTime
+  updatedAt       DateTime
+  key             String            @unique(map: "key_UNIQUE", length: 191) @db.MediumText
+  sourceText      String            @db.MediumText
+  MediaNoiseLevel MediaNoiseLevel[] @relation("MediaNoiseLevelSources")
+}
+
+model MediaNetwork {
+  id           String         @id @db.Char(25)
+  createdAt    DateTime
+  updatedAt    DateTime
+  name         String         @unique(map: "name_UNIQUE", length: 191) @db.MediumText
+  description  String?        @db.MediumText
+  Location     Location[]
+  MediaFile    MediaFile[]
+  MediaPersona MediaPersona[]
+}
+
+model MediaNoiseLevel {
+  id                String              @id @db.Char(25)
+  createdAt         DateTime
+  updatedAt         DateTime
+  postRate          Int
+  name              String              @unique(map: "name_UNIQUE", length: 191) @db.MediumText
+  filterTags        String?             @db.MediumText
+  Location          Location[]
+  MapInt            MapInt[]            @relation("MediaNoiseLevelFeeds")
+  MediaMarkovSource MediaMarkovSource[] @relation("MediaNoiseLevelSources")
+}
+
+model MediaPersona {
+  id                            String             @id @db.Char(25)
+  createdAt                     DateTime
+  updatedAt                     DateTime
+  name                          String             @db.MediumText
+  role                          String?            @db.MediumText
+  description                   String?            @db.MediumText
+  KeyValue                      KeyValue[]
+  Location                      Location[]
+  MediaFile                     MediaFile[]
+  MediaNetwork                  MediaNetwork[]
+  MediaProfile                  MediaProfile[]
+  MediaPersonaEdge_PersonaEnd   MediaPersonaEdge[] @relation("PersonaEnd")
+  MediaPersonaEdge_PersonaStart MediaPersonaEdge[] @relation("PersonaStart")
+}
+
+model MediaPersonaEdge {
+  id                        String         @id @db.Char(25)
+  createdAt                 DateTime
+  updatedAt                 DateTime
+  name                      String?        @db.MediumText
+  MediaPersona_PersonaEnd   MediaPersona[] @relation("PersonaEnd")
+  MediaPersona_PersonaStart MediaPersona[] @relation("PersonaStart")
+}
+
+model MediaPost {
+  id              String         @id @db.Char(25)
+  createdAt       DateTime
+  updatedAt       DateTime
+  createTime      DateTime?
+  updateTime      DateTime?
+  isPublished     Boolean
+  publishTime     DateTime?
+  title           String         @db.MediumText
+  text            String         @db.MediumText
+  url             String?        @db.MediumText
+  isUserGenerated Boolean?
+  counts          String?        @db.MediumText
+  MediaPost_A     MediaPost[]    @relation("Comments")
+  MediaPost_B     MediaPost[]    @relation("Comments")
+  Location        Location[]
+  MediaFile       MediaFile[]
+  MediaProfile    MediaProfile[] @relation("ProfilePosts")
+}
+
+model MediaProfile {
+  id              String         @id @db.Char(25)
+  createdAt       DateTime
+  updatedAt       DateTime
+  username        String         @db.MediumText
+  name            String?        @db.MediumText
+  description     String?        @db.MediumText
+  url             String?        @db.MediumText
+  createdTime     DateTime?
+  isUserGenerated Boolean?
+  language        String?        @db.MediumText
+  counts          String?        @db.MediumText
+  Location        Location[]
+  MediaBanner     MediaBanner[]
+  MediaFile       MediaFile[]
+  MediaPersona    MediaPersona[]
+  MediaService    MediaService[]
+  MediaPost       MediaPost[]    @relation("ProfilePosts")
+}
+
+model MediaService {
+  id           String         @id @db.Char(25)
+  createdAt    DateTime
+  updatedAt    DateTime
+  name         String         @unique(map: "name_UNIQUE", length: 191) @db.MediumText
+  displayName  String         @db.MediumText
+  type         String?
+  description  String?        @db.MediumText
+  icon         String?        @db.MediumText
+  color        String?        @db.MediumText
+  template     String?        @db.MediumText
+  MediaBanner  MediaBanner[]
+  MediaFile    MediaFile[]
+  MediaProfile MediaProfile[]
+}
+
+model NoteBook {
+  id          String        @id @db.Char(25)
+  title       String        @db.MediumText
+  isTemplate  Boolean
+  createdAt   DateTime
+  updatedAt   DateTime
+  icon        String?       @db.MediumText
+  color       String?       @db.MediumText
+  NoteSection NoteSection[] @relation("NoteSections")
+}
+
+model NoteFile {
+  id         String       @id @db.Char(25)
+  createdAt  DateTime
+  updatedAt  DateTime
+  NoteFolder NoteFolder[] @relation("FilesInFolder")
+  MediaFile  MediaFile[]  @relation("MediaFileInFile")
+}
+
+model NoteFolder {
+  id           String       @id @db.Char(25)
+  createdAt    DateTime
+  updatedAt    DateTime
+  name         String       @unique(map: "name_UNIQUE", length: 191) @db.MediumText
+  color        String?      @db.MediumText
+  NoteFile     NoteFile[]   @relation("FilesInFolder")
+  NoteFolder_A NoteFolder[] @relation("FoldersInFolder")
+  NoteFolder_B NoteFolder[] @relation("FoldersInFolder")
+}
+
+model NotePage {
+  id          String        @id @db.Char(25)
+  title       String        @db.MediumText
+  text        String?       @db.MediumText
+  createdAt   DateTime
+  updatedAt   DateTime
+  MediaFile   MediaFile[]
+  NoteSection NoteSection[] @relation("NotePages")
+}
+
+model NoteSection {
+  id        String     @id @db.Char(25)
+  title     String     @db.MediumText
+  createdAt DateTime
+  updatedAt DateTime
+  NotePage  NotePage[] @relation("NotePages")
+  NoteBook  NoteBook[] @relation("NoteSections")
+}
+
+model ObservePost {
+  id        String      @id @db.Char(25)
+  createdAt DateTime
+  updatedAt DateTime
+  text      String      @db.MediumText
+  author    String      @db.MediumText
+  Location  Location[]
+  MediaFile MediaFile[] @relation("ObservePostAttachments")
+}
+
+model PlanAccreditedTask {
+  id                    String                  @id @db.Char(25)
+  createdAt             DateTime
+  updatedAt             DateTime
+  PlanJmet              PlanJmet[]
+  PlanTrainingObjective PlanTrainingObjective[]
+}
+
+model PlanAssessment {
+  id                    String                  @id @db.Char(25)
+  complete              Boolean?
+  status                String?
+  comment               String?                 @db.MediumText
+  createdAt             DateTime
+  updatedAt             DateTime
+  PlanMeasureData       PlanMeasureData[]       @relation("PlanAssessmentMeasureData")
+  PlanReason            PlanReason[]
+  PlanTrainingObjective PlanTrainingObjective[] @relation("PlanTrainingAssessments")
+}
+
+model PlanCommandPriority {
+  id                    String                  @id @db.Char(25)
+  createdAt             DateTime
+  updatedAt             DateTime
+  title                 String?                 @db.MediumText
+  description           String?                 @db.MediumText
+  PlanTrainingObjective PlanTrainingObjective[]
+}
+
+model PlanCustomReport {
+  id        String    @id @db.Char(25)
+  createdAt DateTime
+  updatedAt DateTime
+  title     String    @db.MediumText
+  start     DateTime?
+  end       DateTime?
+  source    String?   @db.MediumText
+}
+
+model PlanEvaluation {
+  id                    String                 @id @db.Char(25)
+  createdAt             DateTime
+  updatedAt             DateTime
+  complete              Boolean
+  status                String
+  comment               String?                @db.MediumText
+  remark                String?                @db.MediumText
+  email                 String?                @db.MediumText
+  trainingObjectives    String?                @db.Char(25)
+  PlanTrainingObjective PlanTrainingObjective? @relation(fields: [trainingObjectives], references: [id], onUpdate: Restrict, map: "PlanEvaluation_ibfk_1")
+  PlanFeedback          PlanFeedback[]         @relation("Evaluations")
+  PlanMeasureData       PlanMeasureData[]      @relation("PlanEvaluationMeasureData")
+  PlanReason            PlanReason[]
+
+  @@index([trainingObjectives], map: "trainingObjectives")
+}
+
+model PlanEvent {
+  id               String             @id @db.Char(25)
+  createdAt        DateTime
+  updatedAt        DateTime
+  name             String             @db.MediumText
+  type             String?            @db.MediumText
+  method           String?            @db.MediumText
+  startDate        DateTime?
+  endDate          DateTime?
+  description      String?            @db.MediumText
+  color            String?            @db.MediumText
+  exerciseGuidance String?            @db.MediumText
+  Location         Location[]
+  PlanInject       PlanInject[]       @relation("PlanEventName")
+  PlanOrganization PlanOrganization[]
+}
+
+model PlanExerciseObjective {
+  id                    String                  @id @db.Char(25)
+  createdAt             DateTime
+  updatedAt             DateTime
+  title                 String?                 @db.MediumText
+  exerciseObjective     String?                 @db.MediumText
+  measurePerformance    String?                 @db.MediumText
+  measureEffectiveness  String?                 @db.MediumText
+  PlanTrainingObjective PlanTrainingObjective[]
+}
+
+model PlanFeedback {
+  id                        String                      @id @db.Char(25)
+  createdAt                 DateTime
+  updatedAt                 DateTime
+  status                    String
+  PlanEvaluation            PlanEvaluation[]            @relation("Evaluations")
+  PlanFeedbackTask          PlanFeedbackTask[]          @relation("FeedbackTasks")
+  PlanLessonsLearned        PlanLessonsLearned[]        @relation("LessonsLearned")
+  PlanMetric                PlanMetric[]                @relation("Metrics")
+  PlanFeedbackRequest       PlanFeedbackRequest[]
+  PlanFeedbackQualification PlanFeedbackQualification[] @relation("Qualifications")
+}
+
+model PlanFeedbackQualification {
+  id                String              @id @db.Char(25)
+  createdAt         DateTime
+  updatedAt         DateTime
+  numberCompleted   Int?
+  PlanQualification PlanQualification[]
+  PlanFeedback      PlanFeedback[]      @relation("Qualifications")
+}
+
+model PlanFeedbackRequest {
+  id           String         @id @db.Char(25)
+  createdAt    DateTime
+  updatedAt    DateTime
+  start        DateTime?
+  end          DateTime?
+  PlanFeedback PlanFeedback[]
+}
+
+model PlanFeedbackTask {
+  id              String            @id @db.Char(25)
+  createdAt       DateTime
+  updatedAt       DateTime
+  numberCompleted Decimal?
+  PlanFeedback    PlanFeedback[]    @relation("FeedbackTasks")
+  PlanMissionTask PlanMissionTask[]
+}
+
+model PlanFundingSource {
+  id            String   @id @db.Char(25)
+  createdAt     DateTime
+  updatedAt     DateTime
+  primarySource String?  @db.MediumText
+  subSource     String?  @db.MediumText
+  amount        Decimal?
+}
+
+model PlanInject {
+  id                    String                  @id @db.Char(25)
+  number                Int?                    @unique(map: "number_UNIQUE")
+  title                 String                  @db.MediumText
+  description           String?                 @db.MediumText
+  mitigation            String?                 @db.MediumText
+  type                  String?                 @db.MediumText
+  trigger               String?                 @db.MediumText
+  response              String?                 @db.MediumText
+  responseDate          DateTime?
+  remarks               String?                 @db.MediumText
+  deletedAt             DateTime?
+  createdAt             DateTime
+  updatedAt             DateTime
+  startDate             DateTime?
+  from                  String?                 @db.MediumText
+  to                    String?                 @db.MediumText
+  Location              Location[]
+  MediaFile             MediaFile[]
+  PlanEvent             PlanEvent[]             @relation("PlanEventName")
+  PlanTrainingObjective PlanTrainingObjective[] @relation("PlanInjectObjectives")
+  PlanInjectOwner       PlanInjectOwner[]
+  PlanLabel             PlanLabel[]
+  PlanMethod            PlanMethod[]
+}
+
+model PlanInjectOwner {
+  id         String       @id @db.Char(25)
+  createdAt  DateTime
+  updatedAt  DateTime
+  title      String?      @unique(map: "title_UNIQUE", length: 191) @db.MediumText
+  key        String?      @unique(map: "key_UNIQUE", length: 191) @db.MediumText
+  PlanInject PlanInject[]
+}
+
+model PlanJmet {
+  id                    String                  @id @db.Char(25)
+  createdAt             DateTime
+  updatedAt             DateTime
+  levelWar              String?                 @db.MediumText
+  taskNumber            String?                 @db.MediumText
+  taskTitle             String?                 @db.MediumText
+  key                   String?                 @unique(map: "key_UNIQUE", length: 191) @db.MediumText
+  description           String?                 @db.MediumText
+  PlanAccreditedTask    PlanAccreditedTask[]
+  PlanTrainingObjective PlanTrainingObjective[]
+}
+
+model PlanJointStaffTrainingPriority {
+  id                    String                  @id @db.Char(25)
+  createdAt             DateTime
+  updatedAt             DateTime
+  title                 String?                 @db.MediumText
+  description           String?                 @db.MediumText
+  key                   String?                 @unique(map: "key_UNIQUE", length: 191) @db.MediumText
+  PlanTrainingObjective PlanTrainingObjective[]
+}
+
+model PlanLabel {
+  id             String           @id @db.Char(25)
+  createdAt      DateTime
+  updatedAt      DateTime
+  title          String           @unique(map: "title_UNIQUE", length: 191) @db.MediumText
+  description    String?          @db.MediumText
+  color          String?          @db.MediumText
+  PlanInject     PlanInject[]
+  PlanLabelGroup PlanLabelGroup[]
+}
+
+model PlanLabelGroup {
+  id        String      @id @db.Char(25)
+  createdAt DateTime
+  updatedAt DateTime
+  title     String      @db.MediumText
+  key       String?     @unique(map: "key_UNIQUE", length: 191) @db.MediumText
+  PlanLabel PlanLabel[]
+}
+
+model PlanLessonsLearned {
+  id               String         @id @db.Char(25)
+  createdAt        DateTime
+  updatedAt        DateTime
+  potentialOPR     String?        @db.MediumText
+  classification   String?        @db.MediumText
+  title            String?        @db.MediumText
+  observation      String?        @db.MediumText
+  discussion       String?        @db.MediumText
+  recommendation   String?        @db.MediumText
+  implications     String?        @db.MediumText
+  eventDescription String?        @db.MediumText
+  comments         String?        @db.MediumText
+  PlanFeedback     PlanFeedback[] @relation("LessonsLearned")
+}
+
+model PlanMeasure {
+  id                    String                  @id @db.Char(25)
+  createdAt             DateTime
+  updatedAt             DateTime
+  title                 String                  @db.MediumText
+  PlanMeasureData       PlanMeasureData[]
+  PlanTrainingObjective PlanTrainingObjective[] @relation("PlanTrainingObjectiveMeasure")
+}
+
+model PlanMeasureData {
+  id             String           @id @db.Char(25)
+  createdAt      DateTime
+  updatedAt      DateTime
+  value          String?          @db.MediumText
+  PlanAssessment PlanAssessment[] @relation("PlanAssessmentMeasureData")
+  PlanEvaluation PlanEvaluation[] @relation("PlanEvaluationMeasureData")
+  PlanMeasure    PlanMeasure[]
+}
+
+model PlanMeeting {
+  id        String    @id @db.Char(25)
+  createdAt DateTime
+  updatedAt DateTime
+  name      String?   @db.MediumText
+  location  String?   @db.MediumText
+  startDate DateTime?
+  endDate   DateTime?
+}
+
+model PlanMethod {
+  id         String       @id @db.Char(25)
+  createdAt  DateTime
+  updatedAt  DateTime
+  name       String       @db.MediumText
+  icon       String?      @db.MediumText
+  color      String?      @db.MediumText
+  key        String?      @unique(map: "key_UNIQUE", length: 191) @db.MediumText
+  PlanInject PlanInject[]
+}
+
+model PlanMetric {
+  id               String         @id @db.Char(25)
+  createdAt        DateTime
+  updatedAt        DateTime
+  flightHours      Int?
+  numOfStories     Int?
+  numOfPassesngers Int?
+  cargoWeight      Decimal?
+  fuelPassed       Decimal?
+  milesTraveled    Decimal?
+  gallonsGasUsed   Decimal?
+  PlanFeedback     PlanFeedback[] @relation("Metrics")
+}
+
+model PlanMissionTask {
+  id                  String                @id @db.Char(25)
+  createdAt           DateTime
+  updatedAt           DateTime
+  title               String                @unique(map: "title_UNIQUE", length: 191) @db.MediumText
+  PlanFeedbackTask    PlanFeedbackTask[]
+  PlanParticipantType PlanParticipantType[]
+}
+
+model PlanOrganization {
+  id        String      @id @db.Char(25)
+  createdAt DateTime
+  updatedAt DateTime
+  name      String?     @db.MediumText
+  group     String?     @db.MediumText
+  key       String?     @unique(map: "key_UNIQUE", length: 191) @db.MediumText
+  PlanEvent PlanEvent[]
+}
+
+model PlanParticipant {
+  id                           String                         @id @db.Char(25)
+  createdAt                    DateTime
+  updatedAt                    DateTime
+  name                         String?                        @db.MediumText
+  homeStation                  String?                        @db.MediumText
+  bedDown                      String?                        @db.MediumText
+  totalAudience                String?                        @db.MediumText
+  icon                         String?                        @db.MediumText
+  PlanParticipantFundingSource PlanParticipantFundingSource[] @relation("ParticipantFundingName")
+  PlanParticipantPlanner       PlanParticipantPlanner[]       @relation("ParticipantPlannerName")
+  PlanParticipantPlatform      PlanParticipantPlatform[]      @relation("ParticipantPlatformName")
+  PlanParticipantCommandAgency PlanParticipantCommandAgency[]
+  PlanParticipantService       PlanParticipantService[]
+  PlanParticipantServiceType   PlanParticipantServiceType[]
+  PlanParticipantType          PlanParticipantType[]
+  PlanTrainingObjective        PlanTrainingObjective[]        @relation("PlanTrainingObjectiveName")
+}
+
+model PlanParticipantCommandAgency {
+  id              String            @id @db.Char(25)
+  createdAt       DateTime
+  updatedAt       DateTime
+  title           String?           @unique(map: "title_UNIQUE", length: 191) @db.MediumText
+  key             String?           @unique(map: "key_UNIQUE", length: 191) @db.MediumText
+  PlanParticipant PlanParticipant[]
+}
+
+model PlanParticipantFundingSource {
+  id              String            @id @db.Char(25)
+  createdAt       DateTime
+  updatedAt       DateTime
+  primarySource   String?           @db.MediumText
+  subSource       String?           @db.MediumText
+  amount          Decimal?
+  PlanParticipant PlanParticipant[] @relation("ParticipantFundingName")
+}
+
+model PlanParticipantPlanner {
+  id              String            @id @db.Char(25)
+  createdAt       DateTime
+  updatedAt       DateTime
+  name            String?           @db.MediumText
+  email           String?           @db.MediumText
+  phoneNumber     String?           @db.MediumText
+  isPrimary       Boolean?
+  PlanParticipant PlanParticipant[] @relation("ParticipantPlannerName")
+}
+
+model PlanParticipantPlatform {
+  id                    String                  @id @db.Char(25)
+  createdAt             DateTime
+  updatedAt             DateTime
+  bedDown               String?                 @db.MediumText
+  audience              String?                 @db.MediumText
+  PlanParticipant       PlanParticipant[]       @relation("ParticipantPlatformName")
+  PlanPlatform          PlanPlatform[]
+  PlanTrainingObjective PlanTrainingObjective[]
+}
+
+model PlanParticipantService {
+  id              String            @id @db.Char(25)
+  createdAt       DateTime
+  updatedAt       DateTime
+  title           String?           @unique(map: "title_UNIQUE", length: 191) @db.MediumText
+  key             String?           @unique(map: "key_UNIQUE", length: 191) @db.MediumText
+  PlanParticipant PlanParticipant[]
+}
+
+model PlanParticipantServiceType {
+  id              String            @id @db.Char(25)
+  createdAt       DateTime
+  updatedAt       DateTime
+  title           String?           @unique(map: "title_UNIQUE", length: 191) @db.MediumText
+  key             String?           @unique(map: "key_UNIQUE", length: 191) @db.MediumText
+  PlanParticipant PlanParticipant[]
+}
+
+model PlanParticipantType {
+  id              String            @id @db.Char(25)
+  createdAt       DateTime
+  updatedAt       DateTime
+  title           String?           @unique(map: "title_UNIQUE", length: 191) @db.MediumText
+  key             String?           @unique(map: "key_UNIQUE", length: 191) @db.MediumText
+  PlanMissionTask PlanMissionTask[]
+  PlanParticipant PlanParticipant[]
+}
+
+model PlanPlatform {
+  id                      String                    @id @db.Char(25)
+  createdAt               DateTime
+  updatedAt               DateTime
+  title                   String?                   @db.MediumText
+  type                    String?                   @db.MediumText
+  key                     String?                   @unique(map: "key_UNIQUE", length: 191) @db.MediumText
+  PlanParticipantPlatform PlanParticipantPlatform[]
+}
+
+model PlanPriorityLevel {
+  id                    String                  @id @db.Char(25)
+  title                 String?                 @db.MediumText
+  color                 String?                 @db.MediumText
+  key                   String?                 @unique(map: "key_UNIQUE", length: 191) @db.MediumText
+  PlanTrainingObjective PlanTrainingObjective[]
+}
+
+model PlanQualification {
+  id                        String                      @id @db.Char(25)
+  createdAt                 DateTime
+  updatedAt                 DateTime
+  title                     String                      @unique(map: "title_UNIQUE", length: 191) @db.MediumText
+  PlanFeedbackQualification PlanFeedbackQualification[]
+}
+
+model PlanReason {
+  id             String           @id @db.Char(25)
+  createdAt      DateTime
+  updatedAt      DateTime
+  title          String?          @db.MediumText
+  key            String?          @unique(map: "key_UNIQUE", length: 191) @db.MediumText
+  PlanAssessment PlanAssessment[]
+  PlanEvaluation PlanEvaluation[]
+}
+
+model PlanRequestedMethodType {
+  id                    String                  @id @db.Char(25)
+  title                 String?                 @db.MediumText
+  key                   String?                 @unique(map: "key_UNIQUE", length: 191) @db.MediumText
+  PlanTrainingObjective PlanTrainingObjective[]
+}
+
+model PlanTrainedMethodType {
+  id                    String                  @id @db.Char(25)
+  title                 String?                 @db.MediumText
+  key                   String?                 @unique(map: "key_UNIQUE", length: 191) @db.MediumText
+  PlanTrainingObjective PlanTrainingObjective[]
+}
+
+model PlanTrainingObjective {
+  id                             String                           @id @db.Char(25)
+  requestedMethod                String?                          @db.MediumText
+  trainedMethod                  String?                          @db.MediumText
+  priority                       String?                          @db.MediumText
+  requiredRuns                   String?                          @db.MediumText
+  classification                 String?                          @db.MediumText
+  task                           String?                          @db.MediumText
+  condition                      String?                          @db.MediumText
+  standard                       String?                          @db.MediumText
+  createdAt                      DateTime
+  updatedAt                      DateTime
+  trainedMethodType              String?                          @db.Char(25)
+  requestedMethodType            String?                          @db.Char(25)
+  priorityLevel                  String?                          @db.Char(25)
+  PlanEvaluation                 PlanEvaluation[]
+  PlanTrainedMethodType          PlanTrainedMethodType?           @relation(fields: [trainedMethodType], references: [id], onUpdate: Restrict, map: "PlanTrainingObjective_ibfk_1")
+  PlanRequestedMethodType        PlanRequestedMethodType?         @relation(fields: [requestedMethodType], references: [id], onUpdate: Restrict, map: "PlanTrainingObjective_ibfk_2")
+  PlanPriorityLevel              PlanPriorityLevel?               @relation(fields: [priorityLevel], references: [id], onUpdate: Restrict, map: "PlanTrainingObjective_ibfk_3")
+  PlanAccreditedTask             PlanAccreditedTask[]
+  PlanCommandPriority            PlanCommandPriority[]
+  PlanExerciseObjective          PlanExerciseObjective[]
+  PlanInject                     PlanInject[]                     @relation("PlanInjectObjectives")
+  PlanJmet                       PlanJmet[]
+  PlanJointStaffTrainingPriority PlanJointStaffTrainingPriority[]
+  PlanParticipantPlatform        PlanParticipantPlatform[]
+  PlanAssessment                 PlanAssessment[]                 @relation("PlanTrainingAssessments")
+  PlanMeasure                    PlanMeasure[]                    @relation("PlanTrainingObjectiveMeasure")
+  PlanParticipant                PlanParticipant[]                @relation("PlanTrainingObjectiveName")
+
+  @@index([priorityLevel], map: "priorityLevel")
+  @@index([requestedMethodType], map: "requestedMethodType")
+  @@index([trainedMethodType], map: "trainedMethodType")
+}
+
+model User {
+  id                String         @id @db.Char(25)
+  createdAt         DateTime
+  updatedAt         DateTime
+  email             String         @unique(map: "email_UNIQUE", length: 191) @db.MediumText
+  password          String         @db.MediumText
+  name              String         @db.MediumText
+  inviteToken       String?        @db.MediumText
+  inviteAccepted    Boolean
+  emailConfirmed    Boolean
+  emailConfirmToken String?        @db.MediumText
+  resetToken        String?        @db.MediumText
+  resetExpires      DateTime?
+  deletedAt         DateTime?
+  lastLogin         DateTime?
+  joinedAt          DateTime
+  isSuper           Boolean
+  sessionId         String?        @db.MediumText
+  AuthToken         AuthToken[]
+  AppWorkspace      AppWorkspace[]
+  AppUserRole       AppUserRole[]  @relation("UserRole")
+}

@@ -1,0 +1,108 @@
+#import "./fragments/PlanParticipant.gql"
+
+mutation PlanParticipantsCreate($data: PlanParticipantCreateInput!) {
+  createPlanParticipant(data: $data) {
+    ...ParticipantFields
+    }
+  }
+
+mutation PlanParticipantsDelete($id: PlanParticipantWhereUniqueInput!) {
+  deletePlanParticipant(where: $id) {
+    id
+  }
+}
+
+query PlanParticipantsRead(
+  $where: PlanParticipantWhereInput
+  $skip: Int
+  $first: Int
+  $after: String
+  $orderBy: PlanParticipantOrderByInput
+) {
+  planParticipants(
+    where: $where
+    skip: $skip
+    first: $first
+    after: $after
+    orderBy: $orderBy
+  ) {
+    ...ParticipantFields
+  }
+}
+
+query PlanParticipantsList(
+  $where: PlanParticipantWhereInput
+  $skip: Int
+  $first: Int
+  $after: String
+  $orderBy: PlanParticipantOrderByInput
+) {
+  planParticipants(
+    where: $where
+    skip: $skip
+    first: $first
+    after: $after
+    orderBy: $orderBy
+  ) {
+    ...ParticipantSlim
+  }
+}
+
+query PlanParticipantRead($where: PlanParticipantWhereUniqueInput!) {
+  planParticipant(where: $where) {
+    ...ParticipantFields
+  }
+}
+
+mutation PlanParticipantsUpdate(
+  $data: PlanParticipantUpdateInput!
+  $where: PlanParticipantWhereUniqueInput!
+) {
+  updatePlanParticipant(data: $data, where: $where) {
+        ...ParticipantUpdateField
+    }
+  }
+
+subscription PlanParticipantSubscription(
+  $where: PlanParticipantSubscriptionWhereInput
+) {
+  planParticipant(where: $where) {
+    mutation
+    node {
+    ...ParticipantFields
+    }
+    previousValues {
+      id
+    }
+  }
+}
+
+query PlanParticipantsCounts($where: PlanParticipantWhereInput, $skip: Int) {
+  planParticipantsConnection(where: $where, skip: $skip) {
+    aggregate {
+      count
+    }
+  }
+}
+
+query participantsAndPlatforms {
+  participantsCount: planParticipantsConnection {
+    aggregate {
+      count
+    }
+  }
+    platformsCount: planParticipantPlatformsConnection {
+    aggregate {
+      count
+    }
+  }
+}
+
+query PlanParticipantsCalendarRead(
+  $where: PlanParticipantWhereInput
+  $orderBy: PlanParticipantOrderByInput
+) {
+  planParticipants(where: $where, orderBy: $orderBy) {
+    ...ParticipantFields
+  }
+}

@@ -1,0 +1,109 @@
+query mediaNoiseLevels {
+  mediaNoiseLevels {
+    id
+    name
+    postRate
+    feeds {
+      key
+      value
+    }
+    bounding {
+      geojson
+    }
+    filterTags
+  }
+}
+
+query mapInts {
+  mapInts {
+    key
+    value
+    attributes {
+      name
+    }
+  }
+}
+
+mutation createMediaNoiseLevel($data: MediaNoiseLevelCreateInput!) {
+  createMediaNoiseLevel(data: $data) {
+    name
+    postRate
+    feeds
+    bounding {
+      geojson
+    }
+    filterTags
+  }
+}
+
+mutation updateMediaNoiseLevel(
+  $data: MediaNoiseLevelUpdateInput!
+  $where: MediaNoiseLevelWhereUniqueInput!
+) {
+  updateMediaNoiseLevel(data: $data, where: $where) {
+    id
+    name
+    postRate
+    feeds {
+      key
+      value
+    }
+    bounding {
+      geojson
+    }
+    filterTags
+  }
+}
+
+mutation deleteMediaNoiseLevel($where: NoiseAttributeWhereUniqueInput!) {
+  deleteMediaNoiseLevel(where: $where) {
+    id
+    name
+  }
+}
+
+mutation createMapInt($data: MapIntCreateInput!) {
+  createMapInt(data: $data) {
+    key
+    value
+  }
+}
+
+mutation updateMapInt(
+  $data: MapIntUpdateInput!
+  $where: MapIntWhereUniqueInput!
+) {
+  updateMapInt(data: $data, where: $where) {
+    key
+    value
+    attributes {
+      name
+    }
+  }
+}
+
+mutation CreateMediaMarkovSource($data: MediaMarkovSourceCreateInput!) {
+  createMediaMarkovSource(data: $data) {
+    key
+    sourceText
+    attributes {
+      name
+    }
+  }
+}
+
+query MediaMarkovSource {
+  mediaMarkovSources {
+    key
+    sourceText
+    attributes {
+      name
+    }
+  }
+}
+
+mutation DeleteMediaMarkovSource($where: MediaMarkovSourceWhereUniqueInput!) {
+  deleteMediaMarkovSource(where: $where) {
+    key
+  }
+}

@@ -1,0 +1,23 @@
+#import "./fragments/PlanEvaluation.gql"
+
+query PlanEvaluationsRead(  
+  $where: PlanEvaluationWhereInput
+  $skip: Int
+  $first: Int
+  $after: String
+  $orderBy: PlanEvaluationOrderByInput) {
+  planEvaluations(
+    where: $where
+    skip: $skip
+    first: $first
+    after: $after
+    orderBy: $orderBy) {
+    ...EvaluationFields
+  }
+}
+
+mutation PlanEvaluationsDelete($id: PlanEvaluationWhereUniqueInput!) {
+  deletePlanEvaluation(where: $id) {
+    id
+  }
+}

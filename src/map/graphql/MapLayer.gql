@@ -1,0 +1,79 @@
+#import "./fragments/MapLayer.gql"
+
+mutation MapLayerCreate($data: MapLayerCreateInput!) {
+  createMapLayer(data: $data) {
+    id
+  }
+}
+
+mutation RangeLayerCreate($data:RangeLayerCreateInput!) {
+  createRangeLayer(data: $data) {
+    id
+  }
+}
+
+mutation MapLayerDelete($where: MapLayerWhereUniqueInput!) {
+  deleteMapLayer(where: $where) {
+    id
+  }
+}
+
+mutation MapLayerDuplicate($where: MapLayerWhereUniqueInput!) {
+  duplicateMapLayer(where: $where) {
+    id
+  }
+}
+
+query MapLayerRead(
+  $where: MapLayerWhereUniqueInput!
+) {
+  mapLayer(where: $where) {
+    ...MapLayerFields
+  }
+}
+
+query MapLayerEditRead(
+  $where: MapLayerWhereUniqueInput!
+) {
+  mapLayer(where: $where) {
+      ...MapLayerFields
+  }
+}
+
+query MapLayersRead(
+  $where: MapLayerWhereInput
+  $skip: Int
+  $first: Int
+  $after: String
+) {
+  mapLayers(where: $where, skip: $skip, first: $first, after: $after) {
+    id
+    title
+  }
+}
+
+mutation MapLayerUpdate($data: MapLayerUpdateInput!, $where: MapLayerWhereUniqueInput!) {
+  updateMapLayer(data: $data, where: $where) {
+    title
+  }
+}
+
+query MapLayersCounts($where: MapLayerWhereInput, $skip: Int, $first: Int) {
+mapLayersConnection(where: $where, skip: $skip, first: $first) {
+    aggregate {
+      count
+    }
+  }
+}
+
+subscription MapLayerSubscription {
+  mapLayer {
+    mutation
+    node {
+      ...MapLayerFields
+    }
+    previousValues {
+      id
+    }
+  }
+}

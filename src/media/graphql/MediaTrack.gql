@@ -1,0 +1,109 @@
+#import "./fragments/MediaProfile.gql"
+
+
+query MediaPostsTrack(
+  $where: MediaPostsTrackWhereInput
+  $orderBy: MediaPostOrderByInput
+  $skip: Int
+  $after: String
+  $before: String
+  $first: Int
+  $last: Int
+) {
+  mediaPostsTrack(
+    data: $where
+    orderBy: $orderBy
+    skip: $skip
+    after: $after
+    before: $before
+    first: $first
+    last: $last
+  ) {
+    id
+    node {
+      id
+      publishTime
+      url
+      title
+      text
+      isUserGenerated
+      mediaFile {
+        id
+        name
+        url
+        contentType
+      }
+      profiles {
+        id
+        username
+        name
+        avatar {
+          id
+          url
+        }
+        service {
+          id
+          name
+          displayName
+          type
+          icon
+          color
+        }
+      }
+    }
+    views
+    visitors
+  }
+}
+query MediaPostsTrackInjectsReport($data: MediaPostsTrackWhereInput){
+  mediaPostsTrackInjectsReport(data: $data){
+      data {
+      x
+      y
+      text
+      type
+      textposition
+      name
+      marker
+      orientation
+      labels
+      values
+    }
+    total
+  }
+}
+query MediaPostsTrackCounts($data: MediaPostsTrackWhereInput){
+  track: mediaPostsTrackConnection(data: $data)
+  {
+    count
+    views
+    visitors
+  }
+  all: mediaPostsConnection(
+          where: {}
+  ) {
+    aggregate {
+      count
+    }
+  }
+  inject: mediaPostsConnection(
+          where: { 
+            isUserGenerated: true,
+            isPublished: true
+          }
+  ) {
+    aggregate {
+      count
+    }
+  }
+  noise: mediaPostsConnection(
+          where: { 
+            isUserGenerated: false,
+            isPublished: true
+          }
+  ) {
+    aggregate {
+      count
+    }
+  }
+}

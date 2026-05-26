@@ -1,0 +1,51 @@
+#import "./PlanInject.gql"
+#import "./PlanOrganization.gql"
+#import "@/shared/graphql/fragments/Location.gql"
+
+fragment EventFields on PlanEvent {
+    id
+    name
+    type
+    method
+    startDate
+    endDate
+    locations {...LocationFields}
+    description
+    color
+    organization { ...OrgFields }
+    exerciseGuidance
+    injects(where: {deletedAt: null}) { ...InjectFields }
+}
+
+fragment EventSlim on PlanEvent {
+    id
+    name
+    type
+    method
+    startDate
+    endDate
+    color
+    injects(where: {deletedAt: null}) { ...InjectSlim }
+}
+
+fragment InjectSlim on PlanInject {
+  id number title startDate status {id color title}
+}
+
+fragment EventCalendarFields on PlanEvent {
+    id
+    title: name
+    name
+    start: startDate
+    startDate
+    end: endDate
+    endDate
+    color
+    type
+}
+
+
+fragment EventSelectFields on PlanEvent {
+    id 
+    name
+}

@@ -1,0 +1,67 @@
+#import "./fragments/MediaService.gql"
+
+mutation MediaServicesCreate($data: MediaServiceCreateInput!) {
+  createMediaService(data: $data) {
+    ...MediaServiceFields
+  }
+}
+
+mutation MediaServicesDelete($name: MediaServiceWhereUniqueInput!) {
+  deleteMediaService(where: $name) {
+    id
+    name
+  }
+}
+
+query MediaServicesRead(
+  $where: MediaServiceWhereInput
+  $skip: Int
+  $first: Int
+  $after: String
+  $orderBy: MediaServiceOrderByInput
+) {
+  mediaServices(
+    where: $where
+    skip: $skip
+    first: $first
+    after: $after
+    orderBy: $orderBy
+  ) {
+    ...MediaServiceFields
+  }
+}
+query PublicMediaServiceWhere($data: PublicMediaServiceWhereUniqueInput) {
+  mediaServicePublic(data: $data) {
+    ...MediaServiceFields
+  }
+}
+
+mutation MediaServicesUpdate(
+  $data: MediaServiceUpdateInput!
+  $where: MediaServiceWhereUniqueInput!
+) {
+  updateMediaService(data: $data, where: $where) {
+    ...MediaServiceFields
+  }
+}
+
+subscription MediaServicesSubscription {
+  mediaService {
+    mutation
+    node {
+    ...MediaServiceFields
+    }
+    previousValues {
+      id
+      name
+    }
+  }
+}
+
+query MediaServicesCounts($where: MediaServiceWhereInput) {
+  mediaServicesConnection(where: $where) {
+    aggregate {
+      count
+    }
+  }
+}

@@ -1,0 +1,36 @@
+$body-background-color: #000;
+$panel-background-color: #fff;
+.box {
+  border: 0.5px solid #dddddd;
+  background-color: #fff;
+}
+.panel {
+  background-color: $panel-background-color;
+  .list-section {
+    border-bottom: 1px solid #dddddd;
+    padding-bottom: 0.5px;
+  }
+  .image {
+    cursor: pointer;
+  }
+}
+.card-header {
+  text-align: center;
+  background: url("./static/images/ekath-headers-striped.png");
+  margin-bottom: 0px;
+  .editor-pick {
+    border-top: 8px solid #000;
+  }
+  .comments {
+    border-top: 8px solid #527e67;
+  }
+  .recent-news {
+    border-top: 8px solid #009cd5;
+  }
+  .cartoon {
+    border-top: 8px solid #527e67;
+  }
+  .whats-on {
+    border-top: 8px solid #ffcb05;
+  }
+}

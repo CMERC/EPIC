@@ -1,0 +1,70 @@
+#import "./fragments/AdminFragments.gql"
+
+mutation AppRolesCreate($data: AppRoleCreateInput!) {
+  createAppRole(data: $data) {
+    ...RoleFields
+  }
+}
+
+mutation AppRolesDelete($where: AppRoleWhereUniqueInput!) {
+  deleteAppRole(where: $where) {
+    id
+  }
+}
+
+query AppRolesRead(
+  $where: AppRoleWhereInput
+  $orderBy: AppRoleOrderByInput
+  $skip: Int
+  $after: String
+  $before: String
+  $first: Int
+  $last: Int
+) {
+  appRoles(
+    where: $where
+    orderBy: $orderBy
+    skip: $skip
+    after: $after
+    before: $before
+    first: $first
+    last: $last
+  ) {
+    ...RoleFields
+  }
+}
+
+query AppRoleRead($where: AppRoleWhereUniqueInput!) {
+  appRole(where: $where) {
+    ...RoleFields
+  }
+}
+
+mutation AppRolesUpdate(
+  $data: AppRoleUpdateInput!
+  $where: AppRoleWhereUniqueInput!
+) {
+  updateAppRole(data: $data, where: $where) {
+    ...RoleFields
+  }
+}
+
+query AppRolesCounts($where: AppRoleWhereInput, $skip: Int) {
+  appRolesConnection(where: $where, skip: $skip) {
+    aggregate {
+      count
+    }
+  }
+}
+
+subscription AppRolesSubscription {
+  appRole {
+    mutation
+    node {
+...RoleFields
+    }
+    previousValues {
+      id
+    }
+  }
+}

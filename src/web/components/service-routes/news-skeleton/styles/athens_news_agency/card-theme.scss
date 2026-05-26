@@ -1,0 +1,77 @@
+$body-background: rgba(0, 0, 0, 0.6);
+$header-background: #eceff0;
+
+.card-holder-panel {
+  background-position: center;
+  background-size: contain;
+  background-attachment: fixed;
+  .service-card-header {
+    text-align: left;
+    margin-bottom: 0;
+    section,
+    .service-panel {
+      background: $header-background;
+      border-radius: 0.4em;
+      margin: 30px;
+      -webkit-box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.1);
+      box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.1);
+    }
+    .service-title {
+      color: #fff;
+      text-align: left;
+      padding: 15px;
+      font-style: italic;
+      font-family: "Roboto", sans-serif;
+      font-weight: 700;
+      text-transform: uppercase;
+      height: auto;
+    }
+  }
+  .card-body {
+    padding: 20px;
+    margin: 30px;
+    margin-top: 0;
+  }
+  .right-nav-container {
+    hr {
+      border-top: 1px solid #000;
+    }
+    .right-nav-content-posts {
+      color: #000;
+    }
+    .right-nav-content-comments {
+      color: #000;
+    }
+    .right-nav-content-archives {
+      color: #000;
+      .archive-content {
+        display: block;
+        font-size: 12px;
+      }
+      .archive-title {
+        font-size: 16px;
+        cursor: pointer;
+      }
+    }
+  }
+  .content-title-section {
+    opacity: 0.9;
+    padding: 15px;
+  }
+  .card-post-body {
+    margin-top: 25px;
+  }
+}
+
+.service-logo {
+  display: none;
+}
+
+.banner-row {
+  display: none;
+}
+
+
+.service-footer {
+  height: 256px;
+}

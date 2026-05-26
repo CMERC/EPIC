@@ -1,0 +1,32 @@
+$body-background-color: #000;
+$panel-background-color: #fff;
+.panel {
+  background-color: $panel-background-color;
+  box-shadow: none;
+  .list-section {
+    border-bottom: 1px solid #dddddd;
+    padding-bottom: 0.5px;
+  }
+  .image {
+    cursor: pointer;
+  }
+}
+.card {
+  .card-content {
+    .content.imageArea {
+      min-height: 220px;
+      max-height: 220px;
+      margin-bottom: 50px;
+      object-fit:contain;
+      img {
+        height: 220px;
+        max-width: 100%;
+        object-fit: cover;
+        }
+      }
+    } 
+  }
+.card-header {
+  text-align: center;
+  margin-bottom: 0px;
+}

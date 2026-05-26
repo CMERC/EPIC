@@ -1,0 +1,67 @@
+#import "../fragments/feedback/PlanLessonsLearned.gql"
+
+mutation PlanLessonsLearnedCreate($data: PlanLessonsLearnedCreateInput!) {
+  createPlanLessonsLearned(data: $data) {
+      ...PlanLessonsLearnedFields
+  }
+}
+
+mutation PlanLessonsLearnedDelete($id: PlanLessonsLearnedWhereUniqueInput!) {
+  deletePlanLessonsLearned(where: $id) {
+    id
+  }
+}
+
+query PlanLessonsLearnedsRead(
+  $where: PlanLessonsLearnedWhereInput
+  $skip: Int
+  $first: Int
+  $after: String
+  $orderBy: PlanLessonsLearnedOrderByInput
+) {
+  planLessonsLearneds(
+    where: $where
+    skip: $skip
+    first: $first
+    after: $after
+    orderBy: $orderBy
+  ) {
+      ...PlanLessonsLearnedFields
+  }
+}
+
+query PlanLessonsLearnedRead($where: PlanLessonsLearnedWhereUniqueInput!) {
+  planLessonsLearned(where: $where) {
+      ...PlanLessonsLearnedFields
+  }
+}
+
+mutation PlanLessonsLearnedsUpdate(
+  $data: PlanLessonsLearnedUpdateInput!
+  $where: PlanLessonsLearnedWhereUniqueInput!
+) {
+  updatePlanLessonsLearned(data: $data, where: $where) {
+    id
+  }
+}
+
+subscription PlanLessonsLearnedSubscription(
+  $where: PlanLessonsLearnedSubscriptionWhereInput
+) {
+  planLessonsLearned(where: $where) {
+    mutation
+    node {
+      ...PlanLessonsLearnedFields
+    }
+    previousValues {
+      id
+    }
+  }
+}
+query PlanLessonsLearnedsCounts($where: PlanLessonsLearnedWhereInput, $skip: Int) {
+  planLessonsLearnedsConnection(where: $where, skip: $skip) {
+    aggregate {
+      count
+    }
+  }
+}

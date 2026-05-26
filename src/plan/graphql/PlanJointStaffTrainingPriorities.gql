@@ -1,0 +1,91 @@
+#import "./fragments/PlanJointStaffTrainingPriority.gql"
+
+mutation PlanJointStaffTrainingPrioritiesCreate($data: PlanJointStaffTrainingPriorityCreateInput!) {
+  createPlanJointStaffTrainingPriority(data: $data) {
+    ...JSTPFields
+  }
+}
+
+mutation PlanJointStaffTrainingPrioritiesDelete($id: PlanJointStaffTrainingPriorityWhereUniqueInput!) {
+  deletePlanJointStaffTrainingPriority(where: $id) {
+    id
+  }
+}
+
+query PlanJointStaffTrainingPrioritiesRead(
+  $where: PlanJointStaffTrainingPriorityWhereInput
+  $skip: Int
+  $first: Int
+  $after: String
+  $orderBy: PlanJointStaffTrainingPriorityOrderByInput
+) {
+  planJointStaffTrainingPriorities(
+    where: $where
+    skip: $skip
+    first: $first
+    after: $after
+    orderBy: $orderBy
+  ) {
+    ...JSTPFields
+  }
+}
+
+query PlanJointStaffTrainingPriorityRead($where: PlanJointStaffTrainingPriorityWhereUniqueInput!) {
+  planJointStaffTrainingPriority(where: $where) {
+    ...JSTPFields
+  }
+}
+
+mutation PlanJointStaffTrainingPrioritiesUpdate(
+  $data: PlanJointStaffTrainingPriorityUpdateInput!
+  $where: PlanJointStaffTrainingPriorityWhereUniqueInput!
+) {
+  updatePlanJointStaffTrainingPriority(data: $data, where: $where) {
+    id
+  }
+}
+
+query PlanJointStaffTrainingPrioritiesSearch(
+  $query: String, 
+  $orderBy: PlanJointStaffTrainingPriorityOrderByInput) {
+  planJointStaffTrainingPriorities(
+    where: {
+      OR: [
+        { title_contains: $query },
+        { description_contains: $query },
+      ]
+    }
+    orderBy: $orderBy)
+    {
+    ...JSTPFields
+    }
+}
+
+subscription PlanJointStaffTrainingPrioritySubscription($where: PlanJointStaffTrainingPrioritySubscriptionWhereInput) {
+  planJointStaffTrainingPriority(where: $where) {
+    mutation
+    node {
+    ...JSTPFields
+    }
+    previousValues {
+      id
+    }
+  }
+}
+
+query PlanJointStaffTrainingPrioritiesCounts($where: PlanJointStaffTrainingPriorityWhereInput, $skip: Int) {
+  planJointStaffTrainingPrioritiesConnection(where: $where, skip: $skip) {
+    aggregate {
+      count
+    }
+  }
+}
+
+query PlanJointStaffTrainingPrioritiesCalendarRead(
+  $where: PlanJointStaffTrainingPriorityWhereInput
+  $orderBy: PlanJointStaffTrainingPriorityOrderByInput
+) {
+  planJointStaffTrainingPriorities(where: $where, orderBy: $orderBy) {
+    ...JSTPFields 
+  }
+}

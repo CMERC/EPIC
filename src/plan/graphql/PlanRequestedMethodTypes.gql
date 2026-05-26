@@ -1,0 +1,65 @@
+#import "./fragments/PlanRequestedMethodType.gql"
+
+mutation PlanRequestedMethodTypesCreate($data: PlanRequestedMethodTypeCreateInput!) {
+  createPlanRequestedMethodType(data: $data) {
+      ...RequestedMethodTypeFields
+  }
+}
+
+mutation PlanRequestedMethodTypesDelete($id: PlanRequestedMethodTypeWhereUniqueInput!) {
+  deletePlanRequestedMethodType(where: $id) {
+    id
+  }
+}
+query PlanRequestedMethodTypesRead(
+  $where: PlanRequestedMethodTypeWhereInput
+  $skip: Int
+  $first: Int
+  $after: String
+  $orderBy: PlanRequestedMethodTypeOrderByInput
+) {
+  planRequestedMethodTypes(
+    where: $where
+    skip: $skip
+    first: $first
+    after: $after
+    orderBy: $orderBy
+  ) {
+      ...RequestedMethodTypeFields
+  }
+}
+
+query PlanRequestedMethodTypeRead($where: PlanRequestedMethodTypeWhereUniqueInput!) {
+  planRequestedMethodType(where: $where) {
+      ...RequestedMethodTypeFields
+  }
+}
+
+mutation PlanRequestedMethodTypesUpdate(
+  $data: PlanRequestedMethodTypeUpdateInput!
+  $where: PlanRequestedMethodTypeWhereUniqueInput!
+) {
+  updatePlanRequestedMethodType(data: $data, where: $where) {
+    id
+  }
+}
+
+subscription PlanRequestedMethodTypeSubscription($where: PlanRequestedMethodTypeSubscriptionWhereInput) {
+  planRequestedMethodType(where: $where) {
+    mutation
+    node {
+      ...RequestedMethodTypeFields
+    }
+    previousValues {
+      id
+    }
+  }
+}
+
+query PlanRequestedMethodsCounts($where: PlanRequestedMethodWhereInput, $skip: Int) {
+  planRequestedMethodsConnection(where: $where, skip: $skip) {
+    aggregate {
+      count
+    }
+  }
+}

@@ -1,0 +1,101 @@
+#import "./PlanTrainingObjective.gql"
+#import "./PlanJmet.gql"
+
+fragment ParticipantFields on PlanParticipant {
+    id
+    title: name
+    name
+    service { ...ParticipantServiceFields }
+    serviceType  { ...ServiceTypeFields }
+    commandAgency { ...CommandAgencyFields }
+    homeStation
+    bedDown
+    totalAudience
+    icon
+    participantType { ...ParticipantTypeFields }
+    planners (orderBy: isPrimary_DESC) { ...PlannerFields }
+    fundings { ...ParticipantFundingFields }
+    platforms { ...ParticipantPlatformFields }
+    trainingObjectives { ...TrainingObjectiveFields }
+}
+
+fragment ParticipantUpdateField on PlanParticipant {
+  id
+  trainingObjectives { id createdAt jmet { ...JMETFields}}
+}
+
+fragment ParticipantSlim on PlanParticipant {
+  id
+  name
+  commandAgency { ...CommandAgencyFields }
+  totalAudience
+  icon
+  platforms { platform { title type } }
+  fundings { ...ParticipantFundingFields }
+  trainingObjectives { id }
+}
+
+fragment CommandAgencyFields on PlanParticipantCommandAgency {
+  id
+  title
+  key
+}
+
+fragment ParticipantFundingFields on PlanParticipantFundingSource {
+      id
+      primarySource
+      subSource
+      amount
+      participant{
+      id
+    }
+}
+
+fragment PlannerFields on PlanParticipantPlanner {
+      id
+      email
+      name
+      phoneNumber
+      isPrimary
+      participant { id }
+}
+
+fragment ParticipantPlatformFields on PlanParticipantPlatform {
+  id
+  bedDown
+  audience
+  platform { id title type }
+  participant { 
+    id 
+    name
+    service { ...ParticipantServiceFields }
+    serviceType  { ...ServiceTypeFields }
+    commandAgency { ...CommandAgencyFields }
+    homeStation 
+    bedDown 
+    totalAudience
+    icon
+    participantType { ...ParticipantTypeFields }
+    planners{ id }
+    fundings { id }
+    platforms { id }
+    }
+}
+
+fragment ParticipantServiceFields on PlanParticipantService {
+  id
+  title
+  key
+}
+
+fragment ServiceTypeFields on PlanParticipantServiceType {
+  id
+  title
+  key
+}
+
+fragment ParticipantTypeFields on PlanParticipantType {
+  id
+  title
+  key
+}

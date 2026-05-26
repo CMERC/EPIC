@@ -1,0 +1,26 @@
+#import "@/media/graphql/fragments/MediaProfile.gql"
+
+query PublicMediaProfilesRead(
+  $where: PublicMediaProfileWhereInput
+  $skip: Int
+  $first: Int
+  $after: String
+  $orderBy: MediaProfileOrderByInput
+) {
+  mediaProfilesPublic(
+    data: $where
+    skip: $skip
+    first: $first
+    after: $after
+    orderBy: $orderBy
+  ) {
+    ...ProfileFields
+  }
+}
+query PublicMediaProfilesCounts($where: PublicMediaProfileWhereInput) {
+  mediaProfilesPublicConnection(data: $where) {
+    aggregate {
+      count
+    }
+  }
+}

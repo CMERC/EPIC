@@ -1,0 +1,130 @@
+#import "./fragments/PlanTrainedMethodType.gql"
+
+mutation PlanTrainedMethodTypesCreate($data: PlanTrainedMethodTypeCreateInput!) {
+  createPlanTrainedMethodType(data: $data) {
+      ...TrainedMethodTypeFields
+  }
+}#import "./fragments/PlanTrainedMethodType.gql"
+
+mutation PlanTrainedMethodTypesCreate($data: PlanTrainedMethodTypeCreateInput!) {
+  createPlanTrainedMethodType(data: $data) {
+      ...TrainedMethodTypeFields
+  }
+}
+
+mutation PlanTrainedMethodTypesDelete($id: PlanTrainedMethodTypeWhereUniqueInput!) {
+  deletePlanTrainedMethodType(where: $id) {
+    id
+  }
+}
+query PlanTrainedMethodTypesRead(
+  $where: PlanTrainedMethodTypeWhereInput
+  $skip: Int
+  $first: Int
+  $after: String
+  $orderBy: PlanTrainedMethodTypeOrderByInput
+) {
+  planTrainedMethodTypes(
+    where: $where
+    skip: $skip
+    first: $first
+    after: $after
+    orderBy: $orderBy
+  ) {
+      ...TrainedMethodTypeFields
+  }
+}
+
+query PlanTrainedMethodTypeRead($where: PlanTrainedMethodTypeWhereUniqueInput!) {
+  planRequestedMethodType(where: $where) {
+      ...TrainedMethodTypeFields
+  }
+}
+
+mutation PlanTrainedMethodTypesUpdate(
+  $data: PlanTrainedMethodTypeUpdateInput!
+  $where: PlanTrainedMethodTypeWhereUniqueInput!
+) {
+  updatePlanTrainedMethodType(data: $data, where: $where) {
+    id
+  }
+}
+
+subscription PlanTrainedMethodTypeSubscription($where: PlanTrainedMethodTypeSubscriptionWhereInput) {
+  planTrainedMethodTypes(where: $where) {
+    mutation
+    node {
+      ...TrainedMethodTypeFields
+    }
+    previousValues {
+      id
+    }
+  }
+}
+
+query PlanTrainedMethodsCounts($where: PlanTrainedMethodWhereInput, $skip: Int) {
+  planTrainedMethodsConnection(where: $where, skip: $skip) {
+    aggregate {
+      count
+    }
+  }
+}
+
+
+mutation PlanTrainedMethodsDelete($id: PlanTrainedMethodWhereUniqueInput!) {
+  deletePlanTrainedMethod(where: $id) {
+    id
+  }
+}
+query PlanTrainedMethodsRead(
+  $where: PlanTrainedMethodWhereInput
+  $skip: Int
+  $first: Int
+  $after: String
+  $orderBy: PlanTrainedMethodOrderByInput
+) {
+  planTrainedMethods(
+    where: $where
+    skip: $skip
+    first: $first
+    after: $after
+    orderBy: $orderBy
+  ) {
+      ...TrainedMethodFields
+  }
+}
+
+query PlanTrainedMethodRead($where: PlanTrainedMethodWhereUniqueInput!) {
+  planRequestedMethod(where: $where) {
+      ...TrainedMethodFields
+  }
+}
+
+mutation PlanTrainedMethodsUpdate(
+  $data: PlanTrainedMethodUpdateInput!
+  $where: PlanTrainedMethodWhereUniqueInput!
+) {
+  updatePlanTrainedMethod(data: $data, where: $where) {
+    id
+  }
+}
+
+subscription PlanTrainedMethodSubscription($where: PlanTrainedMethodSubscriptionWhereInput) {
+  planTrainedMethods(where: $where) {
+    mutation
+    node {
+      ...TrainedMethodFields
+    }
+    previousValues {
+      id
+    }
+  }
+}
+
+query PlanTrainedMethodsCounts($where: PlanTrainedMethodWhereInput, $skip: Int) {
+  planTrainedMethodsConnection(where: $where, skip: $skip) {
+    aggregate {
+      count
+    }
+  }
+}

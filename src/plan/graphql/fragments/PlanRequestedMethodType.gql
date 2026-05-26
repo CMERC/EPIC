@@ -1,0 +1,5 @@
+fragment RequestedMethodTypeFields on PlanRequestedMethodType {
+    id
+    title 
+    key
+}

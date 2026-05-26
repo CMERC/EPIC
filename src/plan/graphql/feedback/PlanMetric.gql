@@ -1,0 +1,67 @@
+#import "../fragments/feedback/PlanMetric.gql"
+
+mutation PlanMetricCreate($data: PlanMetricCreateInput!) {
+  createPlanMetric(data: $data) {
+      ...PlanMetricFields
+  }
+}
+
+mutation PlanMetricDelete($id: PlanMetricWhereUniqueInput!) {
+  deletePlanMetric(where: $id) {
+    id
+  }
+}
+
+query PlanMetricsRead(
+  $where: PlanMetricWhereInput
+  $skip: Int
+  $first: Int
+  $after: String
+  $orderBy: PlanMetricOrderByInput
+) {
+  planMetrics(
+    where: $where
+    skip: $skip
+    first: $first
+    after: $after
+    orderBy: $orderBy
+  ) {
+      ...PlanMetricFields
+  }
+}
+
+query PlanMetricRead($where: PlanMetricWhereUniqueInput!) {
+  planMetric(where: $where) {
+      ...PlanMetricFields
+  }
+}
+
+mutation PlanMetricsUpdate(
+  $data: PlanMetricUpdateInput!
+  $where: PlanMetricWhereUniqueInput!
+) {
+  updatePlanMetric(data: $data, where: $where) {
+    id
+  }
+}
+
+subscription PlanMetricSubscription(
+  $where: PlanMetricSubscriptionWhereInput
+) {
+  planMetric(where: $where) {
+    mutation
+    node {
+      ...PlanMetricFields
+    }
+    previousValues {
+      id
+    }
+  }
+}
+query PlanMetricsCounts($where: PlanMetricWhereInput, $skip: Int) {
+  planMetricsConnection(where: $where, skip: $skip) {
+    aggregate {
+      count
+    }
+  }
+}

@@ -1,0 +1,79 @@
+#import "./fragments/PlanFeedbackRequest.gql"
+
+mutation PlanFeedbackRequestsCreate($data: PlanFeedbackRequestCreateInput!) {
+  createPlanFeedbackRequest(data: $data) {
+      ...FeedbackRequestFields
+  }
+}
+
+mutation PlanFeedbackRequestsDelete($id: PlanFeedbackRequestWhereUniqueInput!) {
+  deletePlanFeedbackRequest(where: $id) {
+    id
+  }
+}
+
+query PlanFeedbackRequestsRead(
+  $where: PlanFeedbackRequestWhereInput
+  $skip: Int
+  $first: Int
+  $after: String
+  $orderBy: PlanFeedbackRequestOrderByInput
+) {
+  planFeedbackRequests(
+    where: $where
+    skip: $skip
+    first: $first
+    after: $after
+    orderBy: $orderBy
+  ) {
+      ...FeedbackRequestFields
+  }
+}
+
+query PlanFeedbackRequestRead($where: PlanFeedbackRequestWhereUniqueInput!) {
+  planFeedbackRequest(where: $where) {
+      ...FeedbackRequestFields
+  }
+}
+
+mutation PlanFeedbackRequestsUpsert(
+  $where: PlanFeedbackRequestWhereUniqueInput! 
+  $create: PlanFeedbackRequestCreateInput!
+  $update: PlanFeedbackRequestUpdateInput!) {
+      upsertPlanFeedbackRequest(create: $create, update: $update, where: $where) {
+    ...FeedbackRequestFields
+  }
+  }
+
+mutation PlanFeedbackRequestsUpdate(
+  $data: PlanFeedbackRequestUpdateInput!
+  $where: PlanFeedbackRequestWhereUniqueInput!
+) {
+  updatePlanFeedbackRequest(data: $data, where: $where) {
+      ...FeedbackRequestFields
+  }
+}
+
+subscription PlanFeedbackRequestSubscription($where: PlanFeedbackRequestSubscriptionWhereInput) {
+  planFeedbackRequest(where: $where) {
+    mutation
+    node {
+      ...FeedbackRequestFields
+    }
+    previousValues {
+      id
+    }
+  }
+}
+
+query PlanFeedbackRequestsCounts($where: PlanFeedbackRequestWhereInput, $skip: Int) {
+  planFeedbackRequestsConnection(where: $where, skip: $skip) {
+    aggregate {
+      count
+    }
+  }
+}
+
+mutation FeedbackRequest($email: String, $feedbackUrl: String) {
+  feedbackRequest(email: $email, feedbackUrl:$feedbackUrl)
+}

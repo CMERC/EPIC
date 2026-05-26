@@ -1,0 +1,94 @@
+#import "./fragments/PlanPlatform.gql"
+
+mutation PlanPlatformsCreate($data: PlanPlatformCreateInput!) {
+  createPlanPlatform(data: $data) {
+    ...PlatformFields
+  }
+}
+
+mutation PlanPlatformsDelete($id: PlanPlatformWhereUniqueInput!) {
+  deletePlanPlatform(where: $id) {
+    id
+  }
+}
+
+query PlanPlatformsRead(
+  $where: PlanPlatformWhereInput
+  $skip: Int
+  $first: Int
+  $after: String
+  $orderBy: PlanPlatformOrderByInput
+) {
+  planPlatforms(
+    where: $where
+    skip: $skip
+    first: $first
+    after: $after
+    orderBy: $orderBy
+  ) {
+    ...PlatformFields
+  }
+}
+
+query PlanPlatformRead($where: PlanPlatformWhereUniqueInput!) {
+  planPlatform(where: $where) {
+    ...PlatformFields
+  }
+}
+
+
+
+mutation PlanPlatformsUpdate(
+  $data: PlanPlatformUpdateInput!
+  $where: PlanPlatformWhereUniqueInput!
+) {
+  updatePlanPlatform(data: $data, where: $where) {
+    ...PlatformFields
+  }
+}
+
+mutation PlanPlatformsUpsert(
+  $where: PlanPlatformWhereUniqueInput! 
+  $create: PlanPlatformCreateInput!
+  $update: PlanPlatformUpdateInput!) {
+      upsertPlanPlatform(create: $create, update: $update, where: $where) {
+    ...PlatformFields
+  }
+  }
+
+query PlanPlatformsSearch(
+  $query: String, 
+  $orderBy: PlanPlatformOrderByInput) {
+  planPlatforms(
+    where: {
+      OR: [
+        { title_contains: $query },
+        { type_contains: $query },
+      ]
+    }
+    orderBy: $orderBy)
+    {
+    ...PlatformFields
+    }
+}
+
+
+subscription PlanPlatformSubscription($where: PlanPlatformSubscriptionWhereInput) {
+  planPlatform(where: $where) {
+    mutation
+    node {
+    ...PlatformFields
+    }
+    previousValues {
+      id
+    }
+  }
+}
+
+query PlanPlatformsCounts($where: PlanPlatformWhereInput, $skip: Int) {
+  planPlatformsConnection(where: $where, skip: $skip) {
+    aggregate {
+      count
+    }
+  }
+}

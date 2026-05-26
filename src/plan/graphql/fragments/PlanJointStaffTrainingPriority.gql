@@ -1,0 +1,5 @@
+fragment JSTPFields on PlanJointStaffTrainingPriority {
+      id
+      title
+      description
+}

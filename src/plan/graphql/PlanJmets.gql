@@ -1,0 +1,109 @@
+#import "./fragments/PlanJmet.gql"
+mutation PlanJmetsCreate($data: PlanJmetCreateInput!) {
+  createPlanJmet(data: $data) {
+      ...JMETFields
+  }
+}
+
+mutation PlanJmetsDelete($id: PlanJmetWhereUniqueInput!) {
+  deletePlanJmet(where: $id) {
+    id
+  }
+}
+
+query PlanJmetsRead(
+  $where: PlanJmetWhereInput
+  $skip: Int
+  $first: Int
+  $after: String
+  $orderBy: PlanJmetOrderByInput
+) {
+  planJmets(
+    where: $where
+    skip: $skip
+    first: $first
+    after: $after
+    orderBy: $orderBy
+  ) {
+      ...JMETFields
+  }
+}
+
+query PlanJmetsList(
+  $where: PlanJmetWhereInput
+  $skip: Int
+  $first: Int
+  $after: String
+  $orderBy: PlanJmetOrderByInput
+) {
+  planJmets(
+    where: $where
+    skip: $skip
+    first: $first
+    after: $after
+    orderBy: $orderBy
+  ) {
+      ...JMETSlim
+  }
+}
+
+query PlanJmetRead($where: PlanJmetWhereUniqueInput!) {
+  planJmet(where: $where) {
+      ...JMETFields
+  }
+}
+
+mutation PlanJmetsUpdate(
+  $data: PlanJmetUpdateInput!
+  $where: PlanJmetWhereUniqueInput!
+) {
+  updatePlanJmet(data: $data, where: $where) {
+    id
+  }
+}
+
+mutation PlanJmetsUpsert(
+  $where: PlanJmetWhereUniqueInput! 
+  $create: PlanJmetCreateInput!
+  $update: PlanJmetUpdateInput!) {
+      upsertPlanJmet(create: $create, update: $update, where: $where) {
+    ...JMETFields
+  }
+  }
+
+query PlanJmetsSearch(
+  $query: String, 
+  $orderBy: PlanJmetOrderByInput) {
+  planJmets(
+    first: 100,
+    where: {
+      OR: [
+        { description_contains: $query}
+      ]
+    }
+    orderBy: $orderBy)
+    {
+      ...JMETFields
+    }
+}
+
+subscription PlanJmetSubscription(
+  $where: PlanJmetSubscriptionWhereInput
+) {
+  planJmet(where: $where) {
+    mutation
+    node {
+      ...JMETFields
+    }
+    previousValues {
+      id
+    }
+  }
+}
+query PlanJmetsCounts($where: PlanJmetWhereInput, $skip: Int) {
+  planJmetsConnection(where: $where, skip: $skip) {
+    aggregate {
+      count
+    }
+  }
+}

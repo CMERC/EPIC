@@ -1,0 +1,239 @@
+#import "./PlanAccreditedTask.gql"
+#import "./PlanJmet.gql"
+#import "./PlanExerciseObjective.gql"
+#import "./PlanCommandPriority.gql"
+#import "./PlanJointStaffTrainingPriority.gql"
+#import "./PlanAssessment.gql"
+#import "./PlanInject.gql"
+#import "./PlanPlatform.gql"
+#import "./PlanMeasure.gql"
+#import "./PlanPriorityLevel.gql"
+#import "./PlanRequestedMethodType.gql"
+#import "./PlanTrainedMethodType.gql"
+
+fragment TrainingObjectiveFields on PlanTrainingObjective {
+  id
+  platform {
+    ...PlanTrainingObjPlatformFields
+  }
+  jmet {
+    ...JMETFields
+  }
+  requestedMethod
+  trainedMethod
+  priority
+  priorityLevel {
+    ...PlanPriorityLevelFields
+  }
+  requestedMethodType {
+    ...RequestedMethodTypeFields
+  }
+  trainedMethodType {
+    ...TrainedMethodTypeFields
+  }
+  requiredRuns
+  classification
+  task
+  condition
+  standard
+  exerciseObjective {
+    ...ExerciseObjectiveFields
+  }
+  accreditedTask {
+    ...TaskFields
+  }
+  commandTrainingPriority {
+    ...CommandPriorityFields
+  }
+  jointStaffTrainingPriority {
+    ...JSTPFields
+  }
+  participant {
+    ...PlanInjectTrainingObjParticipantFields
+  }
+  assessments {
+    ...PlanAssessmentFields
+  }
+  createdAt
+  updatedAt
+  injects(where: { deletedAt: null }, orderBy: number_ASC) {
+    ...InjectFields
+  }
+  measures {
+    ...PlanMeasureFields
+  }
+}
+
+fragment TrainingObjectiveSlim on PlanTrainingObjective {
+  id
+  platform { ...PlatformSlim }
+  jmet { ...JMETFields }
+  priorityLevel { ...PlanPriorityLevelFields }
+  requestedMethodType { ...RequestedMethodTypeFields }
+  trainedMethodType { ...TrainedMethodTypeFields }
+  requiredRuns
+  classification
+  task
+  condition
+  standard
+  exerciseObjective { id title }
+  accreditedTask {
+    id
+    jmet {
+      id
+      description
+    }
+  }
+  commandTrainingPriority { id title }
+  jointStaffTrainingPriority { id title }
+  participant {...ParticipantSmall }
+  createdAt
+  updatedAt
+  injects(where: { deletedAt: null }, orderBy: number_ASC) { ...TrainingObjectiveInjectSlim }
+  measures { id title }
+}
+
+fragment TrainingObjectiveAssessSlim on PlanTrainingObjective {
+  id
+  platform { ...PlatformSlim }
+  jmet { ...JMETFields }
+  priorityLevel { ...PlanPriorityLevelFields }
+  requestedMethodType { ...RequestedMethodTypeFields }
+  trainedMethodType { ...TrainedMethodTypeFields }
+  requiredRuns
+  classification
+  task
+  condition
+  standard
+  exerciseObjective { id title }
+  accreditedTask {
+    id
+    jmet {
+      id
+      description
+    }
+  }
+  commandTrainingPriority { id title }
+  jointStaffTrainingPriority { id title }
+  participant {...ParticipantSmall }
+  assessments { ...PlanAssessmentFields }
+  createdAt
+  updatedAt
+  injects(where: { deletedAt: null }, orderBy: number_ASC) { ...TrainingObjectiveInjectSlim }
+  measures { id title }
+}
+
+fragment ParticipantSmall on PlanParticipant {
+  id
+  name
+}
+ 
+fragment PlatformSlim on PlanParticipantPlatform {
+  id
+  platform {
+    id
+    title
+    type
+  }
+}
+fragment TrainingObjectiveInjectSlim on PlanInject {
+  id
+  number
+  title
+  startDate
+  status {
+    id
+    color
+    title
+  }
+}
+
+fragment PlanTrainingObjFundingFields on PlanParticipantFundingSource {
+  id
+  primarySource
+  subSource
+  amount
+}
+
+fragment PlanTrainingObjParticipantFields on PlanParticipant {
+  id
+  title: name
+  name
+  service {
+    ...TrainingObjectiveParticipantServiceFields
+  }
+  serviceType {
+    ...ServiceTypeFields
+  }
+  commandAgency {
+    ...CommandAgencyFields
+  }
+  homeStation
+  bedDown
+  totalAudience
+  icon
+  participantType {
+    ...TrainingObjParticipantTypeFields
+  }
+  planners(orderBy: isPrimary_DESC) {
+    ...PlanTrainingObjParticipantPlannerFields
+  }
+  fundings {
+    ...PlanTrainingObjFundingFields
+  }
+  platforms {
+    ...PlanTrainingObjParticipantPlatformFields
+  }
+}
+
+fragment PlanTrainingObjParticipantPlannerFields on PlanParticipantPlanner {
+  id
+  email
+  name
+  phoneNumber
+  isPrimary
+}
+
+fragment PlanTrainingObjParticipantPlatformFields on PlanParticipantPlatform {
+  id
+  bedDown
+  audience
+  platform {
+    ...PlatformFields
+  }
+}
+
+fragment TrainingObjParticipantTypeFields on PlanParticipantType {
+  id
+  title
+  key
+}
+
+fragment PlanTrainingObjPlatformFields on PlanParticipantPlatform {
+  id
+  bedDown
+  audience
+  platform {
+    id
+    title
+    type
+  }
+}
+
+fragment TrainingObjectiveParticipantServiceFields on PlanParticipantService {
+  id
+  title
+  key
+}
+
+fragment ServiceTypeFields on PlanParticipantServiceType {
+  id
+  title
+  key
+}
+
+fragment CommandAgencyFields on PlanParticipantCommandAgency {
+  id
+  title
+  key
+}

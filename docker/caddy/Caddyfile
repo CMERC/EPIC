@@ -1,0 +1,21 @@
+{$APP_DOMAIN:localhost} {
+  encode gzip zstd
+
+  @graphql path /graphql*
+  reverse_proxy @graphql server:4000
+
+  @link path /link*
+  reverse_proxy @link server:4000
+
+  @health path /healthcheck*
+  reverse_proxy @health server:4000
+
+  @arena path /arena*
+  reverse_proxy @arena server:4000
+
+  @files path /files* /minio*
+  uri strip_prefix /files
+  reverse_proxy @files minio:9000
+
+  reverse_proxy client:80
+}

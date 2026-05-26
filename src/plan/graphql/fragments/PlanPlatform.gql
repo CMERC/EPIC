@@ -1,0 +1,5 @@
+fragment PlatformFields on PlanPlatform {
+    id
+    title
+    type
+}

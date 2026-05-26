@@ -1,0 +1,131 @@
+.actionMenu {
+  background-color: #333;
+  p.menu-label {
+    color: white;
+  }
+  a {
+    color: white;
+    .is-active {
+      color: white;
+    }
+    & span.icon {
+      display: block;
+      margin: 0 auto;
+    }
+  }
+  .menu-list a:hover {
+    background-color: #444;
+  }
+}
+
+.slide-enter-active, .slide-leave-active {
+  transition: opacity .15s;
+}
+
+.slide-enter, .slide-leave-to {
+  opacity: 0;
+}
+
+.actionSubmenu {
+  height: calc(100vh - 54px);
+  width: 10rem;
+  position: absolute;
+  background-color: #444;
+  z-index: 15;
+  grid-row: 1 / 4;
+  grid-column: 2 / 4;
+  & a {
+    color: white;
+  }
+  & span.icon {
+    display: block;
+    margin: 0 auto;
+  }
+  .menu-list a:hover {
+    background-color: #cccccc;
+  }
+}
+.map {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: calc(100vh - 52px);
+}
+.cop-map-container {
+  .map__left {
+    grid-area: mapleft;
+    overflow: scroll;
+  }
+  .map__left__top {
+    grid-area: maplefttop;
+    grid-row-start: 1;
+  }
+  .map__left__bottom {
+    grid-area: mapleftbottom;
+    place-items: end;
+  }
+  .map__right {
+    grid-area: mapright;
+  }
+  .map__grid {
+    display: grid;
+    grid-template-areas: 'mapleft mapright';
+    grid-template-columns: auto 1fr;
+    height: calc(100vh - 52px);
+  }
+
+  .map__left__menu {
+    display: grid;
+    grid-template-areas: 'maplefttop' 'mapleftbottom';
+    grid-template-rows: auto;
+  }
+}
+//overlay
+.feature-action-menu {
+  position: absolute;
+  background-color: white;
+  -webkit-filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.2));
+  filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.2));
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #cccccc;
+  left: 30px;
+  span {
+    cursor: pointer;
+    &:hover {
+      background-color: #d7dcdd;
+    }
+  }
+  &:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 0;
+    height: 0;
+    border: 10px solid transparent;
+    border-right-color:white;
+    border-left: 0;
+    margin-top: -10px;
+    margin-left: -10px;
+  }
+}
+
+.modal-card {max-height: calc(100vh - 120px);}
+
+.helper {
+  position:absolute;
+  bottom:50px;
+  right:5px;
+  z-index:15000;
+  .helperComponent {
+    position: absolute;
+    bottom:0;
+    right:0
+  }
+}
+// custom class to accommodate Generic Point height icon
+.taller-icon{
+  height: 2rem;
+}
+

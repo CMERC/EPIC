@@ -1,0 +1,75 @@
+#import "./fragments/PlanParticipant.gql"
+
+mutation PlanParticipantServicesCreate($data: PlanParticipantServiceCreateInput!) {
+  createPlanParticipantService(data: $data) {
+   ...ParticipantServiceFields
+  }
+}
+
+mutation PlanParticipantServicesDelete($id: PlanParticipantServiceWhereUniqueInput!) {
+  deletePlanParticipantService(where: $id) {
+    id
+  }
+}
+
+query PlanParticipantServicesRead(
+  $where: PlanParticipantServiceWhereInput
+  $skip: Int
+  $first: Int
+  $after: String
+  $orderBy: PlanParticipantServiceOrderByInput
+) {
+  planParticipantServices(
+    where: $where
+    skip: $skip
+    first: $first
+    after: $after
+    orderBy: $orderBy
+  ) {
+    ...ParticipantServiceFields
+  }
+}
+
+query PlanParticipantServiceRead($where: PlanParticipantServiceWhereUniqueInput!) {
+  planParticipantService(where: $where) {
+    ...ParticipantServiceFields
+  }
+}
+
+mutation PlanParticipantServicesUpsert(
+  $where: PlanParticipantServiceWhereUniqueInput! 
+  $create: PlanParticipantServiceCreateInput!
+  $update: PlanParticipantServiceUpdateInput!) {
+    upsertPlanParticipantService(create: $create, update: $update, where: $where) {
+      ...ParticipantServiceFields
+    }
+  }
+
+mutation PlanParticipantServicesUpdate(
+  $data: PlanParticipantServiceUpdateInput!
+  $where: PlanParticipantServiceWhereUniqueInput!
+) {
+  updatePlanParticipantService(data: $data, where: $where) {
+    ...ParticipantServiceFields
+  }
+}
+
+subscription PlanParticipantServiceSubscription($where: PlanParticipantServiceSubscriptionWhereInput) {
+  planParticipantService(where: $where) {
+    mutation
+    node {
+      ...ParticipantServiceFields
+    }
+    previousValues {
+      id
+    }
+  }
+}
+
+query PlanParticipantServicesCounts($where: PlanParticipantServiceWhereInput, $skip: Int) {
+  planParticipantServicesConnection(where: $where, skip: $skip) {
+    aggregate {
+      count
+    }
+  }
+}
