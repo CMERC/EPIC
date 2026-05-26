@@ -28,12 +28,13 @@
 
 .actionSubmenu {
   height: calc(100vh - 54px);
-  width: 10rem;
+  width: 14rem;
   position: absolute;
   background-color: #444;
   z-index: 15;
   grid-row: 1 / 4;
   grid-column: 2 / 4;
+  overflow-y: auto;
   & a {
     color: white;
   }
@@ -129,3 +130,79 @@
   height: 2rem;
 }
 
+.mil-symbol-controls {
+  padding: 0 .75rem .75rem;
+
+  .label {
+    margin: .5rem 0 .25rem;
+  }
+
+  .input,
+  .select,
+  select {
+    width: 100%;
+  }
+}
+
+.mil-symbol-heading {
+  border-bottom: 1px solid #555;
+  margin: 0 .75rem .75rem;
+  padding-bottom: .75rem;
+}
+
+.mil-symbol-preview {
+  align-items: center;
+  background: #f4f7f9;
+  border: 1px solid #d7dcdd;
+  border-radius: 4px;
+  color: #22313f;
+  display: grid;
+  gap: .65rem;
+  grid-template-columns: 3rem 1fr;
+  min-height: 4rem;
+  padding: .5rem;
+  text-align: left;
+
+  .icon {
+    margin: 0;
+  }
+
+  img {
+    max-height: 2.5rem;
+  }
+
+  strong,
+  small {
+    display: block;
+    line-height: 1.25;
+  }
+
+  small {
+    color: #5b6975;
+    margin-top: .15rem;
+  }
+}
+
+.mil-symbol-list {
+  border-bottom: 1px solid #555;
+  margin-bottom: .5rem;
+  padding-bottom: .5rem;
+
+  a {
+    align-items: center;
+    display: grid;
+    gap: .35rem;
+    grid-template-columns: 2.25rem 1fr;
+    min-height: 3rem;
+    text-align: left;
+
+    span.icon {
+      margin: 0;
+    }
+  }
+}
+
+.mil-symbol-list--all {
+  max-height: 18rem;
+  overflow-y: auto;
+}

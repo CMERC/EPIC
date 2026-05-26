@@ -70,12 +70,12 @@
                 </a>
               </li>
               <li>
-                <a @click="enableDrawInteraction('MilSymbol'); showSubmenu('CustomSymbol')" 
+                <a @click="openSymbolChooser" 
                    :class="{'is-active': showArea==='CustomSymbol'}">
                   <span class="icon is-medium">
                     <i class="fas fa-map-signs fa-2x"></i>
                   </span>
-                  <span>Symbol</span>
+                  <span>Unit Symbols</span>
                 </a>
               </li>
             </ul>
@@ -252,6 +252,73 @@
               </ul>
             </div>
             <div v-if="showArea ==='CustomSymbol'">
+              <div class="mil-symbol-heading">
+                <p class="menu-label has-text-white has-text-centered">
+                  Unit Symbol Chooser
+                </p>
+                <div class="mil-symbol-preview">
+                  <span class="icon is-large">
+                    <img :src="getMilSymbolIcon(marker.getOptions().sidc)" />
+                  </span>
+                  <div>
+                    <strong>{{selectedMilSymbolSummary.title}}</strong>
+                    <small>{{selectedMilSymbolSummary.meta}}</small>
+                  </div>
+                </div>
+              </div>
+              <div class="mil-symbol-controls">
+                <label class="label has-text-white">Affiliation</label>
+                <div class="select is-small is-fullwidth">
+                  <select v-model="selectedMilAffiliation"
+                          @change="selectUnitSymbol(selectedUnitSymbol)">
+                    <option v-for="affiliation in milAffiliations"
+                            :key="affiliation.code"
+                            :value="affiliation.code">{{affiliation.title}}</option>
+                  </select>
+                </div>
+                <label class="label has-text-white">Echelon</label>
+                <div class="select is-small is-fullwidth">
+                  <select v-model="selectedMilEchelon"
+                          @change="selectUnitSymbol(selectedUnitSymbol)">
+                    <option v-for="echelon in milEchelons"
+                            :key="echelon.code"
+                            :value="echelon.code">{{echelon.title}}</option>
+                  </select>
+                </div>
+                <label class="label has-text-white">Find Unit</label>
+                <input class="input is-small"
+                       type="search"
+                       placeholder="Infantry, armor, medical..."
+                       v-model.trim="unitSymbolSearch">
+              </div>
+              <p class="menu-label has-text-white has-text-centered">Common Units</p>
+              <ul class="menu-list has-text-centered mil-symbol-list">
+                <li v-for="symbol in commonUnitSymbols"
+                    :key="symbol.key">
+                  <a @click="selectUnitSymbol(symbol)"
+                     :class="{'is-active': selectedUnitSymbol && selectedUnitSymbol.key===symbol.key}">
+                    <span class="icon is-medium">
+                      <img :src="getMilSymbolIcon(symbol.sidc)" />
+                    </span>
+                    <span>{{symbol.title}}</span>
+                  </a>
+                </li>
+              </ul>
+              <p class="menu-label has-text-white has-text-centered">All Land Units</p>
+              <ul class="menu-list has-text-centered mil-symbol-list mil-symbol-list--all">
+                <li v-for="symbol in filteredLandUnitSymbols"
+                    :key="symbol.key">
+                  <a @click="selectUnitSymbol(symbol)"
+                     :class="{'is-active': selectedUnitSymbol && selectedUnitSymbol.key===symbol.key}">
+                    <span class="icon is-medium">
+                      <img :src="getMilSymbolIcon(symbol.sidc)" />
+                    </span>
+                    <span>{{symbol.title}}</span>
+                  </a>
+                </li>
+              </ul>
+              <hr>
+              <p class="menu-label has-text-white has-text-centered">Affiliation Only</p>
               <ul class="menu-list has-text-centered">
                 <li v-for="sidc in staticSidcList" 
                     :key="sidc.sidc">
@@ -1279,6 +1346,7 @@ import { createBox } from 'ol/interaction/Draw.js'
 import featuresStyleFunctions from '@/map/mixins/featuresStyleFunctions'
 import geometry from '@/map/mixins/geometry'
 import MilSymbolGenerator from '@/map/components/milsymbol-generator'
+import { ms2525d } from '@/map/assets/milsymbol/index_2525d.js'
 import Swatches from 'vue-swatches'
 import {
   MapLayerRead,
@@ -1360,6 +1428,53 @@ export default {
       drawType: 'none',
       isWeatherOn: 'Off',
       isRangesOn: 'Off',
+      selectedMilAffiliation: '3',
+      selectedMilEchelon: '16',
+      selectedUnitSymbol: null,
+      unitSymbolSearch: '',
+      milAffiliations: [
+        { title: 'Friend', code: '3' },
+        { title: 'Assumed Friend', code: '2' },
+        { title: 'Neutral', code: '4' },
+        { title: 'Unknown', code: '1' },
+        { title: 'Hostile', code: '6' },
+        { title: 'Suspect', code: '5' }
+      ],
+      milEchelons: [
+        { title: 'Unspecified', code: '00' },
+        { title: 'Team/Crew', code: '11' },
+        { title: 'Squad', code: '12' },
+        { title: 'Section', code: '13' },
+        { title: 'Platoon/Detachment', code: '14' },
+        { title: 'Company/Battery/Troop', code: '15' },
+        { title: 'Battalion/Squadron', code: '16' },
+        { title: 'Regiment/Group', code: '17' },
+        { title: 'Brigade', code: '18' },
+        { title: 'Division', code: '21' },
+        { title: 'Corps/MEF', code: '22' },
+        { title: 'Army', code: '23' },
+        { title: 'Army Group/Front', code: '24' },
+        { title: 'Region/Theater', code: '25' },
+        { title: 'Command', code: '26' }
+      ],
+      commonUnitSymbolCodes: [
+        { title: 'Infantry', code: '121100' },
+        { title: 'Mechanized Infantry', code: '121102' },
+        { title: 'Armor', code: '120500' },
+        { title: 'Recon/Cavalry', code: '121300' },
+        { title: 'Artillery', code: '130300' },
+        { title: 'Air Defense', code: '130100' },
+        { title: 'Aviation', code: '120600' },
+        { title: 'Engineer', code: '140700' },
+        { title: 'Military Police', code: '141200' },
+        { title: 'Intelligence', code: '150000' },
+        { title: 'Signal', code: '111000' },
+        { title: 'Medical', code: '161300' },
+        { title: 'Maintenance', code: '161100' },
+        { title: 'Transportation', code: '163600' },
+        { title: 'Supply', code: '160200' },
+        { title: 'Special Operations', code: '121800' }
+      ],
       interactionsLayer: null,
       interactionsLayerSource: null,
       overlay: null,
@@ -1450,6 +1565,60 @@ export default {
       },
       weatherForecast: [],
       publicPath: process.env.BASE_URL
+    }
+  },
+  computed: {
+    commonUnitSymbols() {
+      return this.commonUnitSymbolCodes.map(symbol => ({
+        ...symbol,
+        key: `common-${symbol.code}`,
+        sidc: this.buildLandUnitSidc(symbol.code)
+      }))
+    },
+    landUnitSymbols() {
+      const landUnitSet = ms2525d['10']
+      if (!landUnitSet || !landUnitSet['main icon']) return []
+
+      return landUnitSet['main icon']
+        .filter(symbol => symbol.code && symbol.code !== '000000')
+        .map(symbol => {
+          const title = this.formatMilSymbolTitle(symbol)
+          return {
+            key: `land-${symbol.code}`,
+            title,
+            searchText: title.toLowerCase(),
+            code: symbol.code,
+            sidc: this.buildLandUnitSidc(symbol.code)
+          }
+        })
+    },
+    filteredLandUnitSymbols() {
+      const searchText = this.unitSymbolSearch.toLowerCase()
+      if (!searchText) return this.landUnitSymbols.slice(0, 80)
+
+      return this.landUnitSymbols
+        .filter(symbol => symbol.searchText.includes(searchText))
+        .slice(0, 80)
+    },
+    selectedMilSymbolSummary() {
+      const affiliation = this.milAffiliations.find(
+        item => item.code === this.selectedMilAffiliation
+      )
+      const echelon = this.milEchelons.find(
+        item => item.code === this.selectedMilEchelon
+      )
+
+      return {
+        title: this.selectedUnitSymbol
+          ? this.selectedUnitSymbol.title
+          : 'Affiliation Marker',
+        meta: [
+          affiliation && affiliation.title,
+          echelon && echelon.title
+        ]
+          .filter(Boolean)
+          .join(' / ')
+      }
     }
   },
   watch: {
@@ -1817,6 +1986,41 @@ export default {
       this.ol3dMap.setEnabled(value === '3D')
       this.updateCesiumImagery()
     },
+    buildLandUnitSidc(iconCode) {
+      return (
+        '10' +
+        '0' +
+        this.selectedMilAffiliation +
+        '10' +
+        '0' +
+        '0' +
+        this.selectedMilEchelon +
+        iconCode +
+        '00' +
+        '00'
+      )
+    },
+    formatMilSymbolTitle(symbol) {
+      return [
+        symbol.entity,
+        symbol['entity type'],
+        symbol['entity subtype']
+      ]
+        .filter(Boolean)
+        .join(' / ')
+        .replace(/â€“/g, '-')
+        .replace(/\s+/g, ' ')
+    },
+    selectUnitSymbol(symbol) {
+      if (!symbol) return
+
+      const sidc = this.buildLandUnitSidc(symbol.code)
+      this.selectedUnitSymbol = {
+        ...symbol,
+        sidc
+      }
+      this.generateMilSymbol(sidc)
+    },
     generateMilSymbol(sidc) {
       this.selectedStaticSidc = sidc
       this.marker = this.getMilSymbol(sidc)
@@ -1902,6 +2106,14 @@ export default {
     },
     showSubmenu(area) {
       this.showArea = area
+    },
+    openSymbolChooser() {
+      this.showSubmenu('CustomSymbol')
+      this.enableDrawInteraction('MilSymbol')
+
+      if (!this.selectedUnitSymbol && this.commonUnitSymbols.length > 0) {
+        this.selectUnitSymbol(this.commonUnitSymbols[0])
+      }
     },
     enableDrawInteraction(type) {
       this.drawType = type

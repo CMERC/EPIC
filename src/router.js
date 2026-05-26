@@ -2039,7 +2039,7 @@ export default new Router({
       },
       children: [
         {
-          path: '/',
+          path: '',
           name: 'learn-home',
           component: LearnHome
         },

@@ -43,6 +43,25 @@ const localDataMiddleware = new ApolloLink((operation, forward) => {
 // generate apllo link with custom links
 let myLink = ApolloLink.from([retyrLink, localDataMiddleware])
 
+function getBrowserGraphqlEndpoints() {
+  if (typeof window === 'undefined' || !window.location) {
+    return {
+      httpEndpoint: 'http://localhost:4000/graphql',
+      wsEndpoint: 'ws://localhost:4000/graphql'
+    }
+  }
+
+  const { protocol, host } = window.location
+  const wsProtocol = protocol === 'https:' ? 'wss:' : 'ws:'
+
+  return {
+    httpEndpoint: `${protocol}//${host}/graphql`,
+    wsEndpoint: `${wsProtocol}//${host}/graphql`
+  }
+}
+
+const browserGraphqlEndpoints = getBrowserGraphqlEndpoints()
+
 // Config
 const defaultOptions = {
   watchQuery: {
@@ -61,9 +80,11 @@ const defaultOptions = {
   websocketsOnly: false,
   // Is being rendered on the server?
   ssr: false,
-  httpEndpoint: process.env.VUE_APP_GRAPHQL_HTTP || 'http://localhost:4000',
+  httpEndpoint:
+    process.env.VUE_APP_GRAPHQL_HTTP || browserGraphqlEndpoints.httpEndpoint,
   // Use `null` to disable subscriptions
-  wsEndpoint: process.env.VUE_APP_GRAPHQL_WS || 'ws://localhost:4000',
+  wsEndpoint:
+    process.env.VUE_APP_GRAPHQL_WS || browserGraphqlEndpoints.wsEndpoint,
   // LocalStorage token
   tokenName: AUTH_TOKEN,
   // Enable Automatic Query persisting with Apollo Engine
