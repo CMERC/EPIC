@@ -310,7 +310,15 @@ export default {
 <style lang="scss" scoped>
 .launcher {
   & .launcherTrigger {
-    height: 50px;
+    height: 42px;
+    width: 42px;
+    border-radius: 8px;
+    padding: 0.45rem;
+    transition: background-color 140ms ease, transform 140ms ease;
+    &:hover {
+      background: rgba(255, 255, 255, 0.14);
+      transform: translateY(-1px);
+    }
   }
   & .dropdown-menu {
     z-index: 250;
@@ -328,20 +336,36 @@ export default {
     margin-bottom: 1rem;
     .dropdown-item {
       text-align: center;
-      padding: 0;
+      padding: 0.25rem;
       a {
-        padding: 0.65rem;
-        display: inline-block;
+        min-height: 6rem;
+        padding: 0.85rem 0.55rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid transparent;
+        border-radius: 8px;
+        transition: background-color 140ms ease, border-color 140ms ease, box-shadow 140ms ease, transform 140ms ease;
         img {
-          height: 44px;
-          width: 44px;
+          height: 42px;
+          width: 42px;
+          filter: drop-shadow(0 4px 8px rgba(20, 38, 60, 0.12));
           & + p {
-            font-size: 0.85rem;
+            margin-top: 0.45rem;
+            font-size: 0.82rem;
             display: block;
             color: #363636;
-            font-weight: 600;
+            font-weight: 700;
             line-height: 1.125;
           }
+        }
+        &:hover,
+        &:focus {
+          background-color: #f5f8fb;
+          border-color: rgba(51, 153, 220, 0.22);
+          box-shadow: 0 10px 24px rgba(20, 38, 60, 0.10);
+          transform: translateY(-1px);
         }
       }
     }
@@ -350,7 +374,7 @@ export default {
     &:hover,
     & > div:hover {
       cursor: pointer;
-      background-color: #f5f5f5;
+      background-color: transparent;
     }
   }
 }

@@ -1,7 +1,7 @@
 <template>
-  <div class="container">
+  <div class="container app-home">
     <section class="section">
-      <div class="columns is-mobile is-vcentered">
+      <div class="home-hero columns is-mobile is-vcentered">
         <div class="column has-text-centered">
           <figure class="image center-image">
             <img src="@/shared/assets/epic_logo.svg"
@@ -512,6 +512,33 @@ export default {
 }
 </script>
 <style scoped lang="scss">
+.app-home {
+  max-width: 1180px;
+}
+
+.home-hero {
+  position: relative;
+  margin-bottom: 1.5rem;
+  padding: 2rem;
+  border: 1px solid rgba(217, 226, 236, 0.82);
+  border-radius: 8px;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.94), rgba(244, 249, 252, 0.92)),
+    linear-gradient(135deg, rgba(51, 153, 220, 0.10), rgba(3, 129, 114, 0.10));
+  box-shadow: 0 16px 40px rgba(20, 38, 60, 0.10);
+
+  .image.logo,
+  .image .logo {
+    filter: drop-shadow(0 10px 18px rgba(20, 38, 60, 0.12));
+  }
+
+  .subtitle {
+    margin-top: 0.75rem;
+    color: #65758b;
+    font-weight: 700;
+  }
+}
+
 @media screen and (min-width: 1024px) {
   div.apps {
     padding-top: 25px;
@@ -519,18 +546,62 @@ export default {
 }
 div.apps {
   .media-left img {
-    height: 50px;
+    height: 52px;
+    width: 52px;
+    filter: drop-shadow(0 8px 14px rgba(20, 38, 60, 0.12));
   }
 }
 div.apps {
-  & .column {
-    * {
-      cursor: pointer;
-      &:hover {
-        border-radius: 15px;
-        background-color: #eee;
-      }
+  & .column > a {
+    display: block;
+    height: 100%;
+    color: inherit;
+  }
+
+  article.media {
+    height: 100%;
+    align-items: center;
+    padding: 1.15rem;
+    border: 1px solid rgba(217, 226, 236, 0.82);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.94);
+    box-shadow: 0 2px 8px rgba(20, 38, 60, 0.08);
+    transition: border-color 140ms ease, box-shadow 140ms ease, transform 140ms ease;
+
+    &:hover,
+    &:focus-within {
+      border-color: rgba(51, 153, 220, 0.34);
+      box-shadow: 0 16px 38px rgba(20, 38, 60, 0.12);
+      transform: translateY(-2px);
     }
+
+    .media-content {
+      overflow: visible;
+    }
+
+    strong {
+      color: #223044;
+      font-size: 1rem;
+    }
+
+    small {
+      color: #65758b;
+      line-height: 1.4;
+    }
+
+    .media-right {
+      color: #3399dc;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .home-hero {
+    padding: 1.25rem;
+  }
+
+  div.apps article.media {
+    align-items: flex-start;
   }
 }
 </style>

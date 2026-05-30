@@ -166,7 +166,7 @@
               @click="toggleThemeMode">
         <span class="theme-toggle-symbol"
               aria-hidden="true">
-          {{ theme.dark ? '☀' : '☾' }}
+          <i :class="theme.dark ? 'fas fa-sun' : 'fas fa-moon'"></i>
         </span>
       </button>
 
@@ -482,7 +482,7 @@
                 @click="toggleThemeMode">
           <span class="theme-toggle-symbol"
                 aria-hidden="true">
-            {{ theme.dark ? '☀' : '☾' }}
+            <i :class="theme.dark ? 'fas fa-sun' : 'fas fa-moon'"></i>
           </span>
         </button>
         <router-link :to="{name: 'timezone'}"
@@ -1014,16 +1014,22 @@ export default {
 }
 .workspace {
   text-transform: capitalize;
+  max-width: 10rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .logout-padding {
   padding-bottom: 1rem;
 }
 .theme-toggle {
+  align-items: center;
   background: transparent;
   border: 0;
   color: inherit;
   cursor: pointer;
   font: inherit;
+  justify-content: center;
+  min-width: 3rem;
 }
 .theme-toggle:focus {
   outline: 2px solid rgba(255, 255, 255, 0.65);
@@ -1033,8 +1039,11 @@ export default {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 1.5rem;
-  font-size: 1.35rem;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  font-size: 0.95rem;
   line-height: 1;
 }
 
