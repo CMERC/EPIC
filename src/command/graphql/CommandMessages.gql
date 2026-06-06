@@ -1,0 +1,85 @@
+fragment CommandMessageFields on CommandMessage {
+  id
+  createdAt
+  updatedAt
+  title
+  body
+  fromName
+  fromEmail
+  recipientNames
+  recipientEmails
+  priority
+  status
+  dueAt
+  sentAt
+  acknowledgedAt
+  completedAt
+  response
+  planInjectId
+  planInjectNumber
+  planInjectTitle
+  createdBy
+  updatedBy
+}
+
+query CommandMessagesRead(
+  $scope: CommandMessageScope
+  $status: CommandStatus
+  $query: String
+  $orderBy: String
+  $first: Int
+  $skip: Int
+) {
+  commandMessages(
+    scope: $scope
+    status: $status
+    query: $query
+    orderBy: $orderBy
+    first: $first
+    skip: $skip
+  ) {
+    ...CommandMessageFields
+  }
+}
+
+query CommandMessageRead($where: CommandMessageWhereUniqueInput!) {
+  commandMessage(where: $where) {
+    ...CommandMessageFields
+  }
+}
+
+mutation CommandMessageCreate($data: CommandMessageCreateInput!) {
+  createCommandMessage(data: $data) {
+    ...CommandMessageFields
+  }
+}
+
+mutation CommandMessageUpdate(
+  $data: CommandMessageUpdateInput!
+  $where: CommandMessageWhereUniqueInput!
+) {
+  updateCommandMessage(data: $data, where: $where) {
+    ...CommandMessageFields
+  }
+}
+
+mutation CommandMessageAcknowledge($where: CommandMessageWhereUniqueInput!) {
+  acknowledgeCommandMessage(where: $where) {
+    ...CommandMessageFields
+  }
+}
+
+mutation CommandMessageComplete(
+  $data: CommandMessageCompleteInput!
+  $where: CommandMessageWhereUniqueInput!
+) {
+  completeCommandMessage(data: $data, where: $where) {
+    ...CommandMessageFields
+  }
+}
+
+mutation CommandMessageDelete($where: CommandMessageWhereUniqueInput!) {
+  deleteCommandMessage(where: $where) {
+    id
+  }
+}

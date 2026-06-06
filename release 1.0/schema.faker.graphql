@@ -1,0 +1,20 @@
+type Profile {
+  name: String @fake(type: fullName)
+  username: String @fake(type: words)
+  jobTitle: String @fake(type: jobTitle)
+  company: String @fake(type: companyCatchPhrase)
+  avatar: String @fake(type: imageUrl)
+  banner: String @fake(type: imageUrl)
+}
+
+type Post {
+  text: String @fake(type: hackerPhrase)
+  longitude: String @fake(type: longitude)
+  latitude: String @fake(type: latitude)
+  publishTime: String @fake(type: pastDate)
+}
+
+type Query {
+  profile: Profile
+  post: Post
+}

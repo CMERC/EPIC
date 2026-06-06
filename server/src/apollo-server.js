@@ -3,6 +3,33 @@ const { ApolloServer, makeExecutableSchema } = require('apollo-server-express')
 const { applyMiddleware } = require('graphql-middleware')
 const { logger } = require('./logger')
 
+function pruneMiddlewareToSchema(schema, middleware) {
+  if (typeof middleware === 'function') {
+    return middleware
+  }
+
+  return Object.keys(middleware).reduce((types, typeName) => {
+    const type = schema.getType(typeName)
+    if (!type || typeof type.getFields !== 'function') {
+      return types
+    }
+
+    const fields = type.getFields()
+    const fieldMiddleware = Object.keys(middleware[typeName]).reduce((resolvers, fieldName) => {
+      if (fields[fieldName]) {
+        resolvers[fieldName] = middleware[typeName][fieldName]
+      }
+      return resolvers
+    }, {})
+
+    if (Object.keys(fieldMiddleware).length > 0) {
+      types[typeName] = fieldMiddleware
+    }
+
+    return types
+  }, {})
+}
+
 /**
  *
  * @description Creates an Apollo Server. Setup based on `vue-cli-plugin-apollo`.
@@ -45,14 +72,16 @@ function createApolloServer(
     schemaDirectives,
     directiveResolvers,
     resolverValidationOptions: {
+      allowResolversNotInSchema: true,
       requireResolversForResolveType: false,
     },
   })
+  const prunedGraphqlMiddlewares = graphqlMiddlewares.map(middleware => pruneMiddlewareToSchema(schema, middleware))
   const applyGraphQLMiddleware = applyMiddleware
   // Apollo server options
   const options = {
     ...apolloServerOptions,
-    schema: applyGraphQLMiddleware(schema, ...graphqlMiddlewares),
+    schema: applyGraphQLMiddleware(schema, ...prunedGraphqlMiddlewares),
     tracing: false,
     cacheControl: false,
     engine: engineKey ? { apiKey: engineKey } : false,

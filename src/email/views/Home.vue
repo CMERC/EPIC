@@ -295,9 +295,11 @@ export default {
   text-transform: uppercase;
 }
 .aside .main .item {
+  border-radius: 8px;
   display: block;
   padding: 10px 0;
   color: #6f7b7e;
+  transition: background-color 140ms ease, color 140ms ease;
 }
 .aside .main .item.is-active {
   background-color: #f1f1f1;
@@ -382,7 +384,16 @@ export default {
   margin-top: 60px;
 }
 .inbox-messages .card {
+  border-radius: 8px;
+  box-shadow: var(--epic-shadow-sm);
+  cursor: pointer;
+  margin-bottom: .75rem;
+  transition: border-color 140ms ease, box-shadow 140ms ease, transform 140ms ease;
   width: 100%;
+}
+.inbox-messages .card:hover {
+  box-shadow: var(--epic-shadow-md);
+  transform: translateY(-1px);
 }
 .inbox-messages strong {
   color: #5d5d5d;
@@ -436,4 +447,5 @@ export default {
 .card.is-active {
   background-color: #f5f5f5;
 }
+
 </style>

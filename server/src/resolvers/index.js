@@ -2,6 +2,7 @@ const { Query } = require('./Query/')
 const { track } = require('./Query/track')
 const { appUserQueries } = require('./Query/appUserQueries')
 const { emailQueries } = require('./Query/email')
+const { commandQueries } = require('./Query/command')
 
 const { planReportQueries } = require('./Query/planReports')
 const { geocode } = require('./Query/geocode')
@@ -14,6 +15,7 @@ const { Subscription } = require('./Subscription')
 
 const { appUserMutations } = require('./Mutation/appUserMutations')
 const { emailMutations } = require('./Mutation/email')
+const { commandMutations } = require('./Mutation/command')
 
 const { appUserRole } = require('./Mutation/appUserRole')
 const { post } = require('./Mutation/post')
@@ -37,6 +39,7 @@ module.exports = {
     ...appUserQueries,
     ...authQueries,
     ...emailQueries,
+    ...commandQueries,
     ...planReportQueries,
     ...randomDataQueries,
     ...geocode,
@@ -46,6 +49,7 @@ module.exports = {
   Mutation: {
     ...appUserMutations,
     ...emailMutations,
+    ...commandMutations,
     ...post,
     ...profile,
     ...MediaService,

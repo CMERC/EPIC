@@ -54,6 +54,26 @@ if [[ "${EUID:-$(id -u)}" -ne 0 ]]; then
   need_sudo="sudo"
 fi
 
+random_secret() {
+  if command -v openssl >/dev/null 2>&1; then
+    openssl rand -hex 32
+  else
+    tr -dc 'A-Za-z0-9' </dev/urandom | head -c 64
+    echo
+  fi
+}
+
+app_url() {
+  case "$app_domain" in
+    http://*|https://*)
+      echo "$app_domain"
+      ;;
+    *)
+      echo "http://$app_domain"
+      ;;
+  esac
+}
+
 install_system_deps() {
   if command -v docker >/dev/null 2>&1 && docker compose version >/dev/null 2>&1; then
     echo "Docker and Docker Compose plugin are already available."
@@ -90,7 +110,8 @@ install_system_deps() {
 prepare_env() {
   if [[ ! -f .env ]]; then
     cp .env.rocky9.example .env
-    sed -i.bak "s/^APP_DOMAIN=.*/APP_DOMAIN=${app_domain}/" .env
+    sed -i.bak "s|^APP_DOMAIN=.*|APP_DOMAIN=${app_domain}|" .env
+    sed -i.bak "s|^MINIO_ROOT_PASSWORD=.*|MINIO_ROOT_PASSWORD=$(random_secret)|" .env
     rm -f .env.bak
     echo "Created .env from .env.rocky9.example."
   else
@@ -98,10 +119,13 @@ prepare_env() {
   fi
 
   if [[ ! -f server/.env.rocky9 ]]; then
-    cat > server/.env.rocky9 <<'ENV'
-PRISMA_SECRET=mysecret123
-DATABASE_URL=mysql://root:prisma@mysql:3306/graphcool
-APP_SECRET=change-me
+    prisma_secret="$(random_secret)"
+    jwt_secret="$(random_secret)"
+    cat > server/.env.rocky9 <<ENV
+APP_DOMAIN=$(app_url)
+PRISMA_SECRET=${prisma_secret}
+DATABASE_URL=mysql://root:prisma@mysql:3306/default@default
+APP_SECRET=${jwt_secret}
 SENDGRID_API_KEY=
 SENDGRID_FROM_EMAIL=
 COBRA_API_URL=
@@ -111,7 +135,7 @@ TWITTER_CONSUMER_SECRET=
 TWITTER_ACCESS_TOKEN_KEY=
 TWITTER_ACCESS_TOKEN_SECRET=
 ENV
-    echo "Created server/.env.rocky9 with placeholder secrets."
+    echo "Created server/.env.rocky9 with generated local secrets."
   else
     echo "server/.env.rocky9 already exists; leaving it unchanged."
   fi
@@ -131,9 +155,22 @@ else
   "${compose[@]}" up -d
 fi
 
+echo "Waiting for the API container to become healthy..."
+for _ in {1..60}; do
+  server_health="$("${compose[@]}" ps --format json server 2>/dev/null | sed -n 's/.*"Health":"\([^"]*\)".*/\1/p' | head -n 1 || true)"
+  if [[ "$server_health" == "healthy" ]]; then
+    break
+  fi
+  sleep 3
+done
+
+echo "Seeding reference data and evaluation content..."
+"${compose[@]}" exec -T server sh -lc 'cd /app/database && npx prisma1 seed >/tmp/epic-prisma-seed.log 2>&1 || { cat /tmp/epic-prisma-seed.log; exit 1; }'
+"${compose[@]}" exec -T server npm run seed:evaluation
+
 echo
 echo "EPIC is starting. Check status with:"
 echo "  docker compose -f docker-compose.rocky9.yml ps"
 echo "  docker compose -f docker-compose.rocky9.yml logs -f server prisma mysql"
 echo
-echo "Open: http://${app_domain}"
+echo "Open: $(app_url)"

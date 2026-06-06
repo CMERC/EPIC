@@ -12,6 +12,8 @@ html.theme-dark,
 body.theme-dark {
   background: $dark-bg;
   color: $dark-text;
+  color-scheme: dark;
+  scrollbar-color: $dark-surface-3 $dark-bg;
 }
 
 .theme-dark {
@@ -20,6 +22,31 @@ body.theme-dark {
   color-scheme: dark;
   min-height: 100vh;
 
+  *,
+  *::before,
+  *::after {
+    scrollbar-color: $dark-surface-3 $dark-bg;
+  }
+
+  *::-webkit-scrollbar {
+    height: 12px;
+    width: 12px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: $dark-bg;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background: $dark-surface-3;
+    border: 3px solid $dark-bg;
+    border-radius: 999px;
+  }
+
+  *::-webkit-scrollbar-thumb:hover {
+    background: lighten($dark-surface-3, 10%);
+  }
+
   a,
   a:hover {
     color: $dark-link;
@@ -27,6 +54,7 @@ body.theme-dark {
 
   .has-text-black,
   .has-text-dark,
+  .has-text-black-ter,
   .has-text-grey-darker,
   .has-text-grey-dark,
   .title,
@@ -52,6 +80,10 @@ body.theme-dark {
 
   .section,
   .hero,
+  .has-background-light,
+  .has-background-white,
+  .has-background-white-bis,
+  .has-background-white-ter,
   .box,
   .card,
   .panel,
@@ -70,11 +102,21 @@ body.theme-dark {
     border-color: $dark-border;
   }
 
+  .has-background-light,
+  .has-background-white,
+  .has-background-white-bis,
+  .has-background-white-ter {
+    background-color: $dark-surface !important;
+    color: $dark-text !important;
+  }
+
   .card-header,
   .card-footer,
   .panel-heading,
   .panel-block,
   .media,
+  .tabs,
+  .tabs ul,
   .table td,
   .table th,
   hr,
@@ -88,7 +130,8 @@ body.theme-dark {
   .modal-card-head,
   .modal-card-foot,
   .card-header,
-  .card-footer {
+  .card-footer,
+  .tabs.is-toggle a {
     background-color: $dark-surface-2;
   }
 
@@ -112,6 +155,8 @@ body.theme-dark {
   .input,
   .textarea,
   .select select,
+  .checkbox:hover,
+  .radio:hover,
   .taginput .taginput-container,
   .multiselect__tags,
   .multiselect__input,
@@ -149,7 +194,7 @@ body.theme-dark {
   .navbar,
   .navbar-menu,
   .navbar-brand {
-    background-color: #0f172a;
+    background: #0f172a !important;
     color: $dark-text;
   }
 
@@ -187,6 +232,14 @@ body.theme-dark {
   .pagination-previous,
   .menu-list a {
     color: $dark-muted;
+  }
+
+  .tabs.is-toggle,
+  .tabs.is-toggle ul,
+  .tabs.is-toggle a {
+    background-color: $dark-surface-2 !important;
+    border-color: $dark-border !important;
+    color: $dark-muted !important;
   }
 
   .tabs li.is-active a,
@@ -231,10 +284,222 @@ body.theme-dark {
     color: $dark-text;
   }
 
+  .fc,
+  .fc-unthemed td,
+  .fc-unthemed th,
+  .fc-unthemed thead,
+  .fc-unthemed tbody,
+  .fc-unthemed .fc-divider,
+  .fc-unthemed .fc-list-heading td,
+  .fc-unthemed .fc-list-view,
+  .fc-unthemed .fc-popover,
+  .fc-unthemed .fc-row {
+    background-color: $dark-surface !important;
+    border-color: $dark-border !important;
+    color: $dark-text !important;
+  }
+
+  .fc-unthemed .fc-list-item:hover td,
+  .fc-unthemed .fc-today {
+    background-color: $dark-surface-3 !important;
+  }
+
   .multiselect__option--highlight,
   .multiselect__option--selected.multiselect__option--highlight {
     background: $dark-surface-3;
     color: $dark-text;
+  }
+
+  .home-hero,
+  div.apps article.media,
+  .launcher .apps .dropdown-item a,
+  .planDash .panel,
+  .planDash .content,
+  .command-list,
+  .command-detail,
+  .command-body,
+  .command-list .message-row,
+  .command-app .meta-grid div,
+  #mail-app .messages,
+  #mail-app .message,
+  #mail-app .card,
+  .container.is-fullhd.is-fullheight .chat,
+  .container.is-fullhd.is-fullheight .thread li,
+  .learn-page .progress-card,
+  .learn-page .module-card,
+  .learn-page .course-overview,
+  .learn-page .overview-step,
+  .learn-page .path-panel,
+  .learn-page .lesson-panel,
+  .learn-page .lesson-card {
+    background-color: $dark-surface !important;
+    border-color: $dark-border !important;
+    color: $dark-text !important;
+  }
+
+  .loading-background {
+    background-color: rgba(15, 23, 42, .72) !important;
+  }
+
+  div.apps article.media,
+  .launcher .apps .dropdown-item a,
+  .home-hero {
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.36) !important;
+  }
+
+  div.apps article.media:hover,
+  div.apps article.media:focus-within,
+  .launcher .apps .dropdown-item a:hover,
+  .launcher .apps .dropdown-item a:focus {
+    background-color: $dark-surface-2 !important;
+    border-color: lighten($dark-border, 10%) !important;
+  }
+
+  .home-hero {
+    background:
+      linear-gradient(135deg, rgba(31, 41, 55, .96), rgba(23, 32, 51, .96)),
+      linear-gradient(135deg, rgba(125, 211, 252, .10), rgba(251, 191, 36, .08)) !important;
+  }
+
+  div.apps article.media strong,
+  .launcher .apps .dropdown-item a .title,
+  .launcher .apps .dropdown-item a p,
+  .learn-page .module-copy strong,
+  .learn-page .overview-copy h2,
+  .learn-page .overview-step strong,
+  .learn-page .lesson-heading h2,
+  .learn-page .path-row strong,
+  .learn-page .quiz-question p,
+  .learn-page .score-row strong,
+  .learn-page .progress-card strong {
+    color: $dark-text !important;
+  }
+
+  div.apps article.media small,
+  .launcher .is-divider,
+  .home-hero .subtitle,
+  .command-app .overline,
+  .command-app .message-row-main small,
+  .command-app .message-row-time,
+  .command-app .muted,
+  .command-app .timeline,
+  .command-app .meta-grid span,
+  .command-app .empty-detail,
+  #mail-app .aside .main,
+  #mail-app .aside .title,
+  #mail-app .aside .main .item,
+  #mail-app .aside .main .name,
+  #mail-app .inbox-messages strong,
+  #mail-app .inbox-messages .msg-subject,
+  #mail-app .inbox-messages .msg-timestamp,
+  .learn-page .learn-hero p,
+  .learn-page .overview-copy p,
+  .learn-page .lesson-heading p,
+  .learn-page .module-copy small,
+  .learn-page .overview-step small,
+  .learn-page .path-row small,
+  .learn-page .lesson-card p,
+  .learn-page .lesson-card li,
+  .learn-page .evidence-label,
+  .learn-page .completion-hint,
+  .learn-page .score-row span,
+  .learn-page .progress-card span,
+  .learn-page .progress-card small {
+    color: $dark-muted !important;
+  }
+
+  .command-app,
+  .container.is-fullhd.is-fullheight,
+  .learn-page,
+  .command-app.command-app {
+    background: $dark-bg !important;
+    color: $dark-text !important;
+  }
+
+  .command-sidebar,
+  #mail-app .aside,
+  .container.is-fullhd.is-fullheight .sidebar {
+    background-color: #0f172a !important;
+    border-color: $dark-border !important;
+    color: $dark-text !important;
+  }
+
+  .command-app .message-list,
+  .command-app .message-row,
+  .learn-page .path-row,
+  .learn-page .lesson-heading,
+  .learn-page .quiz-question {
+    border-color: $dark-border !important;
+  }
+
+  .command-app .message-row.is-active,
+  .command-app .message-row:hover,
+  #mail-app .aside .main .item.is-active,
+  #mail-app .aside .main .item:active,
+  #mail-app .aside .main .item:hover,
+  #mail-app .card.is-active,
+  .container.is-fullhd.is-fullheight .chatClient li.is-active,
+  .learn-page .path-row.active,
+  .learn-page .score-row {
+    background-color: $dark-surface-3 !important;
+  }
+
+  .learn-page.is-course-page {
+    background:
+      linear-gradient(180deg, rgba(125, 211, 252, .08), $dark-bg 22rem) !important;
+  }
+
+  .learn-page .module-card,
+  .learn-page .overview-step,
+  .learn-page .path-row {
+    color: $dark-text !important;
+  }
+
+  .learn-page .module-icon,
+  .learn-page .overview-step span {
+    background: rgba(125, 211, 252, .12) !important;
+    color: $dark-link !important;
+  }
+
+  .learn-page .path-number,
+  .learn-page .preview-marker {
+    background: $dark-surface-2 !important;
+    border-color: $dark-border !important;
+    color: $dark-text !important;
+  }
+
+  .learn-page .lesson-card h3 {
+    color: $dark-link !important;
+  }
+
+  .learn-page .app-preview {
+    border-color: $dark-border !important;
+  }
+
+  .learn-page .preview-nav {
+    background: #0f172a !important;
+  }
+
+  .learn-page .preview-canvas,
+  .learn-page .media-preview .preview-canvas,
+  .learn-page .web-preview .preview-canvas,
+  .learn-page .notes-preview .preview-canvas,
+  .learn-page .resources-preview .preview-canvas,
+  .learn-page .chat-preview .preview-canvas,
+  .learn-page .email-preview .preview-canvas,
+  .learn-page .command-preview .preview-canvas,
+  .learn-page .settings-preview .preview-canvas,
+  .learn-page .dev-preview .preview-canvas,
+  .learn-page .learn-preview .preview-canvas,
+  .learn-page .activity-preview .preview-canvas {
+    background:
+      linear-gradient(90deg, rgba(125, 211, 252, .08) 1px, transparent 1px),
+      linear-gradient(0deg, rgba(125, 211, 252, .08) 1px, transparent 1px),
+      linear-gradient(135deg, $dark-surface, $dark-surface-2) !important;
+  }
+
+  .learn-page .preview-canvas::after {
+    border-color: rgba(125, 211, 252, .16) !important;
   }
 }
 

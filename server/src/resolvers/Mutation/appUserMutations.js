@@ -3,6 +3,17 @@ const appUserMutations = {
     var dateNow = new Date()
     var dateISO = dateNow.toISOString()
 
+    if (ctx.prisma) {
+      return ctx.prisma.user.update({
+        data: {
+          deletedAt: dateNow
+        },
+        where: {
+          id: args.where.id
+        }
+      })
+    }
+
     let deleteUserArgs = {
       data: {
         deletedAt: dateISO

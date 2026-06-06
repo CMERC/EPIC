@@ -295,6 +295,53 @@
         <div class="columns is-mobile">
           <div class="column is-2 px-1">
             <ApolloQuery :query="getAppListSettingReadQuery"
+                         :variables="{where: {name: 'activity'}}">
+              <template slot-scope="{ result: { loading, error, data } }">
+                <div v-if="loading"
+                     class="loading apollo">
+                  Loading...
+                </div>
+                <div v-else-if="error"
+                     class="error apollo">
+                  An error occurred
+                </div>
+                <b-switch v-else-if="data && data.appListSetting"
+                          type="is-primary"
+                          v-model="data.appListSetting.status"
+                          true-value="ACTIVE"
+                          false-value="INACTIVE"
+                          @input="handleChange($event, 'activity')">
+                  <span class="is-size-7"
+                        v-if="data">{{data.appListSetting.status == 'ACTIVE' ? 'Active': 'Inactive'}}</span>
+                </b-switch>
+                <b-switch v-else
+                          type="is-primary"
+                          v-model="status.activity"
+                          true-value="ACTIVE"
+                          false-value="INACTIVE"
+                          @input="addApp($event, 'activity')">
+                  <span class="is-size-7">Active</span>
+                </b-switch>
+
+              </template>
+            </ApolloQuery>
+          </div>
+          <div class="column is-narrow px-1">
+            <img src="@/shared/assets/activity.svg">
+          </div>
+          <div class="column">
+            <div class="content">
+              <p class="has-text-weight-semibold has-text-dark mb-0">Activity</p>
+              <p class="has-text-dark is-size-7 mb-0">{{getAppDescription('activity')}}</p>
+              <p class="has-text-dark is-size-7 mb-0"><strong>Accessible by:</strong> {{getAppAccessNote('activity')}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="column is-half">
+        <div class="columns is-mobile">
+          <div class="column is-2 px-1">
+            <ApolloQuery :query="getAppListSettingReadQuery"
                          :variables="{where: {name: 'chat'}}">
               <template slot-scope="{ result: { loading, error, data } }">
                 <div v-if="loading"
@@ -640,6 +687,7 @@ export default {
         web: 'ACTIVE',
         observe: 'ACTIVE',
         map: 'ACTIVE',
+        activity: 'ACTIVE',
         chat: 'ACTIVE',
         resources: 'ACTIVE',
         learn: 'ACTIVE',
@@ -666,6 +714,8 @@ export default {
           return 'Record and view observations in real-time.'
         case 'map':
           return 'Visualize your training exercise on an interactive 3D map.'
+        case 'activity':
+          return 'Review workspace activity and operational events.'
         case 'chat':
           return 'Communicate securely with messaging and group channels'
         case 'resources':
@@ -689,6 +739,7 @@ export default {
         case 'notebook':
         case 'observe':
         case 'map':
+        case 'activity':
           return 'Admin, Editor'
         case 'web':
         case 'email':

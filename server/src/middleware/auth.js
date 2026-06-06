@@ -337,6 +337,9 @@ const permissions = shield({
     chatRooms: and(isAuthenticated, or(isAdmin, isEditor, isSuper)),
     chatRoomsConnection: and(isAuthenticated, or(isAdmin, isEditor, isSuper)),
 
+    commandMessage: isAuthenticatedWithRole,
+    commandMessages: isAuthenticatedWithRole,
+
     emailMessage: isAuthenticatedWithRole,
     emailMessages: isAuthenticatedWithRole,
     emailMessagesConnection: isAuthenticatedWithRole,
@@ -663,6 +666,12 @@ const permissions = shield({
     updateChatRoom: and(isAuthenticated, or(isAdmin, isEditor, isSuper)),
     upsertChatRoom: and(isAuthenticated, or(isAdmin, isEditor, isSuper)),
     deleteChatRoom: and(isAuthenticated, or(isAdmin, isEditor, isSuper)),
+
+    createCommandMessage: isAuthenticatedWithRole,
+    updateCommandMessage: isAuthenticatedWithRole,
+    acknowledgeCommandMessage: isAuthenticatedWithRole,
+    completeCommandMessage: isAuthenticatedWithRole,
+    deleteCommandMessage: isAuthenticatedWithRole,
 
     composeEmailMessage: isAuthenticatedWithRole,
     updateEmailMessage: isAuthenticatedWithRole,

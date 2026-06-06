@@ -549,6 +549,47 @@ type ChatRoom {
   messages: [ChatMessage!]! @relation(name: "RoomMessage", onDelete: CASCADE)
 }
 
+enum CommandPriority {
+  ROUTINE
+  PRIORITY
+  IMMEDIATE
+  FLASH
+}
+
+enum CommandStatus {
+  DRAFT
+  SENT
+  ACKNOWLEDGED
+  IN_PROGRESS
+  COMPLETED
+  FAILED
+  CANCELLED
+}
+
+type CommandMessage {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  title: String!
+  body: String!
+  fromName: String
+  fromEmail: String
+  recipientNames: String
+  recipientEmails: String
+  priority: CommandPriority! @default(value: ROUTINE)
+  status: CommandStatus! @default(value: DRAFT)
+  dueAt: DateTime
+  sentAt: DateTime
+  acknowledgedAt: DateTime
+  completedAt: DateTime
+  response: String
+  planInjectId: String
+  planInjectNumber: Int
+  planInjectTitle: String
+  createdBy: String
+  updatedBy: String
+}
+
 enum EmailStatus {
   UNREAD
   READ

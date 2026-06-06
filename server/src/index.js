@@ -9,7 +9,7 @@ const {
 } = require('./middleware')
 const createApolloServer = require('./apollo-server')
 const { PubSub } = require('graphql-subscriptions')
-const { getLegacyPrisma } = require('./services/prisma')
+const { getLegacyPrisma, getPrismaClient } = require('./services/prisma')
 
 const { importSchema } = require('graphql-import')
 const typeDefs = importSchema('./src/schema.graphql')
@@ -59,6 +59,7 @@ const server = createApolloServer(app, {
     ...req,
     db: getLegacyPrisma(),
     global: getLegacyPrisma(),
+    prisma: getPrismaClient(),
     pubsub: new PubSub(),
     redisClient,
     graphqlAuthentication: graphqlAuthenticationConfig({

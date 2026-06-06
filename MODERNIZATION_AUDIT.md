@@ -2,11 +2,11 @@
 
 Date: 2026-05-23
 
-Updated: 2026-05-25
+Updated: 2026-05-26
 
 ## Executive summary
 
-EPIC is now runnable for evaluation, but it is still a legacy Vue 2 + Apollo Server 2 + Prisma 1 application. The current package is best treated as a stabilized compatibility release, not a complete modernization. The largest technical debt is the backend data/API layer: Prisma 1, `prisma-binding`, `graphql-import`, Apollo Server 2, GraphQL 14, MySQL 5.7, and several old integration libraries all constrain what can safely be upgraded.
+EPIC is now runnable for evaluation, but it is still a legacy Vue 2 + Apollo Server 2 + Prisma 1 application. The current package is best treated as a stabilized compatibility release, not a complete modernization. The largest technical debt is the backend data/API layer: Prisma 1, `prisma-binding`, Apollo Server 2, GraphQL 14, MySQL 5.7, and several old integration libraries all constrain what can safely be upgraded.
 
 The safest path is phased:
 
@@ -71,6 +71,10 @@ The safest path is phased:
 - Removed unused direct server `fast-csv` dependency.
 - Upgraded compatible server leaf dependencies: `uuid`, `node-schedule`, and `sharp`.
 - Added a MinIO Docker healthcheck and made dependent services wait for healthy Redis/MinIO/client/server states where applicable.
+- Fixed frontend Jest test discovery so the existing unit specs are actually executed.
+- Reduced the server `graphql-import` dependency from 1.x to the smaller 0.7.1 importer, removing the vulnerable GraphQL Toolkit/Babel traversal chain while preserving the Prisma 1 schema import behavior.
+- Hardened the Linux installer so fresh deployments generate local app/Prisma/MinIO secrets and handle domains with or without URL schemes.
+- Made Prisma Client creation lazy and shared through `getPrismaClient()`.
 
 ## Verification
 
@@ -82,6 +86,15 @@ npm run test:unit -- --runInBand
 
 Result: 5 test suites passed, 8 tests passed.
 
+- Server tests pass:
+
+```bash
+cd server && npm test -- --runInBand
+```
+
+Result: 1 test suite passed, 1 test passed.
+
+- Server schema import succeeds with `graphql-import` 0.7.1 and expands to a 520031 character schema string.
 - `graphql-faker` now starts cleanly in Docker Compose and reports its API at `/graphql`.
 - Server dependency lockfile generation completed.
 - Server container rebuild completed successfully after the Apollo/Prisma slice.
@@ -98,9 +111,9 @@ Result: 5 test suites passed, 8 tests passed.
 
 - Production frontend build now completes, but minification is disabled to keep the legacy Cesium/OpenLayers/Vue CLI bundle build stable in Docker. This should be revisited during the frontend platform migration.
 - A cold backend dependency install is slow because of the legacy dependency tree and native packages. Docker layer caching now makes normal rebuilds much faster.
-- Frontend production audit now reports 9 production vulnerabilities: 7 low, 0 moderate, 2 high, 0 critical. This is down from 26 before the dependency cleanup.
-- Server production audit now reports 108 production vulnerabilities: 7 low, 38 moderate, 50 high, 13 critical. This reflects the current lockfile after adding the Prisma ORM bridge and removing or replacing several abandoned direct dependencies.
-- Many remaining server audit fixes require major migrations or replacement of abandoned packages, especially Prisma 1, Apollo Server 2, GraphQL tooling, the old Twitter client, and old request-based transitive integrations.
+- Frontend production audit now reports 7 production vulnerabilities: 5 low, 0 moderate, 2 high, 0 critical. This is down from 26 before the dependency cleanup.
+- Server production audit now reports 73 production vulnerabilities: 7 low, 29 moderate, 33 high, 4 critical. This reflects the current lockfile after adding the Prisma ORM bridge and replacing the vulnerable `graphql-import` 1.x dependency chain.
+- Many remaining server audit fixes require major migrations or replacement of abandoned packages, especially Prisma 1, Apollo Server 2, GraphQL middleware/binding tooling, the old Twitter client, and old request-based transitive integrations.
 - Some `url-regex` transitive entries remain on the server through older integration packages. Direct app usage has been removed.
 - Docker Compose still uses MySQL 5.7 because Prisma 1 compatibility is the priority. Upgrading MySQL should wait until the Prisma migration.
 
@@ -123,7 +136,7 @@ Result: 5 test suites passed, 8 tests passed.
 
 - Create a new Prisma Client schema from the existing Prisma 1 datamodel.
 - Replace `prisma-binding`, `forwardTo`, and generated `prisma.graphql` imports with Prisma Client service calls.
-- Move schema loading away from `graphql-import`.
+- Remove `graphql-import` entirely once direct generated Prisma GraphQL imports are retired.
 - Upgrade Apollo Server to a maintained version or migrate to GraphQL Yoga.
 - Replace request-era libraries.
 

@@ -420,6 +420,7 @@ export default {
     width: 100%;
   }
 }
+
 @media screen and (min-width: 1025px) {
   .container {
     overflow: hidden;
@@ -454,5 +455,6 @@ export default {
       }
     }
   }
+
 }
 </style>

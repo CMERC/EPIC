@@ -319,6 +319,9 @@ const workspaceResolvers = {
     chatRooms: workspaceMiddleware,
     chatRoomsConnection: workspaceMiddleware,
 
+    commandMessage: workspaceMiddleware,
+    commandMessages: workspaceMiddleware,
+
     planParticipantFundingSources: workspaceMiddleware,
     planParticipantFundingSource: workspaceMiddleware,
     planParticipantFundingSourcesConnection: workspaceMiddleware,
@@ -505,6 +508,12 @@ const workspaceResolvers = {
     updateChatRoom: workspaceMiddleware,
     upsertChatRoom: workspaceMiddleware,
     deleteChatRoom: workspaceMiddleware,
+
+    createCommandMessage: workspaceMiddleware,
+    updateCommandMessage: workspaceMiddleware,
+    acknowledgeCommandMessage: workspaceMiddleware,
+    completeCommandMessage: workspaceMiddleware,
+    deleteCommandMessage: workspaceMiddleware,
 
     createPlanParticipantFundingSource: workspaceMiddleware,
     updatePlanParticipantFundingSource: workspaceMiddleware,

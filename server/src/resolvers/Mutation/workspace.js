@@ -2,6 +2,7 @@ const { getUser, getUserId } = require('graphql-authentication')
 const { addJobToQueue } = require('../../jobs/publishPosts')
 const { deployWorkspace } = require('../../jobs/deploy')
 const { addNoiseQueue } = require('../../jobs/noiseScheduler')
+const { appWorkspaceWhereFromPrisma1, toAppWorkspace } = require('../../services/prismaBridge')
 const axios = require('axios')
 
 async function createWorkspaceEndpoint(ctx, args) {
@@ -13,6 +14,53 @@ async function createWorkspaceEndpoint(ctx, args) {
   // Add noise schduler for workspace
   addNoiseQueue(name)
 }
+
+async function ensureEvaluationAdminRole(ctx, userId) {
+  const adminRole = await ctx.db.query.appRole({ where: { name: 'ADMIN' } }, '{ id }')
+  if (!adminRole) {
+    return
+  }
+
+  const user = await ctx.db.query.user(
+    { where: { id: userId } },
+    '{ role { id roles { name } } }'
+  )
+
+  if (
+    user &&
+    user.role &&
+    user.role.roles &&
+    user.role.roles.some(role => role.name === 'ADMIN')
+  ) {
+    return
+  }
+
+  if (user && user.role && user.role.id) {
+    await ctx.db.mutation.deleteAppUserRole({
+      where: {
+        id: user.role.id
+      }
+    })
+  }
+
+  await ctx.db.mutation.createAppUserRole({
+    data: {
+      user: {
+        connect: {
+          id: userId
+        }
+      },
+      roles: {
+        connect: [
+          {
+            id: adminRole.id
+          }
+        ]
+      }
+    }
+  })
+}
+
 const appWorkspaceMutation = {
   async requestAppWorkspace(parent, args, ctx, info) {
     // TODO: Automate this so that the admins of the workspace get notified and can grant access
@@ -32,6 +80,7 @@ const appWorkspaceMutation = {
             id: workspaces[0].id
           }
         })
+        await ensureEvaluationAdminRole(ctx, user.id)
         return 'Workspace access granted for ' + user.email
       }
 
@@ -60,6 +109,48 @@ const appWorkspaceMutation = {
   // assignUserToWorkspace
   async assignUserToWorkspace(parent, args, ctx, info) {
     if (args && args.data && args.data.connect) {
+      if (ctx.prisma) {
+        const appWorkspace = await ctx.prisma.appWorkspace.update({
+          data: {
+            User: {
+              connect: {
+                id: args.data.connect.id
+              }
+            }
+          },
+          where: args.where,
+          include: {
+            User: true
+          }
+        })
+
+        // Send email
+        if (ctx.graphqlAuthentication.mailer) {
+          let user = await ctx.prisma.user.findUnique({
+            where: {
+              id: args.data.connect.id
+            }
+          })
+          let workspace = await ctx.prisma.appWorkspace.findFirst({
+            where: appWorkspaceWhereFromPrisma1(args.where)
+          })
+          if (user && user.inviteAccepted)
+            ctx.graphqlAuthentication.mailer.send({
+              template: 'addUserToWorkspace',
+              message: {
+                to: user.email
+              },
+              locals: {
+                mailAppUrl: ctx.graphqlAuthentication.mailAppUrl,
+                email: user.email,
+                workspaceName: workspace.displayName
+              }
+            })
+        }
+
+        return toAppWorkspace(appWorkspace)
+      }
+
       let variables = {
         data: {
           members: {

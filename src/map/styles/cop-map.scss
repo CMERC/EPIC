@@ -52,7 +52,30 @@
   width: 100%;
   height: calc(100vh - 52px);
 }
+.map-canvas-shell {
+  position: relative;
+}
+.locate-laptop-control {
+  bottom: 1rem;
+  left: 1rem;
+  position: absolute;
+  z-index: 20;
+  box-shadow: 0 10px 28px rgba(20, 38, 60, 0.22);
+}
 .cop-map-container {
+  .actionSubmenu {
+    height: calc(100vh - 60px);
+  }
+
+  .map,
+  .map-canvas-shell {
+    height: 100%;
+  }
+
+  .ol-zoom {
+    top: 1.5rem;
+  }
+
   .map__left {
     grid-area: mapleft;
     overflow: scroll;
@@ -72,7 +95,8 @@
     display: grid;
     grid-template-areas: 'mapleft mapright';
     grid-template-columns: auto 1fr;
-    height: calc(100vh - 52px);
+    height: calc(100vh - 68px);
+    margin-top: 1rem;
   }
 
   .map__left__menu {

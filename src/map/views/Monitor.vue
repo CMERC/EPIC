@@ -24,13 +24,37 @@
         <h3>Media Posts</h3>
       </div>
       <div class="level-item">
+        <button class="button is-small is-primary is-outlined"
+                type="button"
+                :class="{'is-loading': locatingLaptop}"
+                :disabled="locatingLaptop"
+                @click="locateLaptop">
+          <span class="icon is-small">
+            <i class="fas fa-location-arrow"></i>
+          </span>
+          <span>Locate device</span>
+        </button>
+      </div>
+      <div class="level-item">
         <help-content reference="map.monitor"
                       toggle
                       dropdown />
       </div>
     </nav>
-    <div id="map"
-         class="map"></div>
+    <div class="map-shell">
+      <button class="button is-primary locate-laptop-control"
+              type="button"
+              :class="{'is-loading': locatingLaptop}"
+              :disabled="locatingLaptop"
+              @click="locateLaptop">
+        <span class="icon is-small">
+          <i class="fas fa-location-arrow"></i>
+        </span>
+        <span>Locate device</span>
+      </button>
+      <div id="map"
+           class="map"></div>
+    </div>
     <div id='post-info-dialog'>
       <div class="modal-card"
            v-if="selectedFeature">
@@ -109,7 +133,7 @@ import Point from 'ol/geom/Point'
 import { Map, View, Feature } from 'ol'
 import { Vector as VectorSource } from 'ol/source'
 import { Tile as TileLayer, Vector as VectorLayer } from 'ol/layer'
-import { Stroke, Style, Circle as CircleStyle } from 'ol/style.js'
+import { Fill, Stroke, Style, Circle as CircleStyle } from 'ol/style.js'
 import Overlay from 'ol/Overlay.js'
 import { defaults as defaultInteractions, Select } from 'ol/interaction.js'
 import XYZ from 'ol/source/XYZ'
@@ -176,17 +200,32 @@ export default {
       olMap: null,
       vectorSource: null,
       vectorLayer: null,
+      laptopLocationSource: null,
+      laptopLocationLayer: null,
       postInfoDialogLayer: null,
       selectInteraction: null,
+      locatingLaptop: false,
       geoHashRange: []
     }
   },
   mounted() {
     this.vectorSource = new VectorSource({ features: [] })
     this.vectorLayer = new VectorLayer({ source: this.vectorSource })
+    this.laptopLocationSource = new VectorSource({ features: [] })
+    this.laptopLocationLayer = new VectorLayer({
+      source: this.laptopLocationSource,
+      style: new Style({
+        image: new CircleStyle({
+          radius: 8,
+          fill: new Fill({ color: 'rgba(51, 153, 220, 0.85)' }),
+          stroke: new Stroke({ color: '#ffffff', width: 3 })
+        })
+      })
+    })
     this.selectInteraction = new Select({
       wrapX: false,
       hitTolerance: 6,
+      layers: [this.vectorLayer],
       style: this.styleFunction
     })
     this.selectInteraction.getFeatures().on('add', this.addSelectionListener)
@@ -205,7 +244,8 @@ export default {
             url: 'https://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png'
           })
         }),
-        this.vectorLayer
+        this.vectorLayer,
+        this.laptopLocationLayer
       ],
       overlays: [this.postInfoDialogLayer],
       target: document.getElementById('map'),
@@ -224,6 +264,69 @@ export default {
     })
   },
   methods: {
+    locateLaptop() {
+      if (!navigator.geolocation) {
+        this.$buefy.toast.open({
+          message: 'This browser does not support device location lookup.',
+          type: 'is-warning'
+        })
+        return
+      }
+
+      this.locatingLaptop = true
+      navigator.geolocation.getCurrentPosition(
+        position => {
+          const coordinates = [
+            position.coords.longitude,
+            position.coords.latitude
+          ]
+          const laptopFeature = new Feature({
+            geometry: new Point(coordinates),
+            name: 'Device location'
+          })
+
+          this.laptopLocationSource.clear()
+          this.laptopLocationSource.addFeature(laptopFeature)
+          this.olMap.getView().animate({
+            center: coordinates,
+            zoom: Math.max(this.olMap.getView().getZoom(), 14),
+            duration: 600
+          })
+
+          const accuracy = position.coords.accuracy
+            ? ` Accuracy: about ${Math.round(position.coords.accuracy)}m.`
+            : ''
+          this.$buefy.toast.open({
+            message: `Device location placed at ${coordinates[1].toFixed(
+              6
+            )}, ${coordinates[0].toFixed(6)}.${accuracy}`,
+            type: 'is-success',
+            duration: 7000
+          })
+          this.locatingLaptop = false
+        },
+        error => {
+          let message = 'Unable to get device location.'
+          if (error.code === error.PERMISSION_DENIED) {
+            message = 'Location permission was denied.'
+          } else if (error.code === error.POSITION_UNAVAILABLE) {
+            message = 'Device location is unavailable.'
+          } else if (error.code === error.TIMEOUT) {
+            message = 'Device location lookup timed out.'
+          }
+          this.$buefy.toast.open({
+            message,
+            type: 'is-danger'
+          })
+          this.locatingLaptop = false
+        },
+        {
+          enableHighAccuracy: true,
+          timeout: 15000,
+          maximumAge: 30000
+        }
+      )
+    },
     setGeohashRange() {
       let extent = this.olMap.getView().calculateExtent(this.olMap.getSize())
       let geohashLength = 1
@@ -315,6 +418,16 @@ export default {
 }
 .level {
   margin-bottom: 0px;
+}
+.map-shell {
+  position: relative;
+}
+.locate-laptop-control {
+  position: absolute;
+  z-index: 20;
+  top: 1rem;
+  left: 1rem;
+  box-shadow: 0 10px 28px rgba(20, 38, 60, 0.22);
 }
 .map {
   margin: 0;

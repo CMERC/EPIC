@@ -195,6 +195,13 @@ Router.prototype.replace = function replace(location, onResolve, onReject) {
 
 function checkUser() {
   return new Promise(resolve => {
+    if (store.state.currentUser && store.state.currentUser.isSuper === true) {
+      if (store.state.userRole !== 'Super') {
+        store.commit('setUserRole', 'Super')
+      }
+      resolve('Super')
+      return
+    }
     if (store.state.userRole === '') {
       const unwatch = store.watch(
         () => store.state.userRole,
@@ -207,6 +214,17 @@ function checkUser() {
       resolve(store.state.userRole)
     }
   })
+}
+
+function canOpenWorkspaceApps() {
+  return (
+    (store.state.currentUser && store.state.currentUser.isSuper === true) ||
+    store.state.userRole === 'Super' ||
+    store.state.userRole === 'Admin' ||
+    store.state.userRole === 'Editor' ||
+    store.state.userRole === 'Author' ||
+    store.state.userRole === 'User'
+  ) && !store.state.showNoWorkspace
 }
 export default new Router({
   base: process.env.DEPLOY_PAGES ? '/epic-vue/' : '/',
@@ -1239,10 +1257,7 @@ export default new Router({
               },
               beforeEnter: async function(to, from, next) {
                 await checkUser()
-                if (
-                  store.state.userRole === 'Super' &&
-                  !store.state.showNoWorkspace
-                ) {
+                if (canOpenWorkspaceApps()) {
                   next(true)
                 } else {
                   // User has no access to the app, redirect to dashboard
@@ -1352,7 +1367,7 @@ export default new Router({
       meta: { title: 'EPIC Developer', requiresAuth: true },
       beforeEnter: async function(to, from, next) {
         await checkUser()
-        if (store.state.userRole === 'Super') {
+        if (canOpenWorkspaceApps()) {
           next(true)
         } else {
           // User has no access to the app, redirect to dashboard
@@ -1943,7 +1958,7 @@ export default new Router({
       meta: { title: 'EPIC Email', requiresAuth: true },
       beforeEnter: async function(to, from, next) {
         await checkUser()
-        if (store.state.userRole === 'Super') {
+        if (canOpenWorkspaceApps()) {
           next(true)
         } else {
           // User has no access to the app, redirect to dashboard
@@ -1971,7 +1986,7 @@ export default new Router({
       meta: { title: 'EPIC Observe', requiresAuth: true },
       beforeEnter: async function(to, from, next) {
         await checkUser()
-        if (store.state.userRole === 'Super') {
+        if (canOpenWorkspaceApps()) {
           next(true)
         } else {
           // User has no access to the app, redirect to dashboard
@@ -2030,7 +2045,7 @@ export default new Router({
       meta: { title: 'EPIC Learn', requiresAuth: true },
       beforeEnter: async function(to, from, next) {
         await checkUser()
-        if (store.state.userRole === 'Super') {
+        if (canOpenWorkspaceApps()) {
           next(true)
         } else {
           // User has no access to the app, redirect to dashboard
@@ -2064,7 +2079,7 @@ export default new Router({
       meta: { title: 'EPIC Resources', requiresAuth: true },
       beforeEnter: async function(to, from, next) {
         await checkUser()
-        if (store.state.userRole === 'Super') {
+        if (canOpenWorkspaceApps()) {
           next(true)
         } else {
           // User has no access to the app, redirect to dashboard
@@ -2086,7 +2101,7 @@ export default new Router({
       meta: { title: 'EPIC Command', requiresAuth: true },
       beforeEnter: async function(to, from, next) {
         await checkUser()
-        if (store.state.userRole === 'Super') {
+        if (canOpenWorkspaceApps()) {
           next(true)
         } else {
           // User has no access to the app, redirect to dashboard
@@ -2098,6 +2113,12 @@ export default new Router({
           path: '/',
           name: 'command-home',
           component: CommandHome
+        },
+        {
+          path: ':id',
+          name: 'command-message',
+          component: CommandHome,
+          props: true
         }
       ]
     },

@@ -18,7 +18,7 @@
 
       <div class="columns is-multiline apps">
         <template v-if="checkActive('plan')">
-          <template v-if="isSuperAdminEditor">
+          <template v-if="canOpenWorkspaceApps">
             <div class="column is-half">
               <router-link :to="{name: 'plan-home'}">
                 <article class="media">
@@ -46,7 +46,7 @@
           </template>
         </template>
         <template v-if="checkActive('media')">
-          <template v-if="isSuperAdminEditor">
+          <template v-if="canOpenWorkspaceApps">
             <div class="column is-half">
               <router-link :to="{name:'media-home'}">
                 <article class="media">
@@ -74,7 +74,7 @@
           </template>
         </template>
         <template v-if="checkActive('notebook')">
-          <template v-if="isSuperAdminEditor">
+          <template v-if="canOpenWorkspaceApps">
             <div class="column is-half">
               <router-link :to="{name:'notebook-home'}">
                 <article class="media">
@@ -130,7 +130,7 @@
           </template>
         </template>
         <template v-if="checkActive('observe')">
-          <template v-if="isSuper">
+          <template v-if="canOpenWorkspaceApps">
             <div class="column is-half">
               <router-link :to="{name:'observe-home'}">
                 <article class="media">
@@ -158,7 +158,7 @@
           </template>
         </template>
         <template v-if="checkActive('map')">
-          <template v-if="isSuperAdminEditor">
+          <template v-if="canOpenWorkspaceApps">
             <div class="column is-half">
               <router-link :to="{name: 'map-home'}">
                 <article class="media">
@@ -185,8 +185,36 @@
             </div>
           </template>
         </template>
+        <template v-if="checkActive('activity')">
+          <template v-if="canOpenWorkspaceApps">
+            <div class="column is-half">
+              <router-link :to="{name:'activity-home'}">
+                <article class="media">
+                  <figure class="media-left">
+                    <img src="../assets/activity.svg"
+                         alt="EPIC Activity">
+                  </figure>
+                  <div class="media-content">
+                    <div class="content">
+                      <p class="has-text-dark">
+                        <strong>Activity</strong>
+                        <br />
+                        <small> Review workspace activity and operational events.</small>
+                      </p>
+                    </div>
+                  </div>
+                  <div class="media-right">
+                    <span class="icon is-small">
+                      <i class="fas fa-angle-double-right"></i>
+                    </span>
+                  </div>
+                </article>
+              </router-link>
+            </div>
+          </template>
+        </template>
         <template v-if="checkActive('chat')">
-          <template v-if="isSuperAdminEditor && !$store.state.showNoWorkspace">
+          <template v-if="canOpenWorkspaceApps">
             <div class="column is-half">
               <router-link :to="{name:'chat-home'}">
                 <article class="media">
@@ -214,7 +242,7 @@
           </template>
         </template>
         <template v-if="checkActive('resources')">
-          <template v-if="isSuper">
+          <template v-if="canOpenWorkspaceApps">
             <div class="column is-half">
               <router-link :to="{name:'resources-home'}">
                 <article class="media">
@@ -242,7 +270,7 @@
           </template>
         </template>
         <template v-if="checkActive('learn')">
-          <template v-if="isSuper">
+          <template v-if="canOpenWorkspaceApps">
             <div class="column is-half">
               <router-link :to="{name:'learn-home'}">
                 <article class="media">
@@ -296,7 +324,7 @@
           </div>
         </template>
         <template v-if="checkActive('dev')">
-          <template v-if="isSuper">
+          <template v-if="canOpenWorkspaceApps">
             <div class="column is-half">
               <router-link :to="{name:'dev-home'}">
                 <article class="media">
@@ -327,11 +355,11 @@
 
       <div class="is-divider"
            data-content="All Workspace Apps"
-           v-if="isSuper && checkActive('email') || checkActive('command')"></div>
+           v-if="canOpenWorkspaceApps && (checkActive('email') || checkActive('command'))"></div>
 
       <div class="columns is-multiline apps">
         <template v-if="checkActive('email')">
-          <template v-if="isSuper">
+          <template v-if="canOpenWorkspaceApps">
             <div class="column is-half">
               <router-link :to="{name: 'email-home'}">
                 <article class="media">
@@ -359,7 +387,7 @@
           </template>
         </template>
         <template v-if="checkActive('command')">
-          <template v-if="isSuper">
+          <template v-if="canOpenWorkspaceApps">
             <div class="column is-half">
               <router-link :to="{name: 'command-home'}">
                 <article class="media">
@@ -476,21 +504,13 @@ export default {
   methods: {
     checkActive(name) {
       if (!name) return
-      let checkApp
       if (this.appListSettings && this.appListSettings.length > 0) {
-        checkApp = this.appListSettings.filter(app => {
-          if (app.name == name.toUpperCase()) {
-            return app
-          }
+        const checkApp = this.appListSettings.find(app => {
+          return app.name && app.name.toUpperCase() === name.toUpperCase()
         })
-        if (checkApp && checkApp[0] && checkApp[0].status === 'INACTIVE') {
-          checkApp = false
-        }
-      } else {
-        checkApp = true
+        return !checkApp || checkApp.status !== 'INACTIVE'
       }
-
-      return checkApp
+      return true
     },
     async hasNewUserRole() {
       await new Promise(resolve => {

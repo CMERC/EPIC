@@ -850,11 +850,7 @@ export default {
       return this.ensureModuleState(moduleId).complete === true
     },
     isModuleUnlocked(moduleId) {
-      const index = this.modules.findIndex(module => module.id === moduleId)
-      if (index <= 0) {
-        return true
-      }
-      return this.isModuleComplete(this.modules[index - 1].id)
+      return this.modules.some(module => module.id === moduleId)
     },
     moduleStatus(moduleId) {
       if (this.isModuleComplete(moduleId)) {
@@ -1045,6 +1041,7 @@ export default {
 .module-card {
   align-items: flex-start;
   color: #1f2933;
+  border-radius: 8px;
   display: grid;
   gap: .65rem;
   grid-template-columns: 2.35rem minmax(0, 1fr);
@@ -1055,6 +1052,8 @@ export default {
 
   &:hover {
     border-color: #829ab1;
+    box-shadow: 0 10px 24px rgba(16, 42, 67, .10);
+    transform: translateY(-1px);
   }
 
   &.active {
@@ -1141,6 +1140,7 @@ export default {
 
 .overview-step {
   color: #1f2933;
+  border-radius: 8px;
   display: grid;
   font: inherit;
   gap: .2rem;
@@ -1213,6 +1213,7 @@ export default {
   grid-template-columns: 2rem minmax(0, 1fr) 1rem;
   padding: .75rem .25rem;
   text-align: left;
+  transition: background-color 140ms ease, color 140ms ease;
   width: 100%;
 
   &:disabled {

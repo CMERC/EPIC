@@ -32,9 +32,14 @@
 :root {
   --epic-bg: #f5f7fb;
   --epic-surface: #ffffff;
+  --epic-surface-raised: #ffffff;
+  --epic-surface-subtle: #f7fafc;
   --epic-border: #d9e2ec;
+  --epic-border-strong: #b7c7d8;
   --epic-text: #223044;
   --epic-muted: #65758b;
+  --epic-radius-sm: 6px;
+  --epic-radius-md: 8px;
   --epic-shadow-sm: 0 2px 8px rgba(20, 38, 60, 0.08);
   --epic-shadow-md: 0 16px 40px rgba(20, 38, 60, 0.12);
   --epic-ring: rgba(51, 153, 220, 0.28);
@@ -222,8 +227,9 @@ ul {
   }
 }
 .card {
+  background: var(--epic-surface-raised);
   border: 1px solid rgba(217, 226, 236, 0.82);
-  border-radius: 8px;
+  border-radius: var(--epic-radius-md);
   box-shadow: var(--epic-shadow-sm);
   overflow: hidden;
   transition: border-color 140ms ease, box-shadow 140ms ease, transform 140ms ease;
@@ -235,7 +241,14 @@ ul {
 .notification,
 .panel,
 .modal-card {
-  border-radius: 8px;
+  border-radius: var(--epic-radius-md);
+}
+.box,
+.panel,
+.modal-card,
+.notification:not(.is-primary):not(.is-info):not(.is-success):not(.is-warning):not(.is-danger),
+.tile.is-child:not(.is-primary):not(.is-info):not(.is-success):not(.is-warning):not(.is-danger) {
+  border: 1px solid rgba(217, 226, 236, 0.82);
 }
 .box,
 .notification.has-shadow,
@@ -279,6 +292,66 @@ ul {
 .tag {
   font-weight: 700;
   letter-spacing: 0;
+}
+.panel-block {
+  transition: background-color 140ms ease, border-color 140ms ease, color 140ms ease;
+  &:hover {
+    background-color: var(--epic-surface-subtle);
+  }
+}
+.table,
+.b-table table {
+  background: var(--epic-surface);
+  border-collapse: separate;
+  border-spacing: 0;
+}
+.table thead th,
+.b-table table thead th {
+  background: var(--epic-surface-subtle);
+  border-bottom-color: var(--epic-border);
+  color: var(--epic-muted);
+  font-size: .78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+.table td,
+.table th,
+.b-table table td,
+.b-table table th {
+  border-color: var(--epic-border);
+}
+.table.is-hoverable tbody tr:not(.is-selected):hover,
+.b-table table tbody tr:not(.is-selected):hover {
+  background: var(--epic-surface-subtle);
+}
+.tabs.is-toggle a {
+  border-radius: var(--epic-radius-sm);
+  font-weight: 700;
+  transition: background-color 140ms ease, border-color 140ms ease, color 140ms ease;
+}
+.dropdown-content,
+.navbar-dropdown {
+  background: var(--epic-surface-raised);
+}
+.dropdown-item,
+.dropdown .dropdown-menu .has-link a,
+.navbar-dropdown .navbar-item {
+  transition: background-color 140ms ease, color 140ms ease;
+  &:hover,
+  &:focus {
+    background-color: var(--epic-surface-subtle);
+  }
+}
+.modal-card-head,
+.modal-card-foot,
+.card-header,
+.card-footer,
+.panel-heading {
+  background: var(--epic-surface-subtle);
+  border-color: var(--epic-border);
+}
+.delete {
+  transition: background-color 140ms ease, opacity 140ms ease;
 }
 .icon {
   vertical-align: middle;
@@ -718,7 +791,10 @@ overflow: hidden;
 .theme-dark {
   --epic-bg: #111827;
   --epic-surface: #172033;
+  --epic-surface-raised: #172033;
+  --epic-surface-subtle: #1f2937;
   --epic-border: #3b4658;
+  --epic-border-strong: #526176;
   --epic-text: #edf2f7;
   --epic-muted: #b7c2d0;
   --epic-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.24);

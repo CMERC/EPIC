@@ -64,7 +64,7 @@ services:
       NODE_ENV: production
       PORT: 4000
       PRISMA_ENDPOINT: http://prisma:4466/default/default
-      DATABASE_URL: mysql://root:prisma@mysql:3306/graphcool
+      DATABASE_URL: mysql://root:prisma@mysql:3306/default@default
       WORKSPACE_ENDPOINT: http://prisma:4466/default/
       REDIS_ENDPOINT: redis://redis:6379
       S3_ENDPOINT: http://minio:9000

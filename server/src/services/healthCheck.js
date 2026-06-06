@@ -1,5 +1,6 @@
 
 const fetch = require('node-fetch')
+const { getPrismaClient } = require('./prisma')
 
 function requestUrl(url, params) {
   const target = new URL(url)
@@ -107,10 +108,8 @@ async function getHealthCheckEndpoints() {
   })
   if (process.env.DATABASE_URL) {
     try {
-      const { PrismaClient } = require('@prisma/client')
-      const prismaClient = new PrismaClient()
+      const prismaClient = getPrismaClient()
       await prismaClient.$queryRaw`SELECT 1`
-      await prismaClient.$disconnect()
       prismaOrm = {
         ...prismaOrm,
         message: 'OK',

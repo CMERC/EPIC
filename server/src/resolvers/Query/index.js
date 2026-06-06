@@ -1,6 +1,14 @@
 const { forwardTo } = require('prisma-binding')
 const { addFragmentToInfo } = require('graphql-binding')
 const { getUserId, getUser } = require('graphql-authentication')
+const {
+  appWorkspaceArgsFromPrisma1,
+  appWorkspaceWhereFromPrisma1,
+  orderByFromPrisma1,
+  toAppUser,
+  toAppWorkspace,
+  userWhereFromPrisma1
+} = require('../../services/prismaBridge')
 
 const tokenize = require('../../search-tokenize')
 const resolverArgs = require('../arguments')
@@ -12,6 +20,12 @@ const Query = {
 
 
   appWorkspacePublic(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      return ctx.prisma.appWorkspace.findFirst({
+        where: appWorkspaceWhereFromPrisma1(args.where)
+      })
+    }
+
     return ctx.db.query.appWorkspace(args, info)
   },
   planInjectsSearch(parent, args, ctx, info) {
@@ -234,6 +248,21 @@ const Query = {
   async currentUserWorkspaces(parent, args, ctx, info) {
     let userId = await getUserId(ctx)
     if (userId) {
+      if (ctx.prisma) {
+        const workspaces = await ctx.prisma.appWorkspace.findMany({
+          ...appWorkspaceArgsFromPrisma1({
+            ...args,
+            where: {
+              ...args.where,
+              members_some: {
+                id: userId
+              }
+            }
+          })
+        })
+        return workspaces.map(toAppWorkspace)
+      }
+
       args.where = {
         ...args.where,
         members_some: {
@@ -257,6 +286,37 @@ const Query = {
   async getWorkspaceMembers(parent, args, ctx, info) {
     let userId = await getUserId(ctx)
     if (userId) {
+      if (ctx.prisma) {
+        const workspaces = await ctx.prisma.appWorkspace.findMany({
+          ...appWorkspaceArgsFromPrisma1({
+            ...args,
+            where: {
+              ...args.where,
+              members_some: {
+                id: userId
+              }
+            }
+          }),
+          include: {
+            User: {
+              where: userWhereFromPrisma1(args.members_where),
+              orderBy: orderByFromPrisma1(args.members_orderBy),
+              skip: args.members_skip,
+              take: args.members_first,
+              include: {
+                AppUserRole: {
+                  include: {
+                    AppRole: true,
+                    User: true
+                  }
+                }
+              }
+            }
+          }
+        })
+        return workspaces.map(toAppWorkspace)
+      }
+
       args.where = {
         ...args.where,
         members_some: {
@@ -394,6 +454,22 @@ const Query = {
   async appWorkspaces(parent, args, ctx, info) {
     let user = await getUser(ctx)
     if (user) {
+      if (ctx.prisma) {
+        let prismaArgs = args
+        if (!user.isSuper) {
+          prismaArgs = {
+            where: {
+              members_some: {
+                id: user.id
+              }
+            }
+          }
+        }
+
+        const workspaces = await ctx.prisma.appWorkspace.findMany(appWorkspaceArgsFromPrisma1(prismaArgs))
+        return workspaces.map(toAppWorkspace)
+      }
+
       // Return workspaces Admin belongs to
       if (!user.isSuper) {
         args = {

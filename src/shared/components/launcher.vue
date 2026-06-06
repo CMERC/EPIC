@@ -23,7 +23,7 @@
     </div>
     <div class="columns is-multiline apps is-mobile">
       <template v-if="checkActive('plan')">
-        <template v-if="isSuperAdminEditor">
+        <template v-if="canOpenWorkspaceApps">
           <b-dropdown-item custom
                            :class="classList">
             <router-link :to="{name: 'plan-home'}">
@@ -36,7 +36,7 @@
         </template>
       </template>
       <template v-if="checkActive('media')">
-        <template v-if="isSuperAdminEditor">
+        <template v-if="canOpenWorkspaceApps">
           <b-dropdown-item custom
                            :class="classList">
             <router-link :to="{name: 'media-home'}">
@@ -48,7 +48,7 @@
         </template>
       </template>
       <template v-if="checkActive('notebook')">
-        <template v-if="isSuperAdminEditor">
+        <template v-if="canOpenWorkspaceApps">
           <b-dropdown-item custom
                            :class="classList">
             <router-link :to="{name: 'notebook-home'}">
@@ -70,7 +70,7 @@
         </b-dropdown-item>
       </template>
       <template v-if="checkActive('observe')">
-        <template v-if="isSuper">
+        <template v-if="canOpenWorkspaceApps">
           <b-dropdown-item custom
                            :class="classList">
             <router-link :to="{name: 'observe-home'}">
@@ -82,10 +82,10 @@
         </template>
       </template>
       <template v-if="checkActive('map')">
-        <template v-if="isSuperAdminEditor">
+        <template v-if="canOpenWorkspaceApps">
           <b-dropdown-item custom
                            :class="classList"
-                           v-if="isSuperAdminEditor">
+                           v-if="canOpenWorkspaceApps">
             <router-link :to="{name: 'map-home'}">
               <img src="../assets/map.svg"
                    alt="EPIC Map">
@@ -94,8 +94,20 @@
           </b-dropdown-item>
         </template>
       </template>
+      <template v-if="checkActive('activity')">
+        <template v-if="canOpenWorkspaceApps">
+          <b-dropdown-item custom
+                           :class="classList">
+            <router-link :to="{name: 'activity-home'}">
+              <img src="../assets/activity.svg"
+                   alt="EPIC Activity">
+              <p class="title is-7">Activity</p>
+            </router-link>
+          </b-dropdown-item>
+        </template>
+      </template>
       <template v-if="checkActive('chat')">
-        <template v-if="isSuperAdminEditor && !$store.state.showNoWorkspace">
+        <template v-if="canOpenWorkspaceApps">
           <b-dropdown-item custom
                            :class="classList">
             <router-link :to="{name: 'chat-home'}">
@@ -107,7 +119,7 @@
         </template>
       </template>
       <template v-if="checkActive('resources')">
-        <template v-if="isSuper">
+        <template v-if="canOpenWorkspaceApps">
           <b-dropdown-item custom
                            :class="classList">
             <router-link :to="{name: 'resources-home'}">
@@ -119,7 +131,7 @@
         </template>
       </template>
       <template v-if="checkActive('learn')">
-        <template v-if="isSuper">
+        <template v-if="canOpenWorkspaceApps">
           <b-dropdown-item custom
                            :class="classList">
             <router-link :to="{name: 'learn-home'}">
@@ -142,7 +154,7 @@
         </b-dropdown-item>
       </template>
       <template v-if="checkActive('dev')">
-        <template v-if="isSuper">
+        <template v-if="canOpenWorkspaceApps">
           <b-dropdown-item custom
                            :class="classList">
             <router-link :to="{name: 'dev-home'}">
@@ -157,10 +169,10 @@
 
     <div class="is-divider"
          data-content="All Workspace Apps"
-         v-if="isSuper && checkActive('email') || checkActive('command')"></div>
+         v-if="canOpenWorkspaceApps && (checkActive('email') || checkActive('command'))"></div>
     <div class="columns is-multiline is-mobile apps">
       <template v-if="checkActive('email')">
-        <template v-if="isSuper">
+        <template v-if="canOpenWorkspaceApps">
           <b-dropdown-item custom
                            :class="classList">
             <router-link :to="{name: 'email-home'}">
@@ -172,7 +184,7 @@
         </template>
       </template>
       <template v-if="checkActive('command')">
-        <template v-if="isSuper">
+        <template v-if="canOpenWorkspaceApps">
           <b-dropdown-item custom
                            :class="classList">
             <router-link :to="{name: 'command-home'}">
@@ -271,21 +283,13 @@ export default {
   methods: {
     checkActive(name) {
       if (!name) return
-      let checkApp
       if (this.appListSettings && this.appListSettings.length > 0) {
-        checkApp = this.appListSettings.filter(app => {
-          if (app.name == name.toUpperCase()) {
-            return app
-          }
+        const checkApp = this.appListSettings.find(app => {
+          return app.name && app.name.toUpperCase() === name.toUpperCase()
         })
-        if (checkApp && checkApp[0] && checkApp[0].status === 'INACTIVE') {
-          checkApp = false
-        }
-      } else {
-        checkApp = true
+        return !checkApp || checkApp.status !== 'INACTIVE'
       }
-
-      return checkApp
+      return true
     },
     async hasNewUserRole() {
       await new Promise(resolve => {

@@ -451,8 +451,20 @@
                         toggle 
                         dropup />
         </div>
-        <div id="map" 
-             class="map"></div>
+        <div class="map-canvas-shell">
+          <div id="map"
+               class="map"></div>
+          <button class="button is-primary locate-laptop-control"
+                  type="button"
+                  :class="{'is-loading': locatingLaptop}"
+                  :disabled="locatingLaptop"
+                  @click="locateLaptop">
+            <span class="icon is-small">
+              <i class="fas fa-location-arrow"></i>
+            </span>
+            <span>Locate device</span>
+          </button>
+        </div>
         <div id="action-menu" 
              class="feature-action-menu">
           <span v-show="showActionIcons('edit')" 
@@ -1332,12 +1344,12 @@ import {
   Select
 } from 'ol/interaction.js'
 import { getTopRight } from 'ol/extent.js'
-import { toLonLat } from 'ol/proj'
+import { fromLonLat, toLonLat } from 'ol/proj'
 import Point from 'ol/geom/Point'
 import { fromExtent } from 'ol/geom/Polygon'
 import { Vector as VectorSource } from 'ol/source'
 import { GeoJSON } from 'ol/format'
-import { Stroke, Style } from 'ol/style.js'
+import { Fill, Stroke, Style, Circle as CircleStyle } from 'ol/style.js'
 
 import OLCesium from 'olcs/OLCesium.js'
 import olFormatGeoJSON from 'ol/format/GeoJSON.js'
@@ -1477,6 +1489,9 @@ export default {
       ],
       interactionsLayer: null,
       interactionsLayerSource: null,
+      laptopLocationLayer: null,
+      laptopLocationSource: null,
+      locatingLaptop: false,
       overlay: null,
       vectorLayer: null,
       highlightSelectFeature: null,
@@ -1654,6 +1669,17 @@ export default {
       style: this.styleFunction,
       declutter: true
     })
+    this.laptopLocationSource = new VectorSource({ features: [] })
+    this.laptopLocationLayer = new VectorLayer({
+      source: this.laptopLocationSource,
+      style: new Style({
+        image: new CircleStyle({
+          radius: 8,
+          fill: new Fill({ color: 'rgba(51, 153, 220, 0.85)' }),
+          stroke: new Stroke({ color: '#ffffff', width: 3 })
+        })
+      })
+    })
     // Layer to draw temporary features like selection highlight etc
     this.interactionsLayerSource = new VectorSource()
     this.interactionsLayer = new VectorLayer({
@@ -1681,6 +1707,7 @@ export default {
     this.selectInteraction = new Select({
       wrapX: false,
       hitTolerance: 6,
+      layers: [this.vectorLayer],
       style: this.styleFunction
     })
     this.selectInteraction.getFeatures().on('add', this.addSelectionListener)
@@ -1707,6 +1734,7 @@ export default {
         ...this.mapBaseLayers,
         this.interactionsLayer,
         this.vectorLayer,
+        this.laptopLocationLayer,
         this.rangeLayer
       ],
       overlays: [this.actionMenuLayer],
@@ -1723,6 +1751,70 @@ export default {
     this.ol3dMap = new OLCesium({ map: this.olMap }) // ol2dMap is the ol.Map instance
   },
   methods: {
+    locateLaptop() {
+      if (!navigator.geolocation) {
+        this.$buefy.toast.open({
+          message: 'This browser does not support device location lookup.',
+          type: 'is-warning'
+        })
+        return
+      }
+
+      this.locatingLaptop = true
+      navigator.geolocation.getCurrentPosition(
+        position => {
+          const lonLat = [
+            position.coords.longitude,
+            position.coords.latitude
+          ]
+          const coordinates = fromLonLat(lonLat)
+          const laptopFeature = new Feature({
+            geometry: new Point(coordinates),
+            name: 'Device location'
+          })
+
+          this.laptopLocationSource.clear()
+          this.laptopLocationSource.addFeature(laptopFeature)
+          this.olMap.getView().animate({
+            center: coordinates,
+            zoom: Math.max(this.olMap.getView().getZoom(), 14),
+            duration: 600
+          })
+
+          const accuracy = position.coords.accuracy
+            ? ` Accuracy: about ${Math.round(position.coords.accuracy)}m.`
+            : ''
+          this.$buefy.toast.open({
+            message: `Device location placed at ${lonLat[1].toFixed(
+              6
+            )}, ${lonLat[0].toFixed(6)}.${accuracy}`,
+            type: 'is-success',
+            duration: 7000
+          })
+          this.locatingLaptop = false
+        },
+        error => {
+          let message = 'Unable to get device location.'
+          if (error.code === error.PERMISSION_DENIED) {
+            message = 'Location permission was denied.'
+          } else if (error.code === error.POSITION_UNAVAILABLE) {
+            message = 'Device location is unavailable.'
+          } else if (error.code === error.TIMEOUT) {
+            message = 'Device location lookup timed out.'
+          }
+          this.$buefy.toast.open({
+            message,
+            type: 'is-danger'
+          })
+          this.locatingLaptop = false
+        },
+        {
+          enableHighAccuracy: true,
+          timeout: 15000,
+          maximumAge: 30000
+        }
+      )
+    },
     addSelectionListener() {
       this.highlightSelectFeature = null
       let selectStyle = this.defaultSelectStyle()

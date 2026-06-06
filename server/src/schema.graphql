@@ -1,4 +1,7 @@
 # import * from "./generated/prisma.graphql"
+# import Query.* from "./generated/prisma.graphql"
+# import Mutation.* from "./generated/prisma.graphql"
+# import Subscription.* from "./generated/prisma.graphql"
 # import Mutation.* from "../node_modules/graphql-authentication/schema.graphql"
 scalar Upload
 type Query {
@@ -173,6 +176,17 @@ type Query {
     last: Int
   ): [PlanQualification]!
   downloadPlanInjects(where: DownloadPlanInjectInput!): String
+
+  # Command
+  commandMessages(
+    scope: CommandMessageScope
+    status: CommandStatus
+    query: String
+    orderBy: String
+    first: Int
+    skip: Int
+  ): [CommandMessage]!
+  commandMessage(where: CommandMessageWhereUniqueInput!): CommandMessage
 }
 
 type Mutation {
@@ -204,6 +218,19 @@ type Mutation {
   # Cobra Activity
   pushInjectToCobraMultiLog(data: Json): Json
   pushInjectToCobraRequestManager(data: CobraRequestResourcePayload): CobraRequestResource
+
+  # Command
+  createCommandMessage(data: CommandMessageCreateInput!): CommandMessage!
+  updateCommandMessage(
+    data: CommandMessageUpdateInput!
+    where: CommandMessageWhereUniqueInput!
+  ): CommandMessage!
+  acknowledgeCommandMessage(where: CommandMessageWhereUniqueInput!): CommandMessage!
+  completeCommandMessage(
+    data: CommandMessageCompleteInput!
+    where: CommandMessageWhereUniqueInput!
+  ): CommandMessage!
+  deleteCommandMessage(where: CommandMessageWhereUniqueInput!): CommandMessage
 }
 
 type Subscription {
@@ -371,6 +398,55 @@ type CobraRequestResource {
   status: Int
   error: Json
 }
+
+# Command Types
+enum CommandPriority {
+  ROUTINE
+  PRIORITY
+  IMMEDIATE
+  FLASH
+}
+
+enum CommandStatus {
+  DRAFT
+  SENT
+  ACKNOWLEDGED
+  IN_PROGRESS
+  COMPLETED
+  FAILED
+  CANCELLED
+}
+
+enum CommandMessageScope {
+  ALL
+  INBOX
+  OUTBOX
+}
+
+type CommandMessage {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  title: String!
+  body: String!
+  fromName: String
+  fromEmail: String
+  recipientNames: String
+  recipientEmails: String
+  priority: CommandPriority!
+  status: CommandStatus!
+  dueAt: DateTime
+  sentAt: DateTime
+  acknowledgedAt: DateTime
+  completedAt: DateTime
+  response: String
+  planInjectId: String
+  planInjectNumber: Int
+  planInjectTitle: String
+  createdBy: String
+  updatedBy: String
+}
+
 # Admin Inputs
 input AppWorkspaceUpdateMembersInput {
   connect: UserWhereUniqueInput!
@@ -499,6 +575,43 @@ input DownloadPlanInjectInput {
 enum DownloadFileTypeInput {
   csv
   pdf
+}
+
+# Command Inputs
+input CommandMessageWhereUniqueInput {
+  id: ID!
+}
+
+input CommandMessageCreateInput {
+  title: String!
+  body: String!
+  recipientNames: String
+  recipientEmails: String
+  priority: CommandPriority
+  status: CommandStatus
+  dueAt: DateTime
+  planInjectId: String
+  planInjectNumber: Int
+  planInjectTitle: String
+}
+
+input CommandMessageUpdateInput {
+  title: String
+  body: String
+  recipientNames: String
+  recipientEmails: String
+  priority: CommandPriority
+  status: CommandStatus
+  dueAt: DateTime
+  response: String
+  planInjectId: String
+  planInjectNumber: Int
+  planInjectTitle: String
+}
+
+input CommandMessageCompleteInput {
+  response: String
+  status: CommandStatus
 }
 
 #Cobra Inputs

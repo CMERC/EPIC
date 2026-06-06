@@ -41,6 +41,13 @@ mutation SeedAppListSettings{
   ) {
     name
   }
+  activity: upsertAppListSetting(
+    create: { name: "ACTIVITY" }
+    update: { name: "ACTIVITY" }
+    where: { name: "ACTIVITY" }
+  ) {
+    name
+  }
   chat: upsertAppListSetting(
     create: { name: "CHAT" }
     update: { name: "CHAT" }

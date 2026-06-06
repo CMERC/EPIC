@@ -17,6 +17,8 @@ coverage/
 
 data/caddy/
 data/caddy_config/
+release 1.0/server.env
+release 1.0/backups/
 
 .DS_Store
 Thumbs.db
