@@ -4,14 +4,45 @@ const { rule, shield, and, or, not, deny } = require('graphql-shield')
 const { getUserId, getUser } = require('graphql-authentication')
 const jwt = require('jsonwebtoken')
 
+function getAuthorizationHeader(ctx) {
+  const req = ctx.req || ctx.request
+  return req && typeof req.get === 'function' ? req.get('Authorization') : null
+}
+
+function getLegacyRoles(activeUser) {
+  const roleLink = activeUser && activeUser.role
+  return roleLink && Array.isArray(roleLink.roles) ? roleLink.roles : []
+}
+
+function getPrismaRoles(activeUser) {
+  const roleLinks = activeUser && activeUser.AppUserRole
+  if (!Array.isArray(roleLinks)) {
+    return roleLinks && Array.isArray(roleLinks.AppRole) ? roleLinks.AppRole : []
+  }
+
+  return roleLinks.reduce((roles, roleLink) => {
+    if (Array.isArray(roleLink.AppRole)) {
+      return roles.concat(roleLink.AppRole)
+    }
+    return roles
+  }, [])
+}
+
 async function getCurrentUserId(ctx) {
-  // For Apollo Server 2.0+ it is ctx.req and for GraphQL Yoga ctx.request. Maybe there is a better way...
-  const Authorization = (ctx.req || ctx.request).get('Authorization')
+  const Authorization = getAuthorizationHeader(ctx)
 
   if (Authorization) {
     const token = Authorization.replace('Bearer ', '')
     // check if session exists for user
     const { userId, sessionId } = jwt.verify(token, ctx.graphqlAuthentication.secret)
+    if (ctx.prisma) {
+      const sessionUser = await ctx.prisma.user.findFirst({
+        where: { id: userId, sessionId: sessionId },
+        select: { sessionId: true }
+      })
+      return sessionUser && sessionUser.sessionId ? userId : null
+    }
+
     const sessionUser = await ctx.db.query.users(
       { where: { id: userId, sessionId: sessionId } },
       `{
@@ -39,27 +70,48 @@ async function checkSuper(ctx) {
 
 async function checkRole(ctx, roleName) {
   let userId = await getUserId(ctx)
+  if (ctx.prisma) {
+    const activeUser = await ctx.prisma.user.findUnique({
+      where: { id: userId },
+      include: {
+        AppUserRole: {
+          include: {
+            AppRole: true
+          }
+        }
+      }
+    })
+
+    return getPrismaRoles(activeUser).some(role => role['name'] === roleName)
+  }
+
   const activeUser = await ctx.db.query.user(
     { where: { id: userId } },
     '{role {roles {name}}}'
   )
 
-  let hasRole = false
   // check if role is assigned - hasRole rule
-  if (
-    activeUser.role &&
-    activeUser.role.roles &&
-    activeUser.role.roles.length > 0
-  ) {
-    // check if role matches to roleName
-    hasRole = activeUser.role.roles.some(role => role['name'] === roleName)
-  }
-  return hasRole
+  return getLegacyRoles(activeUser).some(role => role['name'] === roleName)
 }
 
 // check if user has been assigned any role
 async function checkHasRole(ctx) {
   let userId = await getUserId(ctx)
+  if (ctx.prisma) {
+    const activeUser = await ctx.prisma.user.findUnique({
+      where: { id: userId },
+      include: {
+        AppUserRole: {
+          include: {
+            AppRole: true
+          }
+        }
+      }
+    })
+
+    return Boolean((activeUser && activeUser.isSuper) || getPrismaRoles(activeUser).length > 0)
+  }
+
   const activeUser = await ctx.db.query.user(
     { where: { id: userId } },
     `{
@@ -68,16 +120,7 @@ async function checkHasRole(ctx) {
     }`
   )
   // Has any Role assigned or isSuper
-  if (
-    (activeUser.role &&
-      activeUser.role.roles &&
-      activeUser.role.roles.length > 0) ||
-    activeUser.isSuper
-  ) {
-    return true
-  }
-
-  return false
+  return Boolean(getLegacyRoles(activeUser).length > 0 || (activeUser && activeUser.isSuper))
 }
 
 const isAuthenticatedWithRole = rule()(async (parent, args, ctx) => {
@@ -721,5 +764,12 @@ const permissions = shield({
   }
 })
 module.exports = {
-  permissions
+  permissions,
+  _test: {
+    checkHasRole,
+    checkRole,
+    getCurrentUserId,
+    getAuthorizationHeader,
+    getPrismaRoles
+  }
 }

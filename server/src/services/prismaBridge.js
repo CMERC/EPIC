@@ -83,6 +83,58 @@ const userWhereFromPrisma1 = where => {
   }
 }
 
+const appListSettingWhereFromPrisma1 = where => {
+  if (!where) {
+    return undefined
+  }
+
+  return {
+    ...combineLogicalFilters(where, appListSettingWhereFromPrisma1),
+    ...scalarFilter(where, 'id'),
+    ...scalarFilter(where, 'name'),
+    ...scalarFilter(where, 'status')
+  }
+}
+
+const appRoleWhereFromPrisma1 = where => {
+  if (!where) {
+    return undefined
+  }
+
+  return {
+    ...combineLogicalFilters(where, appRoleWhereFromPrisma1),
+    ...scalarFilter(where, 'id'),
+    ...scalarFilter(where, 'name'),
+    ...scalarFilter(where, 'displayName')
+  }
+}
+
+const appUserRoleWhereFromPrisma1 = where => {
+  if (!where) {
+    return undefined
+  }
+
+  const filters = {
+    ...combineLogicalFilters(where, appUserRoleWhereFromPrisma1),
+    ...scalarFilter(where, 'id')
+  }
+
+  if (where.user) {
+    filters.User = { some: userWhereFromPrisma1(where.user) }
+  }
+  if (where.roles_some) {
+    filters.AppRole = { some: appRoleWhereFromPrisma1(where.roles_some) }
+  }
+  if (where.roles_none) {
+    filters.AppRole = { none: appRoleWhereFromPrisma1(where.roles_none) }
+  }
+  if (where.roles_every) {
+    filters.AppRole = { every: appRoleWhereFromPrisma1(where.roles_every) }
+  }
+
+  return filters
+}
+
 const appWorkspaceWhereFromPrisma1 = where => {
   if (!where) {
     return undefined
@@ -117,10 +169,44 @@ const appUserArgsFromPrisma1 = args => ({
   ...paginationFromPrisma1(args)
 })
 
+const appListSettingArgsFromPrisma1 = args => ({
+  where: appListSettingWhereFromPrisma1(args.where),
+  orderBy: orderByFromPrisma1(args.orderBy),
+  ...paginationFromPrisma1(args)
+})
+
+const appRoleArgsFromPrisma1 = args => ({
+  where: appRoleWhereFromPrisma1(args.where),
+  orderBy: orderByFromPrisma1(args.orderBy),
+  ...paginationFromPrisma1(args)
+})
+
+const appUserRoleArgsFromPrisma1 = args => ({
+  where: appUserRoleWhereFromPrisma1(args.where),
+  orderBy: orderByFromPrisma1(args.orderBy),
+  ...paginationFromPrisma1(args)
+})
+
 const appWorkspaceArgsFromPrisma1 = args => ({
   where: appWorkspaceWhereFromPrisma1(args.where),
   orderBy: orderByFromPrisma1(args.orderBy),
   ...paginationFromPrisma1(args)
+})
+
+const connectionFromPrismaResults = (items, count) => ({
+  aggregate: {
+    count
+  },
+  edges: (items || []).map(item => ({
+    node: item,
+    cursor: item && item.id ? item.id : ''
+  })),
+  pageInfo: {
+    hasNextPage: false,
+    hasPreviousPage: false,
+    startCursor: items && items[0] && items[0].id ? items[0].id : null,
+    endCursor: items && items.length && items[items.length - 1].id ? items[items.length - 1].id : null
+  }
 })
 
 const toAppUserRole = role => {
@@ -146,6 +232,17 @@ const toAppUser = user => {
   }
 }
 
+const toAppRole = role => {
+  if (!role) {
+    return null
+  }
+
+  return {
+    ...role,
+    users: Array.isArray(role.AppUserRole) ? role.AppUserRole.map(toAppUserRole) : []
+  }
+}
+
 const toAppWorkspace = workspace => {
   if (!workspace) {
     return null
@@ -158,12 +255,21 @@ const toAppWorkspace = workspace => {
 }
 
 module.exports = {
+  appListSettingArgsFromPrisma1,
+  appListSettingWhereFromPrisma1,
+  appRoleArgsFromPrisma1,
+  appRoleWhereFromPrisma1,
   appUserArgsFromPrisma1,
+  appUserRoleArgsFromPrisma1,
+  appUserRoleWhereFromPrisma1,
   appWorkspaceArgsFromPrisma1,
   appWorkspaceWhereFromPrisma1,
+  connectionFromPrismaResults,
   orderByFromPrisma1,
   paginationFromPrisma1,
+  toAppRole,
   toAppUser,
+  toAppUserRole,
   toAppWorkspace,
   userWhereFromPrisma1
 }

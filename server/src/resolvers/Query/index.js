@@ -2,9 +2,17 @@ const { forwardTo } = require('prisma-binding')
 const { addFragmentToInfo } = require('graphql-binding')
 const { getUserId, getUser } = require('graphql-authentication')
 const {
+  appListSettingArgsFromPrisma1,
+  appListSettingWhereFromPrisma1,
+  appRoleArgsFromPrisma1,
+  appRoleWhereFromPrisma1,
+  appUserRoleArgsFromPrisma1,
   appWorkspaceArgsFromPrisma1,
   appWorkspaceWhereFromPrisma1,
+  connectionFromPrismaResults,
   orderByFromPrisma1,
+  toAppRole,
+  toAppUserRole,
   toAppUser,
   toAppWorkspace,
   userWhereFromPrisma1
@@ -14,9 +22,34 @@ const tokenize = require('../../search-tokenize')
 const resolverArgs = require('../arguments')
 const Query = {
 
-  appListSetting: forwardTo('db'),
-  appListSettings: forwardTo('db'),
-  appListSettingsConnection: forwardTo('db'),
+  appListSetting(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      return ctx.prisma.appListSetting.findFirst({
+        where: appListSettingWhereFromPrisma1(args.where)
+      })
+    }
+
+    return ctx.db.query.appListSetting(args, info)
+  },
+  appListSettings(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      return ctx.prisma.appListSetting.findMany(appListSettingArgsFromPrisma1(args))
+    }
+
+    return ctx.db.query.appListSettings(args, info)
+  },
+  async appListSettingsConnection(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      const prismaArgs = appListSettingArgsFromPrisma1(args)
+      const [items, count] = await Promise.all([
+        ctx.prisma.appListSetting.findMany(prismaArgs),
+        ctx.prisma.appListSetting.count({ where: prismaArgs.where })
+      ])
+      return connectionFromPrismaResults(items, count)
+    }
+
+    return ctx.db.query.appListSettingsConnection(args, info)
+  },
 
 
   appWorkspacePublic(parent, args, ctx, info) {
@@ -166,11 +199,69 @@ const Query = {
     return ctx.db.query.mediaProfilesConnection(args, info)
   },
 
-  appUserRoles: forwardTo('db'),
+  async appUserRoles(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      const roles = await ctx.prisma.appUserRole.findMany({
+        ...appUserRoleArgsFromPrisma1(args),
+        include: {
+          AppRole: true,
+          User: true
+        }
+      })
+      return roles.map(toAppUserRole)
+    }
 
-  appRoles: forwardTo('db'),
-  appRole: forwardTo('db'),
-  appRolesConnection: forwardTo('db'),
+    return ctx.db.query.appUserRoles(args, info)
+  },
+
+  async appRoles(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      const roles = await ctx.prisma.appRole.findMany({
+        ...appRoleArgsFromPrisma1(args),
+        include: {
+          AppUserRole: {
+            include: {
+              AppRole: true,
+              User: true
+            }
+          }
+        }
+      })
+      return roles.map(toAppRole)
+    }
+
+    return ctx.db.query.appRoles(args, info)
+  },
+  async appRole(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      const role = await ctx.prisma.appRole.findFirst({
+        where: appRoleWhereFromPrisma1(args.where),
+        include: {
+          AppUserRole: {
+            include: {
+              AppRole: true,
+              User: true
+            }
+          }
+        }
+      })
+      return toAppRole(role)
+    }
+
+    return ctx.db.query.appRole(args, info)
+  },
+  async appRolesConnection(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      const prismaArgs = appRoleArgsFromPrisma1(args)
+      const [items, count] = await Promise.all([
+        ctx.prisma.appRole.findMany(prismaArgs),
+        ctx.prisma.appRole.count({ where: prismaArgs.where })
+      ])
+      return connectionFromPrismaResults(items.map(toAppRole), count)
+    }
+
+    return ctx.db.query.appRolesConnection(args, info)
+  },
 
   mediaNetwork: forwardTo('db'),
   mediaNetworks: forwardTo('db'),
@@ -466,7 +557,12 @@ const Query = {
           }
         }
 
-        const workspaces = await ctx.prisma.appWorkspace.findMany(appWorkspaceArgsFromPrisma1(prismaArgs))
+        const workspaces = await ctx.prisma.appWorkspace.findMany({
+          ...appWorkspaceArgsFromPrisma1(prismaArgs),
+          include: {
+            User: true
+          }
+        })
         return workspaces.map(toAppWorkspace)
       }
 
@@ -484,8 +580,31 @@ const Query = {
       return ctx.db.query.appWorkspaces(args, info)
     }
   },
-  appWorkspace: forwardTo('db'),
-  appWorkspacesConnection: forwardTo('db'),
+  async appWorkspace(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      const workspace = await ctx.prisma.appWorkspace.findFirst({
+        where: appWorkspaceWhereFromPrisma1(args.where),
+        include: {
+          User: true
+        }
+      })
+      return toAppWorkspace(workspace)
+    }
+
+    return ctx.db.query.appWorkspace(args, info)
+  },
+  async appWorkspacesConnection(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      const prismaArgs = appWorkspaceArgsFromPrisma1(args)
+      const [items, count] = await Promise.all([
+        ctx.prisma.appWorkspace.findMany(prismaArgs),
+        ctx.prisma.appWorkspace.count({ where: prismaArgs.where })
+      ])
+      return connectionFromPrismaResults(items.map(toAppWorkspace), count)
+    }
+
+    return ctx.db.query.appWorkspacesConnection(args, info)
+  },
 
   mediaNoiseLevels: forwardTo('db'),
   mapInts: forwardTo('db'),
