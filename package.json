@@ -18,6 +18,7 @@
     "staging": "node --max_old_space_size=4096 node_modules/@vue/cli-service/bin/vue-cli-service.js build --mode staging",
     "test:unit": "vue-cli-service test:unit",
     "test:e2e": "vue-cli-service test:e2e --mode serve",
+    "test:server": "cd server && npm test -- --runInBand",
     "prod:down": "docker compose -f docker-compose.rocky9.yml down"
   },
   "dependencies": {
