@@ -1,42 +1,49 @@
 const { v4: uuid } = require('uuid')
-const { S3 } = require('aws-sdk')
+const { S3Client, PutObjectCommand } = require('@aws-sdk/client-s3')
+const { Upload } = require('@aws-sdk/lib-storage')
 const sharp = require('sharp')
 const fetch = require('node-fetch')
 const logger = require('../../logger')
+
+const createS3Client = () => new S3Client({
+  region: process.env.S3_REGION || 'us-east-1',
+  endpoint: process.env.S3_ENDPOINT,
+  forcePathStyle: true,
+  credentials: {
+    accessKeyId: process.env.S3_ACCESS_KEY_ID,
+    secretAccessKey: process.env.S3_SECRET_ACCESS_KEY
+  }
+})
+
 const upload = {
-  async singleUpload(parent, { file }, ctx, info) {
-    const { createReadStream, filename, mimetype, encoding } = await file
+  async singleUpload(parent, { file }, ctx) {
+    const { createReadStream, filename, mimetype } = await file
     const secret = uuid()
     const size = createReadStream().length
-    const s3 = new S3({
-      accessKeyId: process.env.S3_ACCESS_KEY_ID,
-      secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
-      endpoint: process.env.S3_ENDPOINT,
-      params: {
-        Bucket: process.env.S3_BUCKET
-      },
-      s3ForcePathStyle: true,
-      signatureVersion: 'v4'
-    })
+    const s3 = createS3Client()
+    const bucket = process.env.S3_BUCKET
+    const key = secret + '/' + filename
     try {
       // Upload to S3
-      const response = await s3
-        .upload({
-          Key: secret + '/' + filename,
+      await new Upload({
+        client: s3,
+        params: {
+          Bucket: bucket,
+          Key: key,
           ACL: 'public-read',
           Body: createReadStream(),
           ContentLength: size,
           ContentType: mimetype,
           ContentDisposition: 'inline; filename ="' + filename + '"'
-        })
-        .promise()
+        }
+      }).done()
 
       const pathURI =
         process.env.S3_EXTERNAL_ENDPOINT +
         '/' +
-        response.Bucket +
+        bucket +
         '/' +
-        response.Key
+        key
 
       let url = {
         thumb: pathURI,
@@ -53,13 +60,13 @@ const upload = {
       if (mimetype.includes('image') && mimetype.includes('gif') === false) {
 
         //Add resized url suffix
-        for (let urlItem in url) {
-          if (url.hasOwnProperty(urlItem) && urlItem != 'raw') {
+        for (let urlItem of Object.keys(url)) {
+          if (urlItem !== 'raw') {
             url[urlItem] += ':' + urlItem
           }
         }
 
-        let resizeList = {
+        const resizeList = {
           thumb: { width: 150 },
           small: { width: 340 },
           medium: { width: 600 },
@@ -68,32 +75,29 @@ const upload = {
           full: { width: 1200 }
         }
 
-        const imageResponse = await fetch(response.Location)
+        const imageResponse = await fetch(pathURI)
         if (!imageResponse.ok) {
           throw new Error('Unable to fetch uploaded image for resizing: ' + imageResponse.statusText)
         }
         const bodyBuffer = await imageResponse.buffer()
 
-        for (let resizeItem in resizeList) {
-          if (resizeList.hasOwnProperty(resizeItem)) {
+        for (let resizeItem of Object.keys(resizeList)) {
+          //Do no resize if value is larger than raw size
+          resizeList[resizeItem].withoutEnlargement = true
 
-            //Do no resize if value is larger than raw size
-            resizeList[resizeItem].withoutEnlargement = true
+          const data = await sharp(bodyBuffer)
+            .rotate()
+            .resize(resizeList[resizeItem])
+            .toBuffer()
 
-            const data = await sharp(bodyBuffer)
-              .rotate()
-              .resize(resizeList[resizeItem])
-              .toBuffer()
-
-            await s3.putObject({
-              Bucket: response.Bucket,
-              Key: response.Key + ':' + resizeItem,
-              ACL: 'public-read',
-              Body: data,
-              ContentType: mimetype,
-              ContentDisposition: 'inline; filename ="' + filename + '"'
-            }).promise()
-          }
+          await s3.send(new PutObjectCommand({
+            Bucket: bucket,
+            Key: key + ':' + resizeItem,
+            ACL: 'public-read',
+            Body: data,
+            ContentType: mimetype,
+            ContentDisposition: 'inline; filename ="' + filename + '"'
+          }))
         }
       }
 
@@ -116,4 +120,4 @@ const upload = {
   }
 }
 
-module.exports = { upload }
+module.exports = { upload, createS3Client }
