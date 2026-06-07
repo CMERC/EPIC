@@ -7,7 +7,8 @@ const { expressMiddleware } = require('@as-integrations/express4')
 const { ApolloServerPluginDrainHttpServer } = require('@apollo/server/plugin/drainHttpServer')
 const { makeExecutableSchema } = require('@graphql-tools/schema')
 const { applyMiddleware } = require('graphql-middleware')
-const { SubscriptionServer } = require('subscriptions-transport-ws')
+const { useServer } = require('graphql-ws/lib/use/ws')
+const { WebSocketServer } = require('ws')
 const { logger } = require('./logger')
 
 function pruneMiddlewareToSchema(schema, middleware) {
@@ -97,46 +98,48 @@ async function createApolloServer(
   }
 
   const subscriptionServer = subscriptionsEndpoint
-    ? SubscriptionServer.create(
-      {
-        schema: executableSchema,
-        execute,
-        subscribe,
-        onConnect: async(connection, websocket) => {
-          let contextData = {}
-          try {
-            // Simulate `req` object for auth and workspace name.
-            const req = { headers: connection }
+    ? useServer({
+      schema: executableSchema,
+      execute,
+      subscribe,
+      context: async(ctx) => {
+        const connection = ctx.connectionParams || {}
+        const headers = {
+          ...ctx.extra.request.headers,
+          ...connection
+        }
+        const req = {
+          ...ctx.extra.request,
+          headers,
+          get: name => headers[name] || headers[name.toLowerCase()]
+        }
 
-            await new Promise((resolve, reject) =>
-              wsMiddlewares.reduceRight(
-                (acc, m) => err => (err ? reject(err) : m(req, null, acc)),
-                err => (err ? reject(err) : resolve())
-              )()
-            )
+        try {
+          await new Promise((resolve, reject) =>
+            wsMiddlewares.reduceRight(
+              (acc, m) => err => (err ? reject(err) : m(req, null, acc)),
+              err => (err ? reject(err) : resolve())
+            )()
+          )
 
-            contextData = await context({
-              connection,
-              websocket,
-              request: req,
-              req,
-            })
-          } catch (error) {
-            if (error.status !== 401) {
-              logger.error(error)
-            }
-
-            throw error
+          return await buildContext({
+            connection,
+            websocket: ctx.extra.socket,
+            request: req,
+            req
+          })
+        } catch (error) {
+          if (error.status !== 401) {
+            logger.error(error)
           }
 
-          return contextData
+          throw error
         }
-      },
-      {
-        server: httpServer,
-        path: subscriptionsEndpoint
       }
-    )
+    }, new WebSocketServer({
+      server: httpServer,
+      path: subscriptionsEndpoint
+    }))
     : null
 
   // Apollo server options
@@ -151,7 +154,7 @@ async function createApolloServer(
           return {
             async drainServer() {
               if (subscriptionServer) {
-                subscriptionServer.close()
+                await subscriptionServer.dispose()
               }
             }
           }

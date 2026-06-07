@@ -1,14 +1,16 @@
 import Vue from 'vue'
 import VueApollo from 'vue-apollo'
-import {
-  createApolloClient,
-  restartWebsockets
-} from 'vue-cli-plugin-apollo/graphql-client'
+import { ApolloClient } from 'apollo-client'
+import { InMemoryCache } from 'apollo-cache-inmemory'
+import { ApolloLink, Observable, split, from } from 'apollo-link'
+import { createUploadLink } from 'apollo-upload-client'
+import { getMainDefinition } from 'apollo-utilities'
+import { createClient } from 'graphql-ws'
+import { print } from 'graphql/language/printer'
 
 import clientStateDefaults from './state/defaults'
 import { ConnectedSet } from '@/state/graphql/user.gql'
 import { typeDefs, resolvers } from '@/state/local'
-import { ApolloLink } from 'apollo-link'
 import { RetryLink } from 'apollo-link-retry'
 
 // Install the vue plugin
@@ -42,6 +44,99 @@ const localDataMiddleware = new ApolloLink((operation, forward) => {
 })
 // generate apllo link with custom links
 let myLink = ApolloLink.from([retyrLink, localDataMiddleware])
+
+function getAuth(tokenName) {
+  const token = localStorage.getItem(tokenName)
+  return token ? `Bearer ${token}` : ''
+}
+
+function getConnectionParams() {
+  return {
+    workspace:
+      sessionStorage.getItem('workspace') || localStorage.getItem('workspace'),
+    authorization: localStorage.getItem(AUTH_TOKEN)
+  }
+}
+
+function createGraphqlWsLink(wsClient) {
+  return new ApolloLink(operation => new Observable(observer => {
+    return wsClient.subscribe(
+      {
+        query: print(operation.query),
+        variables: operation.variables,
+        operationName: operation.operationName
+      },
+      {
+        next: value => observer.next(value),
+        error: error => observer.error(error),
+        complete: () => observer.complete()
+      }
+    )
+  }))
+}
+
+function restartWebsockets(wsClient) {
+  if (wsClient && typeof wsClient.dispose === 'function') {
+    wsClient.dispose()
+  }
+}
+
+function createApolloClient(options) {
+  const cache = new InMemoryCache()
+  const authLink = new ApolloLink((operation, forward) => {
+    operation.setContext(({ headers = {} }) => ({
+      headers: {
+        ...headers,
+        authorization: getAuth(options.tokenName)
+      }
+    }))
+    return forward(operation)
+  })
+  const httpLink = createUploadLink({
+    uri: options.httpEndpoint
+  })
+  const httpChain = from([authLink, options.link, httpLink])
+  let link = httpChain
+  let wsClient = null
+
+  if (!options.ssr && options.wsEndpoint) {
+    wsClient = createClient({
+      url: options.wsEndpoint,
+      lazy: true,
+      retryAttempts: Infinity,
+      connectionParams: getConnectionParams
+    })
+
+    const wsLink = createGraphqlWsLink(wsClient)
+    link = split(
+      ({ query }) => {
+        const { kind, operation } = getMainDefinition(query)
+        return kind === 'OperationDefinition' && operation === 'subscription'
+      },
+      wsLink,
+      httpChain
+    )
+  }
+
+  const apolloClient = new ApolloClient({
+    link,
+    cache,
+    ssrForceFetchDelay: 100,
+    connectToDevTools: process.env.NODE_ENV !== 'production',
+    typeDefs: options.typeDefs,
+    resolvers: options.resolvers
+  })
+
+  if (options.onCacheInit) {
+    options.onCacheInit(cache)
+    apolloClient.onResetStore(() => options.onCacheInit(cache))
+  }
+
+  return {
+    apolloClient,
+    wsClient
+  }
+}
 
 function getBrowserGraphqlEndpoints() {
   if (typeof window === 'undefined' || !window.location) {
@@ -121,14 +216,7 @@ export function createProvider(options = {}, { router }) {
   if (wsClient) {
     wsClient.lazy = true
     wsClient.reconnect = true
-    wsClient.connectionParams = () => {
-      return {
-        workspace:
-          sessionStorage.getItem('workspace') ||
-          localStorage.getItem('workspace'),
-        authorization: localStorage.getItem(AUTH_TOKEN)
-      }
-    }
+    wsClient.connectionParams = getConnectionParams
   }
   apolloClient.wsClient = wsClient
 
@@ -163,6 +251,7 @@ export function createProvider(options = {}, { router }) {
   })
 
   /* Connected state */
+  let hasConnected = false
   function setConnected(value) {
     apolloClient.mutate({
       mutation: ConnectedSet,
@@ -172,14 +261,15 @@ export function createProvider(options = {}, { router }) {
     })
   }
 
-  wsClient.on('connected', () => setConnected(true))
-  // eslint-disable-next-line space-before-function-paren
-  wsClient.on('reconnected', async () => {
-    await resetApollo(apolloClient)
+  wsClient.on('connected', async () => {
+    if (hasConnected) {
+      await resetApollo(apolloClient)
+    }
+    hasConnected = true
     setConnected(true)
   })
   // Offline
-  wsClient.on('disconnected', () => setConnected(false))
+  wsClient.on('closed', () => setConnected(false))
   wsClient.on('error', () => setConnected(false))
 
   return apolloProvider
