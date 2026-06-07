@@ -18,7 +18,21 @@ const {
   emailMailboxWhereFromPrisma1,
   emailMessageArgsFromPrisma1,
   emailMessageWhereFromPrisma1,
+  mediaNetworkArgsFromPrisma1,
+  mediaNetworkWhereFromPrisma1,
+  mediaNoiseLevelArgsFromPrisma1,
+  mediaNoiseLevelWhereFromPrisma1,
+  mediaServiceArgsFromPrisma1,
+  mediaServiceWhereFromPrisma1,
   orderByFromPrisma1,
+  planFundingSourceArgsFromPrisma1,
+  planFundingSourceWhereFromPrisma1,
+  planMethodArgsFromPrisma1,
+  planMethodWhereFromPrisma1,
+  planPriorityLevelArgsFromPrisma1,
+  planPriorityLevelWhereFromPrisma1,
+  planReasonArgsFromPrisma1,
+  planReasonWhereFromPrisma1,
   toAppRole,
   toAppUserRole,
   toAppUser,
@@ -275,9 +289,34 @@ const Query = {
     return ctx.db.query.appRolesConnection(args, info)
   },
 
-  mediaNetwork: forwardTo('db'),
-  mediaNetworks: forwardTo('db'),
-  mediaNetworksConnection: forwardTo('db'),
+  mediaNetwork(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      return ctx.prisma.mediaNetwork.findFirst({
+        where: mediaNetworkWhereFromPrisma1(args.where)
+      })
+    }
+
+    return ctx.db.query.mediaNetwork(args, info)
+  },
+  mediaNetworks(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      return ctx.prisma.mediaNetwork.findMany(mediaNetworkArgsFromPrisma1(args))
+    }
+
+    return ctx.db.query.mediaNetworks(args, info)
+  },
+  async mediaNetworksConnection(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      const prismaArgs = mediaNetworkArgsFromPrisma1(args)
+      const [items, count] = await Promise.all([
+        ctx.prisma.mediaNetwork.findMany(prismaArgs),
+        ctx.prisma.mediaNetwork.count({ where: prismaArgs.where })
+      ])
+      return connectionFromPrismaResults(items, count)
+    }
+
+    return ctx.db.query.mediaNetworksConnection(args, info)
+  },
 
   mediaPersonae: forwardTo('db'),
   mediaPersona: forwardTo('db'),
@@ -291,14 +330,44 @@ const Query = {
   mediaProfile: forwardTo('db'),
   mediaProfilesConnection: forwardTo('db'),
 
-  planReasons: forwardTo('db'),
-  planReason: forwardTo('db'),
-  planReasonsConnection: forwardTo('db'),
+  planReasons(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      return ctx.prisma.planReason.findMany(planReasonArgsFromPrisma1(args))
+    }
+
+    return ctx.db.query.planReasons(args, info)
+  },
+  planReason(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      return ctx.prisma.planReason.findFirst({
+        where: planReasonWhereFromPrisma1(args.where)
+      })
+    }
+
+    return ctx.db.query.planReason(args, info)
+  },
+  async planReasonsConnection(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      const prismaArgs = planReasonArgsFromPrisma1(args)
+      const [items, count] = await Promise.all([
+        ctx.prisma.planReason.findMany(prismaArgs),
+        ctx.prisma.planReason.count({ where: prismaArgs.where })
+      ])
+      return connectionFromPrismaResults(items, count)
+    }
+
+    return ctx.db.query.planReasonsConnection(args, info)
+  },
 
   planReasonsPublic(parent, args, ctx, info) {
     if (args.data && args.data.planReason) {
-      args = { where: args.data.planReason }
+      args = { ...args, where: args.data.planReason }
+      delete args.data
     }
+    if (ctx.prisma) {
+      return ctx.prisma.planReason.findMany(planReasonArgsFromPrisma1(args))
+    }
+
     return ctx.db.query.planReasons(args, info)
   },
 
@@ -322,9 +391,34 @@ const Query = {
   planInjectOwner: forwardTo('db'),
   planInjectOwnersConnection: forwardTo('db'),
 
-  mediaServices: forwardTo('db'),
-  mediaService: forwardTo('db'),
-  mediaServicesConnection: forwardTo('db'),
+  mediaServices(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      return ctx.prisma.mediaService.findMany(mediaServiceArgsFromPrisma1(args))
+    }
+
+    return ctx.db.query.mediaServices(args, info)
+  },
+  mediaService(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      return ctx.prisma.mediaService.findFirst({
+        where: mediaServiceWhereFromPrisma1(args.where)
+      })
+    }
+
+    return ctx.db.query.mediaService(args, info)
+  },
+  async mediaServicesConnection(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      const prismaArgs = mediaServiceArgsFromPrisma1(args)
+      const [items, count] = await Promise.all([
+        ctx.prisma.mediaService.findMany(prismaArgs),
+        ctx.prisma.mediaService.count({ where: prismaArgs.where })
+      ])
+      return connectionFromPrismaResults(items, count)
+    }
+
+    return ctx.db.query.mediaServicesConnection(args, info)
+  },
 
   mediaFiles: forwardTo('db'),
   mediaFilesConnection: forwardTo('db'),
@@ -618,7 +712,34 @@ const Query = {
     return ctx.db.query.appWorkspacesConnection(args, info)
   },
 
-  mediaNoiseLevels: forwardTo('db'),
+  mediaNoiseLevel(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      return ctx.prisma.mediaNoiseLevel.findFirst({
+        where: mediaNoiseLevelWhereFromPrisma1(args.where)
+      })
+    }
+
+    return ctx.db.query.mediaNoiseLevel(args, info)
+  },
+  mediaNoiseLevels(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      return ctx.prisma.mediaNoiseLevel.findMany(mediaNoiseLevelArgsFromPrisma1(args))
+    }
+
+    return ctx.db.query.mediaNoiseLevels(args, info)
+  },
+  async mediaNoiseLevelsConnection(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      const prismaArgs = mediaNoiseLevelArgsFromPrisma1(args)
+      const [items, count] = await Promise.all([
+        ctx.prisma.mediaNoiseLevel.findMany(prismaArgs),
+        ctx.prisma.mediaNoiseLevel.count({ where: prismaArgs.where })
+      ])
+      return connectionFromPrismaResults(items, count)
+    }
+
+    return ctx.db.query.mediaNoiseLevelsConnection(args, info)
+  },
   mapInts: forwardTo('db'),
   mediaMarkovSources: forwardTo('db'),
 
@@ -640,9 +761,34 @@ const Query = {
   },
   planInjectsConnection: forwardTo('db'),
 
-  planMethod: forwardTo('db'),
-  planMethods: forwardTo('db'),
-  planMethodsConnection: forwardTo('db'),
+  planMethod(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      return ctx.prisma.planMethod.findFirst({
+        where: planMethodWhereFromPrisma1(args.where)
+      })
+    }
+
+    return ctx.db.query.planMethod(args, info)
+  },
+  planMethods(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      return ctx.prisma.planMethod.findMany(planMethodArgsFromPrisma1(args))
+    }
+
+    return ctx.db.query.planMethods(args, info)
+  },
+  async planMethodsConnection(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      const prismaArgs = planMethodArgsFromPrisma1(args)
+      const [items, count] = await Promise.all([
+        ctx.prisma.planMethod.findMany(prismaArgs),
+        ctx.prisma.planMethod.count({ where: prismaArgs.where })
+      ])
+      return connectionFromPrismaResults(items, count)
+    }
+
+    return ctx.db.query.planMethodsConnection(args, info)
+  },
 
   planCustomReport: forwardTo('db'),
   planCustomReports: forwardTo('db'),
@@ -654,9 +800,34 @@ const Query = {
   planFeedbackRequests: forwardTo('db'),
   planFeedbackRequestsConnection: forwardTo('db'),
 
-  planFundingSource: forwardTo('db'),
-  planFundingSources: forwardTo('db'),
-  planFundingSourcesConnection: forwardTo('db'),
+  planFundingSource(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      return ctx.prisma.planFundingSource.findFirst({
+        where: planFundingSourceWhereFromPrisma1(args.where)
+      })
+    }
+
+    return ctx.db.query.planFundingSource(args, info)
+  },
+  planFundingSources(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      return ctx.prisma.planFundingSource.findMany(planFundingSourceArgsFromPrisma1(args))
+    }
+
+    return ctx.db.query.planFundingSources(args, info)
+  },
+  async planFundingSourcesConnection(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      const prismaArgs = planFundingSourceArgsFromPrisma1(args)
+      const [items, count] = await Promise.all([
+        ctx.prisma.planFundingSource.findMany(prismaArgs),
+        ctx.prisma.planFundingSource.count({ where: prismaArgs.where })
+      ])
+      return connectionFromPrismaResults(items, count)
+    }
+
+    return ctx.db.query.planFundingSourcesConnection(args, info)
+  },
 
   planMeeting: forwardTo('db'),
   planMeetings: forwardTo('db'),
@@ -694,9 +865,34 @@ const Query = {
   planOrganizations: forwardTo('db'),
   planOrganizationsConnection: forwardTo('db'),
 
-  planPriorityLevel: forwardTo('db'),
-  planPriorityLevels: forwardTo('db'),
-  planPriorityLevelsConnection: forwardTo('db'),
+  planPriorityLevel(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      return ctx.prisma.planPriorityLevel.findFirst({
+        where: planPriorityLevelWhereFromPrisma1(args.where)
+      })
+    }
+
+    return ctx.db.query.planPriorityLevel(args, info)
+  },
+  planPriorityLevels(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      return ctx.prisma.planPriorityLevel.findMany(planPriorityLevelArgsFromPrisma1(args))
+    }
+
+    return ctx.db.query.planPriorityLevels(args, info)
+  },
+  async planPriorityLevelsConnection(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      const prismaArgs = planPriorityLevelArgsFromPrisma1(args)
+      const [items, count] = await Promise.all([
+        ctx.prisma.planPriorityLevel.findMany(prismaArgs),
+        ctx.prisma.planPriorityLevel.count({ where: prismaArgs.where })
+      ])
+      return connectionFromPrismaResults(items, count)
+    }
+
+    return ctx.db.query.planPriorityLevelsConnection(args, info)
+  },
 
   planRequestedMethodType: forwardTo('db'),
   planRequestedMethodTypes: forwardTo('db'),

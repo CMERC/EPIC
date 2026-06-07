@@ -6,6 +6,13 @@ const {
   chatRoomDataFromPrisma1,
   emailMailboxDataFromPrisma1,
   emailMessageDataFromPrisma1,
+  mediaNetworkDataFromPrisma1,
+  mediaNoiseLevelDataFromPrisma1,
+  mediaServiceDataFromPrisma1,
+  planFundingSourceDataFromPrisma1,
+  planMethodDataFromPrisma1,
+  planPriorityLevelDataFromPrisma1,
+  planReasonDataFromPrisma1,
   toAppRole,
   toAppUserRole,
   toChatMessage,
@@ -148,9 +155,34 @@ const prismaForward = {
     return ctx.db.mutation.deleteAppRole(args, info)
   },
 
-  createMediaNetwork: forwardTo('db'),
-  updateMediaNetwork: forwardTo('db'),
-  deleteMediaNetwork: forwardTo('db'),
+  async createMediaNetwork(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      return ctx.prisma.mediaNetwork.create({
+        data: mediaNetworkDataFromPrisma1(args.data, { create: true })
+      })
+    }
+
+    return ctx.db.mutation.createMediaNetwork(args, info)
+  },
+  async updateMediaNetwork(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      return ctx.prisma.mediaNetwork.update({
+        where: args.where,
+        data: mediaNetworkDataFromPrisma1(args.data)
+      })
+    }
+
+    return ctx.db.mutation.updateMediaNetwork(args, info)
+  },
+  async deleteMediaNetwork(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      return ctx.prisma.mediaNetwork.delete({
+        where: args.where
+      })
+    }
+
+    return ctx.db.mutation.deleteMediaNetwork(args, info)
+  },
 
   createMediaPersona: forwardTo('db'),
   createMediaPersonaEdge: forwardTo('db'),
@@ -163,9 +195,35 @@ const prismaForward = {
 
   deleteMediaPost: forwardTo('db'),
 
-  createMediaService: forwardTo('db'),
-  upsertMediaService: forwardTo('db'),
-  deleteMediaService: forwardTo('db'),
+  async createMediaService(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      return ctx.prisma.mediaService.create({
+        data: mediaServiceDataFromPrisma1(args.data, { create: true })
+      })
+    }
+
+    return ctx.db.mutation.createMediaService(args, info)
+  },
+  async upsertMediaService(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      return ctx.prisma.mediaService.upsert({
+        where: args.where,
+        create: mediaServiceDataFromPrisma1(args.create, { create: true }),
+        update: mediaServiceDataFromPrisma1(args.update)
+      })
+    }
+
+    return ctx.db.mutation.upsertMediaService(args, info)
+  },
+  async deleteMediaService(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      return ctx.prisma.mediaService.delete({
+        where: args.where
+      })
+    }
+
+    return ctx.db.mutation.deleteMediaService(args, info)
+  },
 
   createMediaFile: forwardTo('db'),
   deleteMediaFile: forwardTo('db'),
@@ -191,9 +249,34 @@ const prismaForward = {
   deleteNoteFile: forwardTo('db'),
   updateNoteFile: forwardTo('db'),
 
-  createMediaNoiseLevel: forwardTo('db'),
-  deleteMediaNoiseLevel: forwardTo('db'),
-  updateMediaNoiseLevel: forwardTo('db'),
+  async createMediaNoiseLevel(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      return ctx.prisma.mediaNoiseLevel.create({
+        data: mediaNoiseLevelDataFromPrisma1(args.data, { create: true })
+      })
+    }
+
+    return ctx.db.mutation.createMediaNoiseLevel(args, info)
+  },
+  async deleteMediaNoiseLevel(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      return ctx.prisma.mediaNoiseLevel.delete({
+        where: args.where
+      })
+    }
+
+    return ctx.db.mutation.deleteMediaNoiseLevel(args, info)
+  },
+  async updateMediaNoiseLevel(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      return ctx.prisma.mediaNoiseLevel.update({
+        where: args.where,
+        data: mediaNoiseLevelDataFromPrisma1(args.data)
+      })
+    }
+
+    return ctx.db.mutation.updateMediaNoiseLevel(args, info)
+  },
 
   createMapInt: forwardTo('db'),
   updateMapInt: forwardTo('db'),
@@ -205,15 +288,56 @@ const prismaForward = {
   upsertPlanLabel: forwardTo('db'),
   deletePlanLabel: forwardTo('db'),
 
-  createPlanReason: forwardTo('db'),
-  updatePlanReason: forwardTo('db'),
-  upsertPlanReason: forwardTo('db'),
-  deletePlanReason: forwardTo('db'),
+  async createPlanReason(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      return ctx.prisma.planReason.create({
+        data: planReasonDataFromPrisma1(args.data, { create: true })
+      })
+    }
+
+    return ctx.db.mutation.createPlanReason(args, info)
+  },
+  async updatePlanReason(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      return ctx.prisma.planReason.update({
+        where: args.where,
+        data: planReasonDataFromPrisma1(args.data)
+      })
+    }
+
+    return ctx.db.mutation.updatePlanReason(args, info)
+  },
+  async upsertPlanReason(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      return ctx.prisma.planReason.upsert({
+        where: args.where,
+        create: planReasonDataFromPrisma1(args.create, { create: true }),
+        update: planReasonDataFromPrisma1(args.update)
+      })
+    }
+
+    return ctx.db.mutation.upsertPlanReason(args, info)
+  },
+  async deletePlanReason(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      return ctx.prisma.planReason.delete({
+        where: args.where
+      })
+    }
+
+    return ctx.db.mutation.deletePlanReason(args, info)
+  },
 
   createPlanReasonPublic(parent, args, ctx, info) {
     if (args.data && args.data.planReason) {
       args = { data: args.data.planReason }
     }
+    if (ctx.prisma) {
+      return ctx.prisma.planReason.create({
+        data: planReasonDataFromPrisma1(args.data, { create: true })
+      })
+    }
+
     return ctx.db.mutation.createPlanReason(args, info)
   },
 
@@ -267,20 +391,125 @@ const prismaForward = {
   updatePlanInject: forwardTo('db'),
   upsertPlanInject: forwardTo('db'),
 
-  createPlanMethod: forwardTo('db'),
-  updatePlanMethod: forwardTo('db'),
-  upsertPlanMethod: forwardTo('db'),
-  deletePlanMethod: forwardTo('db'),
+  async createPlanMethod(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      return ctx.prisma.planMethod.create({
+        data: planMethodDataFromPrisma1(args.data, { create: true })
+      })
+    }
 
-  createPlanFundingSource: forwardTo('db'),
-  updatePlanFundingSource: forwardTo('db'),
-  upsertPlanFundingSource: forwardTo('db'),
-  deletePlanFundingSource: forwardTo('db'),
+    return ctx.db.mutation.createPlanMethod(args, info)
+  },
+  async updatePlanMethod(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      return ctx.prisma.planMethod.update({
+        where: args.where,
+        data: planMethodDataFromPrisma1(args.data)
+      })
+    }
 
-  createPlanPriorityLevel: forwardTo('db'),
-  updatePlanPriorityLevel: forwardTo('db'),
-  upsertPlanPriorityLevel: forwardTo('db'),
-  deletePlanPriorityLevel: forwardTo('db'),
+    return ctx.db.mutation.updatePlanMethod(args, info)
+  },
+  async upsertPlanMethod(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      return ctx.prisma.planMethod.upsert({
+        where: args.where,
+        create: planMethodDataFromPrisma1(args.create, { create: true }),
+        update: planMethodDataFromPrisma1(args.update)
+      })
+    }
+
+    return ctx.db.mutation.upsertPlanMethod(args, info)
+  },
+  async deletePlanMethod(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      return ctx.prisma.planMethod.delete({
+        where: args.where
+      })
+    }
+
+    return ctx.db.mutation.deletePlanMethod(args, info)
+  },
+
+  async createPlanFundingSource(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      return ctx.prisma.planFundingSource.create({
+        data: planFundingSourceDataFromPrisma1(args.data, { create: true })
+      })
+    }
+
+    return ctx.db.mutation.createPlanFundingSource(args, info)
+  },
+  async updatePlanFundingSource(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      return ctx.prisma.planFundingSource.update({
+        where: args.where,
+        data: planFundingSourceDataFromPrisma1(args.data)
+      })
+    }
+
+    return ctx.db.mutation.updatePlanFundingSource(args, info)
+  },
+  async upsertPlanFundingSource(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      return ctx.prisma.planFundingSource.upsert({
+        where: args.where,
+        create: planFundingSourceDataFromPrisma1(args.create, { create: true }),
+        update: planFundingSourceDataFromPrisma1(args.update)
+      })
+    }
+
+    return ctx.db.mutation.upsertPlanFundingSource(args, info)
+  },
+  async deletePlanFundingSource(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      return ctx.prisma.planFundingSource.delete({
+        where: args.where
+      })
+    }
+
+    return ctx.db.mutation.deletePlanFundingSource(args, info)
+  },
+
+  async createPlanPriorityLevel(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      return ctx.prisma.planPriorityLevel.create({
+        data: planPriorityLevelDataFromPrisma1(args.data, { create: true })
+      })
+    }
+
+    return ctx.db.mutation.createPlanPriorityLevel(args, info)
+  },
+  async updatePlanPriorityLevel(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      return ctx.prisma.planPriorityLevel.update({
+        where: args.where,
+        data: planPriorityLevelDataFromPrisma1(args.data)
+      })
+    }
+
+    return ctx.db.mutation.updatePlanPriorityLevel(args, info)
+  },
+  async upsertPlanPriorityLevel(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      return ctx.prisma.planPriorityLevel.upsert({
+        where: args.where,
+        create: planPriorityLevelDataFromPrisma1(args.create, { create: true }),
+        update: planPriorityLevelDataFromPrisma1(args.update)
+      })
+    }
+
+    return ctx.db.mutation.upsertPlanPriorityLevel(args, info)
+  },
+  async deletePlanPriorityLevel(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      return ctx.prisma.planPriorityLevel.delete({
+        where: args.where
+      })
+    }
+
+    return ctx.db.mutation.deletePlanPriorityLevel(args, info)
+  },
 
   createPlanRequestedMethodType: forwardTo('db'),
   updatePlanRequestedMethodType: forwardTo('db'),

@@ -291,6 +291,59 @@ const chatMessageWhereFromPrisma1 = where => {
   return filters
 }
 
+const simpleWhereFromPrisma1 = (where, fields, mapper) => {
+  if (!where) {
+    return undefined
+  }
+
+  return {
+    ...combineLogicalFilters(where, mapper),
+    ...fields.reduce((filters, field) => ({
+      ...filters,
+      ...scalarFilter(where, field)
+    }), {})
+  }
+}
+
+const simpleArgsFromPrisma1 = (args, whereMapper) => ({
+  where: whereMapper(args.where),
+  orderBy: orderByFromPrisma1(args.orderBy),
+  ...paginationFromPrisma1(args)
+})
+
+const simpleDataFromPrisma1 = (data = {}, fields, options = {}) => {
+  const modelData = {}
+  fields.forEach(field => {
+    if (data[field] !== undefined) {
+      modelData[field] = data[field]
+    }
+  })
+
+  if (options.create) {
+    modelData.id = modelData.id || generatePrismaId()
+    modelData.createdAt = data.createdAt || now()
+  }
+  modelData.updatedAt = data.updatedAt || now()
+
+  return modelData
+}
+
+const mediaNetworkFields = ['id', 'createdAt', 'updatedAt', 'name', 'displayName', 'description', 'icon', 'color', 'template']
+const mediaServiceFields = ['id', 'createdAt', 'updatedAt', 'name', 'displayName', 'type', 'description', 'icon', 'color', 'template']
+const mediaNoiseLevelFields = ['id', 'createdAt', 'updatedAt', 'name', 'displayName', 'description', 'templates', 'duration', 'rate']
+const planReasonFields = ['id', 'createdAt', 'updatedAt', 'title']
+const planMethodFields = ['id', 'createdAt', 'updatedAt', 'title']
+const planFundingSourceFields = ['id', 'createdAt', 'updatedAt', 'primarySource', 'subSource', 'amount']
+const planPriorityLevelFields = ['id', 'createdAt', 'updatedAt', 'title', 'description']
+
+const mediaNetworkWhereFromPrisma1 = where => simpleWhereFromPrisma1(where, mediaNetworkFields, mediaNetworkWhereFromPrisma1)
+const mediaServiceWhereFromPrisma1 = where => simpleWhereFromPrisma1(where, mediaServiceFields, mediaServiceWhereFromPrisma1)
+const mediaNoiseLevelWhereFromPrisma1 = where => simpleWhereFromPrisma1(where, mediaNoiseLevelFields, mediaNoiseLevelWhereFromPrisma1)
+const planReasonWhereFromPrisma1 = where => simpleWhereFromPrisma1(where, planReasonFields, planReasonWhereFromPrisma1)
+const planMethodWhereFromPrisma1 = where => simpleWhereFromPrisma1(where, planMethodFields, planMethodWhereFromPrisma1)
+const planFundingSourceWhereFromPrisma1 = where => simpleWhereFromPrisma1(where, planFundingSourceFields, planFundingSourceWhereFromPrisma1)
+const planPriorityLevelWhereFromPrisma1 = where => simpleWhereFromPrisma1(where, planPriorityLevelFields, planPriorityLevelWhereFromPrisma1)
+
 const appUserArgsFromPrisma1 = args => ({
   where: userWhereFromPrisma1(args.where),
   orderBy: orderByFromPrisma1(args.orderBy),
@@ -445,6 +498,14 @@ const chatMessageArgsFromPrisma1 = args => ({
   ...paginationFromPrisma1(args)
 })
 
+const mediaNetworkArgsFromPrisma1 = args => simpleArgsFromPrisma1(args, mediaNetworkWhereFromPrisma1)
+const mediaServiceArgsFromPrisma1 = args => simpleArgsFromPrisma1(args, mediaServiceWhereFromPrisma1)
+const mediaNoiseLevelArgsFromPrisma1 = args => simpleArgsFromPrisma1(args, mediaNoiseLevelWhereFromPrisma1)
+const planReasonArgsFromPrisma1 = args => simpleArgsFromPrisma1(args, planReasonWhereFromPrisma1)
+const planMethodArgsFromPrisma1 = args => simpleArgsFromPrisma1(args, planMethodWhereFromPrisma1)
+const planFundingSourceArgsFromPrisma1 = args => simpleArgsFromPrisma1(args, planFundingSourceWhereFromPrisma1)
+const planPriorityLevelArgsFromPrisma1 = args => simpleArgsFromPrisma1(args, planPriorityLevelWhereFromPrisma1)
+
 const appWorkspaceDataFromPrisma1 = (data = {}, options = {}) => {
   const workspaceData = {}
   ;['id', 'name', 'displayName', 'timeZone', 'isTemplate', 'status'].forEach(field => {
@@ -574,6 +635,14 @@ const chatMessageDataFromPrisma1 = (data = {}, options = {}) => {
 
   return messageData
 }
+
+const mediaNetworkDataFromPrisma1 = (data = {}, options = {}) => simpleDataFromPrisma1(data, mediaNetworkFields, options)
+const mediaServiceDataFromPrisma1 = (data = {}, options = {}) => simpleDataFromPrisma1(data, mediaServiceFields, options)
+const mediaNoiseLevelDataFromPrisma1 = (data = {}, options = {}) => simpleDataFromPrisma1(data, mediaNoiseLevelFields, options)
+const planReasonDataFromPrisma1 = (data = {}, options = {}) => simpleDataFromPrisma1(data, planReasonFields, options)
+const planMethodDataFromPrisma1 = (data = {}, options = {}) => simpleDataFromPrisma1(data, planMethodFields, options)
+const planFundingSourceDataFromPrisma1 = (data = {}, options = {}) => simpleDataFromPrisma1(data, planFundingSourceFields, options)
+const planPriorityLevelDataFromPrisma1 = (data = {}, options = {}) => simpleDataFromPrisma1(data, planPriorityLevelFields, options)
 
 const connectionFromPrismaResults = (items, count) => ({
   aggregate: {
@@ -710,8 +779,29 @@ module.exports = {
   emailMessageDataFromPrisma1,
   emailMessageWhereFromPrisma1,
   generatePrismaId,
+  mediaNetworkArgsFromPrisma1,
+  mediaNetworkDataFromPrisma1,
+  mediaNetworkWhereFromPrisma1,
+  mediaNoiseLevelArgsFromPrisma1,
+  mediaNoiseLevelDataFromPrisma1,
+  mediaNoiseLevelWhereFromPrisma1,
+  mediaServiceArgsFromPrisma1,
+  mediaServiceDataFromPrisma1,
+  mediaServiceWhereFromPrisma1,
   orderByFromPrisma1,
   paginationFromPrisma1,
+  planFundingSourceArgsFromPrisma1,
+  planFundingSourceDataFromPrisma1,
+  planFundingSourceWhereFromPrisma1,
+  planMethodArgsFromPrisma1,
+  planMethodDataFromPrisma1,
+  planMethodWhereFromPrisma1,
+  planPriorityLevelArgsFromPrisma1,
+  planPriorityLevelDataFromPrisma1,
+  planPriorityLevelWhereFromPrisma1,
+  planReasonArgsFromPrisma1,
+  planReasonDataFromPrisma1,
+  planReasonWhereFromPrisma1,
   toAppRole,
   toAppUser,
   toAppUserRole,

@@ -1,8 +1,22 @@
 
+const {
+  mediaServiceDataFromPrisma1
+} = require('../../services/prismaBridge')
+
 const MediaService = {
   updateMediaService(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      if (ctx.db && ctx.db.query && ctx.db.query.mediaProfilesConnection && ctx.db.query.mediaProfiles && info && info.workspaceName) {
+        updateServiceProfileUrls(args, ctx, info.workspaceName)
+      }
+      return ctx.prisma.mediaService.update({
+        where: args.where,
+        data: mediaServiceDataFromPrisma1(args.data)
+      })
+    }
+
     // Update url of profiles with this service
-    updateServiceProfileUrls(args, ctx, info.workspaceName)
+    updateServiceProfileUrls(args, ctx, info && info.workspaceName)
     return ctx.db.mutation.updateMediaService(args, info)
   }
 }
