@@ -1,5 +1,6 @@
 const { forwardTo } = require('prisma-binding')
 const {
+  appListSettingDataFromPrisma1,
   appRoleDataFromPrisma1,
   toAppRole,
   toAppUserRole
@@ -7,10 +8,45 @@ const {
 
 const prismaForward = {
 
-  createAppListSetting: forwardTo('db'),
-  updateAppListSetting: forwardTo('db'),
-  upsertAppListSetting: forwardTo('db'),
-  deleteAppListSetting: forwardTo('db'),
+  async createAppListSetting(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      return ctx.prisma.appListSetting.create({
+        data: appListSettingDataFromPrisma1(args.data, { create: true })
+      })
+    }
+
+    return ctx.db.mutation.createAppListSetting(args, info)
+  },
+  async updateAppListSetting(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      return ctx.prisma.appListSetting.update({
+        where: args.where,
+        data: appListSettingDataFromPrisma1(args.data)
+      })
+    }
+
+    return ctx.db.mutation.updateAppListSetting(args, info)
+  },
+  async upsertAppListSetting(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      return ctx.prisma.appListSetting.upsert({
+        where: args.where,
+        create: appListSettingDataFromPrisma1(args.create, { create: true }),
+        update: appListSettingDataFromPrisma1(args.update)
+      })
+    }
+
+    return ctx.db.mutation.upsertAppListSetting(args, info)
+  },
+  async deleteAppListSetting(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      return ctx.prisma.appListSetting.delete({
+        where: args.where
+      })
+    }
+
+    return ctx.db.mutation.deleteAppListSetting(args, info)
+  },
 
   updateManyMediaPosts: forwardTo('db'),
   async deleteAppUserRole(parent, args, ctx, info) {

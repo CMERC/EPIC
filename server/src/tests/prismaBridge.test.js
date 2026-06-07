@@ -1,4 +1,5 @@
 const {
+  appListSettingDataFromPrisma1,
   appRoleDataFromPrisma1,
   appUserRoleDataFromPrisma1,
   appWorkspaceArgsFromPrisma1,
@@ -83,6 +84,22 @@ test('converts workspace mutation data to Prisma Client fields and relations', (
       }]
     }
   }))
+  expect(data.id).toHaveLength(25)
+})
+
+test('converts list setting mutation data to Prisma Client fields', () => {
+  const data = appListSettingDataFromPrisma1({
+    name: 'PLAN',
+    status: 'ACTIVE'
+  }, {
+    create: true
+  })
+
+  expect(data).toEqual({
+    id: expect.stringMatching(/^c/),
+    name: 'PLAN',
+    status: 'ACTIVE'
+  })
   expect(data.id).toHaveLength(25)
 })
 

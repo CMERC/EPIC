@@ -205,6 +205,21 @@ const appListSettingArgsFromPrisma1 = args => ({
   ...paginationFromPrisma1(args)
 })
 
+const appListSettingDataFromPrisma1 = (data = {}, options = {}) => {
+  const settingData = {}
+  ;['id', 'name', 'status'].forEach(field => {
+    if (data[field] !== undefined) {
+      settingData[field] = data[field]
+    }
+  })
+
+  if (options.create) {
+    settingData.id = settingData.id || generatePrismaId()
+  }
+
+  return settingData
+}
+
 const appRoleArgsFromPrisma1 = args => ({
   where: appRoleWhereFromPrisma1(args.where),
   orderBy: orderByFromPrisma1(args.orderBy),
@@ -371,6 +386,7 @@ const toAppWorkspace = workspace => {
 
 module.exports = {
   appListSettingArgsFromPrisma1,
+  appListSettingDataFromPrisma1,
   appListSettingWhereFromPrisma1,
   appRoleArgsFromPrisma1,
   appRoleDataFromPrisma1,
