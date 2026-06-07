@@ -104,7 +104,7 @@
     "not dead"
   ],
   "engines": {
-    "node": ">=18 <23",
+    "node": ">=22 <25",
     "npm": ">=9"
   },
   "gitHooks": {
