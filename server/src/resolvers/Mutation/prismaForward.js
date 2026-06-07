@@ -2,10 +2,14 @@ const { forwardTo } = require('prisma-binding')
 const {
   appListSettingDataFromPrisma1,
   appRoleDataFromPrisma1,
+  chatMessageDataFromPrisma1,
+  chatRoomDataFromPrisma1,
   emailMailboxDataFromPrisma1,
   emailMessageDataFromPrisma1,
   toAppRole,
   toAppUserRole,
+  toChatMessage,
+  toChatRoom,
   toEmailMailbox,
   toEmailMessage
 } = require('../../services/prismaBridge')
@@ -339,15 +343,133 @@ const prismaForward = {
   upsertObservePost: forwardTo('db'),
   deleteObservePost: forwardTo('db'),
 
-  createChatMessage: forwardTo('db'),
-  updateChatMessage: forwardTo('db'),
-  upsertChatMessage: forwardTo('db'),
-  deleteChatMessage: forwardTo('db'),
+  async createChatMessage(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      const message = await ctx.prisma.chatMessage.create({
+        data: chatMessageDataFromPrisma1(args.data, { create: true }),
+        include: {
+          ChatRoom: true
+        }
+      })
+      return toChatMessage(message)
+    }
 
-  createChatRoom: forwardTo('db'),
-  updateChatRoom: forwardTo('db'),
-  upsertChatRoom: forwardTo('db'),
-  deleteChatRoom: forwardTo('db'),
+    return ctx.db.mutation.createChatMessage(args, info)
+  },
+  async updateChatMessage(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      const message = await ctx.prisma.chatMessage.update({
+        where: args.where,
+        data: chatMessageDataFromPrisma1(args.data),
+        include: {
+          ChatRoom: true
+        }
+      })
+      return toChatMessage(message)
+    }
+
+    return ctx.db.mutation.updateChatMessage(args, info)
+  },
+  async upsertChatMessage(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      const message = await ctx.prisma.chatMessage.upsert({
+        where: args.where,
+        create: chatMessageDataFromPrisma1(args.create, { create: true }),
+        update: chatMessageDataFromPrisma1(args.update),
+        include: {
+          ChatRoom: true
+        }
+      })
+      return toChatMessage(message)
+    }
+
+    return ctx.db.mutation.upsertChatMessage(args, info)
+  },
+  async deleteChatMessage(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      const message = await ctx.prisma.chatMessage.delete({
+        where: args.where,
+        include: {
+          ChatRoom: true
+        }
+      })
+      return toChatMessage(message)
+    }
+
+    return ctx.db.mutation.deleteChatMessage(args, info)
+  },
+
+  async createChatRoom(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      const room = await ctx.prisma.chatRoom.create({
+        data: chatRoomDataFromPrisma1(args.data, { create: true }),
+        include: {
+          ChatMessage: {
+            include: {
+              ChatRoom: true
+            }
+          }
+        }
+      })
+      return toChatRoom(room)
+    }
+
+    return ctx.db.mutation.createChatRoom(args, info)
+  },
+  async updateChatRoom(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      const room = await ctx.prisma.chatRoom.update({
+        where: args.where,
+        data: chatRoomDataFromPrisma1(args.data),
+        include: {
+          ChatMessage: {
+            include: {
+              ChatRoom: true
+            }
+          }
+        }
+      })
+      return toChatRoom(room)
+    }
+
+    return ctx.db.mutation.updateChatRoom(args, info)
+  },
+  async upsertChatRoom(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      const room = await ctx.prisma.chatRoom.upsert({
+        where: args.where,
+        create: chatRoomDataFromPrisma1(args.create, { create: true }),
+        update: chatRoomDataFromPrisma1(args.update),
+        include: {
+          ChatMessage: {
+            include: {
+              ChatRoom: true
+            }
+          }
+        }
+      })
+      return toChatRoom(room)
+    }
+
+    return ctx.db.mutation.upsertChatRoom(args, info)
+  },
+  async deleteChatRoom(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      const room = await ctx.prisma.chatRoom.delete({
+        where: args.where,
+        include: {
+          ChatMessage: {
+            include: {
+              ChatRoom: true
+            }
+          }
+        }
+      })
+      return toChatRoom(room)
+    }
+
+    return ctx.db.mutation.deleteChatRoom(args, info)
+  },
 
   async updateEmailMessage(parent, args, ctx, info) {
     if (ctx.prisma) {

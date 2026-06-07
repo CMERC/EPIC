@@ -9,6 +9,10 @@ const {
   appUserRoleArgsFromPrisma1,
   appWorkspaceArgsFromPrisma1,
   appWorkspaceWhereFromPrisma1,
+  chatMessageArgsFromPrisma1,
+  chatMessageWhereFromPrisma1,
+  chatRoomArgsFromPrisma1,
+  chatRoomWhereFromPrisma1,
   connectionFromPrismaResults,
   emailMailboxArgsFromPrisma1,
   emailMailboxWhereFromPrisma1,
@@ -19,6 +23,8 @@ const {
   toAppUserRole,
   toAppUser,
   toAppWorkspace,
+  toChatMessage,
+  toChatRoom,
   toEmailMailbox,
   toEmailMessage,
   userWhereFromPrisma1
@@ -709,13 +715,105 @@ const Query = {
   activityStreams: forwardTo('db'),
   activityStreamsConnection: forwardTo('db'),
 
-  chatMessage: forwardTo('db'),
-  chatMessages: forwardTo('db'),
-  chatMessagesConnection: forwardTo('db'),
+  async chatMessage(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      const message = await ctx.prisma.chatMessage.findFirst({
+        where: chatMessageWhereFromPrisma1(args.where),
+        include: {
+          ChatRoom: true
+        }
+      })
+      return toChatMessage(message)
+    }
 
-  chatRoom: forwardTo('db'),
-  chatRooms: forwardTo('db'),
-  chatRoomsConnection: forwardTo('db'),
+    return ctx.db.query.chatMessage(args, info)
+  },
+  async chatMessages(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      const messages = await ctx.prisma.chatMessage.findMany({
+        ...chatMessageArgsFromPrisma1(args),
+        include: {
+          ChatRoom: true
+        }
+      })
+      return messages.map(toChatMessage)
+    }
+
+    return ctx.db.query.chatMessages(args, info)
+  },
+  async chatMessagesConnection(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      const prismaArgs = chatMessageArgsFromPrisma1(args)
+      const [items, count] = await Promise.all([
+        ctx.prisma.chatMessage.findMany({
+          ...prismaArgs,
+          include: {
+            ChatRoom: true
+          }
+        }),
+        ctx.prisma.chatMessage.count({ where: prismaArgs.where })
+      ])
+      return connectionFromPrismaResults(items.map(toChatMessage), count)
+    }
+
+    return ctx.db.query.chatMessagesConnection(args, info)
+  },
+
+  async chatRoom(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      const room = await ctx.prisma.chatRoom.findFirst({
+        where: chatRoomWhereFromPrisma1(args.where),
+        include: {
+          ChatMessage: {
+            include: {
+              ChatRoom: true
+            }
+          }
+        }
+      })
+      return toChatRoom(room)
+    }
+
+    return ctx.db.query.chatRoom(args, info)
+  },
+  async chatRooms(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      const rooms = await ctx.prisma.chatRoom.findMany({
+        ...chatRoomArgsFromPrisma1(args),
+        include: {
+          ChatMessage: {
+            include: {
+              ChatRoom: true
+            }
+          }
+        }
+      })
+      return rooms.map(toChatRoom)
+    }
+
+    return ctx.db.query.chatRooms(args, info)
+  },
+  async chatRoomsConnection(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      const prismaArgs = chatRoomArgsFromPrisma1(args)
+      const [items, count] = await Promise.all([
+        ctx.prisma.chatRoom.findMany({
+          ...prismaArgs,
+          include: {
+            ChatMessage: {
+              include: {
+                ChatRoom: true
+              }
+            }
+          }
+        }),
+        ctx.prisma.chatRoom.count({ where: prismaArgs.where })
+      ])
+      return connectionFromPrismaResults(items.map(toChatRoom), count)
+    }
+
+    return ctx.db.query.chatRoomsConnection(args, info)
+  },
 
   async emailMessage(parent, args, ctx, info) {
     if (ctx.prisma) {

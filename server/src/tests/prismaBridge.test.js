@@ -4,11 +4,15 @@ const {
   appUserRoleDataFromPrisma1,
   appWorkspaceArgsFromPrisma1,
   appWorkspaceDataFromPrisma1,
+  chatMessageDataFromPrisma1,
+  chatRoomDataFromPrisma1,
   emailMailboxDataFromPrisma1,
   emailMessageDataFromPrisma1,
   orderByFromPrisma1,
   toAppUser,
   toAppWorkspace,
+  toChatMessage,
+  toChatRoom,
   toEmailMailbox,
   toEmailMessage,
   userWhereFromPrisma1
@@ -215,6 +219,54 @@ test('converts email mutation data and maps legacy relation names', () => {
   expect(mappedMessage.mailbox.owner).toBe('ada@example.test')
   expect(mappedMessage.attachments).toEqual([{ id: 'file-1' }])
   expect(mappedMailbox.messages[0].mailbox.owner).toBe('ada@example.test')
+})
+
+test('converts chat mutation data and maps legacy relation names', () => {
+  const room = chatRoomDataFromPrisma1({
+    title: 'General'
+  }, {
+    create: true
+  })
+  const message = chatMessageDataFromPrisma1({
+    text: 'Ready',
+    author: 'ada@example.test',
+    room: {
+      connect: {
+        id: 'room-1'
+      }
+    }
+  }, {
+    create: true
+  })
+  const mappedMessage = toChatMessage({
+    id: 'message-1',
+    ChatRoom: [{ id: 'room-1', title: 'General' }]
+  })
+  const mappedRoom = toChatRoom({
+    id: 'room-1',
+    ChatMessage: [mappedMessage]
+  })
+
+  expect(room).toEqual(expect.objectContaining({
+    id: expect.any(String),
+    title: 'General',
+    createdAt: expect.any(Date),
+    updatedAt: expect.any(Date)
+  }))
+  expect(message).toEqual(expect.objectContaining({
+    id: expect.any(String),
+    text: 'Ready',
+    author: 'ada@example.test',
+    createdAt: expect.any(Date),
+    updatedAt: expect.any(Date),
+    ChatRoom: {
+      connect: [{
+        id: 'room-1'
+      }]
+    }
+  }))
+  expect(mappedMessage.room.title).toBe('General')
+  expect(mappedRoom.messages[0].room.title).toBe('General')
 })
 
 test('maps introspected relation names back to legacy GraphQL field names', () => {

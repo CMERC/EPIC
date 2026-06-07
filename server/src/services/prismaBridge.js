@@ -244,6 +244,53 @@ const emailMessageWhereFromPrisma1 = where => {
   return filters
 }
 
+const chatRoomWhereFromPrisma1 = where => {
+  if (!where) {
+    return undefined
+  }
+
+  const filters = {
+    ...combineLogicalFilters(where, chatRoomWhereFromPrisma1),
+    ...scalarFilter(where, 'id'),
+    ...scalarFilter(where, 'createdAt'),
+    ...scalarFilter(where, 'updatedAt'),
+    ...scalarFilter(where, 'title')
+  }
+
+  if (where.messages_some) {
+    filters.ChatMessage = { some: chatMessageWhereFromPrisma1(where.messages_some) }
+  }
+  if (where.messages_none) {
+    filters.ChatMessage = { none: chatMessageWhereFromPrisma1(where.messages_none) }
+  }
+  if (where.messages_every) {
+    filters.ChatMessage = { every: chatMessageWhereFromPrisma1(where.messages_every) }
+  }
+
+  return filters
+}
+
+const chatMessageWhereFromPrisma1 = where => {
+  if (!where) {
+    return undefined
+  }
+
+  const filters = {
+    ...combineLogicalFilters(where, chatMessageWhereFromPrisma1),
+    ...scalarFilter(where, 'id'),
+    ...scalarFilter(where, 'createdAt'),
+    ...scalarFilter(where, 'updatedAt'),
+    ...scalarFilter(where, 'text'),
+    ...scalarFilter(where, 'author')
+  }
+
+  if (where.room) {
+    filters.ChatRoom = { some: chatRoomWhereFromPrisma1(where.room) }
+  }
+
+  return filters
+}
+
 const appUserArgsFromPrisma1 = args => ({
   where: userWhereFromPrisma1(args.where),
   orderBy: orderByFromPrisma1(args.orderBy),
@@ -348,6 +395,18 @@ const emailMessageArgsFromPrisma1 = args => ({
   ...paginationFromPrisma1(args)
 })
 
+const chatRoomArgsFromPrisma1 = args => ({
+  where: chatRoomWhereFromPrisma1(args.where),
+  orderBy: orderByFromPrisma1(args.orderBy),
+  ...paginationFromPrisma1(args)
+})
+
+const chatMessageArgsFromPrisma1 = args => ({
+  where: chatMessageWhereFromPrisma1(args.where),
+  orderBy: orderByFromPrisma1(args.orderBy),
+  ...paginationFromPrisma1(args)
+})
+
 const appWorkspaceDataFromPrisma1 = (data = {}, options = {}) => {
   const workspaceData = {}
   ;['id', 'name', 'displayName', 'timeZone', 'isTemplate', 'status'].forEach(field => {
@@ -423,6 +482,50 @@ const emailMessageDataFromPrisma1 = (data = {}, options = {}) => {
   const attachments = relationInputFromPrisma1(data.attachments)
   if (attachments) {
     messageData.MediaFile = attachments
+  }
+
+  if (options.create) {
+    messageData.id = messageData.id || generatePrismaId()
+    messageData.createdAt = data.createdAt || now()
+  }
+  messageData.updatedAt = data.updatedAt || now()
+
+  return messageData
+}
+
+const chatRoomDataFromPrisma1 = (data = {}, options = {}) => {
+  const roomData = {}
+  ;['id', 'title'].forEach(field => {
+    if (data[field] !== undefined) {
+      roomData[field] = data[field]
+    }
+  })
+
+  const messages = relationInputFromPrisma1(data.messages)
+  if (messages) {
+    roomData.ChatMessage = messages
+  }
+
+  if (options.create) {
+    roomData.id = roomData.id || generatePrismaId()
+    roomData.createdAt = data.createdAt || now()
+  }
+  roomData.updatedAt = data.updatedAt || now()
+
+  return roomData
+}
+
+const chatMessageDataFromPrisma1 = (data = {}, options = {}) => {
+  const messageData = {}
+  ;['id', 'text', 'author'].forEach(field => {
+    if (data[field] !== undefined) {
+      messageData[field] = data[field]
+    }
+  })
+
+  const room = relationInputFromPrisma1(data.room)
+  if (room) {
+    messageData.ChatRoom = room
   }
 
   if (options.create) {
@@ -518,6 +621,28 @@ const toEmailMailbox = mailbox => {
   }
 }
 
+const toChatMessage = message => {
+  if (!message) {
+    return null
+  }
+
+  return {
+    ...message,
+    room: Array.isArray(message.ChatRoom) ? message.ChatRoom[0] : message.ChatRoom
+  }
+}
+
+const toChatRoom = room => {
+  if (!room) {
+    return null
+  }
+
+  return {
+    ...room,
+    messages: Array.isArray(room.ChatMessage) ? room.ChatMessage.map(toChatMessage) : []
+  }
+}
+
 module.exports = {
   appListSettingArgsFromPrisma1,
   appListSettingDataFromPrisma1,
@@ -533,6 +658,12 @@ module.exports = {
   appWorkspaceArgsFromPrisma1,
   appWorkspaceDataFromPrisma1,
   appWorkspaceWhereFromPrisma1,
+  chatMessageArgsFromPrisma1,
+  chatMessageDataFromPrisma1,
+  chatMessageWhereFromPrisma1,
+  chatRoomArgsFromPrisma1,
+  chatRoomDataFromPrisma1,
+  chatRoomWhereFromPrisma1,
   connectionFromPrismaResults,
   emailMailboxArgsFromPrisma1,
   emailMailboxDataFromPrisma1,
@@ -547,6 +678,8 @@ module.exports = {
   toAppUser,
   toAppUserRole,
   toAppWorkspace,
+  toChatMessage,
+  toChatRoom,
   toEmailMailbox,
   toEmailMessage,
   userWhereFromPrisma1
