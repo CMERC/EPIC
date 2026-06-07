@@ -31,7 +31,7 @@ const relationInputFromPrisma1 = input => {
   }
 
   const relation = {}
-  ;['connect', 'disconnect', 'set'].forEach(action => {
+  ;['connect', 'disconnect', 'set', 'create', 'delete', 'update', 'upsert'].forEach(action => {
     const values = asArray(input[action])
     if (values.length > 0) {
       relation[action] = values
@@ -193,6 +193,57 @@ const appWorkspaceWhereFromPrisma1 = where => {
   return filters
 }
 
+const emailMailboxWhereFromPrisma1 = where => {
+  if (!where) {
+    return undefined
+  }
+
+  const filters = {
+    ...combineLogicalFilters(where, emailMailboxWhereFromPrisma1),
+    ...scalarFilter(where, 'id'),
+    ...scalarFilter(where, 'createdAt'),
+    ...scalarFilter(where, 'updatedAt'),
+    ...scalarFilter(where, 'owner')
+  }
+
+  if (where.messages_some) {
+    filters.EmailMessage = { some: emailMessageWhereFromPrisma1(where.messages_some) }
+  }
+  if (where.messages_none) {
+    filters.EmailMessage = { none: emailMessageWhereFromPrisma1(where.messages_none) }
+  }
+  if (where.messages_every) {
+    filters.EmailMessage = { every: emailMessageWhereFromPrisma1(where.messages_every) }
+  }
+
+  return filters
+}
+
+const emailMessageWhereFromPrisma1 = where => {
+  if (!where) {
+    return undefined
+  }
+
+  const filters = {
+    ...combineLogicalFilters(where, emailMessageWhereFromPrisma1),
+    ...scalarFilter(where, 'id'),
+    ...scalarFilter(where, 'createdAt'),
+    ...scalarFilter(where, 'updatedAt'),
+    ...scalarFilter(where, 'to'),
+    ...scalarFilter(where, 'from'),
+    ...scalarFilter(where, 'subject'),
+    ...scalarFilter(where, 'content'),
+    ...scalarFilter(where, 'status'),
+    ...scalarFilter(where, 'folder')
+  }
+
+  if (where.mailbox) {
+    filters.EmailMailbox = { some: emailMailboxWhereFromPrisma1(where.mailbox) }
+  }
+
+  return filters
+}
+
 const appUserArgsFromPrisma1 = args => ({
   where: userWhereFromPrisma1(args.where),
   orderBy: orderByFromPrisma1(args.orderBy),
@@ -285,6 +336,18 @@ const appWorkspaceArgsFromPrisma1 = args => ({
   ...paginationFromPrisma1(args)
 })
 
+const emailMailboxArgsFromPrisma1 = args => ({
+  where: emailMailboxWhereFromPrisma1(args.where),
+  orderBy: orderByFromPrisma1(args.orderBy),
+  ...paginationFromPrisma1(args)
+})
+
+const emailMessageArgsFromPrisma1 = args => ({
+  where: emailMessageWhereFromPrisma1(args.where),
+  orderBy: orderByFromPrisma1(args.orderBy),
+  ...paginationFromPrisma1(args)
+})
+
 const appWorkspaceDataFromPrisma1 = (data = {}, options = {}) => {
   const workspaceData = {}
   ;['id', 'name', 'displayName', 'timeZone', 'isTemplate', 'status'].forEach(field => {
@@ -322,6 +385,54 @@ const appUserRoleCreateData = (userId, roleId) => ({
     }]
   }
 })
+
+const emailMailboxDataFromPrisma1 = (data = {}, options = {}) => {
+  const mailboxData = {}
+  ;['id', 'owner'].forEach(field => {
+    if (data[field] !== undefined) {
+      mailboxData[field] = data[field]
+    }
+  })
+
+  const messages = relationInputFromPrisma1(data.messages)
+  if (messages) {
+    mailboxData.EmailMessage = messages
+  }
+
+  if (options.create) {
+    mailboxData.id = mailboxData.id || generatePrismaId()
+    mailboxData.createdAt = data.createdAt || now()
+  }
+  mailboxData.updatedAt = data.updatedAt || now()
+
+  return mailboxData
+}
+
+const emailMessageDataFromPrisma1 = (data = {}, options = {}) => {
+  const messageData = {}
+  ;['id', 'to', 'from', 'subject', 'content', 'status', 'folder'].forEach(field => {
+    if (data[field] !== undefined) {
+      messageData[field] = data[field]
+    }
+  })
+
+  const mailbox = relationInputFromPrisma1(data.mailbox)
+  if (mailbox) {
+    messageData.EmailMailbox = mailbox
+  }
+  const attachments = relationInputFromPrisma1(data.attachments)
+  if (attachments) {
+    messageData.MediaFile = attachments
+  }
+
+  if (options.create) {
+    messageData.id = messageData.id || generatePrismaId()
+    messageData.createdAt = data.createdAt || now()
+  }
+  messageData.updatedAt = data.updatedAt || now()
+
+  return messageData
+}
 
 const connectionFromPrismaResults = (items, count) => ({
   aggregate: {
@@ -384,6 +495,29 @@ const toAppWorkspace = workspace => {
   }
 }
 
+const toEmailMessage = message => {
+  if (!message) {
+    return null
+  }
+
+  return {
+    ...message,
+    mailbox: Array.isArray(message.EmailMailbox) ? message.EmailMailbox[0] : message.EmailMailbox,
+    attachments: Array.isArray(message.MediaFile) ? message.MediaFile : []
+  }
+}
+
+const toEmailMailbox = mailbox => {
+  if (!mailbox) {
+    return null
+  }
+
+  return {
+    ...mailbox,
+    messages: Array.isArray(mailbox.EmailMessage) ? mailbox.EmailMessage.map(toEmailMessage) : []
+  }
+}
+
 module.exports = {
   appListSettingArgsFromPrisma1,
   appListSettingDataFromPrisma1,
@@ -400,6 +534,12 @@ module.exports = {
   appWorkspaceDataFromPrisma1,
   appWorkspaceWhereFromPrisma1,
   connectionFromPrismaResults,
+  emailMailboxArgsFromPrisma1,
+  emailMailboxDataFromPrisma1,
+  emailMailboxWhereFromPrisma1,
+  emailMessageArgsFromPrisma1,
+  emailMessageDataFromPrisma1,
+  emailMessageWhereFromPrisma1,
   generatePrismaId,
   orderByFromPrisma1,
   paginationFromPrisma1,
@@ -407,5 +547,7 @@ module.exports = {
   toAppUser,
   toAppUserRole,
   toAppWorkspace,
+  toEmailMailbox,
+  toEmailMessage,
   userWhereFromPrisma1
 }

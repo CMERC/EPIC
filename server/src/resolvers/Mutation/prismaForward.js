@@ -2,8 +2,12 @@ const { forwardTo } = require('prisma-binding')
 const {
   appListSettingDataFromPrisma1,
   appRoleDataFromPrisma1,
+  emailMailboxDataFromPrisma1,
+  emailMessageDataFromPrisma1,
   toAppRole,
-  toAppUserRole
+  toAppUserRole,
+  toEmailMailbox,
+  toEmailMessage
 } = require('../../services/prismaBridge')
 
 const prismaForward = {
@@ -345,9 +349,51 @@ const prismaForward = {
   upsertChatRoom: forwardTo('db'),
   deleteChatRoom: forwardTo('db'),
 
-  updateEmailMessage: forwardTo('db'),
-  upsertEmailMessage: forwardTo('db'),
-  deleteEmailMessage: forwardTo('db'),
+  async updateEmailMessage(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      const message = await ctx.prisma.emailMessage.update({
+        where: args.where,
+        data: emailMessageDataFromPrisma1(args.data),
+        include: {
+          EmailMailbox: true,
+          MediaFile: true
+        }
+      })
+      return toEmailMessage(message)
+    }
+
+    return ctx.db.mutation.updateEmailMessage(args, info)
+  },
+  async upsertEmailMessage(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      const message = await ctx.prisma.emailMessage.upsert({
+        where: args.where,
+        create: emailMessageDataFromPrisma1(args.create, { create: true }),
+        update: emailMessageDataFromPrisma1(args.update),
+        include: {
+          EmailMailbox: true,
+          MediaFile: true
+        }
+      })
+      return toEmailMessage(message)
+    }
+
+    return ctx.db.mutation.upsertEmailMessage(args, info)
+  },
+  async deleteEmailMessage(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      const message = await ctx.prisma.emailMessage.delete({
+        where: args.where,
+        include: {
+          EmailMailbox: true,
+          MediaFile: true
+        }
+      })
+      return toEmailMessage(message)
+    }
+
+    return ctx.db.mutation.deleteEmailMessage(args, info)
+  },
 
   createPlanParticipantFundingSource: forwardTo('db'),
   updatePlanParticipantFundingSource: forwardTo('db'),
@@ -440,10 +486,81 @@ const prismaForward = {
   upsertPlanMeasureData: forwardTo('db'),
   deletePlanMeasureData: forwardTo('db'),
 
-  createEmailMailbox: forwardTo('db'),
-  updateEmailMailbox: forwardTo('db'),
-  upsertEmailMailbox: forwardTo('db'),
-  deleteEmailMailbox: forwardTo('db'),
+  async createEmailMailbox(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      const mailbox = await ctx.prisma.emailMailbox.create({
+        data: emailMailboxDataFromPrisma1(args.data, { create: true }),
+        include: {
+          EmailMessage: {
+            include: {
+              EmailMailbox: true,
+              MediaFile: true
+            }
+          }
+        }
+      })
+      return toEmailMailbox(mailbox)
+    }
+
+    return ctx.db.mutation.createEmailMailbox(args, info)
+  },
+  async updateEmailMailbox(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      const mailbox = await ctx.prisma.emailMailbox.update({
+        where: args.where,
+        data: emailMailboxDataFromPrisma1(args.data),
+        include: {
+          EmailMessage: {
+            include: {
+              EmailMailbox: true,
+              MediaFile: true
+            }
+          }
+        }
+      })
+      return toEmailMailbox(mailbox)
+    }
+
+    return ctx.db.mutation.updateEmailMailbox(args, info)
+  },
+  async upsertEmailMailbox(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      const mailbox = await ctx.prisma.emailMailbox.upsert({
+        where: args.where,
+        create: emailMailboxDataFromPrisma1(args.create, { create: true }),
+        update: emailMailboxDataFromPrisma1(args.update),
+        include: {
+          EmailMessage: {
+            include: {
+              EmailMailbox: true,
+              MediaFile: true
+            }
+          }
+        }
+      })
+      return toEmailMailbox(mailbox)
+    }
+
+    return ctx.db.mutation.upsertEmailMailbox(args, info)
+  },
+  async deleteEmailMailbox(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      const mailbox = await ctx.prisma.emailMailbox.delete({
+        where: args.where,
+        include: {
+          EmailMessage: {
+            include: {
+              EmailMailbox: true,
+              MediaFile: true
+            }
+          }
+        }
+      })
+      return toEmailMailbox(mailbox)
+    }
+
+    return ctx.db.mutation.deleteEmailMailbox(args, info)
+  },
 
   createMapLayer: forwardTo('db'),
   updateMapLayer: forwardTo('db'),

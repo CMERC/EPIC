@@ -10,11 +10,17 @@ const {
   appWorkspaceArgsFromPrisma1,
   appWorkspaceWhereFromPrisma1,
   connectionFromPrismaResults,
+  emailMailboxArgsFromPrisma1,
+  emailMailboxWhereFromPrisma1,
+  emailMessageArgsFromPrisma1,
+  emailMessageWhereFromPrisma1,
   orderByFromPrisma1,
   toAppRole,
   toAppUserRole,
   toAppUser,
   toAppWorkspace,
+  toEmailMailbox,
+  toEmailMessage,
   userWhereFromPrisma1
 } = require('../../services/prismaBridge')
 
@@ -711,12 +717,97 @@ const Query = {
   chatRooms: forwardTo('db'),
   chatRoomsConnection: forwardTo('db'),
 
-  emailMessage: forwardTo('db'),
-  emailMessagesConnection: forwardTo('db'),
+  async emailMessage(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      const message = await ctx.prisma.emailMessage.findFirst({
+        where: emailMessageWhereFromPrisma1(args.where),
+        include: {
+          EmailMailbox: true,
+          MediaFile: true
+        }
+      })
+      return toEmailMessage(message)
+    }
 
-  emailMailbox: forwardTo('db'),
-  emailMailboxes: forwardTo('db'),
-  emailMailboxesConnection: forwardTo('db'),
+    return ctx.db.query.emailMessage(args, info)
+  },
+  async emailMessagesConnection(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      const prismaArgs = emailMessageArgsFromPrisma1(args)
+      const [items, count] = await Promise.all([
+        ctx.prisma.emailMessage.findMany({
+          ...prismaArgs,
+          include: {
+            EmailMailbox: true,
+            MediaFile: true
+          }
+        }),
+        ctx.prisma.emailMessage.count({ where: prismaArgs.where })
+      ])
+      return connectionFromPrismaResults(items.map(toEmailMessage), count)
+    }
+
+    return ctx.db.query.emailMessagesConnection(args, info)
+  },
+
+  async emailMailbox(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      const mailbox = await ctx.prisma.emailMailbox.findFirst({
+        where: emailMailboxWhereFromPrisma1(args.where),
+        include: {
+          EmailMessage: {
+            include: {
+              EmailMailbox: true,
+              MediaFile: true
+            }
+          }
+        }
+      })
+      return toEmailMailbox(mailbox)
+    }
+
+    return ctx.db.query.emailMailbox(args, info)
+  },
+  async emailMailboxes(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      const mailboxes = await ctx.prisma.emailMailbox.findMany({
+        ...emailMailboxArgsFromPrisma1(args),
+        include: {
+          EmailMessage: {
+            include: {
+              EmailMailbox: true,
+              MediaFile: true
+            }
+          }
+        }
+      })
+      return mailboxes.map(toEmailMailbox)
+    }
+
+    return ctx.db.query.emailMailboxes(args, info)
+  },
+  async emailMailboxesConnection(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      const prismaArgs = emailMailboxArgsFromPrisma1(args)
+      const [items, count] = await Promise.all([
+        ctx.prisma.emailMailbox.findMany({
+          ...prismaArgs,
+          include: {
+            EmailMessage: {
+              include: {
+                EmailMailbox: true,
+                MediaFile: true
+              }
+            }
+          }
+        }),
+        ctx.prisma.emailMailbox.count({ where: prismaArgs.where })
+      ])
+      return connectionFromPrismaResults(items.map(toEmailMailbox), count)
+    }
+
+    return ctx.db.query.emailMailboxesConnection(args, info)
+  },
 
   planParticipantFundingSource: forwardTo('db'),
   planParticipantFundingSources: forwardTo('db'),

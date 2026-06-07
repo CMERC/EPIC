@@ -1,6 +1,30 @@
 const { getUser } = require('graphql-authentication')
+const {
+  emailMailboxDataFromPrisma1,
+  emailMessageDataFromPrisma1,
+  toEmailMessage
+} = require('../../services/prismaBridge')
 
 async function createMailbox(email, ctx) {
+  if (ctx.prisma) {
+    let mailbox = await ctx.prisma.emailMailbox.findFirst({
+      where: {
+        owner: email
+      }
+    })
+
+    if (!mailbox) {
+      mailbox = await ctx.prisma.emailMailbox.create({
+        data: emailMailboxDataFromPrisma1({
+          owner: email
+        }, {
+          create: true
+        })
+      })
+    }
+    return mailbox
+  }
+
   let ownerMailbox = {
     where: {
       owner: email
@@ -36,7 +60,18 @@ const emailMutations = {
       }
     }
 
-    let sentMessage = await ctx.db.mutation.createEmailMessage(emailMessageData)
+    let sentMessage
+    if (ctx.prisma) {
+      sentMessage = await ctx.prisma.emailMessage.create({
+        data: emailMessageDataFromPrisma1(emailMessageData.data, { create: true }),
+        include: {
+          EmailMailbox: true,
+          MediaFile: true
+        }
+      })
+    } else {
+      sentMessage = await ctx.db.mutation.createEmailMessage(emailMessageData)
+    }
 
 
     //Store the email message in outgoing "to:" user inbox
@@ -52,11 +87,17 @@ const emailMutations = {
       }
     }
 
-    await ctx.db.mutation.createEmailMessage(inboxMessageData)
+    if (ctx.prisma) {
+      await ctx.prisma.emailMessage.create({
+        data: emailMessageDataFromPrisma1(inboxMessageData.data, { create: true })
+      })
+    } else {
+      await ctx.db.mutation.createEmailMessage(inboxMessageData)
+    }
 
 
-    return sentMessage
+    return ctx.prisma ? toEmailMessage(sentMessage) : sentMessage
   }
 }
 
-module.exports = { emailMutations }
+module.exports = { emailMutations, _test: { createMailbox } }

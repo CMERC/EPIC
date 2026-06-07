@@ -4,9 +4,13 @@ const {
   appUserRoleDataFromPrisma1,
   appWorkspaceArgsFromPrisma1,
   appWorkspaceDataFromPrisma1,
+  emailMailboxDataFromPrisma1,
+  emailMessageDataFromPrisma1,
   orderByFromPrisma1,
   toAppUser,
   toAppWorkspace,
+  toEmailMailbox,
+  toEmailMessage,
   userWhereFromPrisma1
 } = require('../services/prismaBridge')
 
@@ -159,6 +163,58 @@ test('converts role mutation data to Prisma Client relation fields', () => {
     }
   }))
   expect(userRole.id).toHaveLength(25)
+})
+
+test('converts email mutation data and maps legacy relation names', () => {
+  const mailbox = emailMailboxDataFromPrisma1({
+    owner: 'ada@example.test'
+  }, {
+    create: true
+  })
+  const message = emailMessageDataFromPrisma1({
+    to: 'grace@example.test',
+    from: 'ada@example.test',
+    subject: 'Status',
+    mailbox: {
+      connect: {
+        owner: 'ada@example.test'
+      }
+    }
+  }, {
+    create: true
+  })
+  const mappedMessage = toEmailMessage({
+    id: 'message-1',
+    EmailMailbox: [{ id: 'mailbox-1', owner: 'ada@example.test' }],
+    MediaFile: [{ id: 'file-1' }]
+  })
+  const mappedMailbox = toEmailMailbox({
+    id: 'mailbox-1',
+    EmailMessage: [mappedMessage]
+  })
+
+  expect(mailbox).toEqual(expect.objectContaining({
+    id: expect.any(String),
+    owner: 'ada@example.test',
+    createdAt: expect.any(Date),
+    updatedAt: expect.any(Date)
+  }))
+  expect(message).toEqual(expect.objectContaining({
+    id: expect.any(String),
+    to: 'grace@example.test',
+    from: 'ada@example.test',
+    subject: 'Status',
+    createdAt: expect.any(Date),
+    updatedAt: expect.any(Date),
+    EmailMailbox: {
+      connect: [{
+        owner: 'ada@example.test'
+      }]
+    }
+  }))
+  expect(mappedMessage.mailbox.owner).toBe('ada@example.test')
+  expect(mappedMessage.attachments).toEqual([{ id: 'file-1' }])
+  expect(mappedMailbox.messages[0].mailbox.owner).toBe('ada@example.test')
 })
 
 test('maps introspected relation names back to legacy GraphQL field names', () => {
