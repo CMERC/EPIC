@@ -9,6 +9,10 @@ const utils_1 = require('../../../node_modules/graphql-authentication/dist/utils
 const errors_1 = require('../../../node_modules/graphql-authentication/dist/errors')
 const { getUser } = require('graphql-authentication')
 const axios = require('axios')
+const {
+  toAppUser,
+  userDataFromPrisma1
+} = require('../../services/prismaBridge')
 function generateToken(user, ctx) {
   return jwt.sign({ userId: user.id, sessionId: user.sessionId }, ctx.graphqlAuthentication.secret, { expiresIn: '30 days' })
 }
@@ -107,7 +111,9 @@ exports.authMutations = {
     }
   },
   async login(parent, { email, password }, ctx) {
-    let user = await ctx.graphqlAuthentication.adapter.findUserByEmail(ctx, email)
+    let user = ctx.prisma
+      ? await ctx.prisma.user.findFirst({ where: { email } })
+      : await ctx.graphqlAuthentication.adapter.findUserByEmail(ctx, email)
     if (!user) {
       throw new errors_1.UserNotFoundError()
     }
@@ -125,6 +131,54 @@ exports.authMutations = {
     if (!valid) {
       throw new errors_1.UserNotFoundError()
     }
+    if (ctx.prisma) {
+      await ctx.prisma.user.update({
+        where: {
+          id: user.id
+        },
+        data: userDataFromPrisma1({
+          lastLogin: new Date()
+        })
+      })
+
+      let userSession = await ctx.prisma.user.findUnique({
+        where: {
+          id: user.id
+        },
+        include: {
+          AppUserRole: {
+            include: {
+              AppRole: true,
+              User: true
+            }
+          }
+        }
+      })
+      if (!userSession.sessionId) {
+        userSession = await ctx.prisma.user.update({
+          where: {
+            id: user.id
+          },
+          data: userDataFromPrisma1({
+            sessionId: uuid()
+          }),
+          include: {
+            AppUserRole: {
+              include: {
+                AppRole: true,
+                User: true
+              }
+            }
+          }
+        })
+      }
+
+      return {
+        token: generateToken(userSession, ctx),
+        user: toAppUser(userSession)
+      }
+    }
+
     // Purposefully async, this update doesn't matter that much.
     ctx.graphqlAuthentication.adapter.updateUserLastLogin(ctx, user.id, {
       lastLogin: new Date().toISOString()
@@ -164,7 +218,9 @@ exports.authMutations = {
     if (!validator.isEmail(data.email)) {
       throw new errors_1.InvalidEmailError()
     }
-    let user = await ctx.graphqlAuthentication.adapter.findUserByEmail(ctx, data.email)
+    let user = ctx.prisma
+      ? await ctx.prisma.user.findFirst({ where: { email: data.email.toLowerCase() } })
+      : await ctx.graphqlAuthentication.adapter.findUserByEmail(ctx, data.email)
     let loggedinUser = await getUser(ctx)
     // New User
     if (!user) {
@@ -172,14 +228,19 @@ exports.authMutations = {
       // According to https://gist.github.com/joepie91/7105003c3b26e65efcea63f3db82dfba
       // uuid v4 is safe to be used as random token generator.
       const inviteToken = uuid()
-      user = await ctx.graphqlAuthentication.adapter.createUserByInvite(ctx, {
+      const inviteData = {
         email: data.email.toLowerCase(),
         inviteToken,
         inviteAccepted: false,
         password: '',
         name: '',
         joinedAt: new Date().toISOString()
-      })
+      }
+      user = ctx.prisma
+        ? await ctx.prisma.user.create({
+          data: userDataFromPrisma1(inviteData, { create: true })
+        })
+        : await ctx.graphqlAuthentication.adapter.createUserByInvite(ctx, inviteData)
     }
     if (ctx.graphqlAuthentication.hookInviteUserPostCreate) {
       await ctx.graphqlAuthentication.hookInviteUserPostCreate(data, ctx, user)
@@ -289,11 +350,40 @@ exports.authMutations = {
   },
   async updateCurrentUser(parent, { data }, ctx) {
     const user = await utils_1.getUser(ctx)
+    if (ctx.prisma) {
+      const updatedUser = await ctx.prisma.user.update({
+        where: {
+          id: user.id
+        },
+        data: userDataFromPrisma1(data),
+        include: {
+          AppUserRole: {
+            include: {
+              AppRole: true,
+              User: true
+            }
+          }
+        }
+      })
+      return toAppUser(updatedUser)
+    }
+
     const updatedUser = await ctx.graphqlAuthentication.adapter.updateUserInfo(ctx, user.id, data)
     return updatedUser
   },
   async logoutCurrentUser(parent, { data }, ctx) {
     const user = await utils_1.getUser(ctx)
+    if (ctx.prisma) {
+      const invalidateTokens = await ctx.prisma.user.update({
+        where: {
+          id: user.id
+        },
+        data: userDataFromPrisma1({
+          sessionId: null
+        })
+      })
+      return Boolean(invalidateTokens)
+    }
 
     const invalidateTokens = await ctx.graphqlAuthentication.adapter.updateUserInfo(ctx, user.id, { sessionId: null })
     if (invalidateTokens)

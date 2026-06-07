@@ -297,6 +297,44 @@ const appUserArgsFromPrisma1 = args => ({
   ...paginationFromPrisma1(args)
 })
 
+const userDataFromPrisma1 = (data = {}, options = {}) => {
+  const userData = {}
+  ;[
+    'id',
+    'email',
+    'password',
+    'name',
+    'inviteToken',
+    'inviteAccepted',
+    'emailConfirmed',
+    'emailConfirmToken',
+    'resetToken',
+    'resetExpires',
+    'deletedAt',
+    'lastLogin',
+    'joinedAt',
+    'isSuper',
+    'sessionId'
+  ].forEach(field => {
+    if (data[field] !== undefined) {
+      userData[field] = data[field]
+    }
+  })
+
+  if (options.create) {
+    userData.id = userData.id || generatePrismaId()
+    userData.createdAt = data.createdAt || now()
+    userData.updatedAt = data.updatedAt || now()
+    userData.inviteAccepted = userData.inviteAccepted === undefined ? false : userData.inviteAccepted
+    userData.emailConfirmed = userData.emailConfirmed === undefined ? false : userData.emailConfirmed
+    userData.isSuper = userData.isSuper === undefined ? false : userData.isSuper
+  } else {
+    userData.updatedAt = data.updatedAt || now()
+  }
+
+  return userData
+}
+
 const appListSettingArgsFromPrisma1 = args => ({
   where: appListSettingWhereFromPrisma1(args.where),
   orderBy: orderByFromPrisma1(args.orderBy),
@@ -682,5 +720,6 @@ module.exports = {
   toChatRoom,
   toEmailMailbox,
   toEmailMessage,
+  userDataFromPrisma1,
   userWhereFromPrisma1
 }

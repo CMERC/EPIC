@@ -23,7 +23,7 @@ function loginContext(user, dbUser = user) {
   }
 }
 
-test('login rejects users who have not accepted invites', async () => {
+test('login rejects users who have not accepted invites', async() => {
   const password = await bcrypt.hash('correct-password', 4)
   const ctx = loginContext({
     id: 'user-1',
@@ -38,7 +38,7 @@ test('login rejects users who have not accepted invites', async () => {
   }, ctx)).rejects.toThrow()
 })
 
-test('login rejects deleted users', async () => {
+test('login rejects deleted users', async() => {
   const password = await bcrypt.hash('correct-password', 4)
   const ctx = loginContext({
     id: 'user-1',
@@ -54,7 +54,7 @@ test('login rejects deleted users', async () => {
   }, ctx)).rejects.toThrow()
 })
 
-test('login creates a session when the stored user does not have one', async () => {
+test('login creates a session when the stored user does not have one', async() => {
   const password = await bcrypt.hash('correct-password', 4)
   const user = {
     id: 'user-1',
@@ -91,4 +91,60 @@ test('login creates a session when the stored user does not have one', async () 
   const decoded = jwt.verify(result.token, 'test-secret')
   expect(decoded.userId).toBe('user-1')
   expect(decoded.sessionId).toBe(result.user.sessionId)
+})
+
+test('login creates a session through Prisma Client when available', async() => {
+  const password = await bcrypt.hash('correct-password', 4)
+  const user = {
+    id: 'user-1',
+    email: 'ada@example.test',
+    password,
+    inviteAccepted: true,
+    deletedAt: null,
+    sessionId: null
+  }
+  const update = jest.fn()
+    .mockResolvedValueOnce({ ...user, lastLogin: new Date() })
+    .mockResolvedValueOnce({ ...user, sessionId: 'session-1', AppUserRole: [] })
+  const ctx = {
+    graphqlAuthentication: {
+      secret: 'test-secret'
+    },
+    prisma: {
+      user: {
+        findFirst: jest.fn().mockResolvedValue(user),
+        findUnique: jest.fn().mockResolvedValue(user),
+        update
+      }
+    }
+  }
+
+  const result = await authMutations.login(null, {
+    email: 'ada@example.test',
+    password: 'correct-password'
+  }, ctx)
+
+  expect(update).toHaveBeenNthCalledWith(1, {
+    where: {
+      id: 'user-1'
+    },
+    data: expect.objectContaining({
+      lastLogin: expect.any(Date),
+      updatedAt: expect.any(Date)
+    })
+  })
+  expect(update).toHaveBeenNthCalledWith(2, expect.objectContaining({
+    where: {
+      id: 'user-1'
+    },
+    data: expect.objectContaining({
+      sessionId: expect.any(String),
+      updatedAt: expect.any(Date)
+    })
+  }))
+
+  const decoded = jwt.verify(result.token, 'test-secret')
+  expect(decoded.userId).toBe('user-1')
+  expect(decoded.sessionId).toBe('session-1')
+  expect(result.user.role).toBeNull()
 })
