@@ -11,6 +11,36 @@ const orderByFromPrisma1 = orderBy => {
   return { [field]: direction.toLowerCase() }
 }
 
+const generatePrismaId = () => {
+  const seed = Date.now().toString(36) + Math.random().toString(36).slice(2)
+  return ('c' + seed).slice(0, 25).padEnd(25, '0')
+}
+
+const now = () => new Date()
+
+const asArray = value => {
+  if (!value) {
+    return []
+  }
+  return Array.isArray(value) ? value : [value]
+}
+
+const relationInputFromPrisma1 = input => {
+  if (!input) {
+    return undefined
+  }
+
+  const relation = {}
+  ;['connect', 'disconnect', 'set'].forEach(action => {
+    const values = asArray(input[action])
+    if (values.length > 0) {
+      relation[action] = values
+    }
+  })
+
+  return Object.keys(relation).length > 0 ? relation : undefined
+}
+
 const paginationFromPrisma1 = args => {
   const pagination = {}
   if (Number.isInteger(args.skip)) {
@@ -193,6 +223,44 @@ const appWorkspaceArgsFromPrisma1 = args => ({
   ...paginationFromPrisma1(args)
 })
 
+const appWorkspaceDataFromPrisma1 = (data = {}, options = {}) => {
+  const workspaceData = {}
+  ;['id', 'name', 'displayName', 'timeZone', 'isTemplate', 'status'].forEach(field => {
+    if (data[field] !== undefined) {
+      workspaceData[field] = data[field]
+    }
+  })
+
+  const members = relationInputFromPrisma1(data.members)
+  if (members) {
+    workspaceData.User = members
+  }
+
+  if (options.create) {
+    workspaceData.id = workspaceData.id || generatePrismaId()
+    workspaceData.createdAt = data.createdAt || now()
+  }
+  workspaceData.updatedAt = data.updatedAt || now()
+
+  return workspaceData
+}
+
+const appUserRoleCreateData = (userId, roleId) => ({
+  id: generatePrismaId(),
+  createdAt: now(),
+  updatedAt: now(),
+  User: {
+    connect: {
+      id: userId
+    }
+  },
+  AppRole: {
+    connect: [{
+      id: roleId
+    }]
+  }
+})
+
 const connectionFromPrismaResults = (items, count) => ({
   aggregate: {
     count
@@ -260,11 +328,14 @@ module.exports = {
   appRoleArgsFromPrisma1,
   appRoleWhereFromPrisma1,
   appUserArgsFromPrisma1,
+  appUserRoleCreateData,
   appUserRoleArgsFromPrisma1,
   appUserRoleWhereFromPrisma1,
   appWorkspaceArgsFromPrisma1,
+  appWorkspaceDataFromPrisma1,
   appWorkspaceWhereFromPrisma1,
   connectionFromPrismaResults,
+  generatePrismaId,
   orderByFromPrisma1,
   paginationFromPrisma1,
   toAppRole,

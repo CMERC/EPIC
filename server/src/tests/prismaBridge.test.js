@@ -1,5 +1,6 @@
 const {
   appWorkspaceArgsFromPrisma1,
+  appWorkspaceDataFromPrisma1,
   orderByFromPrisma1,
   toAppUser,
   toAppWorkspace,
@@ -51,6 +52,36 @@ test('converts workspace member filters to Prisma Client relation filters', () =
     skip: 5,
     take: 10
   })
+})
+
+test('converts workspace mutation data to Prisma Client fields and relations', () => {
+  const data = appWorkspaceDataFromPrisma1({
+    name: 'test-workspace',
+    displayName: 'Test Workspace',
+    status: 'Available',
+    members: {
+      connect: [{
+        id: 'user-1'
+      }]
+    }
+  }, {
+    create: true
+  })
+
+  expect(data).toEqual(expect.objectContaining({
+    id: expect.stringMatching(/^c/),
+    name: 'test-workspace',
+    displayName: 'Test Workspace',
+    status: 'Available',
+    createdAt: expect.any(Date),
+    updatedAt: expect.any(Date),
+    User: {
+      connect: [{
+        id: 'user-1'
+      }]
+    }
+  }))
+  expect(data.id).toHaveLength(25)
 })
 
 test('maps introspected relation names back to legacy GraphQL field names', () => {
