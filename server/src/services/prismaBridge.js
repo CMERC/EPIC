@@ -211,11 +211,58 @@ const appRoleArgsFromPrisma1 = args => ({
   ...paginationFromPrisma1(args)
 })
 
+const appRoleDataFromPrisma1 = (data = {}, options = {}) => {
+  const roleData = {}
+  ;['id', 'name', 'displayName'].forEach(field => {
+    if (data[field] !== undefined) {
+      roleData[field] = data[field]
+    }
+  })
+
+  const users = relationInputFromPrisma1(data.users)
+  if (users) {
+    roleData.AppUserRole = users
+  }
+
+  if (options.create) {
+    roleData.id = roleData.id || generatePrismaId()
+    roleData.createdAt = data.createdAt || now()
+  }
+  roleData.updatedAt = data.updatedAt || now()
+
+  return roleData
+}
+
 const appUserRoleArgsFromPrisma1 = args => ({
   where: appUserRoleWhereFromPrisma1(args.where),
   orderBy: orderByFromPrisma1(args.orderBy),
   ...paginationFromPrisma1(args)
 })
+
+const appUserRoleDataFromPrisma1 = (data = {}, options = {}) => {
+  const roleData = {}
+  if (data.id !== undefined) {
+    roleData.id = data.id
+  }
+
+  const user = relationInputFromPrisma1(data.user)
+  if (user) {
+    roleData.User = user
+  }
+
+  const roles = relationInputFromPrisma1(data.roles)
+  if (roles) {
+    roleData.AppRole = roles
+  }
+
+  if (options.create) {
+    roleData.id = roleData.id || generatePrismaId()
+    roleData.createdAt = data.createdAt || now()
+  }
+  roleData.updatedAt = data.updatedAt || now()
+
+  return roleData
+}
 
 const appWorkspaceArgsFromPrisma1 = args => ({
   where: appWorkspaceWhereFromPrisma1(args.where),
@@ -326,10 +373,12 @@ module.exports = {
   appListSettingArgsFromPrisma1,
   appListSettingWhereFromPrisma1,
   appRoleArgsFromPrisma1,
+  appRoleDataFromPrisma1,
   appRoleWhereFromPrisma1,
   appUserArgsFromPrisma1,
   appUserRoleCreateData,
   appUserRoleArgsFromPrisma1,
+  appUserRoleDataFromPrisma1,
   appUserRoleWhereFromPrisma1,
   appWorkspaceArgsFromPrisma1,
   appWorkspaceDataFromPrisma1,

@@ -1,4 +1,6 @@
 const {
+  appRoleDataFromPrisma1,
+  appUserRoleDataFromPrisma1,
   appWorkspaceArgsFromPrisma1,
   appWorkspaceDataFromPrisma1,
   orderByFromPrisma1,
@@ -82,6 +84,64 @@ test('converts workspace mutation data to Prisma Client fields and relations', (
     }
   }))
   expect(data.id).toHaveLength(25)
+})
+
+test('converts role mutation data to Prisma Client relation fields', () => {
+  const role = appRoleDataFromPrisma1({
+    name: 'ADMIN',
+    displayName: 'Administrator',
+    users: {
+      connect: [{
+        id: 'role-link-1'
+      }]
+    }
+  }, {
+    create: true
+  })
+  const userRole = appUserRoleDataFromPrisma1({
+    user: {
+      connect: {
+        id: 'user-1'
+      }
+    },
+    roles: {
+      connect: [{
+        id: 'role-1'
+      }]
+    }
+  }, {
+    create: true
+  })
+
+  expect(role).toEqual(expect.objectContaining({
+    id: expect.stringMatching(/^c/),
+    name: 'ADMIN',
+    displayName: 'Administrator',
+    createdAt: expect.any(Date),
+    updatedAt: expect.any(Date),
+    AppUserRole: {
+      connect: [{
+        id: 'role-link-1'
+      }]
+    }
+  }))
+  expect(role.id).toHaveLength(25)
+  expect(userRole).toEqual(expect.objectContaining({
+    id: expect.stringMatching(/^c/),
+    createdAt: expect.any(Date),
+    updatedAt: expect.any(Date),
+    User: {
+      connect: [{
+        id: 'user-1'
+      }]
+    },
+    AppRole: {
+      connect: [{
+        id: 'role-1'
+      }]
+    }
+  }))
+  expect(userRole.id).toHaveLength(25)
 })
 
 test('maps introspected relation names back to legacy GraphQL field names', () => {

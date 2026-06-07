@@ -1,4 +1,9 @@
 const { forwardTo } = require('prisma-binding')
+const {
+  appRoleDataFromPrisma1,
+  toAppRole,
+  toAppUserRole
+} = require('../../services/prismaBridge')
 
 const prismaForward = {
 
@@ -8,12 +13,96 @@ const prismaForward = {
   deleteAppListSetting: forwardTo('db'),
 
   updateManyMediaPosts: forwardTo('db'),
-  deleteAppUserRole: forwardTo('db'),
+  async deleteAppUserRole(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      const role = await ctx.prisma.appUserRole.delete({
+        where: args.where,
+        include: {
+          AppRole: true,
+          User: true
+        }
+      })
+      return toAppUserRole(role)
+    }
 
-  createAppRole: forwardTo('db'),
-  upsertAppRole: forwardTo('db'),
-  updateAppRole: forwardTo('db'),
-  deleteAppRole: forwardTo('db'),
+    return ctx.db.mutation.deleteAppUserRole(args, info)
+  },
+
+  async createAppRole(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      const role = await ctx.prisma.appRole.create({
+        data: appRoleDataFromPrisma1(args.data, { create: true }),
+        include: {
+          AppUserRole: {
+            include: {
+              AppRole: true,
+              User: true
+            }
+          }
+        }
+      })
+      return toAppRole(role)
+    }
+
+    return ctx.db.mutation.createAppRole(args, info)
+  },
+  async upsertAppRole(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      const role = await ctx.prisma.appRole.upsert({
+        where: args.where,
+        create: appRoleDataFromPrisma1(args.create, { create: true }),
+        update: appRoleDataFromPrisma1(args.update),
+        include: {
+          AppUserRole: {
+            include: {
+              AppRole: true,
+              User: true
+            }
+          }
+        }
+      })
+      return toAppRole(role)
+    }
+
+    return ctx.db.mutation.upsertAppRole(args, info)
+  },
+  async updateAppRole(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      const role = await ctx.prisma.appRole.update({
+        where: args.where,
+        data: appRoleDataFromPrisma1(args.data),
+        include: {
+          AppUserRole: {
+            include: {
+              AppRole: true,
+              User: true
+            }
+          }
+        }
+      })
+      return toAppRole(role)
+    }
+
+    return ctx.db.mutation.updateAppRole(args, info)
+  },
+  async deleteAppRole(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      const role = await ctx.prisma.appRole.delete({
+        where: args.where,
+        include: {
+          AppUserRole: {
+            include: {
+              AppRole: true,
+              User: true
+            }
+          }
+        }
+      })
+      return toAppRole(role)
+    }
+
+    return ctx.db.mutation.deleteAppRole(args, info)
+  },
 
   createMediaNetwork: forwardTo('db'),
   updateMediaNetwork: forwardTo('db'),
