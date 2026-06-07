@@ -46,32 +46,6 @@ const connectionMiddlewares = [
   trackingResolvers,
   activityResolvers
 ]
-const server = createApolloServer(app, {
-  graphqlEndpoint: '/graphql',
-  subscriptionsEndpoint: '/graphql',
-  graphqlMiddlewares: connectionMiddlewares,
-  typeDefs,
-  resolvers,
-  resolverValidationOptions: {
-    requireResolversForResolveType: false
-  },
-  context: req => ({
-    ...req,
-    db: getLegacyPrisma(),
-    global: getLegacyPrisma(),
-    prisma: getPrismaClient(),
-    pubsub: new PubSub(),
-    redisClient,
-    graphqlAuthentication: graphqlAuthenticationConfig({
-      validatePassword: value => value.length >= 5,
-      adapter: new GraphqlAuthenticationPrismaAdapter({ prismaContextName: 'global' }),
-      secret: process.env.PRISMA_SECRET,
-      mailer: email,
-      mailAppUrl: process.env.APP_DOMAIN
-    })
-  })
-})
-
 // https://en.wikipedia.org/wiki/Cross-origin_resource_sharing
 app.use(function(req, res, next) {
   res.header('Access-Control-Allow-Origin', '*')
@@ -142,8 +116,41 @@ if (String(process.env.ENABLE_ARENA || '').toLowerCase() === 'true') {
   }
 }
 
-const options = { port: process.env.PORT || 4000 }
+async function startServer() {
+  const server = await createApolloServer(app, {
+    graphqlEndpoint: '/graphql',
+    subscriptionsEndpoint: '/graphql',
+    graphqlMiddlewares: connectionMiddlewares,
+    typeDefs,
+    resolvers,
+    resolverValidationOptions: {
+      requireResolversForResolveType: false
+    },
+    context: req => ({
+      ...req,
+      db: getLegacyPrisma(),
+      global: getLegacyPrisma(),
+      prisma: getPrismaClient(),
+      pubsub: new PubSub(),
+      redisClient,
+      graphqlAuthentication: graphqlAuthenticationConfig({
+        validatePassword: value => value.length >= 5,
+        adapter: new GraphqlAuthenticationPrismaAdapter({ prismaContextName: 'global' }),
+        secret: process.env.PRISMA_SECRET,
+        mailer: email,
+        mailAppUrl: process.env.APP_DOMAIN
+      })
+    })
+  })
 
-server.listen(options, () => {
-  logger.info('Server is running on http://localhost:' + options.port)
+  const options = { port: process.env.PORT || 4000 }
+
+  server.listen(options, () => {
+    logger.info('Server is running on http://localhost:' + options.port)
+  })
+}
+
+startServer().catch(error => {
+  logger.error(error)
+  process.exit(1)
 })

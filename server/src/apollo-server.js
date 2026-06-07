@@ -1,6 +1,13 @@
 const http = require('http')
-const { ApolloServer, makeExecutableSchema } = require('apollo-server-express')
+const express = require('express')
+const corsMiddleware = require('cors')
+const { execute, subscribe } = require('graphql')
+const { ApolloServer } = require('@apollo/server')
+const { expressMiddleware } = require('@as-integrations/express4')
+const { ApolloServerPluginDrainHttpServer } = require('@apollo/server/plugin/drainHttpServer')
+const { makeExecutableSchema } = require('@graphql-tools/schema')
 const { applyMiddleware } = require('graphql-middleware')
+const { SubscriptionServer } = require('subscriptions-transport-ws')
 const { logger } = require('./logger')
 
 function pruneMiddlewareToSchema(schema, middleware) {
@@ -37,15 +44,13 @@ function pruneMiddlewareToSchema(schema, middleware) {
  * @param {Object} options Apollo options
  * @returns {Object} HTTP Server
  */
-function createApolloServer(
+async function createApolloServer(
   app,
   {
     // Main options
     graphqlEndpoint = '',
     typeDefs = {},
     resolvers = {},
-    schemaDirectives = {},
-    directiveResolvers = {},
     graphqlMiddlewares = [],
     dataSources = () => ({}),
     context = () => ({}),
@@ -61,16 +66,13 @@ function createApolloServer(
     timeout = 120000,
     // Extra options for Apollo Server
     apolloServerOptions = {
-      introspection: true,
-      playground: true
+      introspection: true
     }
   }
 ) {
   const schema = makeExecutableSchema({
     typeDefs,
     resolvers,
-    schemaDirectives,
-    directiveResolvers,
     resolverValidationOptions: {
       allowResolversNotInSchema: true,
       requireResolversForResolveType: false,
@@ -78,65 +80,90 @@ function createApolloServer(
   })
   const prunedGraphqlMiddlewares = graphqlMiddlewares.map(middleware => pruneMiddlewareToSchema(schema, middleware))
   const applyGraphQLMiddleware = applyMiddleware
+  const executableSchema = applyGraphQLMiddleware(schema, ...prunedGraphqlMiddlewares)
+  const httpServer = http.createServer(app)
+  httpServer.setTimeout(timeout)
+
+  const buildContext = async requestData => {
+    let contextData
+    try {
+      contextData = await context(requestData)
+    } catch (error) {
+      logger.error(error)
+      throw error
+    }
+
+    return contextData
+  }
+
+  const subscriptionServer = subscriptionsEndpoint
+    ? SubscriptionServer.create(
+      {
+        schema: executableSchema,
+        execute,
+        subscribe,
+        onConnect: async(connection, websocket) => {
+          let contextData = {}
+          try {
+            // Simulate `req` object for auth and workspace name.
+            const req = { headers: connection }
+
+            await new Promise((resolve, reject) =>
+              wsMiddlewares.reduceRight(
+                (acc, m) => err => (err ? reject(err) : m(req, null, acc)),
+                err => (err ? reject(err) : resolve())
+              )()
+            )
+
+            contextData = await context({
+              connection,
+              websocket,
+              request: req,
+              req,
+            })
+          } catch (error) {
+            if (error.status !== 401) {
+              logger.error(error)
+            }
+
+            throw error
+          }
+
+          return contextData
+        }
+      },
+      {
+        server: httpServer,
+        path: subscriptionsEndpoint
+      }
+    )
+    : null
+
   // Apollo server options
   const options = {
     ...apolloServerOptions,
-    schema: applyGraphQLMiddleware(schema, ...prunedGraphqlMiddlewares),
-    tracing: false,
-    cacheControl: false,
-    engine: engineKey ? { apiKey: engineKey } : false,
+    schema: executableSchema,
     dataSources,
-    // Resolvers context in POST requests
-    context: async({ req, connection }) => {
-      let contextData
-      try {
-        if (connection) {
-          contextData = { ...connection.context }
-        } else {
-          contextData = await context({ req, request: req })
-        }
-      } catch (error) {
-        logger.error(error)
-        throw error
-      }
-
-      return contextData
-    },
-    // Resolvers context in WebSocket requests
-    subscriptions: {
-      path: subscriptionsEndpoint,
-      onConnect: async(connection, websocket) => {
-        // console.log(connection)
-        let contextData = {}
-        try {
-          // Simulate `req` object for auth and workspace name
-          const req = { headers: connection }
-
-          // Call all middlewares in order and modify `req`
-          await new Promise((resolve, reject) =>
-            wsMiddlewares.reduceRight(
-              (acc, m) => err => (err ? reject(err) : m(req, null, acc)),
-              err => (err ? reject(err) : resolve())
-            )()
-          )
-
-          contextData = await context({
-            connection,
-            websocket,
-            request: req,
-            req,
-          })
-        } catch (error) {
-          if (error.status !== 401) {
-            logger.error(error)
+    plugins: [
+      ApolloServerPluginDrainHttpServer({ httpServer }),
+      {
+        async serverWillStart() {
+          return {
+            async drainServer() {
+              if (subscriptionServer) {
+                subscriptionServer.close()
+              }
+            }
           }
-
-          throw error
         }
+      }
+    ]
+  }
 
-        return contextData
-      },
-    },
+  if (engineKey) {
+    options.apollo = {
+      key: engineKey
+    }
   }
 
   // Automatic mocking
@@ -152,22 +179,21 @@ function createApolloServer(
 
   // Apollo Server
   const server = new ApolloServer(options)
+  await server.start()
 
-  // Express middleware
-  server.applyMiddleware({
-    app,
-    cors,
-    path: graphqlEndpoint,
-    // gui: {
-    //   endpoint: graphqlEndpoint,
-    //   subscriptionEndpoint: graphqlSubscriptionsPath,
-    // },
+  app.get('/.well-known/apollo/server-health', (req, res) => {
+    res.json({ status: 'pass' })
   })
 
-  // Create HTTP server and add subscriptions
-  const httpServer = http.createServer(app)
-  httpServer.setTimeout(timeout)
-  server.installSubscriptionHandlers(httpServer)
+  const middlewares = []
+  if (cors) {
+    middlewares.push(corsMiddleware(typeof cors === 'object' ? cors : undefined))
+  }
+  middlewares.push(express.json({ limit: '50mb' }))
+  middlewares.push(expressMiddleware(server, {
+    context: async({ req, res }) => buildContext({ req, res, request: req })
+  }))
+  app.use(graphqlEndpoint, ...middlewares)
 
   return httpServer
 }
