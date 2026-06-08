@@ -1,5 +1,5 @@
-const { forwardTo } = require('prisma-binding')
-const { addFragmentToInfo } = require('graphql-binding')
+const forwardTo = binding => (parent, args, ctx, info) => ctx[binding].query[info.fieldName](args, info)
+const addFragmentToInfo = info => info
 const {
   getCurrentUser,
   getCurrentUserId

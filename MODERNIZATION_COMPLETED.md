@@ -43,7 +43,7 @@ Date: 2026-05-26
 
 - Migrate from Vue 2/Buefy/Vuex/Vue Apollo to Vue 3-compatible equivalents.
 - Migrate from Apollo Server 2/GraphQL 14/subscriptions-transport-ws to a maintained GraphQL server stack.
-- Replace Prisma 1/prisma-binding with Prisma Client queries and migrations.
+- Continue replacing compatibility resolvers with explicit Prisma Client queries and migrations.
 - Replace `graphql-import` entirely after generated Prisma GraphQL forwarding is removed.
 - Replace AWS SDK v2 with AWS SDK v3.
 - Replace the Twitter/request-era noise integration if that workflow remains required.

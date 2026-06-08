@@ -1,4 +1,4 @@
-const { Prisma } = require('prisma-binding')
+const { getLegacyPrisma } = require('../src/services/prisma')
 const { prismaDeployWorkspace } = require('../src/jobs/deploy')
 
 getWorkspaces()
@@ -6,14 +6,7 @@ getWorkspaces()
 async function getWorkspaces() {
   // Load env variables from path
   require('dotenv').config({ path: '../.env' })
-  const getPrismaInstance = () => {
-    return new Prisma({
-      typeDefs: '../src/generated/prisma.graphql',
-      endpoint: process.env.PRISMA_ENDPOINT,
-      secret: process.env.PRISMA_SECRET,
-      debug: false
-    })
-  }
+  const getPrismaInstance = () => getLegacyPrisma()
   // Query the appWorkspaces resolver for all created workspaces on the global endpoint
   let appWorkspaces = await getPrismaInstance().query.appWorkspaces()
   // Iterate through the workspaces and run the 'prisma deploy' command

@@ -14,6 +14,7 @@ yarn-error.log*
 coverage/
 .nyc_output/
 .cache/
+backups/
 
 data/caddy/
 data/caddy_config/

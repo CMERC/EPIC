@@ -20,10 +20,10 @@ const { getBullQueues } = require('./jobs/arena')
 
 const { getHealthCheckEndpoints } = require('./services/healthCheck')
 
-const {
-  GraphqlAuthenticationPrismaAdapter
-} = require('graphql-authentication-prisma')
 const { graphqlAuthenticationConfig } = require('graphql-authentication')
+const {
+  createGraphqlAuthenticationAdapter
+} = require('./services/authenticationAdapter')
 
 const { email } = require('./email')
 
@@ -135,8 +135,8 @@ async function startServer() {
       redisClient,
       graphqlAuthentication: graphqlAuthenticationConfig({
         validatePassword: value => value.length >= 5,
-        adapter: new GraphqlAuthenticationPrismaAdapter({ prismaContextName: 'global' }),
-        secret: process.env.PRISMA_SECRET,
+        adapter: createGraphqlAuthenticationAdapter(),
+        secret: process.env.JWT_SECRET || process.env.PRISMA_SECRET,
         mailer: email,
         mailAppUrl: process.env.APP_DOMAIN
       })

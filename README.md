@@ -121,19 +121,12 @@ TODO
 
 ## Seed Files
 
-There are a few methods for running the seed file:
+Reference seeding now runs through the server's Prisma Client path:
 
 ```bash
 cd server
-npx prisma1 seed
+npm run seed:evaluation
 ```
-
-```bash
-cd server
-npx graphql query database/seed.graphql
-```
-
-This last section will allow you to select what database you want to run against, and what query you want to run
 
 ## Minio Information
 
@@ -199,32 +192,24 @@ Documentation:
 
 Add Workspace
 
-Add your prisma endpoint url to yout .env file
-
-WORKSPACE_ENDPOINT=<http://localhost:4466/>
-
 Navigate to Dev-->Workspaces
 Click 'Add Workspace' and enter a 'workspace name'
 
-Once the endpoint is available you can choose the workspace in the top right corner nav and you can add data
+Once the workspace is available you can choose it in the top right corner nav and add data.
 
-## Prisma Update
+## Prisma Client Update
 
 Run command:
 
 ```bash
 cd server
-npm i -g prisma@VERSION
+npm run prisma:client
 ```
 
-Update Prisma Version in docker-compose.yml file
-stop Prisma in Kitematic
-
-run command:
+After database schema changes, refresh the Prisma Client and restart the server container:
 
 ```bash
-cd..
-docker-compose up -d prisma
+docker compose -f docker-compose.rocky9.yml up -d --build server
 ```
 
 ## Cypress End to End Tests

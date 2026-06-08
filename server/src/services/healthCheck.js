@@ -26,21 +26,16 @@ function requestUrl(url, params) {
 async function getHealthCheckEndpoints() {
   let apolloCheck = requestUrl('http://localhost:' + (process.env.PORT || 4000) + '/.well-known/apollo/server-health')
   let minioCheck = requestUrl(process.env.S3_ENDPOINT + '/minio/health/ready')
-  let prismaCheck = requestUrl(process.env.PRISMA_ENDPOINT + '/management')
   //const redisClient = new Redis(process.env.REDIS_ENDPOINT)
   let allServicesOk = true
   let apollo = {
     name: 'Apollo Server',
     timestamp: Date.now()
   }
-  let prisma = {
-    name: 'Prisma',
-    timestamp: Date.now(),
-  }
   let prismaOrm = {
     name: 'Prisma ORM',
     timestamp: Date.now(),
-    message: process.env.DATABASE_URL ? 'Not checked' : 'DATABASE_URL not configured; using Prisma 1 compatibility adapter',
+    message: process.env.DATABASE_URL ? 'Not checked' : 'DATABASE_URL not configured',
     status: '200'
   }
   // let redis = {
@@ -98,14 +93,6 @@ async function getHealthCheckEndpoints() {
       ...result
     }
   })
-  // Prisma
-  await prismaCheck.then((result) => {
-    if (result.status != '200') allServicesOk = false
-    prisma = {
-      ...prisma,
-      ...result
-    }
-  })
   if (process.env.DATABASE_URL) {
     try {
       const prismaClient = getPrismaClient()
@@ -142,7 +129,6 @@ async function getHealthCheckEndpoints() {
   let returnData = {
     apollo,
     //db,
-    prisma,
     prismaOrm,
     minio,
     //redis,

@@ -10,7 +10,7 @@
     "lint": "vue-cli-service lint --no-fix",
     "deploy": "cd server/database && node ./migrateWorkspaces.js",
     "client": "vue-cli-service serve --host 0.0.0.0",
-    "database": "cd server && npx prisma1 deploy",
+    "database": "cd server && npm run prisma:client",
     "prod": "npm-run-all build prod:test",
     "prod:test": "http-server ./dist -o",
     "prod:up": "docker compose -f docker-compose.rocky9.yml up -d --build",

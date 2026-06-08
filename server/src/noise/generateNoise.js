@@ -2,7 +2,7 @@ const logger = require('../logger')
 const faker = require('faker')
 const userGen = require('username-generator')
 const rwc = require('random-weighted-choice')
-const { Prisma } = require('prisma-binding')
+const { getLegacyPrisma } = require('../services/prisma')
 const rita = require('rita')
 const Twitter = require('twitter')
 const mime = require('mime-types')
@@ -27,19 +27,7 @@ function startNoise(workspace) {
 
 class NoiseGenerator {
   constructor(workspace) {
-    let apolloURI = process.env.PRISMA_ENDPOINT
-    if (workspace !== 'global') {
-      apolloURI = process.env.WORKSPACE_ENDPOINT + workspace
-    }
-    const getPrismaInstance = () => {
-      return new Prisma({
-        typeDefs: 'src/generated/prisma.graphql', // the Prisma DB schema
-        endpoint: apolloURI, // the endpoint of the Prisma DB service (value is set in .env)
-        secret: process.env.PRISMA_SECRET, // taken from database/prisma.yml (value is set in .env)
-        debug: false // log all GraphQL queries & mutations
-      })
-    }
-    this.db = getPrismaInstance()
+    this.db = getLegacyPrisma()
     this.noiseProfiles = []
     this.noiseProfilesByService = []
     this.livePostLocations = []
@@ -397,7 +385,7 @@ class NoiseGenerator {
       if (tweetText === undefined) {
         logger.error(event)
       }
-      if (tweetText !== undefined && !event.hasOwnProperty('retweeted_status')) {
+      if (tweetText !== undefined && !Object.prototype.hasOwnProperty.call(event, 'retweeted_status')) {
         let tempArray = tweetText.split(' ')
         for (let i = 0; i < tempArray.length; i++) {
           if (tempArray[i].charAt(0) === '@') {

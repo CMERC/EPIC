@@ -11,7 +11,7 @@
 //
 // -- This is a parent command --
 Cypress.Commands.add('register', () => {
-  cy.exec('cd server && npx prisma1 reset --force')
+  cy.exec('cd server && npx prisma db push --schema prisma/schema.prisma --force-reset --skip-generate')
 
   cy.visit('/register')
   //Register

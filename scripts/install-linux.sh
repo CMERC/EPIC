@@ -148,7 +148,7 @@ fi
 prepare_env
 
 compose=(docker compose -f docker-compose.rocky9.yml)
-"${compose[@]}" pull mysql prisma redis minio create-minio-bucket graphql-faker caddy || true
+"${compose[@]}" pull mysql redis minio create-minio-bucket graphql-faker caddy || true
 if [[ -n "$build_flag" ]]; then
   "${compose[@]}" up -d "$build_flag"
 else
@@ -165,12 +165,11 @@ for _ in {1..60}; do
 done
 
 echo "Seeding reference data and evaluation content..."
-"${compose[@]}" exec -T server sh -lc 'cd /app/database && npx prisma1 seed >/tmp/epic-prisma-seed.log 2>&1 || { cat /tmp/epic-prisma-seed.log; exit 1; }'
 "${compose[@]}" exec -T server npm run seed:evaluation
 
 echo
 echo "EPIC is starting. Check status with:"
 echo "  docker compose -f docker-compose.rocky9.yml ps"
-echo "  docker compose -f docker-compose.rocky9.yml logs -f server prisma mysql"
+echo "  docker compose -f docker-compose.rocky9.yml logs -f server mysql"
 echo
 echo "Open: $(app_url)"

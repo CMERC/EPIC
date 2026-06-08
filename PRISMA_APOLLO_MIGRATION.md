@@ -8,7 +8,7 @@ This app exposes much of the Prisma 1 generated GraphQL API directly through `fo
 
 The active migration strategy is therefore a bridge:
 
-- Keep Prisma 1 / `prisma-binding` running for existing application behavior.
+- Keep existing application behavior while routing runtime data access through Prisma Client compatibility adapters.
 - Add Prisma ORM / Prisma Client against the existing Prisma 1 MySQL service database.
 - Add `ctx.prisma` to Apollo context for new or migrated resolver code.
 - Move resolver groups from `ctx.db` to `ctx.prisma` incrementally.
@@ -49,7 +49,7 @@ The active migration strategy is therefore a bridge:
 - Added focused Jest coverage for the Prisma bridge argument and relation mapping.
 - Made Apollo schema setup prune middleware entries that are not present in the currently imported schema and allow resolver entries outside the schema. This preserves the legacy generated-Prisma compatibility surface while direct forwarding is being retired.
 - Updated the server Dockerfile to run `npm ci --omit=dev` and generate Prisma Client during image build.
-- Moved legacy `prisma1` and `graphql-cli` to production dependencies because the entrypoint still needs them until the generated Prisma GraphQL schema is retired.
+- Removed the legacy Prisma GraphQL service packages from production dependencies; the committed GraphQL SDL remains until schema imports are retired.
 - Updated the entrypoint to call local legacy binaries instead of relying on `npx` executable guessing.
 - Downgraded direct `graphql-import` usage to 0.7.1 to avoid the vulnerable 1.x GraphQL Toolkit dependency chain while preserving current schema import behavior.
 
@@ -99,7 +99,7 @@ Tests: 5 passed, 5 total
 
 ## Recommended next resolver migration order
 
-1. Move auth/current-user internals off `graphql-authentication-prisma` so role/session checks use Prisma Client instead of `ctx.db`.
+1. Continue moving remaining compatibility resolver paths from `ctx.db` forwarding to explicit Prisma Client calls.
 2. Migrate simple global role queries/mutations for `AppRole` and `AppUserRole`.
 3. Migrate simple global email mailbox/message queries that live in the same database.
 4. Add workspace-aware Prisma Client routing before moving workspace-scoped media, plan, note, map, chat, and observe resolvers.

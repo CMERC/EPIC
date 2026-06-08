@@ -1,14 +1,6 @@
-const { Prisma } = require('prisma-binding')
+const { getLegacyPrisma } = require('../src/services/prisma')
 
-const endpoint = process.env.PRISMA_ENDPOINT || 'http://localhost:4466/default/default'
-const secret = process.env.PRISMA_SECRET
-
-const db = new Prisma({
-  typeDefs: 'src/generated/prisma.graphql',
-  endpoint,
-  secret,
-  debug: false
-})
+const db = getLegacyPrisma()
 
 const first = async(promise, fallback = null) => {
   const values = await promise
@@ -36,7 +28,7 @@ const ensureReferenceSeed = async() => {
   }
 
   throw new Error(
-    'Reference data is missing. Run `cd database && npx prisma1 seed` before seeding evaluation data.'
+    'Reference data is missing. Run the current Prisma Client seed flow before seeding evaluation data.'
   )
 }
 

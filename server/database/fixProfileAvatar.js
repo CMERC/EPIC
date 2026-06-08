@@ -1,6 +1,6 @@
 const fetch = require('node-fetch')
 const logger = require('../src/logger')
-const { Prisma } = require('prisma-binding')
+const { getLegacyPrisma } = require('../src/services/prisma')
 const queryLimit = 600
 
 // https://uifaces.co/api-key
@@ -57,18 +57,7 @@ async function profileAvatar(workspace) {
   // Load env variables from path
   require('dotenv').config({ path: '../.env' })
 
-  let endpoint = process.env.PRISMA_ENDPOINT
-  if (workspace !== 'global') {
-    endpoint = process.env.WORKSPACE_ENDPOINT + workspace
-  }
-  const getPrismaInstance = () => {
-    return new Prisma({
-      typeDefs: '../src/generated/prisma.graphql',
-      endpoint: endpoint,
-      secret: process.env.PRISMA_SECRET,
-      debug: false
-    })
-  }
+  const getPrismaInstance = () => getLegacyPrisma()
   let totalAvatarsInWorkspace = await getPrismaInstance().query.mediaFilesConnection(
     {where: {name: 'Avatar'}}, '{aggregate {count}}'
   )
@@ -140,14 +129,7 @@ const logCyan = '\x1b[36m%s\x1b[0m'
 async function getWorkspaces() {
   // Load env variables from path
   require('dotenv').config({ path: '../.env' })
-  const getPrismaInstance = () => {
-    return new Prisma({
-      typeDefs: '../src/generated/prisma.graphql',
-      endpoint: process.env.PRISMA_ENDPOINT,
-      secret: process.env.PRISMA_SECRET,
-      debug: false
-    })
-  }
+  const getPrismaInstance = () => getLegacyPrisma()
   // Query the appWorkspaces resolver for all created workspaces on the global endpoint
   let appWorkspaces = await getPrismaInstance().query.appWorkspaces()
   // Iterate through the workspaces and run the command

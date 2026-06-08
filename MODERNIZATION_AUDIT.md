@@ -6,7 +6,7 @@ Updated: 2026-05-26
 
 ## Executive summary
 
-EPIC is now runnable for evaluation, but it is still a legacy Vue 2 + Apollo Server 2 + Prisma 1 application. The current package is best treated as a stabilized compatibility release, not a complete modernization. The largest technical debt is the backend data/API layer: Prisma 1, `prisma-binding`, Apollo Server 2, GraphQL 14, MySQL 5.7, and several old integration libraries all constrain what can safely be upgraded.
+EPIC is now runnable for evaluation as a Vue 2 + Apollo Server + Prisma Client application. The current package is best treated as a stabilized compatibility release rather than a complete greenfield modernization. The largest remaining technical debt is the backend data/API layer shape: the app still carries legacy GraphQL SDL/import patterns, Apollo Server compatibility code, and several older integration libraries.
 
 The safest path is phased:
 
@@ -18,7 +18,7 @@ The safest path is phased:
 ## Current architecture
 
 - Frontend: Vue 2.7, Vue Router 3, Vuex 3, Buefy/Bulma, Apollo Client via `vue-apollo`, Vue CLI 5/Webpack.
-- Backend: Node app with Express, Apollo Server 2, GraphQL 14, `prisma-binding`, Prisma 1 schema generation, Redis/Bull, MinIO/S3, SendGrid-style email support.
+- Backend: Node app with Express, Apollo Server, GraphQL, Prisma Client, Redis/Bull, MinIO/S3, SendGrid-style email support.
 - Data/services: MySQL 5.7, Prisma 1, Redis 7, MinIO, GraphQL Faker.
 - Deployment: Docker Compose v2 via `docker-compose.rocky9.yml`, Caddy 2 reverse proxy, nginx static client image.
 
@@ -135,7 +135,7 @@ Result: 1 test suite passed, 1 test passed.
 ### Phase 3: Backend API/data migration
 
 - Create a new Prisma Client schema from the existing Prisma 1 datamodel.
-- Replace `prisma-binding`, `forwardTo`, and generated `prisma.graphql` imports with Prisma Client service calls.
+- Continue replacing forwarded compatibility resolvers and generated GraphQL SDL imports with explicit Prisma Client service calls.
 - Remove `graphql-import` entirely once direct generated Prisma GraphQL imports are retired.
 - Upgrade Apollo Server to a maintained version or migrate to GraphQL Yoga.
 - Replace request-era libraries.

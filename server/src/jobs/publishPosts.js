@@ -1,5 +1,5 @@
 const logger = require('../logger')
-const { Prisma } = require('prisma-binding')
+const { getLegacyPrisma } = require('../services/prisma')
 const { addNoiseQueue } = require('./noiseScheduler')
 const schedule = require('node-schedule')
 var Queue = require('bull')
@@ -12,16 +12,8 @@ async function initPublishPostJobs() {
   addJobToQueue('global')
   // Strat Noise Scheduler for workspaces
   addNoiseQueue('global')
-  const getPrismaInstance = () => {
-    return new Prisma({
-      typeDefs: 'src/generated/prisma.graphql',
-      endpoint: process.env.PRISMA_ENDPOINT,
-      secret: process.env.PRISMA_SECRET,
-      debug: false
-    })
-  }
   // Start Scheduler for all workspace endpoint
-  let appWorkspaces = await getPrismaInstance().query.appWorkspaces()
+  let appWorkspaces = await getLegacyPrisma().query.appWorkspaces()
   for (let i = 0; i < appWorkspaces.length; i++) {
     addJobToQueue(appWorkspaces[i].name)
     // Add Noise Scheduler for each workspace
@@ -54,20 +46,7 @@ function processJob(job) {
 }
 function handle(job) {
   if (job.data.endpoint) {
-    // Get workspace prisma instance
-    let endpoint = process.env.PRISMA_ENDPOINT
-    if (job.data.endpoint !== 'global') {
-      endpoint = process.env.WORKSPACE_ENDPOINT + job.data.endpoint
-    }
-    const getPrismaInstance = () => {
-      return new Prisma({
-        typeDefs: 'src/generated/prisma.graphql',
-        endpoint: endpoint,
-        secret: process.env.PRISMA_SECRET,
-        debug: false
-      })
-    }
-    publishSchedule(5, getPrismaInstance())
+    publishSchedule(5, getLegacyPrisma())
   }
 }
 async function publishedPosts(db, first, skipCount = 0) {

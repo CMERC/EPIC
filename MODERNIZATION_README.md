@@ -4,7 +4,7 @@ This package keeps the original Vue 2 + Apollo Server 2 + Prisma 1 application a
 
 ## Important limitation
 
-The app is not a simple dependency bump to a fully current stack because it is built around **Prisma 1 / prisma-binding**, which is deprecated and tightly coupled to its legacy GraphQL schema-generation workflow. A full modernization to current Prisma requires a data-layer rewrite from `prisma-binding`/GraphQL imports to Prisma Client and a new database migration model. This package therefore modernizes the deployment/runtime and upgrades safer dependencies while preserving Prisma 1 compatibility.
+The app was not a simple dependency bump to a fully current stack because the original backend depended on a deprecated Prisma GraphQL binding workflow. The current package now routes the runtime through Prisma Client and MySQL 8 while preserving the committed GraphQL SDL used by the existing schema importer.
 
 ## What changed
 
@@ -15,7 +15,7 @@ The app is not a simple dependency bump to a fully current stack because it is b
 - Added Rocky 9 Docker prerequisite script at `scripts/rocky9-prereqs.sh`.
 - Removed stale `package-lock.json` files so Rocky 9 builds do not try to reuse old Node 10 lock state.
 - Updated frontend build tooling toward Vue CLI 5 / Vue 2.7 and removed `node-sass` in favor of Dart Sass.
-- Updated server dependency declarations where they are low-risk, while intentionally keeping Apollo Server 2, GraphQL 14, `prisma-binding`, and Prisma 1 in place.
+- Updated server dependency declarations and removed the legacy Prisma GraphQL binding runtime.
 
 ## Run on Rocky 9
 

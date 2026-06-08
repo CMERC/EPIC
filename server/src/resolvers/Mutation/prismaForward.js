@@ -1,4 +1,4 @@
-const { forwardTo } = require('prisma-binding')
+const forwardTo = binding => (parent, args, ctx, info) => ctx[binding].mutation[info.fieldName](args, info)
 const {
   appListSettingDataFromPrisma1,
   appRoleDataFromPrisma1,

@@ -1,5 +1,5 @@
 const logger = require('../src/logger')
-const { Prisma } = require('prisma-binding')
+const { getLegacyPrisma } = require('../src/services/prisma')
 const queryLimit = 500
 const Geohash = require('ngeohash')
 
@@ -11,14 +11,7 @@ const logCyan = '\x1b[36m%s\x1b[0m'
 async function getWorkspaces() {
   // Load env variables from path
   require('dotenv').config({ path: '../.env' })
-  const getPrismaInstance = () => {
-    return new Prisma({
-      typeDefs: '../src/generated/prisma.graphql',
-      endpoint: process.env.PRISMA_ENDPOINT,
-      secret: process.env.PRISMA_SECRET,
-      debug: false
-    })
-  }
+  const getPrismaInstance = () => getLegacyPrisma()
   // Query the appWorkspaces resolver for all created workspaces on the global endpoint
   let appWorkspaces = await getPrismaInstance().query.appWorkspaces()
   // Iterate through the workspaces and run the 'prisma deploy' command
@@ -44,19 +37,7 @@ async function addGeohashToLocation(workspace) {
     badLocations: 0
   }
   logger.info(workspace + ' workspace, adding Location geohash')
-  // Get prisma endpoint to query
-  let endpoint = process.env.PRISMA_ENDPOINT
-  if (workspace !== 'global') {
-    endpoint = process.env.WORKSPACE_ENDPOINT + workspace
-  }
-  const getPrismaInstance = () => {
-    return new Prisma({
-      typeDefs: '../src/generated/prisma.graphql',
-      endpoint: endpoint,
-      secret: process.env.PRISMA_SECRET,
-      debug: false
-    })
-  }
+  const getPrismaInstance = () => getLegacyPrisma()
   const totalLocationsInWorkspace = await getPrismaInstance().query.locationsConnection(
     {}, '{aggregate {count}}'
   )

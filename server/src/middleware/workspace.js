@@ -106,11 +106,6 @@ const workspaceMiddleware = async(resolve, parent, args, ctx, info) => {
     return new Error(workspaceError)
 
   if (activeUserDB) {
-    // Get prisma endpoint to query
-    let endpoint = process.env.PRISMA_ENDPOINT
-    if (activeUserDB !== 'global') {
-      endpoint = process.env.WORKSPACE_ENDPOINT + activeUserDB
-    }
     // Pass workspace name for post url generation
     info.workspaceName = activeUserDB
     // Pass workspace display name for email
@@ -120,7 +115,7 @@ const workspaceMiddleware = async(resolve, parent, args, ctx, info) => {
     if (workspaceTimeZone)
       info.workspaceTimeZone = workspaceTimeZone
 
-    ctx.db = getLegacyPrisma(endpoint)
+    ctx.db = getLegacyPrisma()
     const res = await resolve(parent, args, ctx, info)
     return res
   } else
