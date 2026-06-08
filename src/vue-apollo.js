@@ -81,6 +81,12 @@ function restartWebsockets(wsClient) {
   }
 }
 
+function writeClientDefaults(apolloClient) {
+  if (apolloClient && apolloClient.cache) {
+    apolloClient.cache.writeData({ data: clientStateDefaults() })
+  }
+}
+
 function createApolloClient(options) {
   const cache = new InMemoryCache()
   const authLink = new ApolloLink((operation, forward) => {
@@ -121,6 +127,11 @@ function createApolloClient(options) {
   const apolloClient = new ApolloClient({
     link,
     cache,
+    defaultOptions: {
+      watchQuery: options.watchQuery,
+      query: options.query,
+      mutate: options.mutate
+    },
     ssrForceFetchDelay: 100,
     connectToDevTools: process.env.NODE_ENV !== 'production',
     typeDefs: options.typeDefs,
@@ -261,16 +272,21 @@ export function createProvider(options = {}, { router }) {
     })
   }
 
-  wsClient.on('connected', async () => {
-    if (hasConnected) {
-      await resetApollo(apolloClient)
-    }
+  wsClient.on('connected', () => {
     hasConnected = true
     setConnected(true)
   })
   // Offline
-  wsClient.on('closed', () => setConnected(false))
-  wsClient.on('error', () => setConnected(false))
+  wsClient.on('closed', event => {
+    if (hasConnected && event && event.code !== 1000) {
+      setConnected(false)
+    }
+  })
+  wsClient.on('error', () => {
+    if (hasConnected) {
+      setConnected(false)
+    }
+  })
 
   return apolloProvider
 }
@@ -279,6 +295,7 @@ export async function resetApollo(apolloClient) {
   try {
     await apolloClient.resetStore()
     if (apolloClient.wsClient) restartWebsockets(apolloClient.wsClient)
+    writeClientDefaults(apolloClient)
     return true
   } catch (error) {
     if (!isUnauthorizedError(error)) {
@@ -292,7 +309,17 @@ export async function resetApollo(apolloClient) {
 // Manually call this when user log in
 export async function onLogin(apolloClient, token) {
   localStorage.setItem(AUTH_TOKEN, token)
-  return await resetApollo(apolloClient)
+  try {
+    await apolloClient.clearStore()
+    writeClientDefaults(apolloClient)
+    return true
+  } catch (error) {
+    if (!isUnauthorizedError(error)) {
+      // eslint-disable-next-line no-console
+      console.log('%cError on login cache clear', 'color: orange;', error.message)
+    }
+    return false
+  }
 }
 
 // Manually call this when user log out

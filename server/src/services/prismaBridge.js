@@ -331,21 +331,144 @@ const simpleDataFromPrisma1 = (data = {}, fields, options = {}) => {
 const mediaNetworkFields = ['id', 'createdAt', 'updatedAt', 'name', 'displayName', 'description', 'icon', 'color', 'template']
 const mediaServiceFields = ['id', 'createdAt', 'updatedAt', 'name', 'displayName', 'type', 'description', 'icon', 'color', 'template']
 const mediaNoiseLevelFields = ['id', 'createdAt', 'updatedAt', 'name', 'displayName', 'description', 'templates', 'duration', 'rate']
+const mediaPostFields = ['id', 'createdAt', 'updatedAt', 'createTime', 'updateTime', 'isPublished', 'publishTime', 'title', 'text', 'url', 'isUserGenerated', 'counts']
+const mediaProfileFields = ['id', 'createdAt', 'updatedAt', 'username', 'name', 'description', 'url', 'createdTime', 'isUserGenerated', 'language', 'counts']
+const mediaPersonaFields = ['id', 'createdAt', 'updatedAt', 'name', 'role', 'description']
+const mapLayerFields = ['id', 'createdAt', 'updatedAt', 'title', 'type', 'geojson']
 const planReasonFields = ['id', 'createdAt', 'updatedAt', 'title']
 const planMethodFields = ['id', 'createdAt', 'updatedAt', 'title']
+const planEventFields = ['id', 'createdAt', 'updatedAt', 'name', 'type', 'method', 'startDate', 'endDate', 'description', 'color', 'exerciseGuidance']
+const planInjectFields = ['id', 'createdAt', 'updatedAt', 'number', 'title', 'description', 'mitigation', 'type', 'trigger', 'response', 'responseDate', 'remarks', 'deletedAt', 'startDate', 'from', 'to']
+const planMeetingFields = ['id', 'createdAt', 'updatedAt', 'name', 'location', 'startDate', 'endDate']
 const planFundingSourceFields = ['id', 'createdAt', 'updatedAt', 'primarySource', 'subSource', 'amount']
 const planPriorityLevelFields = ['id', 'createdAt', 'updatedAt', 'title', 'description']
 
 const mediaNetworkWhereFromPrisma1 = where => simpleWhereFromPrisma1(where, mediaNetworkFields, mediaNetworkWhereFromPrisma1)
 const mediaServiceWhereFromPrisma1 = where => simpleWhereFromPrisma1(where, mediaServiceFields, mediaServiceWhereFromPrisma1)
 const mediaNoiseLevelWhereFromPrisma1 = where => simpleWhereFromPrisma1(where, mediaNoiseLevelFields, mediaNoiseLevelWhereFromPrisma1)
+const mapLayerWhereFromPrisma1 = where => simpleWhereFromPrisma1(where, mapLayerFields, mapLayerWhereFromPrisma1)
 const planReasonWhereFromPrisma1 = where => simpleWhereFromPrisma1(where, planReasonFields, planReasonWhereFromPrisma1)
 const planMethodWhereFromPrisma1 = where => simpleWhereFromPrisma1(where, planMethodFields, planMethodWhereFromPrisma1)
+const planEventWhereFromPrisma1 = where => simpleWhereFromPrisma1(where, planEventFields, planEventWhereFromPrisma1)
+const planMeetingWhereFromPrisma1 = where => simpleWhereFromPrisma1(where, planMeetingFields, planMeetingWhereFromPrisma1)
 const planFundingSourceWhereFromPrisma1 = where => simpleWhereFromPrisma1(where, planFundingSourceFields, planFundingSourceWhereFromPrisma1)
 const planPriorityLevelWhereFromPrisma1 = where => simpleWhereFromPrisma1(where, planPriorityLevelFields, planPriorityLevelWhereFromPrisma1)
 
 const appUserArgsFromPrisma1 = args => ({
   where: userWhereFromPrisma1(args.where),
+  orderBy: orderByFromPrisma1(args.orderBy),
+  ...paginationFromPrisma1(args)
+})
+
+const mediaProfileWhereFromPrisma1 = where => {
+  if (!where) {
+    return undefined
+  }
+
+  const filters = simpleWhereFromPrisma1(where, mediaProfileFields, mediaProfileWhereFromPrisma1)
+
+  if (where.service) {
+    filters.MediaService = { some: mediaServiceWhereFromPrisma1(where.service) }
+  }
+  if (where.service_some) {
+    filters.MediaService = { some: mediaServiceWhereFromPrisma1(where.service_some) }
+  }
+
+  return filters
+}
+
+const mediaPersonaWhereFromPrisma1 = where => {
+  if (!where) {
+    return undefined
+  }
+
+  const filters = simpleWhereFromPrisma1(where, mediaPersonaFields, mediaPersonaWhereFromPrisma1)
+
+  if (where.profiles_some) {
+    filters.MediaProfile = { some: mediaProfileWhereFromPrisma1(where.profiles_some) }
+  }
+  if (where.profiles_none) {
+    filters.MediaProfile = { none: mediaProfileWhereFromPrisma1(where.profiles_none) }
+  }
+  if (where.networks_some) {
+    filters.MediaNetwork = { some: mediaNetworkWhereFromPrisma1(where.networks_some) }
+  }
+
+  return filters
+}
+
+const mediaPostWhereFromPrisma1 = where => {
+  if (!where) {
+    return undefined
+  }
+
+  const filters = simpleWhereFromPrisma1(where, mediaPostFields, mediaPostWhereFromPrisma1)
+
+  if (where.profiles_some) {
+    filters.MediaProfile = { some: mediaProfileWhereFromPrisma1(where.profiles_some) }
+  }
+  if (where.profiles_none) {
+    filters.MediaProfile = { none: mediaProfileWhereFromPrisma1(where.profiles_none) }
+  }
+  if (where.location) {
+    filters.Location = { some: simpleWhereFromPrisma1(where.location, ['id', 'geojson', 'geohash'], value => simpleWhereFromPrisma1(value, ['id', 'geojson', 'geohash'])) }
+  }
+
+  return filters
+}
+
+const mediaPostArgsFromPrisma1 = args => ({
+  where: mediaPostWhereFromPrisma1(args.where),
+  orderBy: orderByFromPrisma1(args.orderBy),
+  ...paginationFromPrisma1(args)
+})
+
+const mediaProfileArgsFromPrisma1 = args => ({
+  where: mediaProfileWhereFromPrisma1(args.where),
+  orderBy: orderByFromPrisma1(args.orderBy),
+  ...paginationFromPrisma1(args)
+})
+
+const mediaPersonaArgsFromPrisma1 = args => ({
+  where: mediaPersonaWhereFromPrisma1(args.where),
+  orderBy: orderByFromPrisma1(args.orderBy),
+  ...paginationFromPrisma1(args)
+})
+
+const mapLayerArgsFromPrisma1 = args => ({
+  where: mapLayerWhereFromPrisma1(args.where),
+  orderBy: orderByFromPrisma1(args.orderBy),
+  ...paginationFromPrisma1(args)
+})
+
+const planInjectWhereFromPrisma1 = where => {
+  if (!where) {
+    return undefined
+  }
+
+  const filters = simpleWhereFromPrisma1(where, planInjectFields, planInjectWhereFromPrisma1)
+
+  if (where.deletedAt === null) {
+    filters.deletedAt = null
+  }
+  if (where.events_some) {
+    filters.PlanEvent = { some: planEventWhereFromPrisma1(where.events_some) }
+  }
+  if (where.events_none) {
+    filters.PlanEvent = { none: planEventWhereFromPrisma1(where.events_none) }
+  }
+  if (where.objectives_some) {
+    filters.PlanTrainingObjective = { some: simpleWhereFromPrisma1(where.objectives_some, ['id']) }
+  }
+  if (where.status) {
+    filters.PlanLabel = { some: simpleWhereFromPrisma1(where.status, ['id', 'title', 'description', 'color']) }
+  }
+
+  return filters
+}
+
+const planInjectArgsFromPrisma1 = args => ({
+  where: planInjectWhereFromPrisma1(args.where),
   orderBy: orderByFromPrisma1(args.orderBy),
   ...paginationFromPrisma1(args)
 })
@@ -503,6 +626,8 @@ const mediaServiceArgsFromPrisma1 = args => simpleArgsFromPrisma1(args, mediaSer
 const mediaNoiseLevelArgsFromPrisma1 = args => simpleArgsFromPrisma1(args, mediaNoiseLevelWhereFromPrisma1)
 const planReasonArgsFromPrisma1 = args => simpleArgsFromPrisma1(args, planReasonWhereFromPrisma1)
 const planMethodArgsFromPrisma1 = args => simpleArgsFromPrisma1(args, planMethodWhereFromPrisma1)
+const planEventArgsFromPrisma1 = args => simpleArgsFromPrisma1(args, planEventWhereFromPrisma1)
+const planMeetingArgsFromPrisma1 = args => simpleArgsFromPrisma1(args, planMeetingWhereFromPrisma1)
 const planFundingSourceArgsFromPrisma1 = args => simpleArgsFromPrisma1(args, planFundingSourceWhereFromPrisma1)
 const planPriorityLevelArgsFromPrisma1 = args => simpleArgsFromPrisma1(args, planPriorityLevelWhereFromPrisma1)
 
@@ -750,6 +875,128 @@ const toChatRoom = room => {
   }
 }
 
+const toMediaProfile = profile => {
+  if (!profile) {
+    return null
+  }
+
+  return {
+    ...profile,
+    location: Array.isArray(profile.Location) ? profile.Location[0] : profile.Location,
+    banner: Array.isArray(profile.MediaBanner) ? profile.MediaBanner[0] : profile.MediaBanner,
+    avatar: Array.isArray(profile.MediaFile) ? profile.MediaFile[0] : profile.MediaFile,
+    service: Array.isArray(profile.MediaService) ? profile.MediaService[0] : profile.MediaService,
+    persona: Array.isArray(profile.MediaPersona) ? profile.MediaPersona[0] : profile.MediaPersona
+  }
+}
+
+const toMediaPost = post => {
+  if (!post) {
+    return null
+  }
+
+  return {
+    ...post,
+    profiles: Array.isArray(post.MediaProfile) ? post.MediaProfile.map(toMediaProfile) : [],
+    location: Array.isArray(post.Location) ? post.Location[0] : post.Location,
+    mediaFile: Array.isArray(post.MediaFile) ? post.MediaFile[0] : post.MediaFile,
+    comments: Array.isArray(post.MediaPost_A) ? post.MediaPost_A.map(toMediaPost) : [],
+    parent: Array.isArray(post.MediaPost_B) ? post.MediaPost_B[0] : post.MediaPost_B
+  }
+}
+
+const toMediaPersonaSlim = persona => {
+  if (!persona) {
+    return null
+  }
+
+  return {
+    ...persona,
+    avatar: Array.isArray(persona.MediaFile) ? persona.MediaFile[0] : persona.MediaFile,
+    location: Array.isArray(persona.Location) ? persona.Location[0] : persona.Location,
+    profiles: Array.isArray(persona.MediaProfile) ? persona.MediaProfile.map(toMediaProfile) : [],
+    attributes: Array.isArray(persona.KeyValue) ? persona.KeyValue : []
+  }
+}
+
+const toMediaPersonaEdge = edge => {
+  if (!edge) {
+    return null
+  }
+
+  return {
+    ...edge,
+    start: Array.isArray(edge.MediaPersona_PersonaStart)
+      ? edge.MediaPersona_PersonaStart.map(toMediaPersonaSlim)
+      : [],
+    end: Array.isArray(edge.MediaPersona_PersonaEnd)
+      ? edge.MediaPersona_PersonaEnd.map(toMediaPersonaSlim)
+      : []
+  }
+}
+
+const toMediaPersona = persona => {
+  if (!persona) {
+    return null
+  }
+
+  return {
+    ...toMediaPersonaSlim(persona),
+    relatesTo: Array.isArray(persona.MediaPersonaEdge_PersonaStart)
+      ? persona.MediaPersonaEdge_PersonaStart.map(toMediaPersonaEdge)
+      : [],
+    relatesFrom: Array.isArray(persona.MediaPersonaEdge_PersonaEnd)
+      ? persona.MediaPersonaEdge_PersonaEnd.map(toMediaPersonaEdge)
+      : []
+  }
+}
+
+const toPlanInjectSlim = inject => {
+  if (!inject) {
+    return null
+  }
+
+  return {
+    ...inject,
+    location: Array.isArray(inject.Location) ? inject.Location[0] : inject.Location,
+    method: Array.isArray(inject.PlanMethod) ? inject.PlanMethod[0] : inject.PlanMethod,
+    owner: Array.isArray(inject.PlanInjectOwner) ? inject.PlanInjectOwner[0] : inject.PlanInjectOwner,
+    status: Array.isArray(inject.PlanLabel) ? inject.PlanLabel[0] : inject.PlanLabel,
+    attachments: Array.isArray(inject.MediaFile) ? inject.MediaFile : [],
+    events: Array.isArray(inject.PlanEvent) ? inject.PlanEvent.map(toPlanEvent) : [],
+    objectives: Array.isArray(inject.PlanTrainingObjective) ? inject.PlanTrainingObjective : []
+  }
+}
+
+const toPlanEvent = event => {
+  if (!event) {
+    return null
+  }
+
+  return {
+    ...event,
+    title: event.name,
+    start: event.startDate,
+    end: event.endDate,
+    locations: Array.isArray(event.Location) ? event.Location : [],
+    organization: Array.isArray(event.PlanOrganization) ? event.PlanOrganization[0] : event.PlanOrganization,
+    injects: Array.isArray(event.PlanInject) ? event.PlanInject.map(toPlanInjectSlim) : []
+  }
+}
+
+const toPlanMeeting = meeting => {
+  if (!meeting) {
+    return null
+  }
+
+  return {
+    ...meeting,
+    title: meeting.name,
+    start: meeting.startDate,
+    end: meeting.endDate
+  }
+}
+
 module.exports = {
   appListSettingArgsFromPrisma1,
   appListSettingDataFromPrisma1,
@@ -785,14 +1032,28 @@ module.exports = {
   mediaNoiseLevelArgsFromPrisma1,
   mediaNoiseLevelDataFromPrisma1,
   mediaNoiseLevelWhereFromPrisma1,
+  mediaPersonaArgsFromPrisma1,
+  mediaPersonaWhereFromPrisma1,
+  mediaPostArgsFromPrisma1,
+  mediaPostWhereFromPrisma1,
+  mediaProfileArgsFromPrisma1,
+  mediaProfileWhereFromPrisma1,
   mediaServiceArgsFromPrisma1,
   mediaServiceDataFromPrisma1,
   mediaServiceWhereFromPrisma1,
+  mapLayerArgsFromPrisma1,
+  mapLayerWhereFromPrisma1,
   orderByFromPrisma1,
   paginationFromPrisma1,
   planFundingSourceArgsFromPrisma1,
   planFundingSourceDataFromPrisma1,
   planFundingSourceWhereFromPrisma1,
+  planEventArgsFromPrisma1,
+  planEventWhereFromPrisma1,
+  planInjectArgsFromPrisma1,
+  planInjectWhereFromPrisma1,
+  planMeetingArgsFromPrisma1,
+  planMeetingWhereFromPrisma1,
   planMethodArgsFromPrisma1,
   planMethodDataFromPrisma1,
   planMethodWhereFromPrisma1,
@@ -810,6 +1071,13 @@ module.exports = {
   toChatRoom,
   toEmailMailbox,
   toEmailMessage,
+  toMediaPost,
+  toMediaPersona,
+  toMediaPersonaEdge,
+  toMediaProfile,
+  toPlanEvent,
+  toPlanInjectSlim,
+  toPlanMeeting,
   userDataFromPrisma1,
   userWhereFromPrisma1
 }

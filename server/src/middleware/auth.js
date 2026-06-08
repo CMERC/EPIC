@@ -1,13 +1,11 @@
 /* eslint-disable space-before-function-paren */
 
 const { rule, shield, and, or, not, deny } = require('graphql-shield')
-const { getUserId, getUser } = require('graphql-authentication')
-const jwt = require('jsonwebtoken')
-
-function getAuthorizationHeader(ctx) {
-  const req = ctx.req || ctx.request
-  return req && typeof req.get === 'function' ? req.get('Authorization') : null
-}
+const {
+  getAuthorizationHeader,
+  getCurrentUser,
+  getCurrentUserId
+} = require('../services/authContext')
 
 function getLegacyRoles(activeUser) {
   const roleLink = activeUser && activeUser.role
@@ -28,48 +26,18 @@ function getPrismaRoles(activeUser) {
   }, [])
 }
 
-async function getCurrentUserId(ctx) {
-  const Authorization = getAuthorizationHeader(ctx)
-
-  if (Authorization) {
-    const token = Authorization.replace('Bearer ', '')
-    // check if session exists for user
-    const { userId, sessionId } = jwt.verify(token, ctx.graphqlAuthentication.secret)
-    if (ctx.prisma) {
-      const sessionUser = await ctx.prisma.user.findFirst({
-        where: { id: userId, sessionId: sessionId },
-        select: { sessionId: true }
-      })
-      return sessionUser && sessionUser.sessionId ? userId : null
-    }
-
-    const sessionUser = await ctx.db.query.users(
-      { where: { id: userId, sessionId: sessionId } },
-      `{
-        sessionId
-      }`
-    )
-    // Check if session is stored in db
-    if (sessionUser[0] && sessionUser[0].sessionId)
-      return userId
-    else
-      return null
-  } else
-    return null
-}
-
 function isAuthResolver(parent, args, ctx) {
   return getCurrentUserId(ctx)
 }
 const isAuthenticated = rule()(isAuthResolver)
 
 async function checkSuper(ctx) {
-  let user = await getUser(ctx)
-  return user.isSuper
+  let user = await getCurrentUser(ctx)
+  return user && user.isSuper
 }
 
 async function checkRole(ctx, roleName) {
-  let userId = await getUserId(ctx)
+  let userId = await getCurrentUserId(ctx)
   if (ctx.prisma) {
     const activeUser = await ctx.prisma.user.findUnique({
       where: { id: userId },
@@ -96,7 +64,7 @@ async function checkRole(ctx, roleName) {
 
 // check if user has been assigned any role
 async function checkHasRole(ctx) {
-  let userId = await getUserId(ctx)
+  let userId = await getCurrentUserId(ctx)
   if (ctx.prisma) {
     const activeUser = await ctx.prisma.user.findUnique({
       where: { id: userId },

@@ -27,17 +27,37 @@ const { appWorkspaceMutation } = require('./Mutation/workspace')
 const { prismaForward } = require('./Mutation/prismaForward')
 const { authQueries } = require('graphql-authentication')
 const { authMutations } = require('./Mutation/authMutations')
+const { getCurrentUser } = require('../services/authContext')
+const { toAppUser } = require('../services/prismaBridge')
 const { upload } = require('./Mutation/upload')
 const { mapLayer } = require('./Mutation/mapLayer')
 const { comment } = require('./Mutation/comment')
 const { cobraMutations } = require('./Mutation/cobraMutations')
+
+const localAuthQueries = {
+  ...authQueries,
+  async currentUser(parent, args, ctx) {
+    const user = await getCurrentUser(ctx, {
+      include: {
+        AppUserRole: {
+          include: {
+            AppRole: true,
+            User: true
+          }
+        }
+      }
+    })
+
+    return ctx.prisma ? toAppUser(user) : user
+  }
+}
 
 module.exports = {
   Query: {
     ...Query,
     ...track,
     ...appUserQueries,
-    ...authQueries,
+    ...localAuthQueries,
     ...emailQueries,
     ...commandQueries,
     ...planReportQueries,

@@ -1,5 +1,5 @@
-const { getUserId } = require('graphql-authentication')
 const { getLegacyPrisma } = require('../services/prisma')
+const { getCurrentUserId } = require('../services/authContext')
 
 const { getUserIdWebSocket } = require('../authSubscription')
 
@@ -16,19 +16,31 @@ const workspaceMiddleware = async(resolve, parent, args, ctx, info) => {
     userId = await getUserIdWebSocket(ctx)
   } else if (ctx.request && ctx.request.headers.authorization) {
     activeWorkspaceFromClient = ctx.request.headers.workspace
-    userId = await getUserId(ctx)
+    userId = await getCurrentUserId(ctx)
   }
   let workspaceError
 
   // Public Resolvers: workspace is passed in with query
   if (args.data && args.data.workspace) {
     // check if workspace is valid
-    let appWorkspaces = await ctx.db.query.appWorkspaces({
-      where: {
-        name: args.data.workspace
-      }
-    }, '{name}'
-    )
+    let appWorkspaces
+    if (ctx.prisma) {
+      appWorkspaces = await ctx.prisma.appWorkspace.findMany({
+        where: {
+          name: args.data.workspace
+        },
+        select: {
+          name: true
+        }
+      })
+    } else {
+      appWorkspaces = await ctx.db.query.appWorkspaces({
+        where: {
+          name: args.data.workspace
+        }
+      }, '{name}'
+      )
+    }
 
     if (appWorkspaces && appWorkspaces.length > 0)
       activeUserDB = args.data.workspace
@@ -47,7 +59,40 @@ const workspaceMiddleware = async(resolve, parent, args, ctx, info) => {
           name: activeWorkspaceFromClient
         }
       }
-      let appWorkspaces = await ctx.db.query.appWorkspaces(args, '{name displayName timeZone}')
+      let appWorkspaces
+      if (ctx.prisma) {
+        const activeUser = await ctx.prisma.user.findUnique({
+          where: {
+            id: userId
+          },
+          select: {
+            isSuper: true
+          }
+        })
+        const workspaceWhere = activeUser && activeUser.isSuper
+          ? {
+            name: activeWorkspaceFromClient
+          }
+          : {
+            User: {
+              some: {
+                id: userId
+              }
+            },
+            name: activeWorkspaceFromClient
+          }
+
+        appWorkspaces = await ctx.prisma.appWorkspace.findMany({
+          where: workspaceWhere,
+          select: {
+            name: true,
+            displayName: true,
+            timeZone: true
+          }
+        })
+      } else {
+        appWorkspaces = await ctx.db.query.appWorkspaces(args, '{name displayName timeZone}')
+      }
       if (appWorkspaces && appWorkspaces.length > 0) {
         activeUserDB = appWorkspaces[0].name
         workspaceDisplayName = appWorkspaces[0].displayName
