@@ -15,6 +15,7 @@ const { importSchema } = require('graphql-import')
 const typeDefs = importSchema('./src/schema.graphql')
 const resolvers = require('./resolvers')
 const cors = require('cors')
+const { requestContextMiddleware } = require('./middleware/requestContext')
 
 const { getBullQueues } = require('./jobs/arena')
 
@@ -37,6 +38,7 @@ redisClient.on('error', function(err) {
 })
 
 const app = express()
+app.use(requestContextMiddleware)
 app.use(cors())
 
 const connectionMiddlewares = [
@@ -58,7 +60,7 @@ app.use(function(req, res, next) {
 
 app.use('/healthcheck', async(req, res) => {
   let testResults
-  await getHealthCheckEndpoints().then(res => {
+  await getHealthCheckEndpoints({ redisClient }).then(res => {
     testResults = res
   })
   if (testResults.status) {
@@ -128,6 +130,7 @@ async function startServer() {
     },
     context: req => ({
       ...req,
+      requestId: req.req && req.req.requestId,
       db: getLegacyPrisma(),
       global: getLegacyPrisma(),
       prisma: getPrismaClient(),

@@ -53,6 +53,11 @@ This roadmap captures the major improvements needed for EPIC Ready to operate as
 
 8. Improve operational reliability and observability
    - Add structured logs, request IDs, metrics, dependency health, backup status, job queue visibility, and admin alerts.
+   - Status: started.
+     - Added HTTP request IDs with response propagation and structured completion logs.
+     - Added GraphQL context request ID propagation for downstream resolver/service tracing.
+     - Added Redis dependency health checks to `/healthcheck`.
+     - Fixed Apollo server logger import so error paths use the shared logger correctly.
 
 9. Complete a performance and scale pass
    - Optimize route-level code splitting, pagination, query limits, DB indexes, file handling, map asset loading, subscriptions, and timeline aggregation.

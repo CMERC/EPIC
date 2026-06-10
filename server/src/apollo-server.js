@@ -9,7 +9,7 @@ const { makeExecutableSchema } = require('@graphql-tools/schema')
 const { applyMiddleware } = require('graphql-middleware')
 const { useServer } = require('graphql-ws/lib/use/ws')
 const { WebSocketServer } = require('ws')
-const { logger } = require('./logger')
+const logger = require('./logger')
 
 function pruneMiddlewareToSchema(schema, middleware) {
   if (typeof middleware === 'function') {
