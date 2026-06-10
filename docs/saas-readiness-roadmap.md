@@ -13,6 +13,9 @@ This roadmap captures the major improvements needed for EPIC Ready to operate as
    - Add MFA-ready account flows.
    - Prepare SSO/SAML/OIDC integration points.
    - Improve session controls, invite flows, account recovery, and workspace-specific roles.
+   - Status: started.
+     - Added Redis-backed login failure throttling by email and client IP.
+     - Added regression tests for failed-attempt recording and lockout behavior.
 
 3. Create customer/admin billing and provisioning
    - Add customer/account lifecycle fields: trial, active, suspended, archived.

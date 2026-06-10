@@ -148,3 +148,58 @@ test('login creates a session through Prisma Client when available', async() => 
   expect(decoded.sessionId).toBe('session-1')
   expect(result.user.role).toBeNull()
 })
+
+test('login records failed attempts for SaaS rate limiting', async() => {
+  const incr = jest.fn().mockResolvedValue(1)
+  const expire = jest.fn().mockResolvedValue(1)
+  const ctx = {
+    graphqlAuthentication: {
+      secret: 'test-secret',
+      adapter: {
+        findUserByEmail: jest.fn().mockResolvedValue(null)
+      }
+    },
+    request: {
+      ip: '192.0.2.10',
+      headers: {}
+    },
+    redisClient: {
+      get: jest.fn().mockResolvedValue('0'),
+      incr,
+      expire
+    }
+  }
+
+  await expect(authMutations.login(null, {
+    email: 'ada@example.test',
+    password: 'wrong-password'
+  }, ctx)).rejects.toThrow()
+
+  expect(incr).toHaveBeenCalledWith('auth:login-fail:ada@example.test:192.0.2.10')
+  expect(expire).toHaveBeenCalledWith('auth:login-fail:ada@example.test:192.0.2.10', 900)
+})
+
+test('login blocks accounts over the failed-attempt threshold', async() => {
+  const ctx = {
+    graphqlAuthentication: {
+      secret: 'test-secret',
+      adapter: {
+        findUserByEmail: jest.fn()
+      }
+    },
+    request: {
+      ip: '192.0.2.10',
+      headers: {}
+    },
+    redisClient: {
+      get: jest.fn().mockResolvedValue('10')
+    }
+  }
+
+  await expect(authMutations.login(null, {
+    email: 'ada@example.test',
+    password: 'wrong-password'
+  }, ctx)).rejects.toThrow('Too many failed login attempts')
+
+  expect(ctx.graphqlAuthentication.adapter.findUserByEmail).not.toHaveBeenCalled()
+})

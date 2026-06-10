@@ -13,6 +13,11 @@ const {
   toAppUser,
   userDataFromPrisma1
 } = require('../../services/prismaBridge')
+const {
+  assertLoginAllowed,
+  clearLoginFailures,
+  recordLoginFailure
+} = require('../../services/authSecurity')
 function generateToken(user, ctx) {
   return jwt.sign({ userId: user.id, sessionId: user.sessionId }, ctx.graphqlAuthentication.secret, { expiresIn: '30 days' })
 }
@@ -111,10 +116,12 @@ exports.authMutations = {
     }
   },
   async login(parent, { email, password }, ctx) {
+    await assertLoginAllowed(ctx, email)
     let user = ctx.prisma
       ? await ctx.prisma.user.findFirst({ where: { email } })
       : await ctx.graphqlAuthentication.adapter.findUserByEmail(ctx, email)
     if (!user) {
+      await recordLoginFailure(ctx, email)
       throw new errors_1.UserNotFoundError()
     }
     if (!user.inviteAccepted) {
@@ -129,8 +136,10 @@ exports.authMutations = {
     }
     const valid = await bcrypt.compare(password, user.password)
     if (!valid) {
+      await recordLoginFailure(ctx, email)
       throw new errors_1.UserNotFoundError()
     }
+    await clearLoginFailures(ctx, email)
     if (ctx.prisma) {
       await ctx.prisma.user.update({
         where: {
