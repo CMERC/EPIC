@@ -323,6 +323,7 @@ const workspaceResolvers = {
     commandMessages: workspaceMiddleware,
 
     exerciseTimelineItems: workspaceMiddleware,
+    currentExerciseLifecycle: workspaceMiddleware,
 
     planParticipantFundingSources: workspaceMiddleware,
     planParticipantFundingSource: workspaceMiddleware,

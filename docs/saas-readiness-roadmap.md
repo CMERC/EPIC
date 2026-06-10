@@ -26,6 +26,10 @@ This roadmap captures the major improvements needed for EPIC Ready to operate as
 
 4. Add a true exercise lifecycle model
    - Make Exercise the central object for MSEL, maps, media, chat, commands, observations, timeline, hot wash, AAR, and exports.
+   - Status: started.
+     - Added `currentExerciseLifecycle` GraphQL query as a stable aggregate contract for the active/current exercise context.
+     - Added lifecycle artifact counts for events, injects, observations, commands, media posts, and chat messages.
+     - Protected the lifecycle query with auth and workspace middleware.
 
 5. Build an executive exercise control dashboard
    - Show exercise clock, active injects, participant status, recent observations, command acknowledgements, map events, media activity, unresolved issues, and timeline feed.

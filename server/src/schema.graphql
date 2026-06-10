@@ -195,6 +195,7 @@ type Query {
     end: DateTime
     first: Int
   ): [ExerciseTimelineItem!]!
+  currentExerciseLifecycle: ExerciseLifecycleSummary!
 }
 
 type Mutation {
@@ -480,6 +481,26 @@ type ExerciseTimelineItem {
   routePath: String
   accent: String
   metadata: Json
+}
+
+type ExerciseLifecycleSummary {
+  id: ID
+  name: String
+  status: String!
+  start: DateTime
+  end: DateTime
+  workspaceName: String
+  workspaceDisplayName: String
+  counts: ExerciseLifecycleCounts!
+}
+
+type ExerciseLifecycleCounts {
+  events: Int!
+  injects: Int!
+  observations: Int!
+  commands: Int!
+  mediaPosts: Int!
+  chatMessages: Int!
 }
 
 # Admin Inputs
