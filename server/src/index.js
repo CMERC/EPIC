@@ -16,6 +16,9 @@ const typeDefs = importSchema('./src/schema.graphql')
 const resolvers = require('./resolvers')
 const cors = require('cors')
 const { requestContextMiddleware } = require('./middleware/requestContext')
+const { securityHeaders } = require('./middleware/securityHeaders')
+const { corsOptions } = require('./services/corsPolicy')
+const { safeRedirectUrl } = require('./services/redirect')
 
 const { getBullQueues } = require('./jobs/arena')
 
@@ -39,7 +42,8 @@ redisClient.on('error', function(err) {
 
 const app = express()
 app.use(requestContextMiddleware)
-app.use(cors())
+app.use(securityHeaders)
+app.use(cors(corsOptions))
 
 const connectionMiddlewares = [
   permissions,
@@ -48,16 +52,6 @@ const connectionMiddlewares = [
   trackingResolvers,
   activityResolvers
 ]
-// https://en.wikipedia.org/wiki/Cross-origin_resource_sharing
-app.use(function(req, res, next) {
-  res.header('Access-Control-Allow-Origin', '*')
-  res.header(
-    'Access-Control-Allow-Headers',
-    'Origin, X-Requested-With, Content-Type, Accept'
-  )
-  next()
-})
-
 app.use('/healthcheck', async(req, res) => {
   let testResults
   await getHealthCheckEndpoints({ redisClient }).then(res => {
@@ -72,26 +66,15 @@ app.use('/healthcheck', async(req, res) => {
 // // redirect to the url passed into the link route
 // // ie. example.com/link?url=https%3A%2F%2Fwww.google.com%2F
 app.use('/link', (req, res) => {
-  const redirectURL = req.query.url
-
-  if (redirectURL === undefined) {
+  const redirect = safeRedirectUrl(req.query.url)
+  if (!redirect.ok) {
     res
-      .status(400) // HTTP status 404: NotFound
-      .send('URL not defined in request')
-  } else {
-    let decodedURL
-    try {
-      decodedURL = decodeURIComponent(redirectURL)
-      const parsedURL = new URL(decodedURL)
-      if (!['http:', 'https:', 'ftp:'].includes(parsedURL.protocol)) {
-        throw new Error('Unsupported redirect protocol')
-      }
-    } catch (error) {
-      res.status(400).send('Invalid redirect URL')
-      return
-    }
-    res.redirect(decodedURL)
+      .status(redirect.status)
+      .send(redirect.message)
+    return
   }
+
+  res.redirect(redirect.url)
 })
 
 // Start the scheduler for posting

@@ -69,6 +69,11 @@ This roadmap captures the major improvements needed for EPIC Ready to operate as
 
 10. Complete security hardening
     - Lock down CORS, headers, uploads, file scanning, rate limits, secrets, object storage permissions, public links, GraphQL production behavior, and role enforcement.
+    - Status: started.
+      - Replaced wildcard CORS with an allowlist policy that still supports local development.
+      - Added baseline browser security headers and production HSTS.
+      - Tightened `/link` redirects to `http` and `https` destinations only.
+      - Added regression tests for CORS policy, security headers, and redirect validation.
 
 ## Current Status
 
