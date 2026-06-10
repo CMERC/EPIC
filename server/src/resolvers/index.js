@@ -5,6 +5,7 @@ const { emailQueries } = require('./Query/email')
 const { commandQueries } = require('./Query/command')
 const { timelineQueries } = require('./Query/timeline')
 const { exerciseLifecycleQueries } = require('./Query/exerciseLifecycle')
+const { hotWashQueries } = require('./Query/hotWash')
 
 const { planReportQueries } = require('./Query/planReports')
 const { geocode } = require('./Query/geocode')
@@ -64,6 +65,7 @@ module.exports = {
     ...commandQueries,
     ...timelineQueries,
     ...exerciseLifecycleQueries,
+    ...hotWashQueries,
     ...planReportQueries,
     ...randomDataQueries,
     ...geocode,

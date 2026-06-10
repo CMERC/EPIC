@@ -196,6 +196,7 @@ type Query {
     first: Int
   ): [ExerciseTimelineItem!]!
   currentExerciseLifecycle: ExerciseLifecycleSummary!
+  hotWashEvidence(first: Int): HotWashEvidence!
 }
 
 type Mutation {
@@ -501,6 +502,26 @@ type ExerciseLifecycleCounts {
   commands: Int!
   mediaPosts: Int!
   chatMessages: Int!
+}
+
+type HotWashEvidence {
+  generatedAt: DateTime!
+  workspaceName: String
+  workspaceDisplayName: String
+  items: [HotWashEvidenceItem!]!
+}
+
+type HotWashEvidenceItem {
+  id: ID!
+  source: String!
+  sourceId: String!
+  title: String!
+  summary: String
+  actor: String
+  status: String
+  occurredAt: DateTime!
+  routePath: String
+  tags: [String!]!
 }
 
 # Admin Inputs

@@ -39,6 +39,9 @@ This roadmap captures the major improvements needed for EPIC Ready to operate as
 
 6. Make hot wash and AAR first-class workflows
    - Turn observations, commands, inject responses, media posts, chat, and timeline events into guided hot wash and AAR/IP outputs.
+   - Status: started.
+     - Added `hotWashEvidence` GraphQL query to normalize observations, command outcomes, inject responses, and media posts into review-ready evidence items.
+     - Protected the evidence query with auth and workspace middleware.
 
 7. Add audit logging and compliance-grade traceability
    - Track who viewed, changed, exported, deleted, archived, and acknowledged critical records.

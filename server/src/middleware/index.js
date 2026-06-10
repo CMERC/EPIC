@@ -324,6 +324,7 @@ const workspaceResolvers = {
 
     exerciseTimelineItems: workspaceMiddleware,
     currentExerciseLifecycle: workspaceMiddleware,
+    hotWashEvidence: workspaceMiddleware,
 
     planParticipantFundingSources: workspaceMiddleware,
     planParticipantFundingSource: workspaceMiddleware,
