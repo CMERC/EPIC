@@ -61,6 +61,11 @@ This roadmap captures the major improvements needed for EPIC Ready to operate as
 
 9. Complete a performance and scale pass
    - Optimize route-level code splitting, pagination, query limits, DB indexes, file handling, map asset loading, subscriptions, and timeline aggregation.
+   - Status: started.
+     - Added shared server-side query limit helpers.
+     - Added regression tests for query caps and Prisma date-range filters.
+     - Pushed timeline date filters into Prisma reads so large exercise histories do less post-fetch filtering.
+     - Centralized hot wash evidence limit handling behind the shared query limit helper.
 
 10. Complete security hardening
     - Lock down CORS, headers, uploads, file scanning, rate limits, secrets, object storage permissions, public links, GraphQL production behavior, and role enforcement.

@@ -136,4 +136,34 @@ test('exercise timeline applies source and date filters', async() => {
 
   expect(items).toHaveLength(1)
   expect(items[0].sourceId).toBe('cmd-new')
+  expect(ctx.prisma.commandMessage.findMany).toHaveBeenCalledWith(expect.objectContaining({
+    where: {
+      OR: expect.arrayContaining([
+        {
+          createdAt: {
+            gte: new Date('2026-06-09T00:00:00Z')
+          }
+        }
+      ])
+    }
+  }))
+})
+
+test('exercise timeline caps oversized first values before database reads', async() => {
+  const ctx = {
+    prisma: {
+      observePost: {
+        findMany: jest.fn().mockResolvedValue([])
+      }
+    }
+  }
+
+  await timelineQueries.exerciseTimelineItems(null, {
+    sources: ['OBSERVE'],
+    first: 10000
+  }, ctx)
+
+  expect(ctx.prisma.observePost.findMany).toHaveBeenCalledWith(expect.objectContaining({
+    take: 300
+  }))
 })

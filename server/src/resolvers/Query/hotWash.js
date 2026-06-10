@@ -1,3 +1,5 @@
+const { clampQueryLimit } = require('../../services/queryLimits')
+
 const DEFAULT_LIMIT = 120
 
 function asDate(value) {
@@ -14,7 +16,10 @@ function textSummary(value, max = 220) {
 }
 
 function limitFromArgs(args) {
-  return Math.min(Math.max(args.first || DEFAULT_LIMIT, 1), 300)
+  return clampQueryLimit(args.first, {
+    defaultValue: DEFAULT_LIMIT,
+    max: 300
+  })
 }
 
 async function readModel(ctx, model, args) {

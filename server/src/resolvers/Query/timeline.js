@@ -1,3 +1,5 @@
+const { clampQueryLimit, dateRangeWhere, mergeWhere } = require('../../services/queryLimits')
+
 const DEFAULT_SOURCES = [
   'PLAN_EVENT',
   'PLAN_INJECT',
@@ -43,11 +45,6 @@ const SOURCE_CONFIG = {
 function selectedSources(sources) {
   if (!sources || sources.length === 0) return DEFAULT_SOURCES
   return DEFAULT_SOURCES.filter(source => sources.includes(source))
-}
-
-function clampLimit(first) {
-  if (!first) return 160
-  return Math.min(Math.max(first, 1), 300)
 }
 
 function textSummary(value, max = 180) {
@@ -113,12 +110,16 @@ async function readModel(ctx, model, args) {
 
 const timelineQueries = {
   async exerciseTimelineItems(parent, args, ctx) {
-    const limit = clampLimit(args.first)
+    const limit = clampQueryLimit(args.first, {
+      defaultValue: 160,
+      max: 300
+    })
     const sources = selectedSources(args.sources)
     const reads = []
 
     if (sources.includes('PLAN_EVENT')) {
       reads.push(readModel(ctx, 'planEvent', {
+        where: mergeWhere(dateRangeWhere(['startDate', 'endDate', 'createdAt'], args.start, args.end)),
         orderBy: {
           startDate: 'asc'
         },
@@ -139,9 +140,9 @@ const timelineQueries = {
 
     if (sources.includes('PLAN_INJECT')) {
       reads.push(readModel(ctx, 'planInject', {
-        where: {
+        where: mergeWhere({
           deletedAt: null
-        },
+        }, dateRangeWhere(['startDate', 'responseDate', 'createdAt'], args.start, args.end)),
         orderBy: {
           startDate: 'asc'
         },
@@ -163,6 +164,7 @@ const timelineQueries = {
 
     if (sources.includes('COMMAND')) {
       reads.push(readModel(ctx, 'commandMessage', {
+        where: mergeWhere(dateRangeWhere(['sentAt', 'createdAt', 'completedAt', 'acknowledgedAt', 'dueAt'], args.start, args.end)),
         orderBy: {
           createdAt: 'desc'
         },
@@ -184,6 +186,7 @@ const timelineQueries = {
 
     if (sources.includes('OBSERVE')) {
       reads.push(readModel(ctx, 'observePost', {
+        where: mergeWhere(dateRangeWhere(['createdAt'], args.start, args.end)),
         orderBy: {
           createdAt: 'desc'
         },
@@ -198,6 +201,7 @@ const timelineQueries = {
 
     if (sources.includes('MEDIA')) {
       reads.push(readModel(ctx, 'mediaPost', {
+        where: mergeWhere(dateRangeWhere(['publishTime', 'createTime', 'createdAt'], args.start, args.end)),
         orderBy: {
           createdAt: 'desc'
         },
@@ -223,6 +227,7 @@ const timelineQueries = {
 
     if (sources.includes('CHAT')) {
       reads.push(readModel(ctx, 'chatMessage', {
+        where: mergeWhere(dateRangeWhere(['createdAt'], args.start, args.end)),
         orderBy: {
           createdAt: 'desc'
         },
