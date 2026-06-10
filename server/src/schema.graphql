@@ -187,6 +187,14 @@ type Query {
     skip: Int
   ): [CommandMessage]!
   commandMessage(where: CommandMessageWhereUniqueInput!): CommandMessage
+
+  # Timeline
+  exerciseTimelineItems(
+    sources: [TimelineSource!]
+    start: DateTime
+    end: DateTime
+    first: Int
+  ): [ExerciseTimelineItem!]!
 }
 
 type Mutation {
@@ -445,6 +453,33 @@ type CommandMessage {
   planInjectTitle: String
   createdBy: String
   updatedBy: String
+}
+
+# Timeline Types
+enum TimelineSource {
+  PLAN_EVENT
+  PLAN_INJECT
+  COMMAND
+  OBSERVE
+  MEDIA
+  CHAT
+}
+
+type ExerciseTimelineItem {
+  id: ID!
+  source: TimelineSource!
+  sourceId: String!
+  lane: String!
+  title: String!
+  summary: String
+  actor: String
+  status: String
+  start: DateTime!
+  end: DateTime
+  routeName: String
+  routePath: String
+  accent: String
+  metadata: Json
 }
 
 # Admin Inputs

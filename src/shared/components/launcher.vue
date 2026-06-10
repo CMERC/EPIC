@@ -106,6 +106,18 @@
           </b-dropdown-item>
         </template>
       </template>
+      <template v-if="checkActive('timeline')">
+        <template v-if="canOpenWorkspaceApps">
+          <b-dropdown-item custom
+                           :class="classList">
+            <router-link :to="{name: 'timeline-home'}">
+              <img src="../assets/timeline.svg"
+                   alt="EPIC Timeline">
+              <p class="title is-7">Timeline</p>
+            </router-link>
+          </b-dropdown-item>
+        </template>
+      </template>
       <template v-if="checkActive('chat')">
         <template v-if="canOpenWorkspaceApps">
           <b-dropdown-item custom
@@ -342,14 +354,16 @@ export default {
       text-align: center;
       padding: 0.25rem;
       a {
+        background: var(--epic-surface-raised);
+        color: var(--epic-text);
         min-height: 6rem;
         padding: 0.85rem 0.55rem;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        border: 1px solid transparent;
-        border-radius: 8px;
+        border: 1px solid var(--epic-border);
+        border-radius: var(--epic-radius-md);
         transition: background-color 140ms ease, border-color 140ms ease, box-shadow 140ms ease, transform 140ms ease;
         img {
           height: 42px;
@@ -359,16 +373,16 @@ export default {
             margin-top: 0.45rem;
             font-size: 0.82rem;
             display: block;
-            color: #363636;
+            color: var(--epic-text);
             font-weight: 700;
             line-height: 1.125;
           }
         }
         &:hover,
         &:focus {
-          background-color: #f5f8fb;
-          border-color: rgba(51, 153, 220, 0.22);
-          box-shadow: 0 10px 24px rgba(20, 38, 60, 0.10);
+          background-color: var(--epic-surface-subtle);
+          border-color: rgba(31, 122, 140, 0.28);
+          box-shadow: var(--epic-shadow-sm);
           transform: translateY(-1px);
         }
       }

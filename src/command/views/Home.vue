@@ -523,8 +523,13 @@ export default {
         mutation: CommandMessageAcknowledge,
         variables: { where: { id: message.id } }
       }).then(({ data }) => {
+        if (!data || !data.acknowledgeCommandMessage) {
+          throw new Error('Command acknowledgement failed')
+        }
         this.selectedMessage = data.acknowledgeCommandMessage
         this.$apollo.queries.commandMessages.refetch()
+      }).catch(error => {
+        this.$buefy.toast.open({ message: error.message, type: 'is-danger' })
       })
     },
     openComplete(message) {
@@ -543,9 +548,14 @@ export default {
           }
         }
       }).then(({ data }) => {
+        if (!data || !data.completeCommandMessage) {
+          throw new Error('Command completion failed')
+        }
         this.selectedMessage = data.completeCommandMessage
         this.completeOpen = false
         this.$apollo.queries.commandMessages.refetch()
+      }).catch(error => {
+        this.$buefy.toast.open({ message: error.message, type: 'is-danger' })
       })
     },
     setStatus(message, status) {
@@ -556,8 +566,13 @@ export default {
           data: { status }
         }
       }).then(({ data }) => {
+        if (!data || !data.updateCommandMessage) {
+          throw new Error('Command status update failed')
+        }
         this.selectedMessage = data.updateCommandMessage
         this.$apollo.queries.commandMessages.refetch()
+      }).catch(error => {
+        this.$buefy.toast.open({ message: error.message, type: 'is-danger' })
       })
     },
     deleteMessage(message) {
@@ -612,8 +627,8 @@ export default {
   display: grid;
   grid-template-columns: 260px minmax(320px, 420px) 1fr;
   min-height: calc(100vh - 53px);
-  background: #f6f8fb;
-  color: #1f2933;
+  background: var(--epic-bg);
+  color: var(--epic-text);
 }
 
 .command-sidebar,
@@ -623,9 +638,10 @@ export default {
 }
 
 .command-sidebar {
-  background: #263746;
+  background: linear-gradient(180deg, #172033, #24364e);
   color: #fff;
   padding: 1rem;
+  box-shadow: inset -1px 0 0 rgba(255, 255, 255, .08);
 }
 
 .compose {
@@ -640,7 +656,7 @@ export default {
 .command-nav-item {
   align-items: center;
   background: transparent;
-  border: 0;
+  border: 1px solid transparent;
   border-radius: 8px;
   color: #d7dee7;
   cursor: pointer;
@@ -648,13 +664,16 @@ export default {
   gap: 0.5rem;
   padding: 0.75rem;
   text-align: left;
+  transition: background-color 150ms ease, border-color 150ms ease, color 150ms ease, transform 150ms ease;
   width: 100%;
 }
 
 .command-nav-item.is-active,
 .command-nav-item:hover {
   background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, .14);
   color: #fff;
+  transform: translateX(2px);
 }
 
 .filters {
@@ -669,8 +688,8 @@ export default {
 }
 
 .command-list {
-  background: #fff;
-  border-right: 1px solid #d9e2ec;
+  background: var(--epic-surface);
+  border-right: 1px solid var(--epic-border);
   overflow-y: auto;
 }
 
@@ -683,9 +702,9 @@ export default {
 }
 
 .overline {
-  color: #627d98;
+  color: var(--epic-muted);
   font-size: 0.72rem;
-  font-weight: 700;
+  font-weight: 800;
   letter-spacing: 0;
   margin-bottom: 0.15rem;
   text-transform: uppercase;
@@ -699,14 +718,14 @@ export default {
 }
 
 .message-list {
-  border-top: 1px solid #edf2f7;
+  border-top: 1px solid var(--epic-border);
 }
 
 .message-row {
   align-items: center;
-  background: #fff;
+  background: var(--epic-surface);
   border: 0;
-  border-bottom: 1px solid #edf2f7;
+  border-bottom: 1px solid var(--epic-border);
   cursor: pointer;
   display: grid;
   gap: 0.75rem;
@@ -714,13 +733,14 @@ export default {
   min-height: 72px;
   padding: 0.75rem 1rem;
   text-align: left;
-  transition: background-color 140ms ease, box-shadow 140ms ease;
+  transition: background-color 150ms ease, box-shadow 150ms ease, transform 150ms ease;
   width: 100%;
 }
 
 .message-row.is-active,
 .message-row:hover {
-  background: #eef6ff;
+  background: var(--epic-accent-soft);
+  box-shadow: inset 3px 0 0 var(--epic-accent);
 }
 
 .message-row-main {
@@ -752,7 +772,7 @@ export default {
 
 .command-detail {
   overflow-y: auto;
-  padding: 1rem;
+  padding: 1.15rem;
 }
 
 .detail-header {
@@ -768,9 +788,10 @@ export default {
 
 .meta-grid div,
 .command-body {
-  background: #fff;
-  border: 1px solid #d9e2ec;
+  background: var(--epic-surface-raised);
+  border: 1px solid var(--epic-border);
   border-radius: 8px;
+  box-shadow: var(--epic-shadow-sm);
   padding: 1rem;
 }
 

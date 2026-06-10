@@ -294,7 +294,7 @@ var serverError = __webpack_require__(97750);
 // EXTERNAL MODULE: ./src/media/graphql/MediaProfiles.gql
 var MediaProfiles = __webpack_require__(14840);
 // EXTERNAL MODULE: ./src/shared/components/imagepicker.vue + 5 modules
-var imagepicker = __webpack_require__(17282);
+var imagepicker = __webpack_require__(44464);
 ;// ./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib/index.js??clonedRuleSet-40.use[1]!./node_modules/cache-loader/dist/cjs.js??ruleSet[0].use[0]!./node_modules/@vue/cli-service/lib/config/vue-loader-v15-resolve-compat/vue-loader.js??vue-loader-options!./src/media/views/profiles/profiles-edit.vue?vue&type=script&lang=js
 
 

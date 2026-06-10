@@ -131,11 +131,16 @@ export default {
 }
 
 .emptyState {
+  background: var(--epic-surface-raised);
+  border-color: var(--epic-border);
+  color: var(--epic-text);
+
   & .card-content {
     max-width: calc(75vw - 20vw);
     margin-right: auto;
     margin-left: auto;
     & .subtitle {
+      color: var(--epic-muted);
       font-size: 1rem;
     }
     .column.loadingState {

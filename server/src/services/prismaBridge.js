@@ -335,6 +335,7 @@ const mediaPostFields = ['id', 'createdAt', 'updatedAt', 'createTime', 'updateTi
 const mediaProfileFields = ['id', 'createdAt', 'updatedAt', 'username', 'name', 'description', 'url', 'createdTime', 'isUserGenerated', 'language', 'counts']
 const mediaPersonaFields = ['id', 'createdAt', 'updatedAt', 'name', 'role', 'description']
 const mapLayerFields = ['id', 'createdAt', 'updatedAt', 'title', 'type', 'geojson']
+const observePostFields = ['id', 'createdAt', 'updatedAt', 'text', 'author']
 const planReasonFields = ['id', 'createdAt', 'updatedAt', 'title']
 const planMethodFields = ['id', 'createdAt', 'updatedAt', 'title']
 const planEventFields = ['id', 'createdAt', 'updatedAt', 'name', 'type', 'method', 'startDate', 'endDate', 'description', 'color', 'exerciseGuidance']
@@ -347,6 +348,21 @@ const mediaNetworkWhereFromPrisma1 = where => simpleWhereFromPrisma1(where, medi
 const mediaServiceWhereFromPrisma1 = where => simpleWhereFromPrisma1(where, mediaServiceFields, mediaServiceWhereFromPrisma1)
 const mediaNoiseLevelWhereFromPrisma1 = where => simpleWhereFromPrisma1(where, mediaNoiseLevelFields, mediaNoiseLevelWhereFromPrisma1)
 const mapLayerWhereFromPrisma1 = where => simpleWhereFromPrisma1(where, mapLayerFields, mapLayerWhereFromPrisma1)
+const observePostWhereFromPrisma1 = where => {
+  if (!where) {
+    return undefined
+  }
+
+  const filters = simpleWhereFromPrisma1(where, observePostFields, observePostWhereFromPrisma1)
+
+  if (where.location) {
+    filters.Location = {
+      some: simpleWhereFromPrisma1(where.location, ['id', 'geojson', 'geohash'], value => simpleWhereFromPrisma1(value, ['id', 'geojson', 'geohash']))
+    }
+  }
+
+  return filters
+}
 const planReasonWhereFromPrisma1 = where => simpleWhereFromPrisma1(where, planReasonFields, planReasonWhereFromPrisma1)
 const planMethodWhereFromPrisma1 = where => simpleWhereFromPrisma1(where, planMethodFields, planMethodWhereFromPrisma1)
 const planEventWhereFromPrisma1 = where => simpleWhereFromPrisma1(where, planEventFields, planEventWhereFromPrisma1)
@@ -431,6 +447,12 @@ const mediaProfileArgsFromPrisma1 = args => ({
 
 const mediaPersonaArgsFromPrisma1 = args => ({
   where: mediaPersonaWhereFromPrisma1(args.where),
+  orderBy: orderByFromPrisma1(args.orderBy),
+  ...paginationFromPrisma1(args)
+})
+
+const observePostArgsFromPrisma1 = args => ({
+  where: observePostWhereFromPrisma1(args.where),
   orderBy: orderByFromPrisma1(args.orderBy),
   ...paginationFromPrisma1(args)
 })
@@ -761,6 +783,33 @@ const chatMessageDataFromPrisma1 = (data = {}, options = {}) => {
   return messageData
 }
 
+const observePostDataFromPrisma1 = (data = {}, options = {}) => {
+  const postData = {}
+  ;['id', 'text', 'author'].forEach(field => {
+    if (data[field] !== undefined) {
+      postData[field] = data[field]
+    }
+  })
+
+  const location = relationInputFromPrisma1(data.location)
+  if (location) {
+    postData.Location = location
+  }
+
+  const attachments = relationInputFromPrisma1(data.attachments)
+  if (attachments) {
+    postData.MediaFile = attachments
+  }
+
+  if (options.create) {
+    postData.id = postData.id || generatePrismaId()
+    postData.createdAt = data.createdAt || now()
+  }
+  postData.updatedAt = data.updatedAt || now()
+
+  return postData
+}
+
 const mediaNetworkDataFromPrisma1 = (data = {}, options = {}) => simpleDataFromPrisma1(data, mediaNetworkFields, options)
 const mediaServiceDataFromPrisma1 = (data = {}, options = {}) => simpleDataFromPrisma1(data, mediaServiceFields, options)
 const mediaNoiseLevelDataFromPrisma1 = (data = {}, options = {}) => simpleDataFromPrisma1(data, mediaNoiseLevelFields, options)
@@ -850,6 +899,18 @@ const toEmailMailbox = mailbox => {
   return {
     ...mailbox,
     messages: Array.isArray(mailbox.EmailMessage) ? mailbox.EmailMessage.map(toEmailMessage) : []
+  }
+}
+
+const toObservePost = post => {
+  if (!post) {
+    return null
+  }
+
+  return {
+    ...post,
+    location: Array.isArray(post.Location) ? post.Location[0] : post.Location,
+    attachments: Array.isArray(post.MediaFile) ? post.MediaFile : []
   }
 }
 
@@ -1032,6 +1093,9 @@ module.exports = {
   mediaNoiseLevelArgsFromPrisma1,
   mediaNoiseLevelDataFromPrisma1,
   mediaNoiseLevelWhereFromPrisma1,
+  observePostArgsFromPrisma1,
+  observePostDataFromPrisma1,
+  observePostWhereFromPrisma1,
   mediaPersonaArgsFromPrisma1,
   mediaPersonaWhereFromPrisma1,
   mediaPostArgsFromPrisma1,
@@ -1075,6 +1139,7 @@ module.exports = {
   toMediaPersona,
   toMediaPersonaEdge,
   toMediaProfile,
+  toObservePost,
   toPlanEvent,
   toPlanInjectSlim,
   toPlanMeeting,

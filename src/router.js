@@ -139,6 +139,10 @@ import ObserveProfile from './observe/views/Profile.vue'
 import ActivityDashboard from './activity/views/Dashboard.vue'
 import ActivityHome from './activity/views/Home.vue'
 
+//Timeline
+import TimelineDashboard from './timeline/views/Dashboard.vue'
+import TimelineHome from './timeline/views/Home.vue'
+
 //Learn
 import LearnDashboard from './learn/views/Dashboard.vue'
 import LearnHome from './learn/views/Home.vue'
@@ -2035,6 +2039,28 @@ export default new Router({
           path: '/',
           name: 'activity-home',
           component: ActivityHome
+        }
+      ]
+    },
+    //Timeline
+    {
+      path: '/timeline',
+      component: TimelineDashboard,
+      meta: { title: 'EPIC Timeline', requiresAuth: true },
+      beforeEnter: async function(to, from, next) {
+        await checkUser()
+        if (canOpenWorkspaceApps()) {
+          next(true)
+        } else {
+          // User has no access to the app, redirect to dashboard
+          next({ path: '/' })
+        }
+      },
+      children: [
+        {
+          path: '/',
+          name: 'timeline-home',
+          component: TimelineHome
         }
       ]
     },

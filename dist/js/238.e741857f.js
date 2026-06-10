@@ -497,7 +497,7 @@ var maplocationpicker = __webpack_require__(55964);
 // EXTERNAL MODULE: ./src/media/components/social-counts.vue + 5 modules
 var social_counts = __webpack_require__(88556);
 // EXTERNAL MODULE: ./src/shared/components/imagepicker.vue + 5 modules
-var imagepicker = __webpack_require__(17282);
+var imagepicker = __webpack_require__(44464);
 // EXTERNAL MODULE: ./src/shared/mixins/helpers.js
 var helpers = __webpack_require__(21809);
 // EXTERNAL MODULE: ./src/shared/components/datepicker.vue + 5 modules

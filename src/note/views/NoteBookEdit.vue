@@ -1,5 +1,5 @@
 <template>
-  <div class="has-background-light">
+  <div class="notebook-shell">
     <breadcrumb />
     <div class="container section notebook">
       <nav class="level">
@@ -133,7 +133,7 @@
         <div class="column is-paddingless">
           <div ref="page-top"
                class="is-hidden-desktop" />
-          <div class="box has-background-white"
+          <div class="box notebook-page"
                style="padding: 3vh 3vw">
             <template v-if="selectedPage">
               <button class="button"
@@ -233,7 +233,7 @@ let toolbarOptions = [
 ]
 
 export default {
-  name: 'notes',
+  name: 'NotebookEdit',
   props: {
     notebookID: {
       default: '',

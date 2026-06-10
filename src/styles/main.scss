@@ -34,15 +34,22 @@
   --epic-surface: #ffffff;
   --epic-surface-raised: #ffffff;
   --epic-surface-subtle: #f7fafc;
+  --epic-surface-muted: #eef4f8;
   --epic-border: #d9e2ec;
   --epic-border-strong: #b7c7d8;
   --epic-text: #223044;
   --epic-muted: #65758b;
+  --epic-accent: #1f7a8c;
+  --epic-accent-strong: #155e75;
+  --epic-accent-soft: rgba(31, 122, 140, 0.11);
   --epic-radius-sm: 6px;
   --epic-radius-md: 8px;
+  --epic-radius-lg: 10px;
   --epic-shadow-sm: 0 2px 8px rgba(20, 38, 60, 0.08);
   --epic-shadow-md: 0 16px 40px rgba(20, 38, 60, 0.12);
+  --epic-shadow-lg: 0 24px 56px rgba(20, 38, 60, 0.16);
   --epic-ring: rgba(51, 153, 220, 0.28);
+  --epic-motion: 150ms ease;
 }
 
 html,
@@ -61,6 +68,29 @@ body {
 
 .app {
   min-height: 100vh;
+}
+
+* {
+  scrollbar-width: thin;
+}
+
+*::-webkit-scrollbar {
+  height: 12px;
+  width: 12px;
+}
+
+*::-webkit-scrollbar-track {
+  background: var(--epic-bg);
+}
+
+*::-webkit-scrollbar-thumb {
+  background: var(--epic-border-strong);
+  border: 3px solid var(--epic-bg);
+  border-radius: 999px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: var(--epic-muted);
 }
 
 main {
@@ -139,6 +169,30 @@ figure {
   padding-bottom: 2.25rem;
 }
 
+.section,
+.container,
+.app-home,
+.planDash,
+.mediaDash,
+.learn-page,
+.command-app {
+  color: var(--epic-text);
+}
+
+.has-background-light,
+.has-background-white,
+.has-background-white-bis,
+.has-background-white-ter {
+  background-color: var(--epic-surface) !important;
+  color: var(--epic-text);
+}
+
+.has-background-white-bis,
+.has-background-white-ter,
+.has-background-light {
+  background-color: var(--epic-surface-subtle) !important;
+}
+
 .title,
 .subtitle,
 .label,
@@ -149,6 +203,14 @@ figure {
 
 .subtitle {
   color: var(--epic-muted);
+}
+
+.overline {
+  color: var(--epic-muted);
+  font-size: .72rem;
+  font-weight: 800;
+  letter-spacing: 0;
+  text-transform: uppercase;
 }
 
 .image .logo {
@@ -240,12 +302,14 @@ ul {
 .box,
 .notification,
 .panel,
-.modal-card {
+.modal-card,
+.message {
   border-radius: var(--epic-radius-md);
 }
 .box,
 .panel,
 .modal-card,
+.message,
 .notification:not(.is-primary):not(.is-info):not(.is-success):not(.is-warning):not(.is-danger),
 .tile.is-child:not(.is-primary):not(.is-info):not(.is-success):not(.is-warning):not(.is-danger) {
   border: 1px solid rgba(217, 226, 236, 0.82);
@@ -261,6 +325,14 @@ ul {
   border-color: rgba(51, 153, 220, 0.28);
   box-shadow: var(--epic-shadow-md);
 }
+.card,
+.box,
+.panel,
+.message,
+.modal-card,
+.tile.is-child {
+  color: var(--epic-text);
+}
 .input[disabled],
 .textarea[disabled] {
   border-color: #d5dade;
@@ -269,22 +341,43 @@ ul {
 .textarea,
 .select select,
 .taginput .taginput-container,
-.multiselect__tags {
+.multiselect__tags,
+.datepicker .input {
+  background-color: var(--epic-surface);
+  border-color: var(--epic-border);
+  color: var(--epic-text);
   border-radius: 8px;
   box-shadow: none;
-  transition: border-color 140ms ease, box-shadow 140ms ease, background-color 140ms ease;
+  transition: border-color var(--epic-motion), box-shadow var(--epic-motion), background-color var(--epic-motion);
 }
 .input:focus,
 .textarea:focus,
 .select select:focus,
 .taginput .taginput-container.is-focusable:focus,
 .multiselect.multiselect--active .multiselect__tags {
+  border-color: var(--epic-accent);
   box-shadow: 0 0 0 3px var(--epic-ring);
 }
 .button {
   border-radius: 8px;
   font-weight: 700;
-  transition: background-color 140ms ease, border-color 140ms ease, box-shadow 140ms ease, transform 140ms ease;
+  transition: background-color var(--epic-motion), border-color var(--epic-motion), box-shadow var(--epic-motion), color var(--epic-motion), transform var(--epic-motion);
+}
+.button:not(.is-text):not([disabled]):hover,
+.button:not(.is-text):not([disabled]):focus {
+  box-shadow: 0 8px 18px rgba(20, 38, 60, 0.12);
+  transform: translateY(-1px);
+}
+.button:focus-visible,
+a:focus-visible,
+.navbar-item:focus-visible,
+.navbar-link:focus-visible,
+.command-nav-item:focus-visible,
+.message-row:focus-visible,
+.module-card:focus-visible,
+.overview-step:focus-visible {
+  outline: 3px solid var(--epic-ring);
+  outline-offset: 2px;
 }
 .button:not([disabled]):active {
   transform: translateY(1px);
@@ -294,7 +387,7 @@ ul {
   letter-spacing: 0;
 }
 .panel-block {
-  transition: background-color 140ms ease, border-color 140ms ease, color 140ms ease;
+  transition: background-color var(--epic-motion), border-color var(--epic-motion), color var(--epic-motion);
   &:hover {
     background-color: var(--epic-surface-subtle);
   }
@@ -350,6 +443,17 @@ ul {
   background: var(--epic-surface-subtle);
   border-color: var(--epic-border);
 }
+.modal-background {
+  background-color: rgba(15, 23, 42, .58);
+  backdrop-filter: blur(3px);
+}
+.modal-card {
+  box-shadow: var(--epic-shadow-lg);
+}
+.modal-card-title {
+  color: var(--epic-text);
+  font-weight: 800;
+}
 .delete {
   transition: background-color 140ms ease, opacity 140ms ease;
 }
@@ -394,6 +498,180 @@ ul {
 .profile-description {
 height: 45px;
 overflow: hidden;
+}
+
+.app-home .home-hero {
+  border: 1px solid rgba(217, 226, 236, .82);
+  border-radius: var(--epic-radius-lg);
+  box-shadow: var(--epic-shadow-sm);
+  margin-bottom: 1.25rem;
+  padding: 1.35rem;
+}
+
+.app-home .apps {
+  row-gap: .25rem;
+}
+
+div.apps article.media {
+  align-items: center;
+  background: var(--epic-surface-raised);
+  border: 1px solid rgba(217, 226, 236, .84);
+  border-radius: var(--epic-radius-lg);
+  box-shadow: var(--epic-shadow-sm);
+  min-height: 104px;
+  padding: 1rem;
+  transition: background-color var(--epic-motion), border-color var(--epic-motion), box-shadow var(--epic-motion), transform var(--epic-motion);
+}
+
+div.apps a {
+  color: inherit;
+  display: block;
+}
+
+div.apps article.media:hover,
+div.apps article.media:focus-within {
+  border-color: rgba(31, 122, 140, .34);
+  box-shadow: var(--epic-shadow-md);
+  transform: translateY(-2px);
+}
+
+div.apps article.media .media-left {
+  align-items: center;
+  background: var(--epic-accent-soft);
+  border: 1px solid rgba(31, 122, 140, .14);
+  border-radius: var(--epic-radius-md);
+  display: inline-flex;
+  height: 58px;
+  justify-content: center;
+  margin-right: .9rem;
+  width: 58px;
+}
+
+div.apps article.media .media-left img {
+  max-height: 38px;
+  max-width: 38px;
+}
+
+div.apps article.media .content p {
+  color: var(--epic-text) !important;
+  margin-bottom: 0;
+}
+
+div.apps article.media strong {
+  color: var(--epic-text);
+  font-size: 1rem;
+}
+
+div.apps article.media small {
+  color: var(--epic-muted);
+  display: inline-block;
+  line-height: 1.35;
+  margin-top: .18rem;
+}
+
+div.apps article.media .media-right .icon {
+  align-items: center;
+  background: var(--epic-surface-subtle);
+  border: 1px solid var(--epic-border);
+  border-radius: 999px;
+  color: var(--epic-muted);
+  display: inline-flex;
+  height: 34px;
+  justify-content: center;
+  width: 34px;
+}
+
+div.apps article.media:hover .media-right .icon {
+  background: var(--epic-accent);
+  border-color: var(--epic-accent);
+  color: #fff;
+}
+
+.is-divider {
+  color: var(--epic-muted);
+  font-weight: 800;
+  letter-spacing: 0;
+}
+
+.notebook-shell {
+  background: var(--epic-bg);
+  color: var(--epic-text);
+  min-height: calc(100vh - 3.25rem);
+}
+
+.notebook-page {
+  background: var(--epic-surface-raised);
+  border: 1px solid var(--epic-border);
+  box-shadow: var(--epic-shadow-sm);
+}
+
+.upload-file {
+  background:
+    linear-gradient(135deg, var(--epic-surface-subtle), var(--epic-surface-raised));
+  border: 1px dashed var(--epic-border-strong) !important;
+  color: var(--epic-muted);
+  cursor: pointer;
+  transition: border-color var(--epic-motion), box-shadow var(--epic-motion), transform var(--epic-motion);
+}
+
+.upload-file:hover,
+.upload-file:focus-within {
+  border-color: var(--epic-accent) !important;
+  box-shadow: 0 0 0 3px var(--epic-ring);
+  transform: translateY(-1px);
+}
+
+.fade-enter-active,
+.fade-leave-active,
+.modal.is-active .modal-card,
+.dropdown-menu,
+.navbar-dropdown {
+  animation-duration: 160ms;
+  animation-timing-function: ease;
+}
+
+.fade-enter-active {
+  animation-name: epic-fade-in;
+}
+
+.fade-leave-active {
+  animation-name: epic-fade-out;
+}
+
+.modal.is-active .modal-card {
+  animation-name: epic-rise-in;
+}
+
+@keyframes epic-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes epic-fade-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@keyframes epic-rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(.99);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 1ms !important;
+  }
 }
 
 //Search 
@@ -746,6 +1024,7 @@ overflow: hidden;
   &.is-admin,
   &.is-email,
   &.is-chat,
+  &.is-timeline,
   &.is-resources,
   &.is-learn,
   &.is-command {
@@ -793,12 +1072,17 @@ overflow: hidden;
   --epic-surface: #172033;
   --epic-surface-raised: #172033;
   --epic-surface-subtle: #1f2937;
+  --epic-surface-muted: #263447;
   --epic-border: #3b4658;
   --epic-border-strong: #526176;
   --epic-text: #edf2f7;
   --epic-muted: #b7c2d0;
+  --epic-accent: #7dd3fc;
+  --epic-accent-strong: #38bdf8;
+  --epic-accent-soft: rgba(125, 211, 252, 0.12);
   --epic-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.24);
   --epic-shadow-md: 0 16px 40px rgba(0, 0, 0, 0.36);
+  --epic-shadow-lg: 0 24px 56px rgba(0, 0, 0, 0.48);
   --epic-ring: rgba(125, 211, 252, 0.24);
 
   background:
@@ -818,6 +1102,18 @@ overflow: hidden;
   .home-hero,
   div.apps article.media {
     background: #172033;
+  }
+
+  div.apps article.media .media-left,
+  div.apps article.media .media-right .icon {
+    background: rgba(125, 211, 252, .10);
+    border-color: rgba(125, 211, 252, .18);
+  }
+
+  div.apps article.media:hover .media-right .icon {
+    background: #7dd3fc;
+    border-color: #7dd3fc;
+    color: #0f172a;
   }
 
   div.apps article.media strong {
@@ -852,12 +1148,12 @@ overflow: hidden;
 }
 
 .steps .step-item.is-active.is-completed .step-marker {
-  background-color:#fff;
-  color:#2ecc71;
+  background-color: var(--epic-surface);
+  color: var(--success);
   border-style: dashed!important;
 }
 .steps .step-item.is-active .step-marker{
-  background-color:#fff;
+  background-color: var(--epic-surface);
   border-style: dashed!important;
 }
 
@@ -909,7 +1205,7 @@ overflow: hidden;
     padding: 0;
     box-shadow: initial;
     overflow-y: auto;
-    background-color: white;
+    background-color: var(--epic-surface);
   }
   .navbar-item {
     &.has-dropdown {

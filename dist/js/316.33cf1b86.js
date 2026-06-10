@@ -516,7 +516,7 @@ var mediaPost = __webpack_require__(76714);
 // EXTERNAL MODULE: ./src/shared/mixins/helpers.js
 var helpers = __webpack_require__(21809);
 // EXTERNAL MODULE: ./src/shared/components/imagepicker.vue + 5 modules
-var imagepicker = __webpack_require__(17282);
+var imagepicker = __webpack_require__(44464);
 // EXTERNAL MODULE: ./src/shared/components/profile-card.vue + 6 modules
 var profile_card = __webpack_require__(79194);
 ;// ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"27ccff72-vue-loader-template"}!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib/index.js??clonedRuleSet-40.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/templateLoader.js??ruleSet[1].rules[4]!./node_modules/cache-loader/dist/cjs.js??ruleSet[0].use[0]!./node_modules/@vue/cli-service/lib/config/vue-loader-v15-resolve-compat/vue-loader.js??vue-loader-options!./src/media/components/personas-addprofile.vue?vue&type=template&id=70b8feb9&scoped=true

@@ -314,7 +314,8 @@ export default {
 
 <style lang="scss" scoped>
 .container {
-  background-color: white;
+  background-color: var(--epic-bg);
+  color: var(--epic-text);
   max-width: 100vw;
   width: auto;
   flex-direction: column;
@@ -343,7 +344,9 @@ export default {
     }
     .sidebar {
       padding-left: 20px;
-      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+      background: var(--epic-surface);
+      border-right: 1px solid var(--epic-border);
+      box-shadow: var(--epic-shadow-sm);
       display: flex;
       flex-direction: column;
       min-width: 245px;
@@ -384,7 +387,8 @@ export default {
 }
 
 .chat {
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+  background: var(--epic-surface);
+  box-shadow: var(--epic-shadow-sm);
   display: flex;
   flex-direction: column;
   padding-bottom: 0;
@@ -399,7 +403,7 @@ export default {
   min-height: calc(90vh - 110px);
   height: 65vh;
   & li {
-    background-color: whitesmoke;
+    background-color: var(--epic-surface-subtle);
   }
   .roomTitle {
     margin-left: 10px;
@@ -424,7 +428,7 @@ export default {
 @media screen and (min-width: 1025px) {
   .container {
     overflow: hidden;
-    background-color: whitesmoke;
+    background-color: var(--epic-bg);
   }
   .thread {
     min-height: initial;
@@ -444,9 +448,10 @@ export default {
 
     & li {
       padding: 8px 16px;
-      background-color: #fff;
+      background-color: var(--epic-surface-raised);
+      border: 1px solid var(--epic-border);
       align-self: flex-start;
-      border-radius: 18px;
+      border-radius: var(--epic-radius-lg);
       word-break: break-word;
       word-wrap: break-word;
       span {

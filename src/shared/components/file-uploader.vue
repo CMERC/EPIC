@@ -31,7 +31,7 @@
           <p class="subtitle has-text-centered">Uploading File...</p>
         </div>
         <div v-else
-             class="upload-file box has-background-white-bis has-text-centered">
+             class="upload-file box has-text-centered">
           <div>
             <p>
               <span class="icon is-large">
@@ -120,7 +120,10 @@ export default {
               }
             })
             .then(response => {
-              this.fileList.push(response.data.singleUpload)
+              this.fileListProxy = [
+                ...(this.fileListProxy || []),
+                response.data.singleUpload
+              ]
               this.uploadingFile = false
             })
             .catch(error => {
@@ -152,11 +155,11 @@ export default {
 <style lang="scss">
 .file-uploader {
   .upload-file {
-    outline: 1px dashed lightgrey !important;
-    border-radius: unset;
+    outline: 0 !important;
+    border-radius: var(--epic-radius-md);
     &:hover {
       cursor: pointer;
-      outline: 1px dashed grey !important;
+      outline: 0 !important;
     }
     .input-file {
       opacity: 0; /* invisible but it's there! */

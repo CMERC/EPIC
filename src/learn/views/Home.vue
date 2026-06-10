@@ -897,16 +897,16 @@ export default {
   --learn-accent-dark: #075766;
   --learn-accent-soft: #e0f2f1;
   --learn-accent-wash: #eef8f9;
-  --learn-surface: #ffffff;
-  background: #f5f7f9;
-  color: #1f2933;
+  --learn-surface: var(--epic-surface-raised);
+  background: var(--epic-bg);
+  color: var(--epic-text);
   min-height: calc(100vh - 3.25rem);
   padding: 2rem;
 }
 
 .learn-page.is-course-page {
   background:
-    linear-gradient(180deg, var(--learn-accent-wash), #f5f7f9 22rem);
+    linear-gradient(180deg, var(--learn-accent-wash), var(--epic-bg) 22rem);
 }
 
 .course-plan {
@@ -981,7 +981,7 @@ export default {
   }
 
   p {
-    color: #52606d;
+    color: var(--epic-muted);
     line-height: 1.5;
     max-width: 56rem;
   }
@@ -990,7 +990,7 @@ export default {
 .overline {
   color: var(--learn-accent);
   font-size: .75rem;
-  font-weight: 700;
+  font-weight: 800;
   letter-spacing: 0;
   margin-bottom: .35rem;
   text-transform: uppercase;
@@ -1003,10 +1003,10 @@ export default {
 .path-panel,
 .lesson-panel,
 .lesson-card {
-  background: #ffffff;
-  border: 1px solid #d9e2ec;
-  border-radius: 6px;
-  box-shadow: 0 1px 2px rgba(16, 42, 67, .06);
+  background: var(--learn-surface);
+  border: 1px solid var(--epic-border);
+  border-radius: var(--epic-radius-md);
+  box-shadow: var(--epic-shadow-sm);
 }
 
 .progress-card {
@@ -1040,8 +1040,8 @@ export default {
 
 .module-card {
   align-items: flex-start;
-  color: #1f2933;
-  border-radius: 8px;
+  color: var(--epic-text);
+  border-radius: var(--epic-radius-md);
   display: grid;
   gap: .65rem;
   grid-template-columns: 2.35rem minmax(0, 1fr);
@@ -1051,14 +1051,14 @@ export default {
   width: 100%;
 
   &:hover {
-    border-color: #829ab1;
-    box-shadow: 0 10px 24px rgba(16, 42, 67, .10);
+    border-color: var(--epic-border-strong);
+    box-shadow: var(--epic-shadow-md);
     transform: translateY(-1px);
   }
 
   &.active {
     border-color: var(--learn-accent);
-    box-shadow: inset 0 4px 0 var(--learn-accent), 0 8px 18px rgba(16, 42, 67, .08);
+    box-shadow: inset 0 4px 0 var(--learn-accent), var(--epic-shadow-sm);
   }
 
   &.complete {
@@ -1066,7 +1066,7 @@ export default {
   }
 
   &.locked {
-    color: #829ab1;
+    color: var(--epic-muted);
     cursor: not-allowed;
     opacity: .72;
   }
@@ -1096,13 +1096,13 @@ export default {
   }
 
   small {
-    color: #52606d;
+    color: var(--epic-muted);
     line-height: 1.35;
   }
 }
 
 .module-state {
-  color: #334e68;
+  color: var(--epic-muted);
   font-size: .78rem;
   font-weight: 700;
   grid-column: 2;
@@ -1127,7 +1127,7 @@ export default {
   }
 
   p {
-    color: #52606d;
+    color: var(--epic-muted);
     line-height: 1.5;
   }
 }
@@ -1139,8 +1139,8 @@ export default {
 }
 
 .overview-step {
-  color: #1f2933;
-  border-radius: 8px;
+  color: var(--epic-text);
+  border-radius: var(--epic-radius-md);
   display: grid;
   font: inherit;
   gap: .2rem;
@@ -1168,7 +1168,7 @@ export default {
   }
 
   small {
-    color: #627d98;
+    color: var(--epic-muted);
     font-weight: 700;
   }
 
@@ -1177,7 +1177,7 @@ export default {
   }
 
   &.locked {
-    color: #829ab1;
+    color: var(--epic-muted);
     cursor: not-allowed;
     opacity: .72;
   }
@@ -1205,8 +1205,8 @@ export default {
   align-items: center;
   background: transparent;
   border: 0;
-  border-top: 1px solid #edf2f7;
-  color: #1f2933;
+  border-top: 1px solid var(--epic-border);
+  color: var(--epic-text);
   cursor: pointer;
   display: grid;
   gap: .65rem;
@@ -1217,13 +1217,13 @@ export default {
   width: 100%;
 
   &:disabled {
-    color: #829ab1;
+    color: var(--epic-muted);
     cursor: not-allowed;
   }
 
   &.active {
     background: var(--learn-accent-wash);
-    border-radius: 6px;
+    border-radius: var(--epic-radius-sm);
   }
 
   strong,
@@ -1232,14 +1232,14 @@ export default {
   }
 
   small {
-    color: #627d98;
+    color: var(--epic-muted);
     line-height: 1.35;
   }
 }
 
 .path-number {
   align-items: center;
-  background: #f0f4f8;
+  background: var(--epic-surface-subtle);
   border-radius: 999px;
   display: inline-flex;
   font-weight: 700;
@@ -1255,7 +1255,7 @@ export default {
   justify-content: space-between;
   margin-bottom: 1.25rem;
   padding-bottom: 1rem;
-  border-bottom: 1px solid #edf2f7;
+  border-bottom: 1px solid var(--epic-border);
 
   h2 {
     font-size: 1.65rem;
@@ -1265,7 +1265,7 @@ export default {
   }
 
   p {
-    color: #52606d;
+    color: var(--epic-muted);
     line-height: 1.45;
   }
 }
@@ -1307,7 +1307,7 @@ export default {
 
   p,
   li {
-    color: #334e68;
+    color: var(--epic-text);
     line-height: 1.45;
   }
 
@@ -1322,8 +1322,8 @@ export default {
 }
 
 .app-preview {
-  border: 1px solid #d9e2ec;
-  border-radius: 6px;
+  border: 1px solid var(--epic-border);
+  border-radius: var(--epic-radius-sm);
   display: grid;
   grid-template-columns: 6rem minmax(0, 1fr);
   margin-top: .85rem;
@@ -1373,8 +1373,8 @@ export default {
 
 .preview-marker {
   align-items: center;
-  background: #ffffff;
-  border: 1px solid rgba(16, 42, 67, .16);
+  background: var(--epic-surface-raised);
+  border: 1px solid var(--epic-border);
   border-radius: 999px;
   box-shadow: 0 4px 10px rgba(16, 42, 67, .12);
   color: var(--learn-accent-dark);
@@ -1414,7 +1414,7 @@ export default {
 }
 
 .evidence-label {
-  color: #52606d;
+  color: var(--epic-muted);
   display: block;
   font-size: .85rem;
   font-weight: 700;
@@ -1422,7 +1422,7 @@ export default {
 }
 
 .quiz-question {
-  border-top: 1px solid #edf2f7;
+  border-top: 1px solid var(--epic-border);
   padding: .8rem 0;
 
   &:first-of-type {
@@ -1452,7 +1452,7 @@ export default {
   padding: .8rem;
 
   span {
-    color: #52606d;
+    color: var(--epic-muted);
     font-weight: 700;
   }
 
@@ -1481,7 +1481,7 @@ export default {
 }
 
 .completion-hint {
-  color: #627d98;
+  color: var(--epic-muted);
   font-size: .9rem;
   margin-top: .75rem;
 }

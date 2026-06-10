@@ -1,5 +1,5 @@
 <template>
-  <div class="has-background-light">
+  <div class="notebook-shell">
     <breadcrumb />
     <div class="container section notebook">
       <nav class="level">
@@ -44,7 +44,7 @@
         <div class="column is-paddingless">
           <div ref="page-top"
                class="is-hidden-desktop" />
-          <div class="box has-background-white"
+          <div class="box notebook-page"
                style="padding: 3vh 3vw">
             <template v-if="selectedPage">
               <h1 class="title is-3">
@@ -78,7 +78,7 @@ import HelpContent from '@/shared/components/helpcontent'
 import { NoteBookRead } from '@/note/graphql/NoteBook.gql'
 
 export default {
-  name: 'notes',
+  name: 'NotebookView',
   props: {
     notebookID: {
       default: '',

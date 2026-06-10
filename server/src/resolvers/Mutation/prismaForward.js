@@ -9,6 +9,7 @@ const {
   mediaNetworkDataFromPrisma1,
   mediaNoiseLevelDataFromPrisma1,
   mediaServiceDataFromPrisma1,
+  observePostDataFromPrisma1,
   planFundingSourceDataFromPrisma1,
   planMethodDataFromPrisma1,
   planPriorityLevelDataFromPrisma1,
@@ -18,7 +19,8 @@ const {
   toChatMessage,
   toChatRoom,
   toEmailMailbox,
-  toEmailMessage
+  toEmailMessage,
+  toObservePost
 } = require('../../services/prismaBridge')
 
 const prismaForward = {
@@ -567,10 +569,65 @@ const prismaForward = {
   upsertPlanOrganization: forwardTo('db'),
   deletePlanOrganization: forwardTo('db'),
 
-  createObservePost: forwardTo('db'),
-  updateObservePost: forwardTo('db'),
-  upsertObservePost: forwardTo('db'),
-  deleteObservePost: forwardTo('db'),
+  async createObservePost(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      const post = await ctx.prisma.observePost.create({
+        data: observePostDataFromPrisma1(args.data, { create: true }),
+        include: {
+          Location: true,
+          MediaFile: true
+        }
+      })
+      return toObservePost(post)
+    }
+
+    return ctx.db.mutation.createObservePost(args, info)
+  },
+  async updateObservePost(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      const post = await ctx.prisma.observePost.update({
+        where: args.where,
+        data: observePostDataFromPrisma1(args.data),
+        include: {
+          Location: true,
+          MediaFile: true
+        }
+      })
+      return toObservePost(post)
+    }
+
+    return ctx.db.mutation.updateObservePost(args, info)
+  },
+  async upsertObservePost(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      const post = await ctx.prisma.observePost.upsert({
+        where: args.where,
+        create: observePostDataFromPrisma1(args.create, { create: true }),
+        update: observePostDataFromPrisma1(args.update),
+        include: {
+          Location: true,
+          MediaFile: true
+        }
+      })
+      return toObservePost(post)
+    }
+
+    return ctx.db.mutation.upsertObservePost(args, info)
+  },
+  async deleteObservePost(parent, args, ctx, info) {
+    if (ctx.prisma) {
+      const post = await ctx.prisma.observePost.delete({
+        where: args.where,
+        include: {
+          Location: true,
+          MediaFile: true
+        }
+      })
+      return toObservePost(post)
+    }
+
+    return ctx.db.mutation.deleteObservePost(args, info)
+  },
 
   async createChatMessage(parent, args, ctx, info) {
     if (ctx.prisma) {

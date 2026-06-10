@@ -83,6 +83,30 @@ model ChatRoom {
   ChatMessage ChatMessage[] @relation("RoomMessage")
 }
 
+model CommandMessage {
+  id               String    @id @db.Char(25)
+  createdAt        DateTime
+  updatedAt        DateTime
+  title            String    @db.MediumText
+  body             String    @db.MediumText
+  fromName         String?   @db.MediumText
+  fromEmail        String?   @db.MediumText
+  recipientNames   String?   @db.MediumText
+  recipientEmails  String?   @db.MediumText
+  priority         String
+  status           String
+  dueAt            DateTime?
+  sentAt           DateTime?
+  acknowledgedAt   DateTime?
+  completedAt      DateTime?
+  response         String?   @db.MediumText
+  planInjectId     String?   @db.MediumText
+  planInjectNumber Int?
+  planInjectTitle  String?   @db.MediumText
+  createdBy        String?   @db.MediumText
+  updatedBy        String?   @db.MediumText
+}
+
 model EmailMailbox {
   id           String         @id @db.Char(25)
   createdAt    DateTime

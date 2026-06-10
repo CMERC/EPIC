@@ -139,9 +139,11 @@ export default {
 
 <style scoped>
 .epic-rich-text-editor {
-  border: 1px solid #d8dee9;
-  border-radius: 4px;
-  background: #fff;
+  border: 1px solid var(--epic-border);
+  border-radius: var(--epic-radius-md);
+  background: var(--epic-surface);
+  color: var(--epic-text);
+  overflow: hidden;
 }
 
 .epic-rich-text-toolbar {
@@ -150,8 +152,8 @@ export default {
   gap: 0.25rem;
   align-items: center;
   padding: 0.35rem;
-  border-bottom: 1px solid #d8dee9;
-  background: #f7f9fb;
+  border-bottom: 1px solid var(--epic-border);
+  background: var(--epic-surface-subtle);
 }
 
 .epic-rich-text-toolbar .button {
@@ -169,8 +171,12 @@ export default {
   outline: none;
 }
 
+.epic-rich-text-content:focus {
+  box-shadow: inset 0 0 0 3px var(--epic-ring);
+}
+
 .epic-rich-text-content:empty::before {
   content: attr(data-placeholder);
-  color: #7a7a7a;
+  color: var(--epic-muted);
 }
 </style>

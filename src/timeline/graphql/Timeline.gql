@@ -1,0 +1,28 @@
+query ExerciseTimelineItems(
+  $sources: [TimelineSource!]
+  $start: DateTime
+  $end: DateTime
+  $first: Int
+) {
+  exerciseTimelineItems(
+    sources: $sources
+    start: $start
+    end: $end
+    first: $first
+  ) {
+    id
+    source
+    sourceId
+    lane
+    title
+    summary
+    actor
+    status
+    start
+    end
+    routeName
+    routePath
+    accent
+    metadata
+  }
+}

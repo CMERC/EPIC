@@ -35,6 +35,7 @@ const {
   mediaServiceWhereFromPrisma1,
   mapLayerArgsFromPrisma1,
   mapLayerWhereFromPrisma1,
+  observePostArgsFromPrisma1,
   orderByFromPrisma1,
   planEventArgsFromPrisma1,
   planEventWhereFromPrisma1,
@@ -61,6 +62,7 @@ const {
   toMediaPost,
   toMediaPersona,
   toMediaProfile,
+  toObservePost,
   toPlanEvent,
   toPlanInjectSlim,
   toPlanMeeting,
@@ -192,11 +194,12 @@ const passthroughArgsFromPrisma1 = (args = {}) => {
   return prismaArgs
 }
 
-const prismaModelQueryResolvers = ({ model, field, manyField, connectionField, map = value => value, argsMapper = passthroughArgsFromPrisma1 }) => ({
+const prismaModelQueryResolvers = ({ model, field, manyField, connectionField, map = value => value, argsMapper = passthroughArgsFromPrisma1, include }) => ({
   [field]: async(parent, args, ctx, info) => {
     if (ctx.prisma && ctx.prisma[model]) {
       const item = await ctx.prisma[model].findFirst({
-        where: argsMapper(args).where
+        where: argsMapper(args).where,
+        ...(include ? { include } : {})
       })
       return map(item)
     }
@@ -204,7 +207,10 @@ const prismaModelQueryResolvers = ({ model, field, manyField, connectionField, m
   },
   [manyField]: async(parent, args, ctx, info) => {
     if (ctx.prisma && ctx.prisma[model]) {
-      const items = await ctx.prisma[model].findMany(argsMapper(args))
+      const items = await ctx.prisma[model].findMany({
+        ...argsMapper(args),
+        ...(include ? { include } : {})
+      })
       return items.map(map)
     }
     return ctx.db.query[manyField](args, info)
@@ -213,7 +219,10 @@ const prismaModelQueryResolvers = ({ model, field, manyField, connectionField, m
     if (ctx.prisma && ctx.prisma[model]) {
       const prismaArgs = argsMapper(args)
       const [items, count] = await Promise.all([
-        ctx.prisma[model].findMany(prismaArgs),
+        ctx.prisma[model].findMany({
+          ...prismaArgs,
+          ...(include ? { include } : {})
+        }),
         ctx.prisma[model].count({ where: prismaArgs.where })
       ])
       return connectionFromPrismaResults(items.map(map), count)
@@ -1833,7 +1842,13 @@ Object.assign(Query,
     model: 'observePost',
     field: 'observePost',
     manyField: 'observePosts',
-    connectionField: 'observePostsConnection'
+    connectionField: 'observePostsConnection',
+    argsMapper: observePostArgsFromPrisma1,
+    include: {
+      Location: true,
+      MediaFile: true
+    },
+    map: toObservePost
   }),
   prismaModelQueryResolvers({
     model: 'planParticipantService',

@@ -260,17 +260,18 @@ export default {
 <style lang="scss" scoped>
 .aside {
   display: block;
-  background-color: #f9f9f9;
-  border-right: 1px solid #dedede;
+  background-color: var(--epic-surface-subtle);
+  border-right: 1px solid var(--epic-border);
 }
 .messages {
   display: block;
-  background-color: #fff;
-  border-right: 1px solid #dedede;
+  background-color: var(--epic-surface);
+  border-right: 1px solid var(--epic-border);
 }
 .message {
   display: block;
-  background-color: #fff;
+  background-color: var(--epic-surface);
+  color: var(--epic-text);
 }
 .aside .compose {
   height: 95px;
@@ -286,10 +287,10 @@ export default {
 }
 .aside .main {
   padding: 40px;
-  color: #6f7b7e;
+  color: var(--epic-muted);
 }
 .aside .title {
-  color: #6f7b7e;
+  color: var(--epic-muted);
   font-size: 12px;
   font-weight: bold;
   text-transform: uppercase;
@@ -298,28 +299,28 @@ export default {
   border-radius: 8px;
   display: block;
   padding: 10px 0;
-  color: #6f7b7e;
+  color: var(--epic-muted);
   transition: background-color 140ms ease, color 140ms ease;
 }
 .aside .main .item.is-active {
-  background-color: #f1f1f1;
+  background-color: var(--epic-surface-muted);
   margin: 0 -50px;
   padding-left: 50px;
 }
 .aside .main .item:active,
 .aside .main .item:hover {
-  background-color: #f2f2f2;
+  background-color: var(--epic-surface-muted);
   margin: 0 -50px;
   padding-left: 50px;
 }
 .aside .main .icon {
   font-size: 19px;
   padding-right: 30px;
-  color: #a0a0a0;
+  color: var(--epic-muted);
 }
 .aside .main .name {
   font-size: 15px;
-  color: #5d5d5d;
+  color: var(--epic-text);
   font-weight: 500;
 }
 .messages {
@@ -371,11 +372,12 @@ export default {
   text-decoration: none;
 }
 .is-grouped .button {
-  background-image: linear-gradient(#f8f8f8, #f1f1f1);
+  background-image: none;
+  background-color: var(--epic-surface-raised);
 }
 .is-grouped .button .fa {
   font-size: 15px;
-  color: #aaaaaa;
+  color: var(--epic-muted);
 }
 .inbox-messages {
   margin-top: 60px;
@@ -396,14 +398,14 @@ export default {
   transform: translateY(-1px);
 }
 .inbox-messages strong {
-  color: #5d5d5d;
+  color: var(--epic-text);
 }
 .inbox-messages .msg-check {
   padding: 0 20px;
 }
 .inbox-messages .msg-subject {
   padding: 10px 0;
-  color: #5d5d5d;
+  color: var(--epic-text);
 }
 .inbox-messages .msg-attachment {
   float: right;
@@ -418,7 +420,7 @@ export default {
 .inbox-messages .msg-timestamp {
   float: right;
   padding: 0 20px;
-  color: #5d5d5d;
+  color: var(--epic-muted);
 }
 .message-preview .avatar {
   display: inline-block;
@@ -442,10 +444,10 @@ export default {
   color: #b6c7d1;
 }
 .card.is-unread {
-  background-color: #ffffff;
+  background-color: var(--epic-surface-raised);
 }
 .card.is-active {
-  background-color: #f5f5f5;
+  background-color: var(--epic-accent-soft);
 }
 
 </style>

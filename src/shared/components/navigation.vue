@@ -86,6 +86,16 @@
         </div>
       </router-link>
       <router-link class="navbar-item logo-container"
+                   :to="{name: 'timeline-home'}"
+                   exact
+                   v-if="isUserOrAbove && area == 'timeline'">
+        <img src="../assets/timeline.svg"
+             alt="EPIC Timeline">
+        <div class="epiclogo light">
+          Timeline
+        </div>
+      </router-link>
+      <router-link class="navbar-item logo-container"
                    :to="{name: 'map-home'}"
                    exact
                    v-if="isSuperAdminEditor && area == 'map'">
@@ -153,7 +163,7 @@
                    exact
                    v-if="isUserOrAbove && area == 'command'">
         <img src="../assets/command.svg"
-             alt="EPIC cCmmand">
+             alt="EPIC Command">
         <div class="epiclogo light">
           Command
         </div>
@@ -161,12 +171,16 @@
 
       <button class="navbar-item theme-toggle is-hidden-desktop"
               type="button"
+              :class="{'is-dark-mode': theme.dark}"
               :title="theme.dark ? 'Switch to light mode' : 'Switch to dark mode'"
               :aria-label="theme.dark ? 'Switch to light mode' : 'Switch to dark mode'"
+              :aria-pressed="theme.dark ? 'true' : 'false'"
               @click="toggleThemeMode">
-        <span class="theme-toggle-symbol"
+        <span class="theme-toggle-track"
               aria-hidden="true">
-          <i :class="theme.dark ? 'fas fa-sun' : 'fas fa-moon'"></i>
+          <span class="theme-toggle-mark theme-toggle-sun"></span>
+          <span class="theme-toggle-mark theme-toggle-moon"></span>
+          <span class="theme-toggle-thumb"></span>
         </span>
       </button>
 
@@ -477,12 +491,16 @@
       <div class="navbar-end">
         <button class="navbar-item theme-toggle is-hidden-touch"
                 type="button"
+                :class="{'is-dark-mode': theme.dark}"
                 :title="theme.dark ? 'Switch to light mode' : 'Switch to dark mode'"
                 :aria-label="theme.dark ? 'Switch to light mode' : 'Switch to dark mode'"
+                :aria-pressed="theme.dark ? 'true' : 'false'"
                 @click="toggleThemeMode">
-          <span class="theme-toggle-symbol"
+          <span class="theme-toggle-track"
                 aria-hidden="true">
-            <i :class="theme.dark ? 'fas fa-sun' : 'fas fa-moon'"></i>
+            <span class="theme-toggle-mark theme-toggle-sun"></span>
+            <span class="theme-toggle-mark theme-toggle-moon"></span>
+            <span class="theme-toggle-thumb"></span>
           </span>
         </button>
         <router-link :to="{name: 'timezone'}"
@@ -927,6 +945,8 @@ export default {
           .tz(zone)
           .format('Z')})<span><p>`
       }
+
+      return ''
     },
     displayWorkspace() {
       let result = this.$store.state.activeWorkspace
@@ -980,6 +1000,9 @@ export default {
         case 'activity':
           areaLabel = 'is-activity'
           break
+        case 'timeline':
+          areaLabel = 'is-timeline'
+          break
         case 'base':
           areaLabel = 'is-base'
           break
@@ -1023,28 +1046,101 @@ export default {
 }
 .theme-toggle {
   align-items: center;
-  background: transparent;
+  align-self: stretch;
+  background: transparent !important;
   border: 0;
-  color: inherit;
   cursor: pointer;
   font: inherit;
   justify-content: center;
-  min-width: 3rem;
+  min-width: 4.25rem;
+  padding: 0 0.8rem;
+  transition: background-color 160ms ease, opacity 160ms ease;
 }
-.theme-toggle:focus {
-  outline: 2px solid rgba(255, 255, 255, 0.65);
-  outline-offset: -0.35rem;
+
+.theme-toggle:hover,
+.theme-toggle:focus,
+.theme-toggle:focus-within {
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: inherit;
 }
-.theme-toggle-symbol {
+
+.theme-toggle:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.64);
+  outline-offset: -0.45rem;
+}
+
+.theme-toggle-track {
+  position: relative;
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  width: 2rem;
-  height: 2rem;
+  justify-content: space-between;
+  width: 3rem;
+  height: 1.65rem;
+  padding: 0 0.42rem;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.12);
-  font-size: 0.95rem;
-  line-height: 1;
+  background: rgba(15, 23, 42, 0.28);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  box-shadow: inset 0 1px 3px rgba(15, 23, 42, 0.22);
+  transition: background-color 180ms ease, border-color 180ms ease;
+}
+
+.theme-toggle.is-dark-mode .theme-toggle-track {
+  background: rgba(5, 10, 24, 0.42);
+  border-color: rgba(255, 255, 255, 0.18);
+}
+
+.theme-toggle-mark {
+  position: relative;
+  z-index: 1;
+  width: 0.74rem;
+  height: 0.74rem;
+  flex: 0 0 0.74rem;
+  opacity: 0.72;
+  transition: opacity 180ms ease, transform 180ms ease;
+}
+
+.theme-toggle-sun {
+  border: 2px solid rgba(255, 214, 102, 0.9);
+  border-radius: 999px;
+  box-shadow:
+    0 -0.38rem 0 -0.31rem rgba(255, 214, 102, 0.9),
+    0 0.38rem 0 -0.31rem rgba(255, 214, 102, 0.9),
+    0.38rem 0 0 -0.31rem rgba(255, 214, 102, 0.9),
+    -0.38rem 0 0 -0.31rem rgba(255, 214, 102, 0.9);
+}
+
+.theme-toggle-moon {
+  border-radius: 999px;
+  background: rgba(191, 219, 254, 0.92);
+  box-shadow: inset -0.24rem 0.04rem 0 0 rgba(15, 23, 42, 0.8);
+}
+
+.theme-toggle-thumb {
+  position: absolute;
+  top: 0.18rem;
+  left: 0.2rem;
+  width: 1.2rem;
+  height: 1.2rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 0.2rem 0.5rem rgba(15, 23, 42, 0.28);
+  transition: transform 180ms ease, background-color 180ms ease;
+}
+
+.theme-toggle.is-dark-mode .theme-toggle-thumb {
+  transform: translateX(1.35rem);
+  background: #dbeafe;
+}
+
+.theme-toggle:not(.is-dark-mode) .theme-toggle-sun,
+.theme-toggle.is-dark-mode .theme-toggle-moon {
+  opacity: 1;
+  transform: scale(1.08);
+}
+
+.theme-toggle:not(.is-dark-mode) .theme-toggle-moon,
+.theme-toggle.is-dark-mode .theme-toggle-sun {
+  opacity: 0.42;
 }
 
 @media screen and (max-width: 1023px) {

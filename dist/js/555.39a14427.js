@@ -338,7 +338,7 @@ var staticRenderFns = [function () {
 // EXTERNAL MODULE: ./src/media/graphql/MediaNetworks.gql
 var MediaNetworks = __webpack_require__(7695);
 // EXTERNAL MODULE: ./src/shared/components/imagepicker.vue + 5 modules
-var imagepicker = __webpack_require__(17282);
+var imagepicker = __webpack_require__(44464);
 // EXTERNAL MODULE: ./src/shared/components/helpcontent.vue + 6 modules
 var helpcontent = __webpack_require__(64775);
 // EXTERNAL MODULE: ./node_modules/vue/dist/vue.runtime.esm.js

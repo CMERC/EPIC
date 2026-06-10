@@ -3,6 +3,7 @@ const { track } = require('./Query/track')
 const { appUserQueries } = require('./Query/appUserQueries')
 const { emailQueries } = require('./Query/email')
 const { commandQueries } = require('./Query/command')
+const { timelineQueries } = require('./Query/timeline')
 
 const { planReportQueries } = require('./Query/planReports')
 const { geocode } = require('./Query/geocode')
@@ -60,6 +61,7 @@ module.exports = {
     ...localAuthQueries,
     ...emailQueries,
     ...commandQueries,
+    ...timelineQueries,
     ...planReportQueries,
     ...randomDataQueries,
     ...geocode,

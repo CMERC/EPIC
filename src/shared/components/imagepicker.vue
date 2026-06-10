@@ -68,7 +68,7 @@
                        @click="imagePreview(activePhoto)" />
                 </div>
                 <div v-else
-                     class="upload-file box has-background-white-bis has-text-centered">
+                     class="upload-file box has-text-centered">
                   <div>
                     <p>
                       <span class="icon is-large">

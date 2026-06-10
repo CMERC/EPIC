@@ -37,7 +37,7 @@
                   </div>
                   <div class="media-right">
                     <span class="icon is-small">
-                      <i class="fas fa-angle-double-right"></i>
+                      <i class="fas fa-arrow-right"></i>
                     </span>
                   </div>
                 </article>
@@ -65,7 +65,7 @@
                   </div>
                   <div class="media-right">
                     <span class="icon is-small">
-                      <i class="fas fa-angle-double-right"></i>
+                      <i class="fas fa-arrow-right"></i>
                     </span>
                   </div>
                 </article>
@@ -93,7 +93,7 @@
                   </div>
                   <div class="media-right">
                     <span class="icon is-small">
-                      <i class="fas fa-angle-double-right"></i>
+                      <i class="fas fa-arrow-right"></i>
                     </span>
                   </div>
                 </article>
@@ -121,7 +121,7 @@
                   </div>
                   <div class="media-right">
                     <span class="icon is-small">
-                      <i class="fas fa-angle-double-right"></i>
+                      <i class="fas fa-arrow-right"></i>
                     </span>
                   </div>
                 </article>
@@ -149,7 +149,7 @@
                   </div>
                   <div class="media-right">
                     <span class="icon is-small">
-                      <i class="fas fa-angle-double-right"></i>
+                      <i class="fas fa-arrow-right"></i>
                     </span>
                   </div>
                 </article>
@@ -177,7 +177,7 @@
                   </div>
                   <div class="media-right">
                     <span class="icon is-small">
-                      <i class="fas fa-angle-double-right"></i>
+                      <i class="fas fa-arrow-right"></i>
                     </span>
                   </div>
                 </article>
@@ -205,7 +205,35 @@
                   </div>
                   <div class="media-right">
                     <span class="icon is-small">
-                      <i class="fas fa-angle-double-right"></i>
+                      <i class="fas fa-arrow-right"></i>
+                    </span>
+                  </div>
+                </article>
+              </router-link>
+            </div>
+          </template>
+        </template>
+        <template v-if="checkActive('timeline')">
+          <template v-if="canOpenWorkspaceApps">
+            <div class="column is-half">
+              <router-link :to="{name:'timeline-home'}">
+                <article class="media">
+                  <figure class="media-left">
+                    <img src="../assets/timeline.svg"
+                         alt="EPIC Timeline">
+                  </figure>
+                  <div class="media-content">
+                    <div class="content">
+                      <p class="has-text-dark">
+                        <strong>Timeline</strong>
+                        <br />
+                        <small> Review exercise activity across events, injects, commands, observations, media, and chat.</small>
+                      </p>
+                    </div>
+                  </div>
+                  <div class="media-right">
+                    <span class="icon is-small">
+                      <i class="fas fa-arrow-right"></i>
                     </span>
                   </div>
                 </article>
@@ -233,7 +261,7 @@
                   </div>
                   <div class="media-right">
                     <span class="icon is-small">
-                      <i class="fas fa-angle-double-right"></i>
+                      <i class="fas fa-arrow-right"></i>
                     </span>
                   </div>
                 </article>
@@ -261,7 +289,7 @@
                   </div>
                   <div class="media-right">
                     <span class="icon is-small">
-                      <i class="fas fa-angle-double-right"></i>
+                      <i class="fas fa-arrow-right"></i>
                     </span>
                   </div>
                 </article>
@@ -289,7 +317,7 @@
                   </div>
                   <div class="media-right">
                     <span class="icon is-small">
-                      <i class="fas fa-angle-double-right"></i>
+                      <i class="fas fa-arrow-right"></i>
                     </span>
                   </div>
                 </article>
@@ -316,7 +344,7 @@
                 </div>
                 <div class="media-right">
                   <span class="icon is-small">
-                    <i class="fas fa-angle-double-right"></i>
+                    <i class="fas fa-arrow-right"></i>
                   </span>
                 </div>
               </article>
@@ -343,7 +371,7 @@
                   </div>
                   <div class="media-right">
                     <span class="icon is-small">
-                      <i class="fas fa-angle-double-right"></i>
+                      <i class="fas fa-arrow-right"></i>
                     </span>
                   </div>
                 </article>
@@ -378,7 +406,7 @@
                   </div>
                   <div class="media-right">
                     <span class="icon is-small">
-                      <i class="fas fa-angle-double-right"></i>
+                      <i class="fas fa-arrow-right"></i>
                     </span>
                   </div>
                 </article>
@@ -406,7 +434,7 @@
                   </div>
                   <div class="media-right">
                     <span class="icon is-small">
-                      <i class="fas fa-angle-double-right"></i>
+                      <i class="fas fa-arrow-right"></i>
                     </span>
                   </div>
                 </article>
@@ -430,7 +458,7 @@ import {
 } from '@/shared/graphql/AppListSettings.gql'
 
 export default {
-  name: 'home',
+  name: 'MainHome',
   mixins: [Permissions],
   components: {
     HelpContent
