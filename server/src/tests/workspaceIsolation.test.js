@@ -27,7 +27,9 @@ test('workspace middleware allows authenticated users only into workspaces they 
   const findFirst = jest.fn().mockResolvedValue({
     name: 'exercise-alpha',
     displayName: 'Exercise Alpha',
-    timeZone: 'America/New_York'
+    timeZone: 'America/New_York',
+    status: 'Available',
+    isTemplate: false
   })
   const resolve = jest.fn().mockResolvedValue('ok')
   const ctx = {
@@ -65,13 +67,17 @@ test('workspace middleware allows authenticated users only into workspaces they 
     select: {
       name: true,
       displayName: true,
-      timeZone: true
+      timeZone: true,
+      status: true,
+      isTemplate: true
     }
   })
   expect(ctx.activeWorkspace).toEqual({
     name: 'exercise-alpha',
     displayName: 'Exercise Alpha',
     timeZone: 'America/New_York',
+    status: 'Available',
+    isTemplate: false,
     isPublic: false
   })
   expect(info.workspaceName).toBe('exercise-alpha')
@@ -161,7 +167,9 @@ test('workspace middleware allows workspace-by-name access only for public works
         findFirst: jest.fn().mockResolvedValue({
           name: 'public-exercise',
           displayName: 'Public Exercise',
-          timeZone: 'UTC'
+          timeZone: 'UTC',
+          status: 'Available',
+          isTemplate: false
         })
       }
     }
@@ -181,6 +189,8 @@ test('workspace middleware allows workspace-by-name access only for public works
     name: 'public-exercise',
     displayName: 'Public Exercise',
     timeZone: 'UTC',
+    status: 'Available',
+    isTemplate: false,
     isPublic: true
   })
 })
@@ -190,7 +200,9 @@ test('workspace middleware lets super users select any existing workspace', asyn
   const findFirst = jest.fn().mockResolvedValue({
     name: 'customer-space',
     displayName: 'Customer Space',
-    timeZone: 'UTC'
+    timeZone: 'UTC',
+    status: 'Available',
+    isTemplate: false
   })
   const resolve = jest.fn().mockResolvedValue('ok')
   const ctx = {
@@ -224,7 +236,83 @@ test('workspace middleware lets super users select any existing workspace', asyn
     select: {
       name: true,
       displayName: true,
-      timeZone: true
+      timeZone: true,
+      status: true,
+      isTemplate: true
     }
   })
+})
+
+test('workspace middleware blocks suspended workspaces for SaaS provisioning', async() => {
+  getCurrentUserId.mockResolvedValue('user-1')
+  const resolve = jest.fn()
+  const ctx = {
+    request: {
+      headers: {
+        authorization: 'Bearer token',
+        workspace: 'suspended-space'
+      }
+    },
+    prisma: {
+      user: {
+        findUnique: jest.fn().mockResolvedValue({
+          isSuper: false
+        })
+      },
+      appWorkspace: {
+        findFirst: jest.fn().mockResolvedValue({
+          name: 'suspended-space',
+          displayName: 'Suspended Space',
+          timeZone: 'UTC',
+          status: 'Suspended',
+          isTemplate: false
+        })
+      }
+    }
+  }
+
+  const result = await workspaceMiddleware(resolve, null, {}, ctx, {
+    fieldName: 'planInjects'
+  })
+
+  expect(result).toBeInstanceOf(Error)
+  expect(result.message).toBe('Workspace subscription is suspended')
+  expect(resolve).not.toHaveBeenCalled()
+})
+
+test('workspace middleware blocks deploying workspaces until provisioning completes', async() => {
+  getCurrentUserId.mockResolvedValue('user-1')
+  const resolve = jest.fn()
+  const ctx = {
+    request: {
+      headers: {
+        authorization: 'Bearer token',
+        workspace: 'deploying-space'
+      }
+    },
+    prisma: {
+      user: {
+        findUnique: jest.fn().mockResolvedValue({
+          isSuper: false
+        })
+      },
+      appWorkspace: {
+        findFirst: jest.fn().mockResolvedValue({
+          name: 'deploying-space',
+          displayName: 'Deploying Space',
+          timeZone: 'UTC',
+          status: 'Deploying',
+          isTemplate: false
+        })
+      }
+    }
+  }
+
+  const result = await workspaceMiddleware(resolve, null, {}, ctx, {
+    fieldName: 'planInjects'
+  })
+
+  expect(result).toBeInstanceOf(Error)
+  expect(result.message).toBe('Workspace is still deploying')
+  expect(resolve).not.toHaveBeenCalled()
 })

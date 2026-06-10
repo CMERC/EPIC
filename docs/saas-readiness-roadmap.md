@@ -20,6 +20,9 @@ This roadmap captures the major improvements needed for EPIC Ready to operate as
 3. Create customer/admin billing and provisioning
    - Add customer/account lifecycle fields: trial, active, suspended, archived.
    - Add plan tier, seat limits, storage limits, module entitlements, and billing contacts.
+   - Status: started.
+     - Added server-side workspace lifecycle enforcement for `Deploying`, `Suspended`, and `Archived` workspace states.
+     - Added provisioning regression tests so suspended/deploying workspaces cannot be used even if a client sends the workspace header.
 
 4. Add a true exercise lifecycle model
    - Make Exercise the central object for MSEL, maps, media, chat, commands, observations, timeline, hot wash, AAR, and exports.

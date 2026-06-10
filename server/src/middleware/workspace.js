@@ -1,5 +1,6 @@
 const { getLegacyPrisma } = require('../services/prisma')
 const { getCurrentUserId } = require('../services/authContext')
+const { workspaceAccessError } = require('../services/workspaceProvisioning')
 
 const { getUserIdWebSocket } = require('../authSubscription')
 
@@ -30,6 +31,8 @@ function setWorkspaceContext(ctx, info, workspace) {
     name: workspace.name,
     displayName: workspace.displayName,
     timeZone: workspace.timeZone,
+    status: workspace.status,
+    isTemplate: workspace.isTemplate,
     isPublic: Boolean(workspace.isPublic)
   }
 
@@ -60,12 +63,14 @@ async function findWorkspaceByName(ctx, name, select = {}) {
         name: true,
         displayName: true,
         timeZone: true,
+        status: true,
+        isTemplate: true,
         ...select
       }
     })
   }
 
-  const fields = ['name', 'displayName', 'timeZone'].concat(Object.keys(select))
+  const fields = ['name', 'displayName', 'timeZone', 'status', 'isTemplate'].concat(Object.keys(select))
   return ctx.db.query.appWorkspace({
     where: {
       name
@@ -105,7 +110,9 @@ async function findAuthorizedWorkspace(ctx, userId, name) {
       select: {
         name: true,
         displayName: true,
-        timeZone: true
+        timeZone: true,
+        status: true,
+        isTemplate: true
       }
     })
   }
@@ -160,6 +167,11 @@ const workspaceMiddleware = async(resolve, parent, args, ctx, info) => {
 
   if (workspaceError)
     return new Error(workspaceError)
+
+  const lifecycleError = workspaceAccessError(activeWorkspace)
+  if (activeWorkspace && lifecycleError) {
+    return new Error(lifecycleError)
+  }
 
   if (activeWorkspace) {
     setWorkspaceContext(ctx, info, activeWorkspace)
