@@ -46,6 +46,10 @@ This roadmap captures the major improvements needed for EPIC Ready to operate as
 7. Add audit logging and compliance-grade traceability
    - Track who viewed, changed, exported, deleted, archived, and acknowledged critical records.
    - Track login history, role changes, workspace access changes, file access, and command actions.
+   - Status: started.
+     - Reworked activity/audit middleware to record result-aware audit events.
+     - Expanded audit coverage to high-value Plan, Command, Observe, and Media mutations.
+     - Added regression tests for audit event creation and create-style mutation tracking.
 
 8. Improve operational reliability and observability
    - Add structured logs, request IDs, metrics, dependency health, backup status, job queue visibility, and admin alerts.
