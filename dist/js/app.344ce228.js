@@ -16054,6 +16054,135 @@ doc.definitions = doc.definitions.concat(unique((__webpack_require__(83558).defi
 
 /***/ }),
 
+/***/ 92211:
+/***/ (function(module) {
+
+
+    var doc = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"CurrentExerciseLifecycle"},"variableDefinitions":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"currentExerciseLifecycle"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"status"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"start"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"end"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"workspaceName"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"workspaceDisplayName"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"counts"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"events"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"injects"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"observations"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"commands"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"mediaPosts"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"chatMessages"},"arguments":[],"directives":[]}]}}]}}]}}],"loc":{"start":0,"end":272}};
+    doc.loc.source = {"body":"query CurrentExerciseLifecycle {\n  currentExerciseLifecycle {\n    id\n    name\n    status\n    start\n    end\n    workspaceName\n    workspaceDisplayName\n    counts {\n      events\n      injects\n      observations\n      commands\n      mediaPosts\n      chatMessages\n    }\n  }\n}\n","name":"GraphQL request","locationOffset":{"line":1,"column":1}};
+  
+
+    var names = (/* unused pure expression or super */ null && ({}));
+    function unique(defs) {
+      return defs.filter(
+        function(def) {
+          if (def.kind !== 'FragmentDefinition') return true;
+          var name = def.name.value
+          if (names[name]) {
+            return false;
+          } else {
+            names[name] = true;
+            return true;
+          }
+        }
+      )
+    }
+  
+
+    // Collect any fragment/type references from a node, adding them to the refs Set
+    function collectFragmentReferences(node, refs) {
+      if (node.kind === "FragmentSpread") {
+        refs.add(node.name.value);
+      } else if (node.kind === "VariableDefinition") {
+        var type = node.type;
+        if (type.kind === "NamedType") {
+          refs.add(type.name.value);
+        }
+      }
+
+      if (node.selectionSet) {
+        node.selectionSet.selections.forEach(function(selection) {
+          collectFragmentReferences(selection, refs);
+        });
+      }
+
+      if (node.variableDefinitions) {
+        node.variableDefinitions.forEach(function(def) {
+          collectFragmentReferences(def, refs);
+        });
+      }
+
+      if (node.definitions) {
+        node.definitions.forEach(function(def) {
+          collectFragmentReferences(def, refs);
+        });
+      }
+    }
+
+    var definitionRefs = {};
+    (function extractReferences() {
+      doc.definitions.forEach(function(def) {
+        if (def.name) {
+          var refs = new Set();
+          collectFragmentReferences(def, refs);
+          definitionRefs[def.name.value] = refs;
+        }
+      });
+    })();
+
+    function findOperation(doc, name) {
+      for (var i = 0; i < doc.definitions.length; i++) {
+        var element = doc.definitions[i];
+        if (element.name && element.name.value == name) {
+          return element;
+        }
+      }
+    }
+
+    function oneQuery(doc, operationName) {
+      // Copy the DocumentNode, but clear out the definitions
+      var newDoc = {
+        kind: doc.kind,
+        definitions: [findOperation(doc, operationName)]
+      };
+      if (doc.hasOwnProperty("loc")) {
+        newDoc.loc = doc.loc;
+      }
+
+      // Now, for the operation we're running, find any fragments referenced by
+      // it or the fragments it references
+      var opRefs = definitionRefs[operationName] || new Set();
+      var allRefs = new Set();
+      var newRefs = new Set();
+
+      // IE 11 doesn't support "new Set(iterable)", so we add the members of opRefs to newRefs one by one
+      opRefs.forEach(function(refName) {
+        newRefs.add(refName);
+      });
+
+      while (newRefs.size > 0) {
+        var prevRefs = newRefs;
+        newRefs = new Set();
+
+        prevRefs.forEach(function(refName) {
+          if (!allRefs.has(refName)) {
+            allRefs.add(refName);
+            var childRefs = definitionRefs[refName] || new Set();
+            childRefs.forEach(function(childRef) {
+              newRefs.add(childRef);
+            });
+          }
+        });
+      }
+
+      allRefs.forEach(function(refName) {
+        var op = findOperation(doc, refName);
+        if (op) {
+          newDoc.definitions.push(op);
+        }
+      });
+
+      return newDoc;
+    }
+    
+    module.exports = doc;
+    
+        module.exports.CurrentExerciseLifecycle = oneQuery(doc, "CurrentExerciseLifecycle");
+        
+
+
+/***/ }),
+
 /***/ 9094:
 /***/ (function(module) {
 
@@ -24295,7 +24424,7 @@ webpackContext.id = 33335;
 
 /***/ }),
 
-/***/ 57999:
+/***/ 21300:
 /***/ (function(__unused_webpack_module, __unused_webpack___webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -100417,17 +100546,36 @@ var timeline_views_Dashboard_component = (0,componentNormalizer/* default */.A)(
 )
 
 /* harmony default export */ var timeline_views_Dashboard = (timeline_views_Dashboard_component.exports);
-;// ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"27ccff72-vue-loader-template"}!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib/index.js??clonedRuleSet-40.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/templateLoader.js??ruleSet[1].rules[4]!./node_modules/cache-loader/dist/cjs.js??ruleSet[0].use[0]!./node_modules/@vue/cli-service/lib/config/vue-loader-v15-resolve-compat/vue-loader.js??vue-loader-options!./src/timeline/views/Home.vue?vue&type=template&id=60202c0d&scoped=true
-var Homevue_type_template_id_60202c0d_scoped_true_render = function render() {
+;// ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"27ccff72-vue-loader-template"}!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib/index.js??clonedRuleSet-40.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/templateLoader.js??ruleSet[1].rules[4]!./node_modules/cache-loader/dist/cjs.js??ruleSet[0].use[0]!./node_modules/@vue/cli-service/lib/config/vue-loader-v15-resolve-compat/vue-loader.js??vue-loader-options!./src/timeline/views/Home.vue?vue&type=template&id=7715588f&scoped=true
+var Homevue_type_template_id_7715588f_scoped_true_render = function render() {
   var _vm = this,
     _c = _vm._self._c;
   return _c('div', {
     staticClass: "timeline-page"
   }, [_c('section', {
     staticClass: "timeline-header"
-  }, [_vm._m(0), _c('div', {
+  }, [_c('div', [_c('p', {
+    staticClass: "overline"
+  }, [_vm._v("Exercise Timeline")]), _c('h1', {
+    staticClass: "title is-3"
+  }, [_vm._v(_vm._s(_vm.lifecycleTitle))]), _c('p', {
+    staticClass: "subtitle is-6"
+  }, [_vm._v("Events, injects, commands, observations, media, and chat in one scrollable view.")])]), _c('div', {
     staticClass: "timeline-stats"
-  }, [_c('div', [_c('span', [_vm._v(_vm._s(_vm.filteredItems.length))]), _c('small', [_vm._v("Items")])]), _c('div', [_c('span', [_vm._v(_vm._s(_vm.lanes.length))]), _c('small', [_vm._v("Lanes")])])])]), _c('section', {
+  }, [_c('div', [_c('span', [_vm._v(_vm._s(_vm.filteredItems.length))]), _c('small', [_vm._v("Items")])]), _c('div', [_c('span', [_vm._v(_vm._s(_vm.lanes.length))]), _c('small', [_vm._v("Lanes")])])])]), _vm.lifecycleSummary ? _c('section', {
+    staticClass: "lifecycle-strip"
+  }, [_c('div', {
+    staticClass: "lifecycle-primary"
+  }, [_c('span', {
+    staticClass: "status-pill",
+    class: _vm.statusClass
+  }, [_vm._v(_vm._s(_vm.lifecycleSummary.status))]), _c('strong', [_vm._v(_vm._s(_vm.lifecycleSummary.workspaceDisplayName || _vm.lifecycleSummary.workspaceName || 'Workspace'))]), _vm.lifecycleSummary.start ? _c('small', [_vm._v(_vm._s(_vm.formatDateTime(_vm.lifecycleSummary.start)))]) : _vm._e()]), _c('div', {
+    staticClass: "lifecycle-counts"
+  }, _vm._l(_vm.lifecycleMetrics, function (metric) {
+    return _c('div', {
+      key: metric.label
+    }, [_c('span', [_vm._v(_vm._s(metric.value))]), _c('small', [_vm._v(_vm._s(metric.label))])]);
+  }), 0)]) : _vm._e(), _c('section', {
     staticClass: "timeline-toolbar"
   }, [_c('div', {
     staticClass: "source-filters"
@@ -100468,7 +100616,7 @@ var Homevue_type_template_id_60202c0d_scoped_true_render = function render() {
     on: {
       "click": _vm.refreshTimeline
     }
-  }, [_vm._m(1), _c('span', [_vm._v("Refresh")])])])]), _c('section', {
+  }, [_vm._m(0), _c('span', [_vm._v("Refresh")])])])]), _c('section', {
     staticClass: "timeline-shell",
     class: {
       'is-loading': _vm.$apollo.queries.timelineItems && _vm.$apollo.queries.timelineItems.loading
@@ -100518,7 +100666,7 @@ var Homevue_type_template_id_60202c0d_scoped_true_render = function render() {
     }), 0)]);
   })], 2) : _c('div', {
     staticClass: "timeline-empty"
-  }, [_vm._m(2), _c('h2', {
+  }, [_vm._m(1), _c('h2', {
     staticClass: "title is-5"
   }, [_vm._v("No timeline items yet")]), _c('p', [_vm._v("As exercise activity is created, it will appear here grouped by source.")])])]), _vm.selectedItem ? _c('aside', {
     staticClass: "timeline-detail"
@@ -100538,19 +100686,9 @@ var Homevue_type_template_id_60202c0d_scoped_true_render = function render() {
     on: {
       "click": _vm.openSelectedItem
     }
-  }, [_c('span', [_vm._v("Open source")]), _vm._m(3)]) : _vm._e()]) : _vm._e()]);
+  }, [_c('span', [_vm._v("Open source")]), _vm._m(2)]) : _vm._e()]) : _vm._e()]);
 };
-var Homevue_type_template_id_60202c0d_scoped_true_staticRenderFns = [function () {
-  var _vm = this,
-    _c = _vm._self._c;
-  return _c('div', [_c('p', {
-    staticClass: "overline"
-  }, [_vm._v("Exercise Timeline")]), _c('h1', {
-    staticClass: "title is-3"
-  }, [_vm._v("Operational timeline")]), _c('p', {
-    staticClass: "subtitle is-6"
-  }, [_vm._v("Events, injects, commands, observations, media, and chat in one scrollable view.")])]);
-}, function () {
+var Homevue_type_template_id_7715588f_scoped_true_staticRenderFns = [function () {
   var _vm = this,
     _c = _vm._self._c;
   return _c('span', {
@@ -100581,7 +100719,10 @@ var moment = __webpack_require__(95093);
 var moment_default = /*#__PURE__*/__webpack_require__.n(moment);
 // EXTERNAL MODULE: ./src/timeline/graphql/Timeline.gql
 var Timeline = __webpack_require__(9094);
+// EXTERNAL MODULE: ./src/timeline/graphql/ExerciseLifecycle.gql
+var ExerciseLifecycle = __webpack_require__(92211);
 ;// ./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib/index.js??clonedRuleSet-40.use[1]!./node_modules/cache-loader/dist/cjs.js??ruleSet[0].use[0]!./node_modules/@vue/cli-service/lib/config/vue-loader-v15-resolve-compat/vue-loader.js??vue-loader-options!./src/timeline/views/Home.vue?vue&type=script&lang=js
+
 
 
 const SOURCE_OPTIONS = [{
@@ -100612,6 +100753,15 @@ const SOURCE_OPTIONS = [{
 /* harmony default export */ var timeline_views_Homevue_type_script_lang_js = ({
   name: 'TimelineHome',
   apollo: {
+    lifecycleSummary: {
+      query: ExerciseLifecycle.CurrentExerciseLifecycle,
+      update(data) {
+        return data.currentExerciseLifecycle;
+      },
+      error(error) {
+        console.error(error);
+      }
+    },
     timelineItems: {
       query: Timeline.ExerciseTimelineItems,
       variables() {
@@ -100631,6 +100781,7 @@ const SOURCE_OPTIONS = [{
   data() {
     return {
       timelineItems: [],
+      lifecycleSummary: null,
       selectedSources: SOURCE_OPTIONS.map(source => source.value),
       selectedItem: null,
       sourceOptions: SOURCE_OPTIONS
@@ -100685,6 +100836,34 @@ const SOURCE_OPTIONS = [{
           label: moment_default()(tick).format('MMM D HH:mm')
         };
       });
+    },
+    lifecycleTitle() {
+      return this.lifecycleSummary && this.lifecycleSummary.name ? this.lifecycleSummary.name : 'Operational timeline';
+    },
+    statusClass() {
+      return this.lifecycleSummary ? `is-${String(this.lifecycleSummary.status).toLowerCase().replace(/_/g, '-')}` : '';
+    },
+    lifecycleMetrics() {
+      const counts = this.lifecycleSummary && this.lifecycleSummary.counts ? this.lifecycleSummary.counts : {};
+      return [{
+        label: 'Events',
+        value: counts.events || 0
+      }, {
+        label: 'Injects',
+        value: counts.injects || 0
+      }, {
+        label: 'Commands',
+        value: counts.commands || 0
+      }, {
+        label: 'Observe',
+        value: counts.observations || 0
+      }, {
+        label: 'Media',
+        value: counts.mediaPosts || 0
+      }, {
+        label: 'Chat',
+        value: counts.chatMessages || 0
+      }];
     }
   },
   watch: {
@@ -100743,10 +100922,10 @@ const SOURCE_OPTIONS = [{
 });
 ;// ./src/timeline/views/Home.vue?vue&type=script&lang=js
  /* harmony default export */ var src_timeline_views_Homevue_type_script_lang_js = (timeline_views_Homevue_type_script_lang_js); 
-;// ./node_modules/mini-css-extract-plugin/dist/loader.js??clonedRuleSet-22.use[0]!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-22.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-22.use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-22.use[3]!./node_modules/cache-loader/dist/cjs.js??ruleSet[0].use[0]!./node_modules/@vue/cli-service/lib/config/vue-loader-v15-resolve-compat/vue-loader.js??vue-loader-options!./src/timeline/views/Home.vue?vue&type=style&index=0&id=60202c0d&prod&lang=scss&scoped=true
+;// ./node_modules/mini-css-extract-plugin/dist/loader.js??clonedRuleSet-22.use[0]!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-22.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-22.use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-22.use[3]!./node_modules/cache-loader/dist/cjs.js??ruleSet[0].use[0]!./node_modules/@vue/cli-service/lib/config/vue-loader-v15-resolve-compat/vue-loader.js??vue-loader-options!./src/timeline/views/Home.vue?vue&type=style&index=0&id=7715588f&prod&lang=scss&scoped=true
 // extracted by mini-css-extract-plugin
 
-;// ./src/timeline/views/Home.vue?vue&type=style&index=0&id=60202c0d&prod&lang=scss&scoped=true
+;// ./src/timeline/views/Home.vue?vue&type=style&index=0&id=7715588f&prod&lang=scss&scoped=true
 
 ;// ./src/timeline/views/Home.vue
 
@@ -100759,11 +100938,11 @@ const SOURCE_OPTIONS = [{
 
 var timeline_views_Home_component = (0,componentNormalizer/* default */.A)(
   src_timeline_views_Homevue_type_script_lang_js,
-  Homevue_type_template_id_60202c0d_scoped_true_render,
-  Homevue_type_template_id_60202c0d_scoped_true_staticRenderFns,
+  Homevue_type_template_id_7715588f_scoped_true_render,
+  Homevue_type_template_id_7715588f_scoped_true_staticRenderFns,
   false,
   null,
-  "60202c0d",
+  "7715588f",
   null
   
 )
@@ -108173,7 +108352,7 @@ module.exports = __webpack_require__.p + "img/logo.544ce9c8.png";
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
-/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, [504], function() { return __webpack_require__(57999); })
+/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, [504], function() { return __webpack_require__(21300); })
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 /******/ 	
 /******/ })()

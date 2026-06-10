@@ -33,6 +33,9 @@ This roadmap captures the major improvements needed for EPIC Ready to operate as
 
 5. Build an executive exercise control dashboard
    - Show exercise clock, active injects, participant status, recent observations, command acknowledgements, map events, media activity, unresolved issues, and timeline feed.
+   - Status: started.
+     - Added an executive lifecycle strip to the Timeline page using `currentExerciseLifecycle`.
+     - Displays exercise status, workspace context, exercise start, and key artifact counts.
 
 6. Make hot wash and AAR first-class workflows
    - Turn observations, commands, inject responses, media posts, chat, and timeline events into guided hot wash and AAR/IP outputs.

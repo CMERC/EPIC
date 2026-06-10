@@ -3,7 +3,7 @@
     <section class="timeline-header">
       <div>
         <p class="overline">Exercise Timeline</p>
-        <h1 class="title is-3">Operational timeline</h1>
+        <h1 class="title is-3">{{ lifecycleTitle }}</h1>
         <p class="subtitle is-6">Events, injects, commands, observations, media, and chat in one scrollable view.</p>
       </div>
       <div class="timeline-stats">
@@ -14,6 +14,23 @@
         <div>
           <span>{{ lanes.length }}</span>
           <small>Lanes</small>
+        </div>
+      </div>
+    </section>
+
+    <section v-if="lifecycleSummary"
+             class="lifecycle-strip">
+      <div class="lifecycle-primary">
+        <span class="status-pill"
+              :class="statusClass">{{ lifecycleSummary.status }}</span>
+        <strong>{{ lifecycleSummary.workspaceDisplayName || lifecycleSummary.workspaceName || 'Workspace' }}</strong>
+        <small v-if="lifecycleSummary.start">{{ formatDateTime(lifecycleSummary.start) }}</small>
+      </div>
+      <div class="lifecycle-counts">
+        <div v-for="metric in lifecycleMetrics"
+             :key="metric.label">
+          <span>{{ metric.value }}</span>
+          <small>{{ metric.label }}</small>
         </div>
       </div>
     </section>
@@ -129,6 +146,7 @@
 <script>
 import moment from 'moment'
 import { ExerciseTimelineItems } from '@/timeline/graphql/Timeline.gql'
+import { CurrentExerciseLifecycle } from '@/timeline/graphql/ExerciseLifecycle.gql'
 
 const SOURCE_OPTIONS = [
   { value: 'PLAN_EVENT', label: 'Events', accent: '#38bdf8' },
@@ -142,6 +160,15 @@ const SOURCE_OPTIONS = [
 export default {
   name: 'TimelineHome',
   apollo: {
+    lifecycleSummary: {
+      query: CurrentExerciseLifecycle,
+      update(data) {
+        return data.currentExerciseLifecycle
+      },
+      error(error) {
+        console.error(error)
+      }
+    },
     timelineItems: {
       query: ExerciseTimelineItems,
       variables() {
@@ -161,6 +188,7 @@ export default {
   data() {
     return {
       timelineItems: [],
+      lifecycleSummary: null,
       selectedSources: SOURCE_OPTIONS.map(source => source.value),
       selectedItem: null,
       sourceOptions: SOURCE_OPTIONS
@@ -216,6 +244,29 @@ export default {
           label: moment(tick).format('MMM D HH:mm')
         }
       })
+    },
+    lifecycleTitle() {
+      return this.lifecycleSummary && this.lifecycleSummary.name
+        ? this.lifecycleSummary.name
+        : 'Operational timeline'
+    },
+    statusClass() {
+      return this.lifecycleSummary
+        ? `is-${String(this.lifecycleSummary.status).toLowerCase().replace(/_/g, '-')}`
+        : ''
+    },
+    lifecycleMetrics() {
+      const counts = this.lifecycleSummary && this.lifecycleSummary.counts
+        ? this.lifecycleSummary.counts
+        : {}
+      return [
+        { label: 'Events', value: counts.events || 0 },
+        { label: 'Injects', value: counts.injects || 0 },
+        { label: 'Commands', value: counts.commands || 0 },
+        { label: 'Observe', value: counts.observations || 0 },
+        { label: 'Media', value: counts.mediaPosts || 0 },
+        { label: 'Chat', value: counts.chatMessages || 0 }
+      ]
     }
   },
   watch: {
@@ -347,6 +398,97 @@ export default {
   justify-content: space-between;
   gap: 1rem;
   margin-bottom: 1rem;
+}
+
+.lifecycle-strip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  background: var(--epic-surface-raised);
+  border: 1px solid var(--epic-border);
+  border-radius: var(--epic-radius-lg);
+  box-shadow: var(--epic-shadow-sm);
+}
+
+.lifecycle-primary {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  min-width: 13rem;
+
+  strong {
+    color: var(--epic-text);
+  }
+
+  small {
+    color: var(--epic-muted);
+    font-weight: 700;
+  }
+}
+
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.8rem;
+  padding: 0 0.7rem;
+  background: var(--epic-accent-soft);
+  border: 1px solid var(--epic-border);
+  border-radius: 999px;
+  color: var(--epic-accent-strong);
+  font-size: 0.72rem;
+  font-weight: 900;
+
+  &.is-active {
+    background: rgba(34, 197, 94, 0.14);
+    border-color: rgba(34, 197, 94, 0.45);
+    color: #16a34a;
+  }
+
+  &.is-planning {
+    background: rgba(245, 158, 11, 0.14);
+    border-color: rgba(245, 158, 11, 0.45);
+    color: #d97706;
+  }
+
+  &.is-complete {
+    background: rgba(99, 102, 241, 0.14);
+    border-color: rgba(99, 102, 241, 0.45);
+    color: #6366f1;
+  }
+}
+
+.lifecycle-counts {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(4.5rem, 1fr));
+  gap: 0.5rem;
+
+  div {
+    padding: 0.5rem 0.65rem;
+    background: var(--epic-surface-subtle);
+    border: 1px solid var(--epic-border);
+    border-radius: var(--epic-radius-md);
+    text-align: center;
+  }
+
+  span,
+  small {
+    display: block;
+  }
+
+  span {
+    color: var(--epic-text);
+    font-weight: 900;
+  }
+
+  small {
+    color: var(--epic-muted);
+    font-size: 0.72rem;
+    font-weight: 800;
+  }
 }
 
 .source-filters,
@@ -603,6 +745,7 @@ export default {
 
   .timeline-header,
   .timeline-toolbar,
+  .lifecycle-strip,
   .timeline-detail {
     align-items: stretch;
     flex-direction: column;
@@ -610,6 +753,10 @@ export default {
 
   .timeline-detail {
     display: flex;
+  }
+
+  .lifecycle-counts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 </style>

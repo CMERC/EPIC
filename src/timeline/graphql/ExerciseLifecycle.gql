@@ -1,0 +1,19 @@
+query CurrentExerciseLifecycle {
+  currentExerciseLifecycle {
+    id
+    name
+    status
+    start
+    end
+    workspaceName
+    workspaceDisplayName
+    counts {
+      events
+      injects
+      observations
+      commands
+      mediaPosts
+      chatMessages
+    }
+  }
+}
