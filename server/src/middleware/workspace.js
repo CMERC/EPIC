@@ -3,11 +3,125 @@ const { getCurrentUserId } = require('../services/authContext')
 
 const { getUserIdWebSocket } = require('../authSubscription')
 
+const publicWorkspaceFields = new Set([
+  'mediaSearchPublic',
+  'mediaPostPublic',
+  'mediaPostsPublic',
+  'mediaPostsPublicConnection',
+  'mediaProfilesPublic',
+  'mediaProfilesPublicConnection',
+  'mediaServicePublic',
+  'planFeedbacksPublic',
+  'planReasonsPublic',
+  'planMissionTasksPublic',
+  'planQualificationsPublic',
+  'updatePlanFeedbackPublic',
+  'createPlanMissionTaskPublic',
+  'createPlanQualificationPublic',
+  'createPlanReasonPublic'
+])
+
+function workspaceFromArgs(args) {
+  return args && args.data && args.data.workspace
+}
+
+function setWorkspaceContext(ctx, info, workspace) {
+  const activeWorkspace = {
+    name: workspace.name,
+    displayName: workspace.displayName,
+    timeZone: workspace.timeZone,
+    isPublic: Boolean(workspace.isPublic)
+  }
+
+  ctx.activeWorkspace = activeWorkspace
+  ctx.workspace = activeWorkspace
+  ctx.tenant = activeWorkspace
+
+  info.workspaceName = activeWorkspace.name
+  if (activeWorkspace.displayName) {
+    info.workspaceDisplayName = activeWorkspace.displayName
+  }
+  if (activeWorkspace.timeZone) {
+    info.workspaceTimeZone = activeWorkspace.timeZone
+  }
+}
+
+async function findWorkspaceByName(ctx, name, select = {}) {
+  if (!name) {
+    return null
+  }
+
+  if (ctx.prisma) {
+    return ctx.prisma.appWorkspace.findFirst({
+      where: {
+        name
+      },
+      select: {
+        name: true,
+        displayName: true,
+        timeZone: true,
+        ...select
+      }
+    })
+  }
+
+  const fields = ['name', 'displayName', 'timeZone'].concat(Object.keys(select))
+  return ctx.db.query.appWorkspace({
+    where: {
+      name
+    }
+  }, `{${fields.join(' ')}}`)
+}
+
+async function findAuthorizedWorkspace(ctx, userId, name) {
+  if (!userId || !name) {
+    return null
+  }
+
+  if (ctx.prisma) {
+    const activeUser = await ctx.prisma.user.findUnique({
+      where: {
+        id: userId
+      },
+      select: {
+        isSuper: true
+      }
+    })
+    const workspaceWhere = activeUser && activeUser.isSuper
+      ? {
+        name
+      }
+      : {
+        User: {
+          some: {
+            id: userId
+          }
+        },
+        name
+      }
+
+    return ctx.prisma.appWorkspace.findFirst({
+      where: workspaceWhere,
+      select: {
+        name: true,
+        displayName: true,
+        timeZone: true
+      }
+    })
+  }
+
+  return ctx.db.query.appWorkspace({
+    where: {
+      members_some: {
+        id: userId
+      },
+      name
+    }
+  }, '{name displayName timeZone}')
+}
+
 const workspaceMiddleware = async(resolve, parent, args, ctx, info) => {
-  let activeUserDB
   let userId
-  let workspaceDisplayName
-  let workspaceTimeZone
   let activeWorkspaceFromClient
 
   if (ctx.connection && ctx.connection.authorization) {
@@ -19,101 +133,36 @@ const workspaceMiddleware = async(resolve, parent, args, ctx, info) => {
     userId = await getCurrentUserId(ctx)
   }
   let workspaceError
+  let activeWorkspace
 
-  // Public Resolvers: workspace is passed in with query
-  if (args.data && args.data.workspace) {
-    // check if workspace is valid
-    let appWorkspaces
-    if (ctx.prisma) {
-      appWorkspaces = await ctx.prisma.appWorkspace.findMany({
-        where: {
-          name: args.data.workspace
-        },
-        select: {
-          name: true
-        }
-      })
+  const argsWorkspace = workspaceFromArgs(args)
+  const fieldName = info && info.fieldName
+  const isPublicWorkspaceField = publicWorkspaceFields.has(fieldName)
+
+  if (argsWorkspace && isPublicWorkspaceField) {
+    activeWorkspace = await findWorkspaceByName(ctx, argsWorkspace)
+    if (activeWorkspace) {
+      activeWorkspace.isPublic = true
     } else {
-      appWorkspaces = await ctx.db.query.appWorkspaces({
-        where: {
-          name: args.data.workspace
-        }
-      }, '{name}'
-      )
-    }
-
-    if (appWorkspaces && appWorkspaces.length > 0)
-      activeUserDB = args.data.workspace
-    else
       workspaceError = 'invalid workspace'
-
+    }
   } else if (userId) {
     //Auth: replace with AppUser activeWorkspace endpoint
-    if (activeWorkspaceFromClient) {
+    const requestedWorkspace = activeWorkspaceFromClient || argsWorkspace
+    if (requestedWorkspace) {
       // check if user has access to workspace
-      let args = {
-        where: {
-          members_some: {
-            id: userId
-          },
-          name: activeWorkspaceFromClient
-        }
-      }
-      let appWorkspaces
-      if (ctx.prisma) {
-        const activeUser = await ctx.prisma.user.findUnique({
-          where: {
-            id: userId
-          },
-          select: {
-            isSuper: true
-          }
-        })
-        const workspaceWhere = activeUser && activeUser.isSuper
-          ? {
-            name: activeWorkspaceFromClient
-          }
-          : {
-            User: {
-              some: {
-                id: userId
-              }
-            },
-            name: activeWorkspaceFromClient
-          }
-
-        appWorkspaces = await ctx.prisma.appWorkspace.findMany({
-          where: workspaceWhere,
-          select: {
-            name: true,
-            displayName: true,
-            timeZone: true
-          }
-        })
-      } else {
-        appWorkspaces = await ctx.db.query.appWorkspaces(args, '{name displayName timeZone}')
-      }
-      if (appWorkspaces && appWorkspaces.length > 0) {
-        activeUserDB = appWorkspaces[0].name
-        workspaceDisplayName = appWorkspaces[0].displayName
-        workspaceTimeZone = appWorkspaces[0].timeZone
-      } else
+      activeWorkspace = await findAuthorizedWorkspace(ctx, userId, requestedWorkspace)
+      if (!activeWorkspace) {
         workspaceError = 'Sorry, you do not have access to this workspace'
+      }
     }
   }
 
   if (workspaceError)
     return new Error(workspaceError)
 
-  if (activeUserDB) {
-    // Pass workspace name for post url generation
-    info.workspaceName = activeUserDB
-    // Pass workspace display name for email
-    if (workspaceDisplayName)
-      info.workspaceDisplayName = workspaceDisplayName
-    // Pass for injectDownload
-    if (workspaceTimeZone)
-      info.workspaceTimeZone = workspaceTimeZone
+  if (activeWorkspace) {
+    setWorkspaceContext(ctx, info, activeWorkspace)
 
     ctx.db = getLegacyPrisma()
     const res = await resolve(parent, args, ctx, info)
@@ -123,5 +172,12 @@ const workspaceMiddleware = async(resolve, parent, args, ctx, info) => {
 }
 
 module.exports = {
-  workspaceMiddleware
+  workspaceMiddleware,
+  _test: {
+    publicWorkspaceFields,
+    workspaceFromArgs,
+    setWorkspaceContext,
+    findAuthorizedWorkspace,
+    findWorkspaceByName
+  }
 }

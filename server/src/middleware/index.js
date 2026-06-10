@@ -322,6 +322,8 @@ const workspaceResolvers = {
     commandMessage: workspaceMiddleware,
     commandMessages: workspaceMiddleware,
 
+    exerciseTimelineItems: workspaceMiddleware,
+
     planParticipantFundingSources: workspaceMiddleware,
     planParticipantFundingSource: workspaceMiddleware,
     planParticipantFundingSourcesConnection: workspaceMiddleware,

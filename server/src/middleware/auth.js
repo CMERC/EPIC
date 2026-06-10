@@ -350,6 +350,7 @@ const permissions = shield({
 
     commandMessage: isAuthenticatedWithRole,
     commandMessages: isAuthenticatedWithRole,
+    exerciseTimelineItems: isAuthenticatedWithRole,
 
     emailMessage: isAuthenticatedWithRole,
     emailMessages: isAuthenticatedWithRole,
