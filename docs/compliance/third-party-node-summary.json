@@ -1,0 +1,146 @@
+{
+  "total": 2267,
+  "licenseCounts": {
+    "(AFL-2.1 OR BSD-3-Clause)": 1,
+    "(BSD-2-Clause OR MIT OR Apache-2.0)": 2,
+    "(BSD-3-Clause OR GPL-2.0)": 1,
+    "(CC-BY-4.0 AND MIT)": 3,
+    "(MIT AND BSD-3-Clause)": 2,
+    "(MIT AND Zlib)": 2,
+    "(MIT OR Apache-2.0)": 1,
+    "(MIT OR CC0-1.0)": 2,
+    "(MIT OR GPL-3.0-or-later)": 1,
+    "(MPL-2.0 OR Apache-2.0)": 1,
+    "(WTFPL OR MIT)": 3,
+    "{\"type\":\"MIT\",\"url\":\"https://github.com/jonschlinkert/is-whitespace/blob/master/LICENSE\"}": 1,
+    "{\"type\":\"MIT\",\"url\":\"https://raw.githubusercontent.com/dominictarr/config-chain/master/LICENCE\"}": 1,
+    "0BSD": 2,
+    "Apache-2.0": 110,
+    "Apache-2.0 AND LGPL-3.0-or-later": 1,
+    "BlueOak-1.0.0": 4,
+    "BSD-2-Clause": 43,
+    "BSD-3-Clause": 81,
+    "CC-BY-3.0": 2,
+    "CC-BY-4.0": 2,
+    "CC0-1.0": 3,
+    "ISC": 114,
+    "MIT": 1871,
+    "MIT-0": 1,
+    "MIT/X11": 1,
+    "MPL-2.0": 1,
+    "UNKNOWN": 6,
+    "Unlicense": 4
+  },
+  "flagged": [
+    {
+      "workspace": "client",
+      "name": "node-forge",
+      "version": "1.4.0",
+      "license": "(BSD-3-Clause OR GPL-2.0)",
+      "direct": false,
+      "homepage": "https://github.com/digitalbazaar/forge",
+      "repository": "https://github.com/digitalbazaar/forge",
+      "path": "node_modules/node-forge"
+    },
+    {
+      "workspace": "client",
+      "name": "jszip",
+      "version": "3.10.1",
+      "license": "(MIT OR GPL-3.0-or-later)",
+      "direct": true,
+      "homepage": "",
+      "repository": "https://github.com/Stuk/jszip.git",
+      "path": "node_modules/jszip"
+    },
+    {
+      "workspace": "client",
+      "name": "dompurify",
+      "version": "3.4.5",
+      "license": "(MPL-2.0 OR Apache-2.0)",
+      "direct": false,
+      "homepage": "https://github.com/cure53/DOMPurify",
+      "repository": "git://github.com/cure53/DOMPurify.git",
+      "path": "node_modules/dompurify"
+    },
+    {
+      "workspace": "server",
+      "name": "@img/sharp-win32-x64",
+      "version": "0.34.5",
+      "license": "Apache-2.0 AND LGPL-3.0-or-later",
+      "direct": false,
+      "homepage": "https://sharp.pixelplumbing.com",
+      "repository": "git+https://github.com/lovell/sharp.git",
+      "path": "server/node_modules/@img/sharp-win32-x64"
+    },
+    {
+      "workspace": "client",
+      "name": "webpack-chain",
+      "version": "6.5.1",
+      "license": "MPL-2.0",
+      "direct": false,
+      "homepage": "",
+      "repository": "neutrinojs/webpack-chain",
+      "path": "node_modules/webpack-chain"
+    },
+    {
+      "workspace": "client",
+      "name": "@apollographql/graphql-language-service-interface",
+      "version": "2.0.2",
+      "license": "UNKNOWN",
+      "direct": false,
+      "homepage": "",
+      "repository": "https://github.com/apollographql/graphql-language-service",
+      "path": "node_modules/@apollographql/graphql-language-service-interface"
+    },
+    {
+      "workspace": "client",
+      "name": "@apollographql/graphql-language-service-parser",
+      "version": "2.0.2",
+      "license": "UNKNOWN",
+      "direct": false,
+      "homepage": "",
+      "repository": "https://github.com/apollographql/graphql-language-service",
+      "path": "node_modules/@apollographql/graphql-language-service-parser"
+    },
+    {
+      "workspace": "client",
+      "name": "@apollographql/graphql-language-service-types",
+      "version": "2.0.2",
+      "license": "UNKNOWN",
+      "direct": false,
+      "homepage": "",
+      "repository": "https://github.com/apollographql/graphql-language-service",
+      "path": "node_modules/@apollographql/graphql-language-service-types"
+    },
+    {
+      "workspace": "client",
+      "name": "@apollographql/graphql-language-service-utils",
+      "version": "2.0.2",
+      "license": "UNKNOWN",
+      "direct": false,
+      "homepage": "",
+      "repository": "https://github.com/apollographql/graphql-language-service",
+      "path": "node_modules/@apollographql/graphql-language-service-utils"
+    },
+    {
+      "workspace": "server",
+      "name": "png-js",
+      "version": "1.1.0",
+      "license": "UNKNOWN",
+      "direct": false,
+      "homepage": "",
+      "repository": "https://github.com/devongovett/png.js.git",
+      "path": "server/node_modules/png-js"
+    },
+    {
+      "workspace": "client",
+      "name": "union",
+      "version": "0.5.0",
+      "license": "UNKNOWN",
+      "direct": false,
+      "homepage": "",
+      "repository": "http://github.com/flatiron/union.git",
+      "path": "node_modules/union"
+    }
+  ]
+}

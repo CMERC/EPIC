@@ -71,7 +71,7 @@
     - if a new profile calls createNewProfile() and passes post data
     - if an existing profile calls createPost() and passes post data
 
-    -if postMarkovFeeds() is called it uses a similar method generating as many posts as the count calls for as in postLiveFeeds but instead of getting data from a twitter stream it uses the 'rita' libarary (https://www.npmjs.com/package/rita) to generate posts. Uses a given source text to generate posts.  This link explains markov chains in an excellent way.(http://setosa.io/ev/markov-chains/)
+    -if postMarkovFeeds() is called it uses a similar method generating as many posts as the count calls for as in postLiveFeeds but instead of getting data from a twitter stream it uses the local MarkovTextGenerator to generate posts from a given source text. This link explains markov chains in an excellent way.(http://setosa.io/ev/markov-chains/)
 ```
 ### Database logic and variable creation
 ```

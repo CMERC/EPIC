@@ -3,7 +3,7 @@ const faker = require('faker')
 const userGen = require('username-generator')
 const rwc = require('random-weighted-choice')
 const { getLegacyPrisma } = require('../services/prisma')
-const rita = require('rita')
+const MarkovTextGenerator = require('./markovTextGenerator')
 const Twitter = require('twitter')
 const mime = require('mime-types')
 const { hasUrl, withDefaultProtocol } = require('../utils/url')
@@ -488,7 +488,7 @@ class NoiseGenerator {
   // generates markov posts and posts them to profiles.
   async postMarkovFeeds(postNum) {
     logger.verbose('creating ' + postNum + ' posts using markov chains')
-    let markov = new rita.RiMarkov(markovNfactor)
+    let markov = new MarkovTextGenerator(markovNfactor)
     this.markovText = []
     for (let i = postNum; i >= 0; i--) {
       let randIntInRange = Math.floor(
