@@ -1172,6 +1172,12 @@ export default {
   overflow-wrap: anywhere;
 }
 
+.dashboard-hero .title + .subtitle,
+.plan-card-header .title + .subtitle,
+.empty-plan-state .title + .subtitle {
+  margin-top: 0;
+}
+
 .dashboard-hero {
   align-items: center;
   display: flex;
