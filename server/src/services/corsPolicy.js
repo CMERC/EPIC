@@ -11,8 +11,28 @@ function configuredOrigins() {
   return [
     ...splitOrigins(process.env.CORS_ALLOWED_ORIGINS),
     ...splitOrigins(process.env.APP_DOMAIN),
-    ...splitOrigins(process.env.CLIENT_URL)
+    ...splitOrigins(process.env.CLIENT_URL),
+    ...localDevelopmentOrigins()
   ]
+}
+
+function localDevelopmentOrigins() {
+  const appDomains = splitOrigins(process.env.APP_DOMAIN)
+  const appDomainAllowsLocal = appDomains.some(origin => {
+    const normalized = origin.replace(/^https?:\/\//, '').split(':')[0]
+    return ['localhost', '127.0.0.1', '::1'].includes(normalized)
+  })
+
+  if (process.env.NODE_ENV !== 'production' || appDomainAllowsLocal) {
+    return [
+      'http://localhost:4467',
+      'http://127.0.0.1:4467',
+      'http://localhost:4173',
+      'http://127.0.0.1:4173'
+    ]
+  }
+
+  return []
 }
 
 function isOriginAllowed(origin, allowedOrigins = configuredOrigins()) {

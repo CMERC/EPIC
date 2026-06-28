@@ -22,10 +22,17 @@ test('exercise timeline aggregates workspace activity by time', async() => {
             number: 12,
             title: 'Inject title',
             description: 'A planned inject',
-            type: 'MSEL',
+            type: 'Contingency Inject',
             startDate: new Date('2026-06-09T14:00:00Z'),
+            response: 'Expected player response',
             createdAt: new Date('2026-06-09T12:00:00Z'),
-            deletedAt: null
+            deletedAt: null,
+            PlanEvent: [{ id: 'event-1', name: 'Start exercise' }],
+            PlanInjectOwner: [{ title: 'Lead Controller' }],
+            PlanLabel: [{ title: 'Pending' }],
+            PlanTrainingObjective: [{
+              PlanExerciseObjective: [{ title: 'Exercise objective one' }]
+            }]
           }
         ])
       },
@@ -96,12 +103,82 @@ test('exercise timeline aggregates workspace activity by time', async() => {
   expect(items[1]).toEqual(expect.objectContaining({
     lane: 'Injects',
     title: '#12 Inject title',
-    routePath: '/plan/prepare/injects-list/view/inject-1'
+    routePath: '/plan/prepare/injects-list/view/inject-1',
+    category: 'Contingency Inject',
+    releaseStatus: 'Pending',
+    controller: 'Lead Controller',
+    objective: 'Exercise objective one',
+    expectedAction: 'Expected player response',
+    exerciseId: 'event-1',
+    exerciseName: 'Start exercise'
   }))
   expect(ctx.prisma.mediaPost.findMany).toHaveBeenCalledWith(expect.objectContaining({
     include: {
       MediaProfile: true
     }
+  }))
+})
+
+test('exercise timeline scopes selected exercise queries and links related command activity', async() => {
+  const exercise = {
+    id: 'exercise-1',
+    name: 'Selected exercise',
+    startDate: new Date('2026-06-09T12:00:00Z'),
+    endDate: new Date('2026-06-09T18:00:00Z')
+  }
+  const ctx = {
+    prisma: {
+      planEvent: {
+        findFirst: jest.fn().mockResolvedValue(exercise)
+      },
+      commandMessage: {
+        findMany: jest.fn().mockResolvedValue([{
+          id: 'cmd-1',
+          title: 'Command task',
+          body: 'Do the thing',
+          status: 'SENT',
+          priority: 'PRIORITY',
+          fromName: 'Controller',
+          recipientNames: 'Blue Cell',
+          planInjectId: 'inject-1',
+          planInjectNumber: 14,
+          planInjectTitle: 'Inject title',
+          dueAt: new Date('2026-06-09T14:30:00Z'),
+          createdAt: new Date('2026-06-09T14:00:00Z')
+        }])
+      }
+    }
+  }
+
+  const items = await timelineQueries.exerciseTimelineItems(null, {
+    exerciseId: 'exercise-1',
+    sources: ['COMMAND'],
+    first: 20
+  }, ctx)
+
+  expect(ctx.prisma.planEvent.findFirst).toHaveBeenCalledWith({
+    where: {
+      id: 'exercise-1'
+    }
+  })
+  expect(ctx.prisma.commandMessage.findMany).toHaveBeenCalledWith(expect.objectContaining({
+    where: expect.objectContaining({
+      OR: expect.arrayContaining([
+        {
+          createdAt: {
+            gte: exercise.startDate,
+            lte: exercise.endDate
+          }
+        }
+      ])
+    })
+  }))
+  expect(items[0]).toEqual(expect.objectContaining({
+    parentId: 'PLAN_INJECT:inject-1',
+    parentTitle: '#14 Inject title',
+    exerciseId: 'exercise-1',
+    exerciseName: 'Selected exercise',
+    recipient: 'Blue Cell'
   }))
 })
 

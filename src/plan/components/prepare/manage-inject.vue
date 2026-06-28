@@ -2,6 +2,38 @@
   <div class="is-relative-mobile">
     <breadcrumb :currentPage="planInjects ? '#'+ planInjects.number +' ' + planInjects.title : ''" />
     <div v-if="planInject && planInject.id != null">
+      <section class="inject-readiness-panel">
+        <div class="readiness-summary">
+          <div>
+            <p class="eyebrow">MSEL control readiness</p>
+            <h1 class="title is-4">Build a playable inject</h1>
+            <p class="subtitle is-6">
+              Confirm the controller, timing, delivery method, trigger, training objective link, and response capture before exercise execution.
+            </p>
+          </div>
+          <div class="readiness-score"
+               :class="injectReadinessTone">
+            <span>{{ injectReadinessScore }}%</span>
+            <small>Ready</small>
+          </div>
+        </div>
+        <div class="readiness-checks">
+          <button v-for="item in injectReadinessItems"
+                  :key="item.key"
+                  type="button"
+                  class="readiness-check"
+                  :class="item.complete ? 'is-complete' : 'is-missing'"
+                  @click="goToReadinessStep(item.step)">
+            <span class="check-icon">
+              <i :class="item.icon"></i>
+            </span>
+            <span>
+              <strong>{{ item.label }}</strong>
+              <small>{{ item.complete ? item.readyText : item.missingText }}</small>
+            </span>
+          </button>
+        </div>
+      </section>
       <stepper v-model="stepIndex"
                @previousStep="onStepChange"
                @steps-completed="onStepsCompleted">
@@ -100,8 +132,7 @@
                                       slot-scope="{ option }">
                               {{option.name }}
                             </template>
-                            <template class="multiselect_element"
-                                      slot="afterList">
+                            <template slot="afterList">
                               <div v-show="planEventsCount > 74"
                                    class="afterList">
                                 <hr class="dropdown-divider">
@@ -170,8 +201,7 @@
                                            :close-on-select="true"
                                            :internal-search="false"
                                            @search-change="search('injectOwners', $event)">
-                                <template class="multiselect_element"
-                                          slot="beforeList">
+                                <template slot="beforeList">
                                   <span class="multiselect__option"
                                         @click="showAddValue('injectOwners')">
                                     <span> Add new... </span>
@@ -240,8 +270,7 @@
                                          v-if="planMethods"
                                          :internal-search="false"
                                          @search-change="search('methods', $event)">
-                              <template class="multiselect_element"
-                                        slot="beforeList">
+                              <template slot="beforeList">
                                 <span class="multiselect__option"
                                       @click="openCreateMethod()">
                                   <span> Add new... </span>
@@ -458,6 +487,38 @@
             <form data-vv-scope="injectParticipants"
                   v-on:submit.prevent>
               <div class="card-content">
+                <section class="objective-traceability">
+                  <div class="traceability-header">
+                    <div>
+                      <p class="eyebrow">Objective traceability</p>
+                      <h2 class="title is-5">Connect this inject to exercise outcomes</h2>
+                      <p class="subtitle is-6">
+                        A strong MSEL inject should drive a training objective, create observable evidence, and support assessment or AAR findings.
+                      </p>
+                    </div>
+                    <span class="traceability-status"
+                          :class="assignedObjectives.length ? 'is-linked' : 'is-empty'">
+                      <i :class="assignedObjectives.length ? 'fas fa-link' : 'fas fa-unlink'"></i>
+                      {{ assignedObjectives.length ? 'Linked' : 'No objective linked' }}
+                    </span>
+                  </div>
+                  <div class="traceability-metrics">
+                    <button v-for="metric in objectiveTraceabilityMetrics"
+                            :key="metric.key"
+                            type="button"
+                            class="traceability-metric"
+                            :class="metric.attention ? 'is-attention' : ''"
+                            @click="goToReadinessStep(3)">
+                      <span class="metric-icon">
+                        <i :class="metric.icon"></i>
+                      </span>
+                      <span>
+                        <strong>{{ metric.value }}</strong>
+                        <small>{{ metric.label }}</small>
+                      </span>
+                    </button>
+                  </div>
+                </section>
                 <div class="card objective-section">
                   <div class="card-header">
                     <p class="card-header-title">
@@ -518,6 +579,18 @@
                                         label="JMET"
                                         sortable>
                           <span v-if="props.row.jmet">{{ props.row.jmet.description }}</span>
+                        </b-table-column>
+                        <b-table-column label="Traceability">
+                          <div class="traceability-chip-wrap">
+                            <span v-for="item in objectiveTraceItems(props.row)"
+                                  :key="item.key"
+                                  class="traceability-chip"
+                                  :class="item.complete ? 'is-complete' : 'is-missing'"
+                                  :title="item.complete ? item.readyText : item.missingText">
+                              <i :class="item.icon"></i>
+                              <span>{{ item.label }}</span>
+                            </span>
+                          </div>
                         </b-table-column>
                         <b-table-column field="priorityLevel.title"
                                         label="Priority"
@@ -599,6 +672,15 @@
                                   <label class="label">
                                     Measures
                                   </label>
+                                  <div class="traceability-chip-wrap is-detail">
+                                    <span v-for="item in objectiveTraceItems(props.row)"
+                                          :key="item.key"
+                                          class="traceability-chip"
+                                          :class="item.complete ? 'is-complete' : 'is-missing'">
+                                      <i :class="item.icon"></i>
+                                      <span>{{ item.complete ? item.readyText : item.missingText }}</span>
+                                    </span>
+                                  </div>
                                   <ul class="bd-anchors-list"
                                       v-if="props.row.measures.length > 0">
                                     <li v-for="(measure,$index) in props.row.measures"
@@ -813,6 +895,18 @@
                                         sortable>
                           {{ props.row.jmet ? props.row.jmet.description : "None" }}
                         </b-table-column>
+                        <b-table-column label="Traceability">
+                          <div class="traceability-chip-wrap">
+                            <span v-for="item in objectiveTraceItems(props.row)"
+                                  :key="item.key"
+                                  class="traceability-chip"
+                                  :class="item.complete ? 'is-complete' : 'is-missing'"
+                                  :title="item.complete ? item.readyText : item.missingText">
+                              <i :class="item.icon"></i>
+                              <span>{{ item.label }}</span>
+                            </span>
+                          </div>
+                        </b-table-column>
                         <b-table-column field="priorityLevel.title"
                                         label="Priority"
                                         centered
@@ -870,6 +964,15 @@
                                   <label class="label">
                                     Measures
                                   </label>
+                                  <div class="traceability-chip-wrap is-detail">
+                                    <span v-for="item in objectiveTraceItems(props.row)"
+                                          :key="item.key"
+                                          class="traceability-chip"
+                                          :class="item.complete ? 'is-complete' : 'is-missing'">
+                                      <i :class="item.icon"></i>
+                                      <span>{{ item.complete ? item.readyText : item.missingText }}</span>
+                                    </span>
+                                  </div>
                                   <ul class="bd-anchors-list"
                                       v-if="props.row.measures.length > 0">
                                     <li v-for="(measure,$index) in props.row.measures"
@@ -1026,6 +1129,21 @@
 
           <div class="card review">
             <div class="card-content">
+              <div class="review-readiness">
+                <div>
+                  <p class="eyebrow">Controller review</p>
+                  <h2 class="title is-5">Inject readiness before execution</h2>
+                </div>
+                <div class="review-readiness-grid">
+                  <span v-for="item in injectReadinessItems"
+                        :key="item.key"
+                        class="readiness-pill"
+                        :class="item.complete ? 'is-complete' : 'is-missing'">
+                    <i :class="item.icon"></i>
+                    {{ item.complete ? item.readyText : item.missingText }}
+                  </span>
+                </div>
+              </div>
               <div class="columns is-multiline">
                 <div class="column is-full">
                   <label class="label is-size-4">
@@ -1743,7 +1861,235 @@ export default {
       perPage: 15
     }
   },
+  computed: {
+    assignedObjectives() {
+      return this.planInject.objectives || []
+    },
+    injectReadinessItems() {
+      return [
+        {
+          key: 'owner',
+          label: 'Controller',
+          icon: 'fas fa-headset',
+          step: 0,
+          readyText: 'Controller assigned',
+          missingText: 'Assign a controller or cell owner',
+          complete: !!(this.injectOwner && this.injectOwner.title)
+        },
+        {
+          key: 'timing',
+          label: 'Timing',
+          icon: 'fas fa-clock',
+          step: 0,
+          readyText: 'Start time set',
+          missingText: 'Set planned inject date and time',
+          complete: !!this.planInject.startDate
+        },
+        {
+          key: 'method',
+          label: 'Delivery',
+          icon: 'fas fa-share-alt',
+          step: 0,
+          readyText: 'Delivery method set',
+          missingText: 'Select the inject delivery method',
+          complete: !!this.method
+        },
+        {
+          key: 'trigger',
+          label: 'Trigger',
+          icon: 'fas fa-bolt',
+          step: 1,
+          readyText: 'Trigger defined',
+          missingText: 'Describe what starts this inject',
+          complete: !!this.planInject.trigger
+        },
+        {
+          key: 'objectives',
+          label: 'Training Objective',
+          icon: 'fas fa-bullseye',
+          step: 3,
+          readyText: 'Training objective linked',
+          missingText: 'Link at least one training objective',
+          complete: !!(
+            this.planInject.objectives && this.planInject.objectives.length
+          )
+        },
+        {
+          key: 'response',
+          label: 'Response Capture',
+          icon: 'fas fa-clipboard-check',
+          step: 1,
+          readyText: 'Expected or actual response captured',
+          missingText: 'Capture expected or actual response',
+          complete: !!(this.planInject.response || this.planInject.mitigation)
+        }
+      ]
+    },
+    injectReadinessScore() {
+      if (!this.injectReadinessItems.length) {
+        return 0
+      }
+      let complete = this.injectReadinessItems.filter(item => item.complete)
+        .length
+      return Math.round((complete / this.injectReadinessItems.length) * 100)
+    },
+    injectReadinessTone() {
+      if (this.injectReadinessScore >= 80) {
+        return 'is-strong'
+      }
+      if (this.injectReadinessScore >= 55) {
+        return 'is-building'
+      }
+      return 'is-starting'
+    },
+    objectiveTraceabilityMetrics() {
+      let objectives = this.assignedObjectives
+      let participants = this.uniqueCount(
+        objectives.map(objective =>
+          objective.participant ? objective.participant.id : null
+        )
+      )
+      let platforms = this.uniqueCount(
+        objectives.map(objective =>
+          objective.platform && objective.platform.platform
+            ? objective.platform.platform.id
+            : null
+        )
+      )
+      let measures = objectives.reduce((count, objective) => {
+        return count + (objective.measures ? objective.measures.length : 0)
+      }, 0)
+      let priorityLinks = objectives.filter(
+        objective =>
+          (objective.exerciseObjective &&
+            objective.exerciseObjective.length > 0) ||
+          (objective.commandTrainingPriority &&
+            objective.commandTrainingPriority.length > 0) ||
+          (objective.jointStaffTrainingPriority &&
+            objective.jointStaffTrainingPriority.length > 0)
+      ).length
+      let runProgress = this.objectiveRunProgress(objectives)
+
+      return [
+        {
+          key: 'objectives',
+          label: 'linked objectives',
+          value: objectives.length,
+          icon: 'fas fa-bullseye',
+          attention: objectives.length === 0
+        },
+        {
+          key: 'participants',
+          label: 'training audiences',
+          value: participants,
+          icon: 'fas fa-users',
+          attention: objectives.length > 0 && participants === 0
+        },
+        {
+          key: 'platforms',
+          label: 'platforms',
+          value: platforms,
+          icon: 'fas fa-layer-group',
+          attention: objectives.length > 0 && platforms === 0
+        },
+        {
+          key: 'measures',
+          label: 'assessment measures',
+          value: measures,
+          icon: 'fas fa-ruler-combined',
+          attention: objectives.length > 0 && measures === 0
+        },
+        {
+          key: 'priority',
+          label: 'priority links',
+          value: priorityLinks,
+          icon: 'fas fa-flag',
+          attention: objectives.length > 0 && priorityLinks === 0
+        },
+        {
+          key: 'runs',
+          label: 'run coverage',
+          value: runProgress,
+          icon: 'fas fa-redo-alt',
+          attention: objectives.length > 0 && runProgress !== 'Met'
+        }
+      ]
+    }
+  },
   methods: {
+    uniqueCount(values) {
+      return new Set(values.filter(value => !!value)).size
+    },
+    objectiveRunProgress(objectives) {
+      if (!objectives || objectives.length === 0) {
+        return 'None'
+      }
+      let hasRequiredRuns = objectives.some(objective => objective.requiredRuns)
+      if (!hasRequiredRuns) {
+        return 'Not set'
+      }
+      let unmet = objectives.filter(objective => {
+        let required = Number(objective.requiredRuns || 0)
+        let current = objective.injects ? objective.injects.length : 0
+        return required > 0 && current < required
+      })
+      return unmet.length === 0 ? 'Met' : `${unmet.length} short`
+    },
+    objectiveTraceItems(objective) {
+      let injectCount =
+        objective && objective.injects ? objective.injects.length : 0
+      let requiredRuns = Number(
+        objective && objective.requiredRuns ? objective.requiredRuns : 0
+      )
+      let runComplete = requiredRuns === 0 || injectCount >= requiredRuns
+
+      return [
+        {
+          key: 'measure',
+          label: 'Measure',
+          icon: 'fas fa-ruler-combined',
+          readyText: 'Assessment measure linked',
+          missingText: 'Needs assessment measure',
+          complete: !!(objective.measures && objective.measures.length)
+        },
+        {
+          key: 'audience',
+          label: 'Audience',
+          icon: 'fas fa-users',
+          readyText: 'Training audience linked',
+          missingText: 'Needs participant audience',
+          complete: !!objective.participant
+        },
+        {
+          key: 'priority',
+          label: 'Priority',
+          icon: 'fas fa-flag',
+          readyText: 'Priority or exercise objective linked',
+          missingText: 'Needs priority or exercise objective',
+          complete: !!(
+            (objective.exerciseObjective &&
+              objective.exerciseObjective.length) ||
+            (objective.commandTrainingPriority &&
+              objective.commandTrainingPriority.length) ||
+            (objective.jointStaffTrainingPriority &&
+              objective.jointStaffTrainingPriority.length)
+          )
+        },
+        {
+          key: 'runs',
+          label: 'Runs',
+          icon: 'fas fa-redo-alt',
+          readyText: requiredRuns
+            ? `${injectCount}/${requiredRuns} required runs covered`
+            : 'Required runs not set',
+          missingText: `${injectCount}/${requiredRuns} required runs covered`,
+          complete: runComplete
+        }
+      ]
+    },
+    goToReadinessStep(step) {
+      this.stepIndex = step
+    },
     handleSelectStatusCheck() {
       this.injectStatusCheck(this.planInject)
     },
@@ -2177,6 +2523,329 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.inject-readiness-panel,
+.review-readiness {
+  background:
+    linear-gradient(135deg, rgba(29, 78, 216, 0.12), rgba(20, 184, 166, 0.1)),
+    var(--app-surface, #ffffff);
+  border: 1px solid rgba(148, 163, 184, 0.24);
+  border-radius: 8px;
+  box-shadow: 0 14px 34px rgba(15, 23, 42, 0.08);
+}
+
+.inject-readiness-panel {
+  margin: 0 0 1.25rem;
+  padding: 1rem;
+}
+
+.readiness-summary {
+  align-items: center;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+
+  .title,
+  .subtitle {
+    margin-bottom: 0.25rem;
+  }
+}
+
+.eyebrow {
+  color: var(--app-text-muted, #64748b);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0;
+  margin-bottom: 0.2rem;
+  text-transform: uppercase;
+}
+
+.readiness-score {
+  align-items: center;
+  background: rgba(15, 23, 42, 0.06);
+  border: 1px solid rgba(148, 163, 184, 0.24);
+  border-radius: 8px;
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 88px;
+  min-width: 110px;
+  padding: 0.75rem;
+
+  span {
+    color: var(--app-text-strong, #0f172a);
+    font-size: 1.7rem;
+    font-weight: 800;
+    line-height: 1;
+  }
+
+  small {
+    color: var(--app-text-muted, #64748b);
+    font-size: 0.68rem;
+    font-weight: 700;
+    margin-top: 0.35rem;
+    text-transform: uppercase;
+  }
+
+  &.is-strong {
+    background: rgba(16, 185, 129, 0.12);
+    border-color: rgba(16, 185, 129, 0.32);
+  }
+
+  &.is-building {
+    background: rgba(245, 158, 11, 0.14);
+    border-color: rgba(245, 158, 11, 0.34);
+  }
+
+  &.is-starting {
+    background: rgba(239, 68, 68, 0.1);
+    border-color: rgba(239, 68, 68, 0.28);
+  }
+}
+
+.readiness-checks,
+.review-readiness-grid {
+  display: grid;
+  gap: 0.65rem;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+}
+
+.readiness-check {
+  align-items: center;
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(148, 163, 184, 0.24);
+  border-radius: 8px;
+  color: inherit;
+  cursor: pointer;
+  display: flex;
+  gap: 0.65rem;
+  min-height: 72px;
+  padding: 0.7rem;
+  text-align: left;
+
+  &:hover {
+    border-color: rgba(37, 99, 235, 0.45);
+    box-shadow: 0 10px 22px rgba(15, 23, 42, 0.08);
+  }
+
+  strong,
+  small {
+    display: block;
+  }
+
+  strong {
+    color: var(--app-text-strong, #0f172a);
+    font-size: 0.9rem;
+    line-height: 1.15;
+  }
+
+  small {
+    color: var(--app-text-muted, #64748b);
+    font-size: 0.76rem;
+    line-height: 1.25;
+    margin-top: 0.2rem;
+  }
+}
+
+.check-icon {
+  align-items: center;
+  border-radius: 8px;
+  display: inline-flex;
+  flex: 0 0 auto;
+  height: 34px;
+  justify-content: center;
+  width: 34px;
+}
+
+.readiness-check.is-complete .check-icon,
+.readiness-pill.is-complete {
+  background: rgba(16, 185, 129, 0.12);
+  color: #047857;
+}
+
+.readiness-check.is-missing .check-icon,
+.readiness-pill.is-missing {
+  background: rgba(239, 68, 68, 0.08);
+  color: #b91c1c;
+}
+
+.review-readiness {
+  margin-bottom: 1.25rem;
+  padding: 1rem;
+
+  .title {
+    margin-bottom: 0.75rem;
+  }
+}
+
+.objective-traceability {
+  background: rgba(15, 23, 42, 0.035);
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  padding: 1rem;
+}
+
+.traceability-header {
+  align-items: center;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+
+  .title,
+  .subtitle {
+    margin-bottom: 0.25rem;
+  }
+}
+
+.traceability-status {
+  align-items: center;
+  border: 1px solid rgba(148, 163, 184, 0.24);
+  border-radius: 999px;
+  display: inline-flex;
+  flex: 0 0 auto;
+  font-size: 0.78rem;
+  font-weight: 800;
+  gap: 0.4rem;
+  min-height: 34px;
+  padding: 0.38rem 0.7rem;
+  text-transform: uppercase;
+
+  &.is-linked {
+    background: rgba(16, 185, 129, 0.12);
+    border-color: rgba(16, 185, 129, 0.28);
+    color: #047857;
+  }
+
+  &.is-empty {
+    background: rgba(239, 68, 68, 0.08);
+    border-color: rgba(239, 68, 68, 0.22);
+    color: #b91c1c;
+  }
+}
+
+.traceability-metrics {
+  display: grid;
+  gap: 0.65rem;
+  grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+}
+
+.traceability-metric {
+  align-items: center;
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(148, 163, 184, 0.24);
+  border-radius: 8px;
+  color: inherit;
+  cursor: pointer;
+  display: flex;
+  gap: 0.65rem;
+  min-height: 62px;
+  padding: 0.65rem;
+  text-align: left;
+
+  &:hover {
+    border-color: rgba(37, 99, 235, 0.45);
+    box-shadow: 0 10px 22px rgba(15, 23, 42, 0.08);
+  }
+
+  .metric-icon {
+    align-items: center;
+    background: rgba(37, 99, 235, 0.1);
+    border-radius: 8px;
+    color: #2563eb;
+    display: inline-flex;
+    flex: 0 0 auto;
+    height: 32px;
+    justify-content: center;
+    width: 32px;
+  }
+
+  strong,
+  small {
+    display: block;
+  }
+
+  strong {
+    color: var(--app-text-strong, #0f172a);
+    font-size: 1.05rem;
+    line-height: 1.05;
+  }
+
+  small {
+    color: var(--app-text-muted, #64748b);
+    font-size: 0.68rem;
+    font-weight: 800;
+    margin-top: 0.22rem;
+    text-transform: uppercase;
+  }
+
+  &.is-attention {
+    border-color: rgba(245, 158, 11, 0.36);
+
+    .metric-icon {
+      background: rgba(245, 158, 11, 0.14);
+      color: #b45309;
+    }
+  }
+}
+
+.traceability-chip-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+
+  &.is-detail {
+    margin-bottom: 0.75rem;
+  }
+}
+
+.traceability-chip {
+  align-items: center;
+  border: 1px solid rgba(148, 163, 184, 0.24);
+  border-radius: 999px;
+  display: inline-flex;
+  font-size: 0.72rem;
+  font-weight: 800;
+  gap: 0.3rem;
+  line-height: 1;
+  min-height: 28px;
+  padding: 0.32rem 0.55rem;
+
+  &.is-complete {
+    background: rgba(16, 185, 129, 0.12);
+    border-color: rgba(16, 185, 129, 0.28);
+    color: #047857;
+  }
+
+  &.is-missing {
+    background: rgba(239, 68, 68, 0.08);
+    border-color: rgba(239, 68, 68, 0.22);
+    color: #b91c1c;
+  }
+}
+
+.readiness-pill {
+  align-items: center;
+  border: 1px solid rgba(148, 163, 184, 0.24);
+  border-radius: 999px;
+  display: inline-flex;
+  font-size: 0.78rem;
+  font-weight: 700;
+  gap: 0.4rem;
+  min-height: 30px;
+  padding: 0.35rem 0.65rem;
+
+  &.is-complete {
+    border-color: rgba(16, 185, 129, 0.28);
+  }
+
+  &.is-missing {
+    border-color: rgba(239, 68, 68, 0.24);
+  }
+}
+
 .multiselect {
   .icon {
     margin: 0 10px;
@@ -2202,6 +2871,27 @@ export default {
     .card-header-title {
       color: rgb(255, 255, 255);
     }
+  }
+}
+
+@media (max-width: 768px) {
+  .readiness-summary {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .readiness-score {
+    min-width: 100%;
+  }
+
+  .traceability-header {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .traceability-status {
+    justify-content: center;
+    width: 100%;
   }
 }
 </style>

@@ -1,10 +1,12 @@
 query ExerciseTimelineItems(
+  $exerciseId: ID
   $sources: [TimelineSource!]
   $start: DateTime
   $end: DateTime
   $first: Int
 ) {
   exerciseTimelineItems(
+    exerciseId: $exerciseId
     sources: $sources
     start: $start
     end: $end
@@ -18,6 +20,21 @@ query ExerciseTimelineItems(
     summary
     actor
     status
+    category
+    releaseStatus
+    visibility
+    objective
+    expectedAction
+    controller
+    recipient
+    exerciseId
+    exerciseName
+    parentId
+    parentTitle
+    plannedTime
+    actualTime
+    mapPath
+    keyEvent
     start
     end
     routeName

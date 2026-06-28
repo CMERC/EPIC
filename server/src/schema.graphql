@@ -190,6 +190,7 @@ type Query {
 
   # Timeline
   exerciseTimelineItems(
+    exerciseId: ID
     sources: [TimelineSource!]
     start: DateTime
     end: DateTime
@@ -476,6 +477,21 @@ type ExerciseTimelineItem {
   summary: String
   actor: String
   status: String
+  category: String
+  releaseStatus: String
+  visibility: String
+  objective: String
+  expectedAction: String
+  controller: String
+  recipient: String
+  exerciseId: String
+  exerciseName: String
+  parentId: String
+  parentTitle: String
+  plannedTime: DateTime
+  actualTime: DateTime
+  mapPath: String
+  keyEvent: Boolean
   start: DateTime!
   end: DateTime
   routeName: String

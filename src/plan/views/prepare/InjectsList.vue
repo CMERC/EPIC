@@ -160,6 +160,36 @@
         </div>
       </div>
     </nav>
+    <section class="msel-control-overview">
+      <div class="control-overview-header">
+        <div>
+          <p class="eyebrow">Exercise control</p>
+          <h1 class="title is-4">MSEL readiness board</h1>
+          <p class="subtitle is-6">
+            Review the control details that make each inject playable, observable, and useful during assessment.
+          </p>
+        </div>
+        <div class="control-score"
+             :class="controlScoreTone">
+          <span>{{ controlReadinessScore }}%</span>
+          <small>Ready on this page</small>
+        </div>
+      </div>
+      <div class="control-metrics">
+        <div v-for="metric in controlMetrics"
+             :key="metric.key"
+             class="control-metric"
+             :class="{'is-attention': metric.attention}">
+          <span class="metric-icon">
+            <i :class="metric.icon"></i>
+          </span>
+          <span>
+            <strong>{{ metric.value }}</strong>
+            <small>{{ metric.label }}</small>
+          </span>
+        </div>
+      </div>
+    </section>
     <div v-if="planInjectsSearch && planInjectsSearch.length > 0">
       <b-table :data="planInjectsSearch"
                striped
@@ -228,6 +258,18 @@
                       :style="'background-color:'+props.row.events.color"
                       :class="lightOrDark(props.row.events.color)">{{props.row.events.name | truncate(20)}}</span>
               </router-link>
+            </div>
+          </b-table-column>
+          <b-table-column label="Control Readiness">
+            <div class="control-chip-wrap">
+              <span v-for="item in injectReadinessItems(props.row)"
+                    :key="item.key"
+                    class="control-chip"
+                    :class="item.complete ? 'is-complete' : 'is-missing'"
+                    :title="item.complete ? item.readyText : item.missingText">
+                <i :class="item.icon"></i>
+                <span>{{ item.label }}</span>
+              </span>
             </div>
           </b-table-column>
           <b-table-column field="updatedAt"
@@ -352,6 +394,18 @@
                 <div class="field">
                   <p class="title is-6">Actual Response</p>
                   <p class="subtitle is-6">{{ props.row.mitigation ? props.row.mitigation : "None" }}</p>
+                </div>
+                <div class="field">
+                  <p class="title is-6">Controller Readiness</p>
+                  <div class="control-chip-wrap is-detail">
+                    <span v-for="item in injectReadinessItems(props.row)"
+                          :key="item.key"
+                          class="control-chip"
+                          :class="item.complete ? 'is-complete' : 'is-missing'">
+                      <i :class="item.icon"></i>
+                      <span>{{ item.complete ? item.readyText : item.missingText }}</span>
+                    </span>
+                  </div>
                 </div>
                 <div class="field">
                   <p class="title is-6">Location</p>
@@ -676,6 +730,86 @@ export default {
       this.defaultSortOrder = btableData[1].toLowerCase()
     }
   },
+  computed: {
+    visibleInjects() {
+      return this.planInjectsSearch || []
+    },
+    controlReadinessScore() {
+      if (!this.visibleInjects.length) {
+        return 0
+      }
+      let possible = this.visibleInjects.length * this.readinessTemplate().length
+      let complete = this.visibleInjects.reduce((count, inject) => {
+        return (
+          count +
+          this.injectReadinessItems(inject).filter(item => item.complete).length
+        )
+      }, 0)
+      return Math.round((complete / possible) * 100)
+    },
+    controlScoreTone() {
+      if (this.controlReadinessScore >= 80) {
+        return 'is-strong'
+      }
+      if (this.controlReadinessScore >= 55) {
+        return 'is-building'
+      }
+      return 'is-starting'
+    },
+    controlMetrics() {
+      let total = this.visibleInjects.length
+      let missingOwner = this.visibleInjects.filter(inject => !inject.owner || !inject.owner.title).length
+      let missingTiming = this.visibleInjects.filter(inject => !inject.startDate).length
+      let missingTrigger = this.visibleInjects.filter(inject => !inject.trigger).length
+      let missingObjectives = this.visibleInjects.filter(inject => !inject.objectives || inject.objectives.length === 0).length
+      let noResponseCapture = this.visibleInjects.filter(inject => !inject.response && !inject.mitigation).length
+
+      return [
+        {
+          key: 'total',
+          label: 'visible injects',
+          value: total,
+          icon: 'fas fa-stream',
+          attention: false
+        },
+        {
+          key: 'owner',
+          label: 'missing controller',
+          value: missingOwner,
+          icon: 'fas fa-headset',
+          attention: missingOwner > 0
+        },
+        {
+          key: 'timing',
+          label: 'missing timing',
+          value: missingTiming,
+          icon: 'fas fa-clock',
+          attention: missingTiming > 0
+        },
+        {
+          key: 'trigger',
+          label: 'missing trigger',
+          value: missingTrigger,
+          icon: 'fas fa-bolt',
+          attention: missingTrigger > 0
+        },
+        {
+          key: 'objectives',
+          label: 'without TO link',
+          value: missingObjectives,
+          icon: 'fas fa-bullseye',
+          attention: missingObjectives > 0
+        },
+        {
+          key: 'response',
+          label: 'missing response capture',
+          value: noResponseCapture,
+          icon: 'fas fa-clipboard-check',
+          attention: noResponseCapture > 0
+        }
+      ]
+    }
+  },
   watch: {
     eventName() {
       this.$router.push({
@@ -710,6 +844,65 @@ export default {
     }
   },
   methods: {
+    readinessTemplate() {
+      return [
+        {
+          key: 'owner',
+          label: 'Owner',
+          icon: 'fas fa-headset',
+          readyText: 'Controller assigned',
+          missingText: 'Needs controller',
+          complete: inject => !!(inject.owner && inject.owner.title)
+        },
+        {
+          key: 'timing',
+          label: 'Time',
+          icon: 'fas fa-clock',
+          readyText: 'Start time set',
+          missingText: 'Needs start time',
+          complete: inject => !!inject.startDate
+        },
+        {
+          key: 'method',
+          label: 'Method',
+          icon: 'fas fa-share-alt',
+          readyText: 'Delivery method set',
+          missingText: 'Needs delivery method',
+          complete: inject => !!inject.method
+        },
+        {
+          key: 'trigger',
+          label: 'Trigger',
+          icon: 'fas fa-bolt',
+          readyText: 'Trigger defined',
+          missingText: 'Needs trigger',
+          complete: inject => !!inject.trigger
+        },
+        {
+          key: 'objectives',
+          label: 'TO',
+          icon: 'fas fa-bullseye',
+          readyText: 'Training objective linked',
+          missingText: 'Needs training objective',
+          complete: inject => !!(inject.objectives && inject.objectives.length)
+        },
+        {
+          key: 'response',
+          label: 'Response',
+          icon: 'fas fa-clipboard-check',
+          readyText: 'Expected or actual response captured',
+          missingText: 'Needs response capture',
+          complete: inject => !!(inject.response || inject.mitigation)
+        }
+      ]
+    },
+    injectReadinessItems(inject) {
+      return this.readinessTemplate().map(item => {
+        return Object.assign({}, item, {
+          complete: item.complete(inject || {})
+        })
+      })
+    },
     downloadInjects(type) {
       this.downloadInProgress = true
       let currentDate = this.moment().format('DDMMYYYY HHmm')
@@ -907,6 +1100,175 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.msel-control-overview {
+  background:
+    linear-gradient(135deg, rgba(29, 78, 216, 0.12), rgba(20, 184, 166, 0.1)),
+    var(--app-surface, #ffffff);
+  border: 1px solid rgba(148, 163, 184, 0.24);
+  border-radius: 8px;
+  box-shadow: 0 14px 34px rgba(15, 23, 42, 0.08);
+  margin: 0 0 1.25rem;
+  padding: 1rem;
+}
+
+.control-overview-header {
+  align-items: center;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+
+  .title,
+  .subtitle {
+    margin-bottom: 0.25rem;
+  }
+}
+
+.eyebrow {
+  color: var(--app-text-muted, #64748b);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0;
+  margin-bottom: 0.2rem;
+  text-transform: uppercase;
+}
+
+.control-score {
+  align-items: center;
+  background: rgba(15, 23, 42, 0.06);
+  border: 1px solid rgba(148, 163, 184, 0.24);
+  border-radius: 8px;
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 88px;
+  min-width: 116px;
+  padding: 0.75rem;
+
+  span {
+    color: var(--app-text-strong, #0f172a);
+    font-size: 1.7rem;
+    font-weight: 800;
+    line-height: 1;
+  }
+
+  small {
+    color: var(--app-text-muted, #64748b);
+    font-size: 0.68rem;
+    font-weight: 700;
+    margin-top: 0.35rem;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  &.is-strong {
+    background: rgba(16, 185, 129, 0.12);
+    border-color: rgba(16, 185, 129, 0.32);
+  }
+
+  &.is-building {
+    background: rgba(245, 158, 11, 0.14);
+    border-color: rgba(245, 158, 11, 0.34);
+  }
+
+  &.is-starting {
+    background: rgba(239, 68, 68, 0.1);
+    border-color: rgba(239, 68, 68, 0.28);
+  }
+}
+
+.control-metrics {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+}
+
+.control-metric {
+  align-items: center;
+  background: rgba(255, 255, 255, 0.68);
+  border: 1px solid rgba(148, 163, 184, 0.24);
+  border-radius: 8px;
+  display: flex;
+  gap: 0.65rem;
+  min-height: 66px;
+  padding: 0.7rem;
+
+  .metric-icon {
+    align-items: center;
+    background: rgba(15, 23, 42, 0.06);
+    border-radius: 8px;
+    color: #2563eb;
+    display: inline-flex;
+    height: 34px;
+    justify-content: center;
+    width: 34px;
+  }
+
+  strong,
+  small {
+    display: block;
+  }
+
+  strong {
+    color: var(--app-text-strong, #0f172a);
+    font-size: 1.15rem;
+    line-height: 1.05;
+  }
+
+  small {
+    color: var(--app-text-muted, #64748b);
+    font-size: 0.72rem;
+    font-weight: 700;
+    margin-top: 0.2rem;
+    text-transform: uppercase;
+  }
+
+  &.is-attention {
+    border-color: rgba(245, 158, 11, 0.38);
+
+    .metric-icon {
+      background: rgba(245, 158, 11, 0.14);
+      color: #b45309;
+    }
+  }
+}
+
+.control-chip-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+
+  &.is-detail {
+    gap: 0.5rem;
+  }
+}
+
+.control-chip {
+  align-items: center;
+  border: 1px solid rgba(148, 163, 184, 0.24);
+  border-radius: 999px;
+  display: inline-flex;
+  font-size: 0.72rem;
+  font-weight: 700;
+  gap: 0.3rem;
+  line-height: 1;
+  min-height: 28px;
+  padding: 0.32rem 0.55rem;
+
+  &.is-complete {
+    background: rgba(16, 185, 129, 0.12);
+    border-color: rgba(16, 185, 129, 0.28);
+    color: #047857;
+  }
+
+  &.is-missing {
+    background: rgba(239, 68, 68, 0.08);
+    border-color: rgba(239, 68, 68, 0.22);
+    color: #b91c1c;
+  }
+}
+
 .inject-deleted {
   background: #cccccc;
 }
@@ -917,5 +1279,16 @@ export default {
 }
 .b-table .table {
   width: auto;
+}
+
+@media (max-width: 768px) {
+  .control-overview-header {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .control-score {
+    min-width: 100%;
+  }
 }
 </style>

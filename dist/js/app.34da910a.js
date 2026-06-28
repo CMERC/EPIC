@@ -16187,8 +16187,8 @@ doc.definitions = doc.definitions.concat(unique((__webpack_require__(83558).defi
 /***/ (function(module) {
 
 
-    var doc = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ExerciseTimelineItems"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"sources"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"TimelineSource"}}}},"directives":[]},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"start"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"DateTime"}},"directives":[]},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"end"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"DateTime"}},"directives":[]},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"first"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"exerciseTimelineItems"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"sources"},"value":{"kind":"Variable","name":{"kind":"Name","value":"sources"}}},{"kind":"Argument","name":{"kind":"Name","value":"start"},"value":{"kind":"Variable","name":{"kind":"Name","value":"start"}}},{"kind":"Argument","name":{"kind":"Name","value":"end"},"value":{"kind":"Variable","name":{"kind":"Name","value":"end"}}},{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"first"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"source"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"sourceId"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"lane"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"title"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"summary"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"actor"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"status"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"start"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"end"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"routeName"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"routePath"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"accent"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"metadata"},"arguments":[],"directives":[]}]}}]}}],"loc":{"start":0,"end":375}};
-    doc.loc.source = {"body":"query ExerciseTimelineItems(\n  $sources: [TimelineSource!]\n  $start: DateTime\n  $end: DateTime\n  $first: Int\n) {\n  exerciseTimelineItems(\n    sources: $sources\n    start: $start\n    end: $end\n    first: $first\n  ) {\n    id\n    source\n    sourceId\n    lane\n    title\n    summary\n    actor\n    status\n    start\n    end\n    routeName\n    routePath\n    accent\n    metadata\n  }\n}\n","name":"GraphQL request","locationOffset":{"line":1,"column":1}};
+    var doc = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ExerciseTimelineItems"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"exerciseId"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}},"directives":[]},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"sources"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"TimelineSource"}}}},"directives":[]},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"start"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"DateTime"}},"directives":[]},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"end"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"DateTime"}},"directives":[]},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"first"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"exerciseTimelineItems"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"exerciseId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"exerciseId"}}},{"kind":"Argument","name":{"kind":"Name","value":"sources"},"value":{"kind":"Variable","name":{"kind":"Name","value":"sources"}}},{"kind":"Argument","name":{"kind":"Name","value":"start"},"value":{"kind":"Variable","name":{"kind":"Name","value":"start"}}},{"kind":"Argument","name":{"kind":"Name","value":"end"},"value":{"kind":"Variable","name":{"kind":"Name","value":"end"}}},{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"first"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"source"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"sourceId"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"lane"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"title"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"summary"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"actor"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"status"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"category"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"releaseStatus"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"visibility"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"objective"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"expectedAction"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"controller"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"recipient"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"exerciseId"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"exerciseName"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"parentId"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"parentTitle"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"plannedTime"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"actualTime"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"mapPath"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"keyEvent"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"start"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"end"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"routeName"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"routePath"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"accent"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"metadata"},"arguments":[],"directives":[]}]}}]}}],"loc":{"start":0,"end":646}};
+    doc.loc.source = {"body":"query ExerciseTimelineItems(\n  $exerciseId: ID\n  $sources: [TimelineSource!]\n  $start: DateTime\n  $end: DateTime\n  $first: Int\n) {\n  exerciseTimelineItems(\n    exerciseId: $exerciseId\n    sources: $sources\n    start: $start\n    end: $end\n    first: $first\n  ) {\n    id\n    source\n    sourceId\n    lane\n    title\n    summary\n    actor\n    status\n    category\n    releaseStatus\n    visibility\n    objective\n    expectedAction\n    controller\n    recipient\n    exerciseId\n    exerciseName\n    parentId\n    parentTitle\n    plannedTime\n    actualTime\n    mapPath\n    keyEvent\n    start\n    end\n    routeName\n    routePath\n    accent\n    metadata\n  }\n}\n","name":"GraphQL request","locationOffset":{"line":1,"column":1}};
   
 
     var names = (/* unused pure expression or super */ null && ({}));
@@ -24424,7 +24424,7 @@ webpackContext.id = 33335;
 
 /***/ }),
 
-/***/ 21300:
+/***/ 55826:
 /***/ (function(__unused_webpack_module, __unused_webpack___webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -27431,14 +27431,14 @@ var Dashboard_component = (0,componentNormalizer/* default */.A)(
 )
 
 /* harmony default export */ var Dashboard = (Dashboard_component.exports);
-;// ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"27ccff72-vue-loader-template"}!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib/index.js??clonedRuleSet-40.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/templateLoader.js??ruleSet[1].rules[4]!./node_modules/cache-loader/dist/cjs.js??ruleSet[0].use[0]!./node_modules/@vue/cli-service/lib/config/vue-loader-v15-resolve-compat/vue-loader.js??vue-loader-options!./src/shared/views/Home.vue?vue&type=template&id=71acfb94&scoped=true
-var Homevue_type_template_id_71acfb94_scoped_true_render = function render() {
+;// ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"27ccff72-vue-loader-template"}!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib/index.js??clonedRuleSet-40.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/templateLoader.js??ruleSet[1].rules[4]!./node_modules/cache-loader/dist/cjs.js??ruleSet[0].use[0]!./node_modules/@vue/cli-service/lib/config/vue-loader-v15-resolve-compat/vue-loader.js??vue-loader-options!./src/shared/views/Home.vue?vue&type=template&id=ff7f3fec&scoped=true
+var Homevue_type_template_id_ff7f3fec_scoped_true_render = function render() {
   var _vm = this,
     _c = _vm._self._c;
   return _c('div', {
-    staticClass: "container app-home"
+    staticClass: "app-home"
   }, [_c('section', {
-    staticClass: "section"
+    staticClass: "section app-home-content"
   }, [_c('div', {
     staticClass: "home-hero columns is-mobile is-vcentered"
   }, [_vm._m(0), _c('div', {
@@ -27449,451 +27449,51 @@ var Homevue_type_template_id_71acfb94_scoped_true_render = function render() {
       "toggle": "",
       "dropdown": ""
     }
-  })], 1)]), _c('div', {
-    staticClass: "columns is-multiline apps"
-  }, [_vm.checkActive('plan') ? [_vm.canOpenWorkspaceApps ? [_c('div', {
-    staticClass: "column is-half"
-  }, [_c('router-link', {
-    attrs: {
-      "to": {
-        name: 'plan-home'
-      }
-    }
-  }, [_c('article', {
-    staticClass: "media"
-  }, [_c('figure', {
-    staticClass: "media-left"
-  }, [_c('img', {
-    attrs: {
-      "src": __webpack_require__(82949),
-      "alt": "EPIC Plan"
-    }
-  })]), _c('div', {
-    staticClass: "media-content"
-  }, [_c('div', {
-    staticClass: "content"
-  }, [_c('p', {
-    staticClass: "has-text-dark"
-  }, [_c('strong', [_vm._v("Plan")]), _c('br'), _c('small', [_vm._v(" Design, track, and assess training exercises.")])])])]), _c('div', {
-    staticClass: "media-right"
-  }, [_c('span', {
-    staticClass: "icon is-small"
-  }, [_c('i', {
-    staticClass: "fas fa-arrow-right"
-  })])])])])], 1)] : _vm._e()] : _vm._e(), _vm.checkActive('media') ? [_vm.canOpenWorkspaceApps ? [_c('div', {
-    staticClass: "column is-half"
-  }, [_c('router-link', {
-    attrs: {
-      "to": {
-        name: 'media-home'
-      }
-    }
-  }, [_c('article', {
-    staticClass: "media"
-  }, [_c('figure', {
-    staticClass: "media-left"
-  }, [_c('img', {
-    attrs: {
-      "src": __webpack_require__(52520),
-      "alt": "EPIC Media"
-    }
-  })]), _c('div', {
-    staticClass: "media-content"
-  }, [_c('div', {
-    staticClass: "content"
-  }, [_c('p', {
-    staticClass: "has-text-dark"
-  }, [_c('strong', [_vm._v("Media")]), _c('br'), _c('small', [_vm._v(" Replicate an online media environment.")])])])]), _c('div', {
-    staticClass: "media-right"
-  }, [_c('span', {
-    staticClass: "icon is-small"
-  }, [_c('i', {
-    staticClass: "fas fa-arrow-right"
-  })])])])])], 1)] : _vm._e()] : _vm._e(), _vm.checkActive('notebook') ? [_vm.canOpenWorkspaceApps ? [_c('div', {
-    staticClass: "column is-half"
-  }, [_c('router-link', {
-    attrs: {
-      "to": {
-        name: 'notebook-home'
-      }
-    }
-  }, [_c('article', {
-    staticClass: "media"
-  }, [_c('figure', {
-    staticClass: "media-left"
-  }, [_c('img', {
-    attrs: {
-      "src": __webpack_require__(10479),
-      "alt": "EPIC Note"
-    }
-  })]), _c('div', {
-    staticClass: "media-content"
-  }, [_c('div', {
-    staticClass: "content"
-  }, [_c('p', {
-    staticClass: "has-text-dark"
-  }, [_c('strong', [_vm._v("Notebook")]), _c('br'), _c('small', [_vm._v(" Knowledge sharing in a collaborative environment.")])])])]), _c('div', {
-    staticClass: "media-right"
-  }, [_c('span', {
-    staticClass: "icon is-small"
-  }, [_c('i', {
-    staticClass: "fas fa-arrow-right"
-  })])])])])], 1)] : _vm._e()] : _vm._e(), _vm.checkActive('web') ? [[_c('div', {
-    staticClass: "column is-half"
-  }, [_c('router-link', {
-    attrs: {
-      "to": '/web/' + _vm.$store.state.activeWorkspace.name
-    }
-  }, [_c('article', {
-    staticClass: "media"
-  }, [_c('figure', {
-    staticClass: "media-left"
-  }, [_c('img', {
-    attrs: {
-      "src": __webpack_require__(77326),
-      "alt": "EPIC Web"
-    }
-  })]), _c('div', {
-    staticClass: "media-content"
-  }, [_c('div', {
-    staticClass: "content"
-  }, [_c('p', {
-    staticClass: "has-text-dark"
-  }, [_c('strong', [_vm._v("Web")]), _c('br'), _c('small', [_vm._v(" Portal for training audience to view published media content.")])])])]), _c('div', {
-    staticClass: "media-right"
-  }, [_c('span', {
-    staticClass: "icon is-small"
-  }, [_c('i', {
-    staticClass: "fas fa-arrow-right"
-  })])])])])], 1)]] : _vm._e(), _vm.checkActive('observe') ? [_vm.canOpenWorkspaceApps ? [_c('div', {
-    staticClass: "column is-half"
-  }, [_c('router-link', {
-    attrs: {
-      "to": {
-        name: 'observe-home'
-      }
-    }
-  }, [_c('article', {
-    staticClass: "media"
-  }, [_c('figure', {
-    staticClass: "media-left"
-  }, [_c('img', {
-    attrs: {
-      "src": __webpack_require__(43464),
-      "alt": "EPIC Observe"
-    }
-  })]), _c('div', {
-    staticClass: "media-content"
-  }, [_c('div', {
-    staticClass: "content"
-  }, [_c('p', {
-    staticClass: "has-text-dark"
-  }, [_c('strong', [_vm._v("Observe")]), _c('br'), _c('small', [_vm._v(" Record and view observations in real-time.")])])])]), _c('div', {
-    staticClass: "media-right"
-  }, [_c('span', {
-    staticClass: "icon is-small"
-  }, [_c('i', {
-    staticClass: "fas fa-arrow-right"
-  })])])])])], 1)] : _vm._e()] : _vm._e(), _vm.checkActive('map') ? [_vm.canOpenWorkspaceApps ? [_c('div', {
-    staticClass: "column is-half"
-  }, [_c('router-link', {
-    attrs: {
-      "to": {
-        name: 'map-home'
-      }
-    }
-  }, [_c('article', {
-    staticClass: "media"
-  }, [_c('figure', {
-    staticClass: "media-left"
-  }, [_c('img', {
-    attrs: {
-      "src": __webpack_require__(84870),
-      "alt": "EPIC Map"
-    }
-  })]), _c('div', {
-    staticClass: "media-content"
-  }, [_c('div', {
-    staticClass: "content"
-  }, [_c('p', {
-    staticClass: "has-text-dark"
-  }, [_c('strong', [_vm._v("Map")]), _c('br'), _c('small', [_vm._v(" Visualize your training exercise on an interactive 3D map.")])])])]), _c('div', {
-    staticClass: "media-right"
-  }, [_c('span', {
-    staticClass: "icon is-small"
-  }, [_c('i', {
-    staticClass: "fas fa-arrow-right"
-  })])])])])], 1)] : _vm._e()] : _vm._e(), _vm.checkActive('activity') ? [_vm.canOpenWorkspaceApps ? [_c('div', {
-    staticClass: "column is-half"
-  }, [_c('router-link', {
-    attrs: {
-      "to": {
-        name: 'activity-home'
-      }
-    }
-  }, [_c('article', {
-    staticClass: "media"
-  }, [_c('figure', {
-    staticClass: "media-left"
-  }, [_c('img', {
-    attrs: {
-      "src": __webpack_require__(66547),
-      "alt": "EPIC Activity"
-    }
-  })]), _c('div', {
-    staticClass: "media-content"
-  }, [_c('div', {
-    staticClass: "content"
-  }, [_c('p', {
-    staticClass: "has-text-dark"
-  }, [_c('strong', [_vm._v("Activity")]), _c('br'), _c('small', [_vm._v(" Review workspace activity and operational events.")])])])]), _c('div', {
-    staticClass: "media-right"
-  }, [_c('span', {
-    staticClass: "icon is-small"
-  }, [_c('i', {
-    staticClass: "fas fa-arrow-right"
-  })])])])])], 1)] : _vm._e()] : _vm._e(), _vm.checkActive('timeline') ? [_vm.canOpenWorkspaceApps ? [_c('div', {
-    staticClass: "column is-half"
-  }, [_c('router-link', {
-    attrs: {
-      "to": {
-        name: 'timeline-home'
-      }
-    }
-  }, [_c('article', {
-    staticClass: "media"
-  }, [_c('figure', {
-    staticClass: "media-left"
-  }, [_c('img', {
-    attrs: {
-      "src": __webpack_require__(55541),
-      "alt": "EPIC Timeline"
-    }
-  })]), _c('div', {
-    staticClass: "media-content"
-  }, [_c('div', {
-    staticClass: "content"
-  }, [_c('p', {
-    staticClass: "has-text-dark"
-  }, [_c('strong', [_vm._v("Timeline")]), _c('br'), _c('small', [_vm._v(" Review exercise activity across events, injects, commands, observations, media, and chat.")])])])]), _c('div', {
-    staticClass: "media-right"
-  }, [_c('span', {
-    staticClass: "icon is-small"
-  }, [_c('i', {
-    staticClass: "fas fa-arrow-right"
-  })])])])])], 1)] : _vm._e()] : _vm._e(), _vm.checkActive('chat') ? [_vm.canOpenWorkspaceApps ? [_c('div', {
-    staticClass: "column is-half"
-  }, [_c('router-link', {
-    attrs: {
-      "to": {
-        name: 'chat-home'
-      }
-    }
-  }, [_c('article', {
-    staticClass: "media"
-  }, [_c('figure', {
-    staticClass: "media-left"
-  }, [_c('img', {
-    attrs: {
-      "src": __webpack_require__(41470),
-      "alt": "EPIC Chat"
-    }
-  })]), _c('div', {
-    staticClass: "media-content"
-  }, [_c('div', {
-    staticClass: "content"
-  }, [_c('p', {
-    staticClass: "has-text-dark"
-  }, [_c('strong', [_vm._v("Chat")]), _c('br'), _c('small', [_vm._v(" Communicate securely with messaging and group channels.")])])])]), _c('div', {
-    staticClass: "media-right"
-  }, [_c('span', {
-    staticClass: "icon is-small"
-  }, [_c('i', {
-    staticClass: "fas fa-arrow-right"
-  })])])])])], 1)] : _vm._e()] : _vm._e(), _vm.checkActive('resources') ? [_vm.canOpenWorkspaceApps ? [_c('div', {
-    staticClass: "column is-half"
-  }, [_c('router-link', {
-    attrs: {
-      "to": {
-        name: 'resources-home'
-      }
-    }
-  }, [_c('article', {
-    staticClass: "media"
-  }, [_c('figure', {
-    staticClass: "media-left"
-  }, [_c('img', {
-    attrs: {
-      "src": __webpack_require__(68075),
-      "alt": "EPIC Resources"
-    }
-  })]), _c('div', {
-    staticClass: "media-content"
-  }, [_c('div', {
-    staticClass: "content"
-  }, [_c('p', {
-    staticClass: "has-text-dark"
-  }, [_c('strong', [_vm._v("Resources")]), _c('br'), _c('small', [_vm._v(" Allocate and track resources.")])])])]), _c('div', {
-    staticClass: "media-right"
-  }, [_c('span', {
-    staticClass: "icon is-small"
-  }, [_c('i', {
-    staticClass: "fas fa-arrow-right"
-  })])])])])], 1)] : _vm._e()] : _vm._e(), _vm.checkActive('learn') ? [_vm.canOpenWorkspaceApps ? [_c('div', {
-    staticClass: "column is-half"
-  }, [_c('router-link', {
-    attrs: {
-      "to": {
-        name: 'learn-home'
-      }
-    }
-  }, [_c('article', {
-    staticClass: "media"
-  }, [_c('figure', {
-    staticClass: "media-left"
-  }, [_c('img', {
-    attrs: {
-      "src": __webpack_require__(19174),
-      "alt": "EPIC Learn"
-    }
-  })]), _c('div', {
-    staticClass: "media-content"
-  }, [_c('div', {
-    staticClass: "content"
-  }, [_c('p', {
-    staticClass: "has-text-dark"
-  }, [_c('strong', [_vm._v("Learn")]), _c('br'), _c('small', [_vm._v(" Learn with interactive gameplay and test your skills.")])])])]), _c('div', {
-    staticClass: "media-right"
-  }, [_c('span', {
-    staticClass: "icon is-small"
-  }, [_c('i', {
-    staticClass: "fas fa-arrow-right"
-  })])])])])], 1)] : _vm._e()] : _vm._e(), [_c('div', {
-    staticClass: "column is-half"
-  }, [_c('router-link', {
-    attrs: {
-      "to": {
-        name: 'settings-home'
-      }
-    }
-  }, [_c('article', {
-    staticClass: "media"
-  }, [_c('figure', {
-    staticClass: "media-left"
-  }, [_c('img', {
-    attrs: {
-      "src": __webpack_require__(60643),
-      "alt": "EPIC Settings"
-    }
-  })]), _c('div', {
-    staticClass: "media-content"
-  }, [_c('div', {
-    staticClass: "content"
-  }, [_c('p', {
-    staticClass: "has-text-dark"
-  }, [_c('strong', [_vm._v("Settings")]), _c('br'), _c('small', [_vm._v(" Manage users, workspace settings, data, and more.")])])])]), _c('div', {
-    staticClass: "media-right"
-  }, [_c('span', {
-    staticClass: "icon is-small"
-  }, [_c('i', {
-    staticClass: "fas fa-arrow-right"
-  })])])])])], 1)], _vm.checkActive('dev') ? [_vm.canOpenWorkspaceApps ? [_c('div', {
-    staticClass: "column is-half"
-  }, [_c('router-link', {
-    attrs: {
-      "to": {
-        name: 'dev-home'
-      }
-    }
-  }, [_c('article', {
-    staticClass: "media"
-  }, [_c('figure', {
-    staticClass: "media-left"
-  }, [_c('img', {
-    attrs: {
-      "src": __webpack_require__(48137),
-      "alt": "EPIC Developer"
-    }
-  })]), _c('div', {
-    staticClass: "media-content"
-  }, [_c('div', {
-    staticClass: "content"
-  }, [_c('p', {
-    staticClass: "has-text-dark"
-  }, [_c('strong', [_vm._v("Developer")]), _c('br'), _c('small', [_vm._v(" Test innovative prototypes to aid in development.")])])])]), _c('div', {
-    staticClass: "media-right"
-  }, [_c('span', {
-    staticClass: "icon is-small"
-  }, [_c('i', {
-    staticClass: "fas fa-arrow-right"
-  })])])])])], 1)] : _vm._e()] : _vm._e()], 2), _vm.canOpenWorkspaceApps && (_vm.checkActive('email') || _vm.checkActive('command')) ? _c('div', {
-    staticClass: "is-divider",
-    attrs: {
-      "data-content": "All Workspace Apps"
-    }
-  }) : _vm._e(), _c('div', {
-    staticClass: "columns is-multiline apps"
-  }, [_vm.checkActive('email') ? [_vm.canOpenWorkspaceApps ? [_c('div', {
-    staticClass: "column is-half"
-  }, [_c('router-link', {
-    attrs: {
-      "to": {
-        name: 'email-home'
-      }
-    }
-  }, [_c('article', {
-    staticClass: "media"
-  }, [_c('figure', {
-    staticClass: "media-left"
-  }, [_c('img', {
-    attrs: {
-      "src": __webpack_require__(82172),
-      "alt": "EPIC Email"
-    }
-  })]), _c('div', {
-    staticClass: "media-content"
-  }, [_c('div', {
-    staticClass: "content"
-  }, [_c('p', {
-    staticClass: "has-text-dark"
-  }, [_c('strong', [_vm._v("Email")]), _c('br'), _c('small', [_vm._v(" Protect conversations using a secure email service.")])])])]), _c('div', {
-    staticClass: "media-right"
-  }, [_c('span', {
-    staticClass: "icon is-small"
-  }, [_c('i', {
-    staticClass: "fas fa-arrow-right"
-  })])])])])], 1)] : _vm._e()] : _vm._e(), _vm.checkActive('command') ? [_vm.canOpenWorkspaceApps ? [_c('div', {
-    staticClass: "column is-half"
-  }, [_c('router-link', {
-    attrs: {
-      "to": {
-        name: 'command-home'
-      }
-    }
-  }, [_c('article', {
-    staticClass: "media"
-  }, [_c('figure', {
-    staticClass: "media-left"
-  }, [_c('img', {
-    attrs: {
-      "src": __webpack_require__(55303),
-      "alt": "EPIC Command"
-    }
-  })]), _c('div', {
-    staticClass: "media-content"
-  }, [_c('div', {
-    staticClass: "content"
-  }, [_c('p', {
-    staticClass: "has-text-dark"
-  }, [_c('strong', [_vm._v("Command")]), _c('br'), _c('small', [_vm._v(" Manage all exercises and identify trends.")])])])]), _c('div', {
-    staticClass: "media-right"
-  }, [_c('span', {
-    staticClass: "icon is-small"
-  }, [_c('i', {
-    staticClass: "fas fa-arrow-right"
-  })])])])])], 1)] : _vm._e()] : _vm._e()], 2)])]);
+  })], 1)]), _vm._l(_vm.visibleLauncherSections, function (section) {
+    return [_c('div', {
+      key: `${section.key}-divider`,
+      staticClass: "role-divider"
+    }, [_c('span', {
+      staticClass: "role-divider-label"
+    }, [_vm._v(_vm._s(section.label))]), _c('span', {
+      staticClass: "role-divider-copy"
+    }, [_vm._v(_vm._s(section.description))])]), _c('div', {
+      key: section.key,
+      staticClass: "columns is-multiline apps role-apps"
+    }, _vm._l(section.apps, function (app) {
+      return _c('div', {
+        key: `${section.key}-${app.name}`,
+        staticClass: "column is-half"
+      }, [_c('router-link', {
+        attrs: {
+          "to": _vm.appRoute(app)
+        }
+      }, [_c('article', {
+        staticClass: "media"
+      }, [_c('figure', {
+        staticClass: "media-left"
+      }, [_c('img', {
+        attrs: {
+          "src": app.icon,
+          "alt": `EPIC ${app.label}`
+        }
+      })]), _c('div', {
+        staticClass: "media-content"
+      }, [_c('div', {
+        staticClass: "content"
+      }, [_c('p', {
+        staticClass: "has-text-dark"
+      }, [_c('strong', [_vm._v(_vm._s(app.label))]), _c('br'), _c('small', [_vm._v(_vm._s(app.description))])])])]), _c('div', {
+        staticClass: "media-right"
+      }, [_c('span', {
+        staticClass: "icon is-small"
+      }, [_c('i', {
+        staticClass: "fas fa-arrow-right"
+      })])])])])], 1);
+    }), 0)];
+  })], 2)]);
 };
-var Homevue_type_template_id_71acfb94_scoped_true_staticRenderFns = [function () {
+var Homevue_type_template_id_ff7f3fec_scoped_true_staticRenderFns = [function () {
   var _vm = this,
     _c = _vm._self._c;
   return _c('div', {
@@ -27910,7 +27510,7 @@ var Homevue_type_template_id_71acfb94_scoped_true_staticRenderFns = [function ()
   }, [_vm._v("Innovation Transforming Readiness")])]);
 }];
 
-;// ./src/shared/views/Home.vue?vue&type=template&id=71acfb94&scoped=true
+;// ./src/shared/views/Home.vue?vue&type=template&id=ff7f3fec&scoped=true
 
 // EXTERNAL MODULE: ./src/shared/components/helpcontent.vue + 6 modules
 var helpcontent = __webpack_require__(64775);
@@ -27918,11 +27518,191 @@ var helpcontent = __webpack_require__(64775);
 
 
 
+const appCatalog = [{
+  name: 'plan',
+  label: 'Plan',
+  route: {
+    name: 'plan-home'
+  },
+  icon: __webpack_require__(82949),
+  description: 'Design, track, and assess training exercises.'
+}, {
+  name: 'timeline',
+  label: 'Timeline',
+  route: {
+    name: 'timeline-home'
+  },
+  icon: __webpack_require__(55541),
+  description: 'Review exercise events, injects, commands, observations, media, and chat.'
+}, {
+  name: 'map',
+  label: 'Map',
+  route: {
+    name: 'map-home'
+  },
+  icon: __webpack_require__(84870),
+  description: 'Visualize your training exercise on an interactive 3D map.'
+}, {
+  name: 'resources',
+  label: 'Resources',
+  route: {
+    name: 'resources-home'
+  },
+  icon: __webpack_require__(68075),
+  description: 'Allocate and track resources.'
+}, {
+  name: 'notebook',
+  label: 'Notebook',
+  route: {
+    name: 'notebook-home'
+  },
+  icon: __webpack_require__(10479),
+  description: 'Capture knowledge and collaborate around exercise material.'
+}, {
+  name: 'media',
+  label: 'Media',
+  route: {
+    name: 'media-home'
+  },
+  icon: __webpack_require__(52520),
+  description: 'Replicate an online media environment.'
+}, {
+  name: 'observe',
+  label: 'Observe',
+  route: {
+    name: 'observe-home'
+  },
+  icon: __webpack_require__(43464),
+  description: 'Record and view observations in real time.'
+}, {
+  name: 'command',
+  label: 'Command',
+  route: {
+    name: 'command-home'
+  },
+  icon: __webpack_require__(55303),
+  description: 'Send and acknowledge command traffic during execution.'
+}, {
+  name: 'email',
+  label: 'Email',
+  route: {
+    name: 'email-home'
+  },
+  icon: __webpack_require__(82172),
+  description: 'Protect conversations using a secure exercise email service.'
+}, {
+  name: 'chat',
+  label: 'Chat',
+  route: {
+    name: 'chat-home'
+  },
+  icon: __webpack_require__(41470),
+  description: 'Communicate securely with messaging and group channels.'
+}, {
+  name: 'web',
+  label: 'Web',
+  route(workspace) {
+    return `/web/${workspace.name}`;
+  },
+  icon: __webpack_require__(77326),
+  description: 'Open the public-facing portal for simulated scenario content.',
+  allowWithoutWorkspaceRole: true
+}, {
+  name: 'learn',
+  label: 'Learn',
+  route: {
+    name: 'learn-home'
+  },
+  icon: __webpack_require__(19174),
+  description: 'Learn with interactive gameplay and test your skills.'
+}, {
+  name: 'activity',
+  label: 'Activity',
+  route: {
+    name: 'activity-home'
+  },
+  icon: __webpack_require__(66547),
+  description: 'Review workspace activity and operational events.'
+}, {
+  name: 'settings',
+  label: 'Settings',
+  route: {
+    name: 'settings-home'
+  },
+  icon: __webpack_require__(60643),
+  description: 'Manage users, workspace settings, data, and more.',
+  alwaysVisible: true
+}, {
+  name: 'dev',
+  label: 'Developer',
+  route: {
+    name: 'dev-home'
+  },
+  icon: __webpack_require__(48137),
+  description: 'Test innovative prototypes and development utilities.'
+}];
+const appByName = appCatalog.reduce((apps, app) => {
+  apps[app.name] = app;
+  return apps;
+}, {});
+const productRoleSections = [{
+  key: 'planner',
+  label: 'Planner',
+  description: 'Exercise design, structure, objectives, resources, and planned activity.',
+  apps: ['plan', 'timeline', 'map', 'resources', 'notebook', 'learn']
+}, {
+  key: 'staff',
+  label: 'Staff',
+  description: 'Exercise control, inject execution, observations, communications, and media play.',
+  apps: ['timeline', 'command', 'observe', 'media', 'map', 'email', 'chat', 'notebook']
+}, {
+  key: 'participant',
+  label: 'Participant',
+  description: 'Training audience tools for consuming scenario content and responding in exercise channels.',
+  apps: ['web', 'email', 'chat', 'map', 'notebook', 'learn']
+}, {
+  key: 'leadership',
+  label: 'Leadership',
+  description: 'Commander and senior-leader views for execution status, key events, and outcomes.',
+  apps: ['command', 'timeline', 'activity', 'map', 'learn']
+}, {
+  key: 'developer',
+  label: 'Developer',
+  description: 'Workspace administration, platform setup, diagnostics, and prototype access.',
+  apps: ['settings', 'dev', 'activity']
+}];
 /* harmony default export */ var Homevue_type_script_lang_js = ({
   name: 'MainHome',
   mixins: [permissions/* default */.A],
   components: {
     HelpContent: helpcontent/* default */.A
+  },
+  computed: {
+    rawRoleNames() {
+      const user = this.$store.state.currentUser;
+      if (!user || !user.role || !Array.isArray(user.role.roles)) {
+        return [];
+      }
+      return user.role.roles.map(role => role.name && role.name.toUpperCase()).filter(Boolean);
+    },
+    isDeveloperLauncher() {
+      return this.isSuper || this.$store.state.userRole === 'Super' || this.$store.state.userRole === 'Admin' || this.rawRoleNames.includes('DEVELOPER');
+    },
+    visibleLauncherSections() {
+      if (this.isDeveloperLauncher) {
+        return this.buildSections(productRoleSections);
+      }
+      const roleKeys = productRoleSections.map(section => section.key).filter(role => this.rawRoleNames.includes(role.toUpperCase()));
+      if (roleKeys.length > 0) {
+        return this.buildSections(productRoleSections.filter(section => roleKeys.includes(section.key)));
+      }
+      return this.buildSections([{
+        key: 'workspace',
+        label: 'Workspace Apps',
+        description: 'Apps available to your current workspace and account role.',
+        apps: appCatalog.map(app => app.name)
+      }]);
+    }
   },
   apollo: {
     appListSettings: {
@@ -27983,6 +27763,24 @@ var helpcontent = __webpack_require__(64775);
     this.hasNewUserRole();
   },
   methods: {
+    appRoute(app) {
+      if (typeof app.route === 'function') {
+        return app.route(this.$store.state.activeWorkspace || {});
+      }
+      return app.route;
+    },
+    appIsVisible(app) {
+      if (!app) return false;
+      if (app.alwaysVisible) return true;
+      if (!this.checkActive(app.name)) return false;
+      return app.allowWithoutWorkspaceRole || this.canOpenWorkspaceApps;
+    },
+    buildSections(sections) {
+      return sections.map(section => ({
+        ...section,
+        apps: section.apps.map(appName => appByName[appName]).filter(app => this.appIsVisible(app))
+      })).filter(section => section.apps.length > 0);
+    },
     checkActive(name) {
       if (!name) return;
       if (this.appListSettings && this.appListSettings.length > 0) {
@@ -28010,10 +27808,10 @@ var helpcontent = __webpack_require__(64775);
 });
 ;// ./src/shared/views/Home.vue?vue&type=script&lang=js
  /* harmony default export */ var views_Homevue_type_script_lang_js = (Homevue_type_script_lang_js); 
-;// ./node_modules/mini-css-extract-plugin/dist/loader.js??clonedRuleSet-22.use[0]!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-22.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-22.use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-22.use[3]!./node_modules/cache-loader/dist/cjs.js??ruleSet[0].use[0]!./node_modules/@vue/cli-service/lib/config/vue-loader-v15-resolve-compat/vue-loader.js??vue-loader-options!./src/shared/views/Home.vue?vue&type=style&index=0&id=71acfb94&prod&scoped=true&lang=scss
+;// ./node_modules/mini-css-extract-plugin/dist/loader.js??clonedRuleSet-22.use[0]!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-22.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-22.use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-22.use[3]!./node_modules/cache-loader/dist/cjs.js??ruleSet[0].use[0]!./node_modules/@vue/cli-service/lib/config/vue-loader-v15-resolve-compat/vue-loader.js??vue-loader-options!./src/shared/views/Home.vue?vue&type=style&index=0&id=ff7f3fec&prod&scoped=true&lang=scss
 // extracted by mini-css-extract-plugin
 
-;// ./src/shared/views/Home.vue?vue&type=style&index=0&id=71acfb94&prod&scoped=true&lang=scss
+;// ./src/shared/views/Home.vue?vue&type=style&index=0&id=ff7f3fec&prod&scoped=true&lang=scss
 
 ;// ./src/shared/views/Home.vue
 
@@ -28026,11 +27824,11 @@ var helpcontent = __webpack_require__(64775);
 
 var Home_component = (0,componentNormalizer/* default */.A)(
   views_Homevue_type_script_lang_js,
-  Homevue_type_template_id_71acfb94_scoped_true_render,
-  Homevue_type_template_id_71acfb94_scoped_true_staticRenderFns,
+  Homevue_type_template_id_ff7f3fec_scoped_true_render,
+  Homevue_type_template_id_ff7f3fec_scoped_true_staticRenderFns,
   false,
   null,
-  "71acfb94",
+  "ff7f3fec",
   null
   
 )
@@ -43343,187 +43141,220 @@ var plan_views_Dashboard_component = (0,componentNormalizer/* default */.A)(
 )
 
 /* harmony default export */ var plan_views_Dashboard = (plan_views_Dashboard_component.exports);
-;// ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"27ccff72-vue-loader-template"}!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib/index.js??clonedRuleSet-40.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/templateLoader.js??ruleSet[1].rules[4]!./node_modules/cache-loader/dist/cjs.js??ruleSet[0].use[0]!./node_modules/@vue/cli-service/lib/config/vue-loader-v15-resolve-compat/vue-loader.js??vue-loader-options!./src/plan/views/Home.vue?vue&type=template&id=4a94c7eb&scoped=true
-var Homevue_type_template_id_4a94c7eb_scoped_true_render = function render() {
+;// ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"27ccff72-vue-loader-template"}!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib/index.js??clonedRuleSet-40.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/templateLoader.js??ruleSet[1].rules[4]!./node_modules/cache-loader/dist/cjs.js??ruleSet[0].use[0]!./node_modules/@vue/cli-service/lib/config/vue-loader-v15-resolve-compat/vue-loader.js??vue-loader-options!./src/plan/views/Home.vue?vue&type=template&id=7fe92112&scoped=true
+var Homevue_type_template_id_7fe92112_scoped_true_render = function render() {
   var _vm = this,
     _c = _vm._self._c;
   return _c('div', {
     staticClass: "container is-fullhd"
   }, [_c('section', {
     staticClass: "section"
-  }, [_c('nav', {
-    staticClass: "level"
+  }, [_c('section', {
+    staticClass: "plan-dashboard"
   }, [_c('div', {
-    staticClass: "level-left"
-  }, [_c('quick-create', {
+    staticClass: "dashboard-hero"
+  }, [_vm._m(0), _c('div', {
+    staticClass: "dashboard-actions"
+  }, [_c('router-link', {
+    staticClass: "button is-primary",
     attrs: {
-      "area": "plan"
+      "to": {
+        name: 'exercise-details'
+      }
     }
-  })], 1), _c('div', {
-    staticClass: "level-right"
-  }, [_c('div', {
-    staticClass: "level-item"
-  }, [_c('help-content', {
+  }, [_c('span', {
+    staticClass: "icon is-small"
+  }, [_c('i', {
+    staticClass: "fas fa-clipboard-list"
+  })]), _c('span', [_vm._v("Open Plan Details")])]), _c('help-content', {
     attrs: {
       "reference": 'plan.general',
       "toggle": "",
       "dropdown": ""
     }
-  })], 1)])]), _c('div', {
-    staticClass: "tile is-ancestor planDash"
-  }, [_c('div', {
-    staticClass: "tile is-parent is-3 linkSidebar"
-  }, [_c('div', {
-    staticClass: "tile is-child notification has-shadow"
-  }, [_c('LinkSidebar', {
-    attrs: {
-      "data": _vm.links,
-      "area": 'plan'
-    }
   })], 1)]), _c('div', {
-    staticClass: "tile is-vertical is-4"
+    staticClass: "plan-summary-grid"
+  }, _vm._l(_vm.planCards, function (plan) {
+    return _c('article', {
+      key: plan.id,
+      staticClass: "plan-card"
+    }, [_c('div', {
+      staticClass: "plan-card-header"
+    }, [_c('div', [_c('p', {
+      staticClass: "eyebrow"
+    }, [_vm._v("Exercise plan")]), _c('h2', {
+      staticClass: "title is-4"
+    }, [_vm._v(_vm._s(plan.name))]), _c('p', {
+      staticClass: "subtitle is-6"
+    }, [_vm._v(_vm._s(plan.dateRange))])]), _c('span', {
+      staticClass: "plan-status",
+      class: plan.statusClass
+    }, [_vm._v(_vm._s(plan.status))])]), _c('div', {
+      staticClass: "plan-readiness-row"
+    }, [_c('div', {
+      staticClass: "readiness-score",
+      class: _vm.readinessTone,
+      style: _vm.readinessStyle
+    }, [_c('span', [_vm._v(_vm._s(_vm.readinessScore) + "%")]), _c('small', [_vm._v("Complete")])]), _c('div', {
+      staticClass: "plan-context"
+    }, [_c('p', [_vm._v(_vm._s(plan.guidance))]), _c('strong', [_vm._v(_vm._s(plan.nextAction))])])]), _c('div', {
+      staticClass: "plan-card-metrics"
+    }, _vm._l(_vm.dashboardMetrics, function (metric) {
+      return _c('router-link', {
+        key: metric.key,
+        staticClass: "plan-metric",
+        class: {
+          'is-empty': metric.value === 0
+        },
+        attrs: {
+          "to": metric.to
+        }
+      }, [_c('span', {
+        staticClass: "metric-icon"
+      }, [_c('i', {
+        class: metric.icon
+      })]), _c('span', [_c('strong', [_vm._v(_vm._s(metric.value))]), _c('small', [_vm._v(_vm._s(metric.label))])])]);
+    }), 1), _c('div', {
+      staticClass: "plan-card-actions"
+    }, [_c('router-link', {
+      staticClass: "button is-small is-primary",
+      attrs: {
+        "to": {
+          name: 'exercise-details'
+        }
+      }
+    }, [_vm._v("Review Plan")]), _c('router-link', {
+      staticClass: "button is-small is-primary is-outlined",
+      attrs: {
+        "to": {
+          name: 'injects-list'
+        }
+      }
+    }, [_vm._v("Open MSEL")]), _c('router-link', {
+      staticClass: "button is-small is-primary is-outlined",
+      attrs: {
+        "to": {
+          name: 'overview'
+        }
+      }
+    }, [_vm._v("Assess")])], 1)]);
+  }), 0), _c('div', {
+    staticClass: "dashboard-grid"
+  }, [_c('section', {
+    staticClass: "dashboard-panel"
   }, [_c('div', {
-    staticClass: "tile"
+    staticClass: "panel-heading"
+  }, [_vm._m(1), _c('span', {
+    staticClass: "panel-count"
+  }, [_vm._v(_vm._s(_vm.openReadinessChecks.length) + " open")])]), _c('div', {
+    staticClass: "readiness-checks"
+  }, _vm._l(_vm.prioritizedReadinessChecks, function (check) {
+    return _c('router-link', {
+      key: check.key,
+      staticClass: "readiness-check",
+      class: {
+        'is-complete': check.complete
+      },
+      attrs: {
+        "to": check.to
+      }
+    }, [_c('span', {
+      staticClass: "check-status"
+    }, [_c('i', {
+      class: check.complete ? 'fas fa-check' : 'fas fa-arrow-right'
+    })]), _c('span', [_c('strong', [_vm._v(_vm._s(check.label))]), _c('small', [_vm._v(_vm._s(check.copy))])])]);
+  }), 1)]), _c('section', {
+    staticClass: "dashboard-panel"
+  }, [_vm._m(2), _c('div', {
+    staticClass: "lifecycle-list"
+  }, _vm._l(_vm.lifecyclePhases, function (phase) {
+    return _c('router-link', {
+      key: phase.key,
+      staticClass: "lifecycle-row",
+      attrs: {
+        "to": phase.to
+      }
+    }, [_c('span', {
+      staticClass: "phase-icon"
+    }, [_c('i', {
+      class: phase.icon
+    })]), _c('span', [_c('strong', [_vm._v(_vm._s(phase.label))]), _c('small', [_vm._v(_vm._s(phase.value) + " - " + _vm._s(phase.copy))])])]);
+  }), 1)]), _c('section', {
+    staticClass: "dashboard-panel"
   }, [_c('div', {
-    staticClass: "tile is-parent"
-  }, [_c('div', {
-    staticClass: "tile is-child"
-  }, [_c('exercise-information', {
+    staticClass: "panel-heading"
+  }, [_vm._m(3), _c('router-link', {
+    staticClass: "button is-small is-primary is-outlined",
     attrs: {
-      "bigHeader": true
-    }
-  })], 1)])]), _c('div', {
-    staticClass: "tile is-parent"
-  }, [_c('article', {
-    staticClass: "tile is-child card"
-  }, [_c('nav', {
-    staticClass: "level is-pulled-right"
-  }, [_vm.planEvents && _vm.planEvents.length > 0 ? _c('div', {
-    staticClass: "level-right"
-  }, [_c('div', {
-    staticClass: "level-item"
-  }, [_c('b-dropdown', {
-    attrs: {
-      "position": "is-bottom-left"
-    }
-  }, [_c('a', {
-    staticClass: "button is-small",
-    attrs: {
-      "slot": "trigger"
-    },
-    slot: "trigger"
-  }, [_c('span', {
-    staticClass: "icon is-small"
-  }, [_c('i', {
-    staticClass: "fas fa-ellipsis-v"
-  })])]), _c('b-dropdown-item', {
-    on: {
-      "click": function ($event) {
-        return _vm.editMSEL();
+      "to": {
+        name: 'injects-list'
       }
     }
-  }, [_c('span', {
-    staticClass: "icon is-small"
-  }, [_c('i', {
-    staticClass: "fas fa-pen"
-  })]), _c('span', [_vm._v("Edit MSEL")])])], 1)], 1)]) : _vm._e()]), _c('p', {
-    staticClass: "px-2 py-2 title"
-  }, [_vm._v("MSEL List")]), _c('div', {
-    staticClass: "content mselPanel"
-  }, [_c('loading-state', {
-    attrs: {
-      "isLoading": _vm.$apollo.queries.planInjects.loading
-    }
-  }), _c('nav', {
-    staticClass: "panel has-text-black has-background-white"
-  }, [_c('div', {
-    staticClass: "panel-block"
-  }, [_c('p', {
-    staticClass: "control has-icons-left has-icons-right"
-  }, [_c('input', {
-    directives: [{
-      name: "model",
-      rawName: "v-model.lazy",
-      value: _vm.searchQuery,
-      expression: "searchQuery",
-      modifiers: {
-        "lazy": true
-      }
-    }],
-    staticClass: "input is-rounded is-small",
-    attrs: {
-      "type": "text",
-      "placeholder": "search"
-    },
-    domProps: {
-      "value": _vm.searchQuery
-    },
-    on: {
-      "change": function ($event) {
-        _vm.searchQuery = $event.target.value;
-      }
-    }
-  }), _vm._m(0), _c('span', {
-    staticClass: "icon is-small is-right",
-    on: {
-      "click": function ($event) {
-        _vm.searchQuery = '';
-      }
-    }
-  }, [_c('i', {
-    staticClass: "fas fa-times-circle"
-  })])])]), _vm.planInjects && _vm.planInjects.length > 0 ? _c('div', _vm._l(_vm.planInjects, function (inject) {
-    return _c('a', {
+  }, [_vm._v("View All")])], 1), _vm.recentInjects.length ? _c('div', {
+    staticClass: "activity-list"
+  }, _vm._l(_vm.recentInjects, function (inject) {
+    return _c('button', {
       key: inject.id,
-      staticClass: "panel-block",
+      staticClass: "activity-item",
+      attrs: {
+        "type": "button"
+      },
       on: {
         "click": function ($event) {
           return _vm.previewInject(inject);
         }
       }
-    }, [_c('p', {
-      staticClass: "is-small"
-    }, [_c('span', [_vm._v("#" + _vm._s(inject.number) + " ")]), inject.status != null ? _c('span', {
-      staticClass: "tag is-rounded",
-      class: _vm.lightOrDark(inject.status.color),
-      style: 'background-color:' + inject.status.color
-    }, [_vm._v(_vm._s(inject.status.title))]) : _vm._e(), _c('span', [_vm._v(" " + _vm._s(inject.title) + " ")]), _c('span', {
-      staticClass: "has-text-weight-light tooltip is-tooltip-bottom is-6",
-      attrs: {
-        "data-tooltip": _vm.formatDate(inject.startDate, 'utc-dtg')
-      }
-    }, [_vm._v(_vm._s(_vm.formatDate(inject.startDate, 'dtg')))])])]);
+    }, [_c('span', {
+      staticClass: "activity-number"
+    }, [_vm._v("#" + _vm._s(inject.number))]), _c('span', [_c('strong', [_vm._v(_vm._s(inject.title))]), _c('small', [_vm._v(_vm._s(_vm.formatDate(inject.startDate, 'dtg')) + " - " + _vm._s(inject.status ? inject.status.title : 'No status'))])])]);
   }), 0) : _c('div', {
-    staticClass: "no-result apollo"
-  }, [_c('div', {
-    staticClass: "content"
-  }, [_c('figure', [_c('p', [_vm._v("No MSEL Injects found. Start planning by entering them now.")]), _c('router-link', {
+    staticClass: "empty-panel"
+  }, [_c('p', [_vm._v("No MSEL injects yet.")]), _c('router-link', {
+    staticClass: "button is-small is-primary",
     attrs: {
       "to": {
         name: 'planInjectNew'
       }
     }
-  }, [_c('span', {
-    staticClass: "button is-default is-centered"
-  }, [_vm._v("Create MSEL Inject")])])], 1)])])])], 1)])])]), _c('div', {
-    staticClass: "tile is-parent is-5"
-  }, [_c('article', {
-    staticClass: "tile is-child notification has-shadow"
-  }, [_c('div', {
-    staticClass: "content"
-  }, [_c('p', {
-    staticClass: "title"
-  }, [_vm._v("Calendar")]), _c('div', {
-    staticClass: "content has-text-black has-background-white"
-  }, [_c('full-calendar', _vm._b({
+  }, [_vm._v("Create MSEL Inject")])], 1)]), _c('section', {
+    staticClass: "dashboard-panel"
+  }, [_vm._m(4), _vm.upcomingTimelineItems.length ? _c('div', {
+    staticClass: "activity-list"
+  }, _vm._l(_vm.upcomingTimelineItems, function (item) {
+    return _c('button', {
+      key: `${item.__typename}-${item.id}`,
+      staticClass: "activity-item",
+      attrs: {
+        "type": "button"
+      },
+      on: {
+        "click": function ($event) {
+          return _vm.openTimelineItem(item);
+        }
+      }
+    }, [_c('span', {
+      staticClass: "activity-number"
+    }, [_c('i', {
+      class: item.__typename === 'PlanEvent' ? 'fas fa-calendar-alt' : 'fas fa-stream'
+    })]), _c('span', [_c('strong', [_vm._v(_vm._s(item.title || item.name))]), _c('small', [_vm._v(_vm._s(_vm.formatDate(item.startDate || item.start, 'dtg')))])])]);
+  }), 0) : _c('div', {
+    staticClass: "empty-panel"
+  }, [_c('p', [_vm._v("No scheduled events or injects in the current calendar window.")])])])])]), !_vm.planCards.length ? _c('section', {
+    staticClass: "empty-plan-state"
+  }, [_c('div', [_c('p', {
+    staticClass: "eyebrow"
+  }, [_vm._v("No plan found")]), _c('h2', {
+    staticClass: "title is-4"
+  }, [_vm._v("Create the primary exercise plan to begin.")]), _c('p', {
+    staticClass: "subtitle is-6"
+  }, [_vm._v(" Once an exercise plan exists, this page will track completeness, MSEL work, assessment readiness, and reporting progress. ")]), _c('router-link', {
+    staticClass: "button is-primary",
     attrs: {
-      "events": _vm.filteredCalendar ? _vm.filteredCalendar : [],
-      "datesRender": _vm.viewRender
-    },
-    on: {
-      "eventClick": _vm.eventSelected
+      "to": {
+        name: 'exercise-details'
+      }
     }
-  }, 'full-calendar', _vm.calendarOptions, false))], 1)])])])]), _c('inject-preview', {
+  }, [_vm._v("Start Plan Setup")])], 1)]) : _vm._e(), _c('inject-preview', {
     attrs: {
       "open": _vm.injectPreviewModal,
       "id": _vm.selectedInject
@@ -43533,342 +43364,66 @@ var Homevue_type_template_id_4a94c7eb_scoped_true_render = function render() {
     }
   })], 1)]);
 };
-var Homevue_type_template_id_4a94c7eb_scoped_true_staticRenderFns = [function () {
+var Homevue_type_template_id_7fe92112_scoped_true_staticRenderFns = [function () {
   var _vm = this,
     _c = _vm._self._c;
-  return _c('span', {
-    staticClass: "icon is-small is-left"
-  }, [_c('i', {
-    staticClass: "fas fa-search",
-    attrs: {
-      "aria-hidden": "true"
-    }
-  })]);
+  return _c('div', [_c('p', {
+    staticClass: "eyebrow"
+  }, [_vm._v("Plan workspace")]), _c('h1', {
+    staticClass: "title is-3"
+  }, [_vm._v("Exercise planning dashboard")]), _c('p', {
+    staticClass: "subtitle is-6"
+  }, [_vm._v(" See active exercise plans, completeness, open planning work, and the next actions needed to move each plan toward execution. ")])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c('div', [_c('p', {
+    staticClass: "eyebrow"
+  }, [_vm._v("Readiness checks")]), _c('h2', {
+    staticClass: "title is-5"
+  }, [_vm._v("What needs attention")])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c('div', {
+    staticClass: "panel-heading"
+  }, [_c('div', [_c('p', {
+    staticClass: "eyebrow"
+  }, [_vm._v("Lifecycle")]), _c('h2', {
+    staticClass: "title is-5"
+  }, [_vm._v("Plan sections")])])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c('div', [_c('p', {
+    staticClass: "eyebrow"
+  }, [_vm._v("Recent MSEL")]), _c('h2', {
+    staticClass: "title is-5"
+  }, [_vm._v("Latest inject work")])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c('div', {
+    staticClass: "panel-heading"
+  }, [_c('div', [_c('p', {
+    staticClass: "eyebrow"
+  }, [_vm._v("Schedule")]), _c('h2', {
+    staticClass: "title is-5"
+  }, [_vm._v("Upcoming plan activity")])])]);
 }];
 
 // EXTERNAL MODULE: ./src/plan/components/inject-preview.vue + 5 modules
 var inject_preview = __webpack_require__(2005);
-;// ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"27ccff72-vue-loader-template"}!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib/index.js??clonedRuleSet-40.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/templateLoader.js??ruleSet[1].rules[4]!./node_modules/cache-loader/dist/cjs.js??ruleSet[0].use[0]!./node_modules/@vue/cli-service/lib/config/vue-loader-v15-resolve-compat/vue-loader.js??vue-loader-options!./src/plan/components/exercise-information.vue?vue&type=template&id=1aa4fa22&scoped=true
-var exercise_informationvue_type_template_id_1aa4fa22_scoped_true_render = function render() {
-  var _vm = this,
-    _c = _vm._self._c;
-  return _c('article', {
-    class: {
-      'card': _vm.isCard
-    }
-  }, [_c('nav', {
-    staticClass: "level is-pulled-right"
-  }, [_vm.planEvents && _vm.planEvents.length > 0 ? _c('div', {
-    staticClass: "level-right"
-  }, [_c('div', {
-    staticClass: "level-item"
-  }, [_c('b-dropdown', {
-    attrs: {
-      "position": "is-bottom-left"
-    }
-  }, [_c('a', {
-    staticClass: "button is-small",
-    attrs: {
-      "slot": "trigger"
-    },
-    slot: "trigger"
-  }, [_c('span', {
-    staticClass: "icon is-small"
-  }, [_c('i', {
-    staticClass: "fas fa-ellipsis-v"
-  })])]), _c('b-dropdown-item', {
-    on: {
-      "click": function ($event) {
-        return _vm.editExercise();
-      }
-    }
-  }, [_c('span', {
-    staticClass: "icon is-small"
-  }, [_c('i', {
-    staticClass: "fas fa-pen"
-  })]), _c('span', [_vm._v("Edit Exercise Details")])])], 1)], 1)]) : _vm._e()]), _vm.bigHeader ? _c('p', {
-    staticClass: "px-2 py-2 title"
-  }, [_vm._v("Exercise Details")]) : _c('label', {
-    staticClass: "label"
-  }, [_vm._v(" Exercise Details ")]), _c('div', {
-    staticClass: "content"
-  }, [_vm.planEvents && _vm.planEvents.length > 0 ? _c('div', [_c('div', {
-    staticClass: "card-content"
-  }, [_c('div', {
-    staticClass: "content"
-  }, [_c('span', [_c('p', {
-    staticClass: "subtitle",
-    class: _vm.bigHeader ? 'is-size-5' : 'is-size-6'
-  }, [_c('strong', [_vm._v(_vm._s(_vm.truncate(_vm.currentExercise.name, 30)))])]), _c('p', {
-    staticClass: "subtitle",
-    class: _vm.bigHeader ? 'is-size-5' : 'is-size-6'
-  }, [_c('strong', [_c('span', {
-    staticClass: "tooltip",
-    attrs: {
-      "data-tooltip": _vm.formatDate(_vm.currentExercise.startDate, 'utc-dtg')
-    }
-  }, [_vm._v(_vm._s(_vm.formatDate(_vm.currentExercise.startDate, 'milDate')))]), _vm._v(" - "), _c('span', {
-    staticClass: "tooltip",
-    attrs: {
-      "data-tooltip": _vm.formatDate(_vm.currentExercise.endDate, 'utc-dtg')
-    }
-  }, [_vm._v(_vm._s(_vm.formatDate(_vm.currentExercise.endDate, 'milDate')))])])])]), _c('br'), _c('span', [_c('p', {
-    staticClass: "subtitle is-size-6"
-  }, [_vm._v(_vm._s(_vm.planExerciseObjectiveCount) + " Exercise Objectives")]), _c('p', {
-    staticClass: "subtitle is-size-6"
-  }, [_vm._v(_vm._s(_vm.participantsCount) + " Participants with " + _vm._s(_vm.platformsCount) + " Platforms")]), _c('p', {
-    staticClass: "subtitle is-size-6"
-  }, [_vm._v(_vm._s(_vm.planTrainingObjectivesCount) + " Training Objectives")]), _c('p', {
-    staticClass: "subtitle is-size-6"
-  }, [_vm._v(_vm._s(_vm.planEventsCount) + " Events")]), _c('p', {
-    staticClass: "subtitle is-size-6"
-  }, [_vm._v(_vm._s(_vm.planInjectsCount) + " MSEL Injects")])])])])]) : _c('div', {
-    staticClass: "py-1 px-1"
-  }, [_c('empty-state', {
-    attrs: {
-      "data": _vm.currentExercise,
-      "isLoading": _vm.$apollo.loading,
-      "isCard": false
-    }
-  }, [_c('template', {
-    slot: "custom-message"
-  }, [_c('p', {
-    staticClass: "subtitle has-text-centered"
-  }, [_vm._v("No exercise details found. Start planning by entering them now.")])]), _c('template', {
-    slot: "action-buttons"
-  }, [_c('div', {
-    staticClass: "buttons is-centered is-spaced"
-  }, [_c('button', {
-    staticClass: "button is-primary",
-    on: {
-      "click": function ($event) {
-        return _vm.editExercise();
-      }
-    }
-  }, [_vm._v(" Enter Details ")])])])], 2)], 1)])]);
-};
-var exercise_informationvue_type_template_id_1aa4fa22_scoped_true_staticRenderFns = [];
-
 // EXTERNAL MODULE: ./src/plan/graphql/PlanEvents.gql
 var PlanEvents = __webpack_require__(86305);
-;// ./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib/index.js??clonedRuleSet-40.use[1]!./node_modules/cache-loader/dist/cjs.js??ruleSet[0].use[0]!./node_modules/@vue/cli-service/lib/config/vue-loader-v15-resolve-compat/vue-loader.js??vue-loader-options!./src/plan/components/exercise-information.vue?vue&type=script&lang=js
-
-
-
-
-
-/* harmony default export */ var exercise_informationvue_type_script_lang_js = ({
-  name: 'exercise-information',
-  props: {
-    bigHeader: {
-      type: Boolean,
-      default: false
-    },
-    isCard: {
-      type: Boolean,
-      default: true
-    }
-  },
-  apollo: {
-    planEvents: {
-      query: PlanEvents.PlanEventsList,
-      variables() {
-        return {
-          where: {
-            type: this.exType
-          },
-          orderBy: 'startDate_ASC'
-        };
-      },
-      update(data) {
-        if (data && data.planEvents && data.planEvents[0]) {
-          this.currentExercise = JSON.parse(JSON.stringify(data.planEvents[0]), this.omitTypename);
-          return data.planEvents;
-        }
-      },
-      subscribeToMore: {
-        document: PlanEvents.PlanEventSubscription,
-        variables() {
-          return {
-            where: {
-              node: {
-                type: this.exType
-              }
-            }
-          };
-        },
-        // Mutate the previous result
-        updateQuery: (previousResult, {
-          subscriptionData
-        }) => {
-          // Here, return the new result from the previous with the new data
-          let mutationIn = subscriptionData.data.planEvent.mutation;
-          let newResult;
-          switch (mutationIn) {
-            case 'CREATED':
-              {
-                newResult = {
-                  planEvents: [subscriptionData.data.planEvent.node, ...previousResult.planEvents]
-                };
-                break;
-              }
-            case 'DELETED':
-              {
-                newResult = {
-                  planEvents: [...previousResult.planEvents.filter(obj => subscriptionData.data.planEvent.previousValues.id !== obj.id)]
-                };
-                break;
-              }
-            case 'UPDATED':
-              {
-                let newPlanEvents = JSON.parse(JSON.stringify(previousResult.planEvents));
-                let index = newPlanEvents.findIndex(x => x.id === subscriptionData.data.planEvent.node.id);
-                newPlanEvents[index] = subscriptionData.data.planEvent.node;
-                newResult = {
-                  planEvents: newPlanEvents
-                };
-                break;
-              }
-            default:
-              {
-                throw new Error(`Unknown mediaPost mutation`);
-              }
-          }
-          return newResult;
-        }
-      }
-    },
-    planEventsCount: {
-      query: PlanEvents.PlanEventsCounts,
-      variables() {
-        return {
-          where: {
-            type: null
-          }
-        };
-      },
-      update(data) {
-        if (data && data.planEventsConnection) {
-          return data.planEventsConnection.aggregate.count;
-        }
-      },
-      error(error) {
-        console.error(error);
-      }
-    },
-    planInjectsCount: {
-      query: PlanInjects.PlanInjectsCounts,
-      variables() {
-        return {
-          where: {
-            deletedAt: null
-          }
-        };
-      },
-      update(data) {
-        if (data && data.planInjectsConnection) {
-          return data.planInjectsConnection.aggregate.count;
-        }
-      },
-      error(error) {
-        console.error(error);
-      }
-    },
-    planExerciseObjectiveCount: {
-      query: PlanExerciseObjectives.PlanExerciseObjectivesCounts,
-      variables: {},
-      update(data) {
-        if (data && data.planExerciseObjectivesConnection) {
-          return data.planExerciseObjectivesConnection.aggregate.count;
-        }
-      },
-      error(error) {
-        console.error(error);
-      }
-    },
-    planTrainingObjectivesCount: {
-      query: PlanTrainingObjectives.PlanTrainingObjectiveCounts,
-      update(data) {
-        if (data && data.planTrainingObjectivesConnection && data.planTrainingObjectivesConnection.aggregate) {
-          return data.planTrainingObjectivesConnection.aggregate.count;
-        }
-      },
-      error(error) {
-        console.error(error);
-      }
-    },
-    participantsAndPlatforms: {
-      query: PlanParticipants.participantsAndPlatforms,
-      update(data) {
-        if (data) {
-          return data;
-        }
-      }
-    }
-  },
-  data() {
-    return {
-      exType: 'primary',
-      currentExercise: {
-        name: '',
-        command: null,
-        startDate: null,
-        endDate: null,
-        exerciseGuidance: ''
-      }
-    };
-  },
-  methods: {
-    editExercise() {
-      this.$router.push({
-        name: 'exercise-stepper',
-        query: {
-          from: this.$route.fullPath
-        }
-      });
-    }
-  },
-  computed: {
-    participantsCount() {
-      if (this.participantsAndPlatforms && this.participantsAndPlatforms.participantsCount) {
-        return this.participantsAndPlatforms.participantsCount.aggregate.count;
-      }
-    },
-    platformsCount() {
-      if (this.participantsAndPlatforms && this.participantsAndPlatforms.platformsCount) {
-        return this.participantsAndPlatforms.platformsCount.aggregate.count;
-      }
-    }
-  }
-});
-;// ./src/plan/components/exercise-information.vue?vue&type=script&lang=js
- /* harmony default export */ var components_exercise_informationvue_type_script_lang_js = (exercise_informationvue_type_script_lang_js); 
-;// ./src/plan/components/exercise-information.vue
-
-
-
-
-
-/* normalize component */
-;
-var exercise_information_component = (0,componentNormalizer/* default */.A)(
-  components_exercise_informationvue_type_script_lang_js,
-  exercise_informationvue_type_template_id_1aa4fa22_scoped_true_render,
-  exercise_informationvue_type_template_id_1aa4fa22_scoped_true_staticRenderFns,
-  false,
-  null,
-  "1aa4fa22",
-  null
-  
-)
-
-/* harmony default export */ var exercise_information = (exercise_information_component.exports);
-// EXTERNAL MODULE: ./node_modules/@fullcalendar/vue/main.esm.js
-var main_esm = __webpack_require__(65639);
-// EXTERNAL MODULE: ./node_modules/@fullcalendar/list/main.esm.js
-var list_main_esm = __webpack_require__(30109);
-// EXTERNAL MODULE: ./node_modules/@fullcalendar/moment-timezone/main.esm.js
-var moment_timezone_main_esm = __webpack_require__(3111);
+// EXTERNAL MODULE: ./src/plan/graphql/PlanAssessments.gql
+var PlanAssessments = __webpack_require__(2671);
+// EXTERNAL MODULE: ./src/plan/graphql/PlanFeedback.gql
+var PlanFeedback = __webpack_require__(71459);
+// EXTERNAL MODULE: ./src/plan/graphql/PlanFeedbackRequests.gql
+var PlanFeedbackRequests = __webpack_require__(85537);
+// EXTERNAL MODULE: ./src/plan/graphql/PlanCustomReports.gql
+var PlanCustomReports = __webpack_require__(50172);
 ;// ./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib/index.js??clonedRuleSet-40.use[1]!./node_modules/cache-loader/dist/cjs.js??ruleSet[0].use[0]!./node_modules/@vue/cli-service/lib/config/vue-loader-v15-resolve-compat/vue-loader.js??vue-loader-options!./src/plan/views/Home.vue?vue&type=script&lang=js
 
 
@@ -43887,12 +43442,8 @@ var moment_timezone_main_esm = __webpack_require__(3111);
   name: 'PlanView',
   mixins: [helpers/* default */.A, lightOrDark/* default */.A],
   components: {
-    ExerciseInformation: exercise_information,
-    LinkSidebar: linkSidebar,
     HelpContent: helpcontent/* default */.A,
-    FullCalendar: main_esm/* default */.A,
-    InjectPreview: inject_preview/* default */.A,
-    QuickCreate: quick_create
+    InjectPreview: inject_preview/* default */.A
   },
   apollo: {
     planInjectsCount: {
@@ -44259,27 +43810,82 @@ var moment_timezone_main_esm = __webpack_require__(3111);
       error(error) {
         console.error(error);
       }
+    },
+    planParticipantCount: {
+      query: PlanParticipants.PlanParticipantsCounts,
+      variables: {},
+      update(data) {
+        if (data && data.planParticipantsConnection) {
+          return data.planParticipantsConnection.aggregate.count;
+        }
+      },
+      error(error) {
+        console.error(error);
+      }
+    },
+    planTrainingObjectiveCount: {
+      query: PlanTrainingObjectives.PlanTrainingObjectiveCounts,
+      variables: {},
+      update(data) {
+        if (data && data.planTrainingObjectivesConnection) {
+          return data.planTrainingObjectivesConnection.aggregate.count;
+        }
+      },
+      error(error) {
+        console.error(error);
+      }
+    },
+    planAssessmentCount: {
+      query: PlanAssessments.PlanAssessmentsCounts,
+      variables: {},
+      update(data) {
+        if (data && data.planAssessmentsConnection) {
+          return data.planAssessmentsConnection.aggregate.count;
+        }
+      },
+      error(error) {
+        console.error(error);
+      }
+    },
+    planFeedbackCount: {
+      query: PlanFeedback.PlanFeedbacksCounts,
+      variables: {},
+      update(data) {
+        if (data && data.planFeedbacksConnection) {
+          return data.planFeedbacksConnection.aggregate.count;
+        }
+      },
+      error(error) {
+        console.error(error);
+      }
+    },
+    planFeedbackRequestCount: {
+      query: PlanFeedbackRequests.PlanFeedbackRequestsCounts,
+      variables: {},
+      update(data) {
+        if (data && data.planFeedbackRequestsConnection) {
+          return data.planFeedbackRequestsConnection.aggregate.count;
+        }
+      },
+      error(error) {
+        console.error(error);
+      }
+    },
+    planCustomReportCount: {
+      query: PlanCustomReports.PlanCustomReportsCounts,
+      variables: {},
+      update(data) {
+        if (data && data.planCustomReportsConnection) {
+          return data.planCustomReportsConnection.aggregate.count;
+        }
+      },
+      error(error) {
+        console.error(error);
+      }
     }
   },
   data() {
     return {
-      calendarOptions: {
-        timeZone: this.$store.state.activeWorkspace.timeZone,
-        header: {
-          left: 'prev,next today',
-          center: '',
-          right: 'title'
-        },
-        eventColor: '#424ef4',
-        editable: true,
-        handleWindowResize: false,
-        contentHeight: 640,
-        displayEventTime: true,
-        nowIndicator: true,
-        plugins: [list_main_esm/* default */.A, moment_timezone_main_esm/* default */.A],
-        defaultView: 'listMonth'
-      },
-      calendarPlugins: [list_main_esm/* default */.A],
       searchQuery: '',
       injectPreviewModal: false,
       selectedInject: null,
@@ -44288,6 +43894,12 @@ var moment_timezone_main_esm = __webpack_require__(3111);
       planEventsCalendar: [],
       planInjectsCalendar: [],
       planEvents: [],
+      planParticipantCount: 0,
+      planTrainingObjectiveCount: 0,
+      planAssessmentCount: 0,
+      planFeedbackCount: 0,
+      planFeedbackRequestCount: 0,
+      planCustomReportCount: 0,
       currentExercise: {
         name: '',
         command: null,
@@ -44295,13 +43907,8 @@ var moment_timezone_main_esm = __webpack_require__(3111);
         endDate: null,
         exerciseGuidance: ''
       },
-      header: {
-        left: 'prev,next today',
-        center: 'title',
-        right: ''
-      },
-      startMoment: null,
-      endMoment: null,
+      startMoment: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
+      endMoment: new Date(Date.now() + 60 * 24 * 60 * 60 * 1000).toISOString(),
       links: [{
         name: 'Prepare',
         icon: 'fas fa-tasks',
@@ -44381,13 +43988,289 @@ var moment_timezone_main_esm = __webpack_require__(3111);
     };
   },
   computed: {
+    planCards() {
+      const plans = this.planEvents && this.planEvents.length ? this.planEvents : this.currentExercise && this.currentExercise.name ? [this.currentExercise] : [];
+      return plans.map(plan => {
+        const status = this.planStatus(plan);
+        const next = this.openReadinessChecks[0];
+        return {
+          id: plan.id || 'current-exercise',
+          name: plan.name || 'Untitled exercise plan',
+          dateRange: this.planDateRange(plan),
+          guidance: plan.exerciseGuidance ? this.truncate(plan.exerciseGuidance, 180) : 'No command guidance has been captured for this plan yet.',
+          status: status.label,
+          statusClass: status.className,
+          nextAction: next ? `Next action: ${next.label}` : 'All tracked readiness checks are complete.'
+        };
+      });
+    },
+    dashboardMetrics() {
+      return [{
+        key: 'exercise-objectives',
+        label: 'exercise objectives',
+        value: this.countText(this.planExerciseObjectiveCount),
+        icon: 'fas fa-flag-checkered',
+        to: {
+          name: 'exercise-stepper',
+          query: {
+            step: 2
+          }
+        }
+      }, {
+        key: 'participants',
+        label: 'participants',
+        value: this.countText(this.planParticipantCount),
+        icon: 'fas fa-users',
+        to: {
+          name: 'participants'
+        }
+      }, {
+        key: 'training-objectives',
+        label: 'training objectives',
+        value: this.countText(this.planTrainingObjectiveCount),
+        icon: 'fas fa-bullseye',
+        to: {
+          name: 'objectives-list'
+        }
+      }, {
+        key: 'injects',
+        label: 'MSEL injects',
+        value: this.countText(this.planInjectsCount),
+        icon: 'fas fa-stream',
+        to: {
+          name: 'injects-list'
+        }
+      }, {
+        key: 'assessments',
+        label: 'assessments',
+        value: this.countText(this.planAssessmentCount),
+        icon: 'fas fa-clipboard-check',
+        to: {
+          name: 'overview'
+        }
+      }, {
+        key: 'feedback',
+        label: 'feedback records',
+        value: this.countText(this.planFeedbackCount),
+        icon: 'fas fa-comments',
+        to: {
+          name: 'feedbacks'
+        }
+      }, {
+        key: 'reports',
+        label: 'reports',
+        value: this.countText(this.planCustomReportCount),
+        icon: 'fas fa-chart-bar',
+        to: {
+          name: 'reportsList'
+        }
+      }];
+    },
+    openReadinessChecks() {
+      return this.readinessChecks.filter(check => !check.complete);
+    },
+    prioritizedReadinessChecks() {
+      const open = this.openReadinessChecks;
+      return open.length ? open : this.readinessChecks.slice(0, 4);
+    },
+    recentInjects() {
+      return (this.planInjects || []).slice(0, 5);
+    },
+    upcomingTimelineItems() {
+      return (this.filteredCalendar || []).filter(item => item.startDate || item.start).slice().sort((a, b) => {
+        const aDate = new Date(a.startDate || a.start).getTime();
+        const bDate = new Date(b.startDate || b.start).getTime();
+        return aDate - bDate;
+      }).slice(0, 6);
+    },
     filteredCalendar() {
       if (this.planEventsCalendar && this.planInjectsCalendar) {
         return [...this.planEventsCalendar, ...this.planInjectsCalendar];
       }
+    },
+    lifecyclePhases() {
+      return [{
+        key: 'design',
+        label: 'Design',
+        value: `${this.countText(this.planExerciseObjectiveCount)} objectives`,
+        copy: 'Senior intent, exercise objectives, and planning structure.',
+        icon: 'fas fa-drafting-compass',
+        to: {
+          name: 'exercise-details'
+        }
+      }, {
+        key: 'audience',
+        label: 'Audience',
+        value: `${this.countText(this.planParticipantCount)} participants`,
+        copy: 'Training audience, platforms, planners, and funding data.',
+        icon: 'fas fa-users',
+        to: {
+          name: 'participants'
+        }
+      }, {
+        key: 'objectives',
+        label: 'Training',
+        value: `${this.countText(this.planTrainingObjectiveCount)} TOs`,
+        copy: 'JMET-linked tasks, conditions, standards, and measures.',
+        icon: 'fas fa-bullseye',
+        to: {
+          name: 'objectives-list'
+        }
+      }, {
+        key: 'msel',
+        label: 'MSEL',
+        value: `${this.countText(this.planInjectsCount)} injects`,
+        copy: 'Scenario events and injects that drive exercise play.',
+        icon: 'fas fa-stream',
+        to: {
+          name: 'injects-list'
+        }
+      }, {
+        key: 'evaluate',
+        label: 'Evaluate',
+        value: `${this.countText(this.planAssessmentCount)} assessments`,
+        copy: 'Evaluator observations, ratings, measures, and evidence.',
+        icon: 'fas fa-clipboard-check',
+        to: {
+          name: 'overview'
+        }
+      }, {
+        key: 'improve',
+        label: 'Improve',
+        value: `${this.countText(this.planFeedbackCount)} feedback items`,
+        copy: 'Feedback, lessons learned, reports, and future actions.',
+        icon: 'fas fa-chart-line',
+        to: {
+          name: 'feedbacks'
+        }
+      }];
+    },
+    readinessChecks() {
+      return [{
+        key: 'exercise',
+        label: 'Define exercise dates and guidance',
+        copy: this.currentExercise && this.currentExercise.startDate && this.currentExercise.endDate ? 'STARTEX, ENDEX, and exercise guidance are present.' : 'Add STARTEX, ENDEX, primary organization, and command guidance.',
+        complete: Boolean(this.currentExercise && this.currentExercise.startDate && this.currentExercise.endDate),
+        to: {
+          name: 'exercise-details'
+        }
+      }, {
+        key: 'objectives',
+        label: 'Create exercise objectives',
+        copy: this.planExerciseObjectiveCount ? `${this.planExerciseObjectiveCount} exercise objectives are available.` : 'Capture commander priorities and measurable exercise objectives.',
+        complete: this.planExerciseObjectiveCount > 0,
+        to: {
+          name: 'exercise-stepper',
+          query: {
+            step: 2
+          }
+        }
+      }, {
+        key: 'participants',
+        label: 'Add participants and training audience',
+        copy: this.planParticipantCount ? `${this.planParticipantCount} participants are in the exercise.` : 'Add organizations, platforms, planners, and audience counts.',
+        complete: this.planParticipantCount > 0,
+        to: {
+          name: 'participants'
+        }
+      }, {
+        key: 'training-objectives',
+        label: 'Map training objectives to JMETs',
+        copy: this.planTrainingObjectiveCount ? `${this.planTrainingObjectiveCount} training objectives are mapped.` : 'Connect participants to JMETs, tasks, conditions, standards, and measures.',
+        complete: this.planTrainingObjectiveCount > 0,
+        to: {
+          name: 'objectives-list'
+        }
+      }, {
+        key: 'msel',
+        label: 'Build MSEL inject coverage',
+        copy: this.planInjectsCount ? `${this.planInjectsCount} MSEL injects are ready for review.` : 'Create injects, events, methods, owners, expected responses, and timings.',
+        complete: this.planInjectsCount > 0,
+        to: {
+          name: 'injects-list'
+        }
+      }, {
+        key: 'assessment',
+        label: 'Prepare evaluation collection',
+        copy: this.planAssessmentCount ? `${this.planAssessmentCount} assessments have been created.` : 'Create evaluator assessments tied to objectives and measures.',
+        complete: this.planAssessmentCount > 0,
+        to: {
+          name: 'overview'
+        }
+      }, {
+        key: 'feedback',
+        label: 'Set up feedback and hot wash capture',
+        copy: this.planFeedbackRequestCount || this.planFeedbackCount ? `${this.planFeedbackRequestCount} requests and ${this.planFeedbackCount} feedback records exist.` : 'Request feedback and prepare lessons-learned collection.',
+        complete: this.planFeedbackRequestCount > 0 || this.planFeedbackCount > 0,
+        to: {
+          name: 'collect'
+        }
+      }, {
+        key: 'reports',
+        label: 'Create report or AAR workspace',
+        copy: this.planCustomReportCount ? `${this.planCustomReportCount} custom report windows are configured.` : 'Create a report window for analytics, AAR, and export products.',
+        complete: this.planCustomReportCount > 0,
+        to: {
+          name: 'reportsList'
+        }
+      }];
+    },
+    readinessScore() {
+      if (!this.readinessChecks.length) return 0;
+      const complete = this.readinessChecks.filter(check => check.complete).length;
+      return Math.round(complete / this.readinessChecks.length * 100);
+    },
+    readinessTone() {
+      if (this.readinessScore >= 75) return 'is-strong';
+      if (this.readinessScore >= 45) return 'is-building';
+      return 'is-starting';
+    },
+    readinessStyle() {
+      return {
+        '--score': this.readinessScore
+      };
     }
   },
   methods: {
+    countText(value) {
+      return Number.isFinite(Number(value)) ? Number(value) : 0;
+    },
+    planDateRange(plan) {
+      if (plan && plan.startDate && plan.endDate) {
+        return `${this.formatDate(plan.startDate, 'dtg')} to ${this.formatDate(plan.endDate, 'dtg')}`;
+      }
+      if (plan && plan.startDate) {
+        return `Starts ${this.formatDate(plan.startDate, 'dtg')}`;
+      }
+      if (plan && plan.endDate) {
+        return `Ends ${this.formatDate(plan.endDate, 'dtg')}`;
+      }
+      return 'Schedule not set';
+    },
+    planStatus(plan) {
+      if (this.readinessScore >= 85) {
+        return {
+          label: 'Ready',
+          className: 'is-ready'
+        };
+      }
+      if (plan && plan.startDate && new Date(plan.startDate) <= new Date()) {
+        return {
+          label: 'In Progress',
+          className: 'is-active'
+        };
+      }
+      if (this.readinessScore >= 45) {
+        return {
+          label: 'Building',
+          className: 'is-building'
+        };
+      }
+      return {
+        label: 'Draft',
+        className: 'is-draft'
+      };
+    },
     editExercise() {
       this.$router.push({
         name: 'exercise-stepper',
@@ -44408,6 +44291,26 @@ var moment_timezone_main_esm = __webpack_require__(3111);
     injectCloseModal() {
       this.injectPreviewModal = false;
       this.selectedInject = null;
+    },
+    openTimelineItem(item) {
+      if (!item) return;
+      if (item.__typename === 'PlanEvent') {
+        if (item.type === 'primary') {
+          this.$router.push({
+            name: 'exercise-details'
+          });
+        } else {
+          this.$router.push({
+            name: 'view-event',
+            params: {
+              id: item.id
+            }
+          });
+        }
+      } else {
+        this.injectPreviewModal = true;
+        this.selectedInject = item.id;
+      }
     },
     eventSelected(e) {
       if (!e) return;
@@ -44442,10 +44345,10 @@ var moment_timezone_main_esm = __webpack_require__(3111);
 });
 ;// ./src/plan/views/Home.vue?vue&type=script&lang=js
  /* harmony default export */ var src_plan_views_Homevue_type_script_lang_js = (plan_views_Homevue_type_script_lang_js); 
-;// ./node_modules/mini-css-extract-plugin/dist/loader.js??clonedRuleSet-22.use[0]!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-22.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-22.use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-22.use[3]!./node_modules/cache-loader/dist/cjs.js??ruleSet[0].use[0]!./node_modules/@vue/cli-service/lib/config/vue-loader-v15-resolve-compat/vue-loader.js??vue-loader-options!./src/plan/views/Home.vue?vue&type=style&index=0&id=4a94c7eb&prod&lang=scss&scoped=true
+;// ./node_modules/mini-css-extract-plugin/dist/loader.js??clonedRuleSet-22.use[0]!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-22.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-22.use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-22.use[3]!./node_modules/cache-loader/dist/cjs.js??ruleSet[0].use[0]!./node_modules/@vue/cli-service/lib/config/vue-loader-v15-resolve-compat/vue-loader.js??vue-loader-options!./src/plan/views/Home.vue?vue&type=style&index=0&id=7fe92112&prod&lang=scss&scoped=true
 // extracted by mini-css-extract-plugin
 
-;// ./src/plan/views/Home.vue?vue&type=style&index=0&id=4a94c7eb&prod&lang=scss&scoped=true
+;// ./src/plan/views/Home.vue?vue&type=style&index=0&id=7fe92112&prod&lang=scss&scoped=true
 
 ;// ./src/plan/views/Home.vue
 
@@ -44458,11 +44361,11 @@ var moment_timezone_main_esm = __webpack_require__(3111);
 
 var plan_views_Home_component = (0,componentNormalizer/* default */.A)(
   src_plan_views_Homevue_type_script_lang_js,
-  Homevue_type_template_id_4a94c7eb_scoped_true_render,
-  Homevue_type_template_id_4a94c7eb_scoped_true_staticRenderFns,
+  Homevue_type_template_id_7fe92112_scoped_true_render,
+  Homevue_type_template_id_7fe92112_scoped_true_staticRenderFns,
   false,
   null,
-  "4a94c7eb",
+  "7fe92112",
   null
   
 )
@@ -45348,8 +45251,8 @@ var InjectsBoard_component = (0,componentNormalizer/* default */.A)(
 )
 
 /* harmony default export */ var InjectsBoard = (InjectsBoard_component.exports);
-;// ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"27ccff72-vue-loader-template"}!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib/index.js??clonedRuleSet-40.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/templateLoader.js??ruleSet[1].rules[4]!./node_modules/cache-loader/dist/cjs.js??ruleSet[0].use[0]!./node_modules/@vue/cli-service/lib/config/vue-loader-v15-resolve-compat/vue-loader.js??vue-loader-options!./src/plan/views/prepare/InjectsList.vue?vue&type=template&id=6b0ad67c&scoped=true
-var InjectsListvue_type_template_id_6b0ad67c_scoped_true_render = function render() {
+;// ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"27ccff72-vue-loader-template"}!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib/index.js??clonedRuleSet-40.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/templateLoader.js??ruleSet[1].rules[4]!./node_modules/cache-loader/dist/cjs.js??ruleSet[0].use[0]!./node_modules/@vue/cli-service/lib/config/vue-loader-v15-resolve-compat/vue-loader.js??vue-loader-options!./src/plan/views/prepare/InjectsList.vue?vue&type=template&id=1396fac2&scoped=true
+var InjectsListvue_type_template_id_1396fac2_scoped_true_render = function render() {
   var _vm = this,
     _c = _vm._self._c;
   return _c('div', {
@@ -45624,7 +45527,28 @@ var InjectsListvue_type_template_id_6b0ad67c_scoped_true_render = function rende
     staticClass: "icon is-small"
   }, [_c('i', {
     staticClass: "fas fa-spinner fa-pulse fa-3x has-text-primary"
-  })]) : _vm._e()])], 1)], 1)])]), _vm.planInjectsSearch && _vm.planInjectsSearch.length > 0 ? _c('div', [_c('b-table', {
+  })]) : _vm._e()])], 1)], 1)])]), _c('section', {
+    staticClass: "msel-control-overview"
+  }, [_c('div', {
+    staticClass: "control-overview-header"
+  }, [_vm._m(3), _c('div', {
+    staticClass: "control-score",
+    class: _vm.controlScoreTone
+  }, [_c('span', [_vm._v(_vm._s(_vm.controlReadinessScore) + "%")]), _c('small', [_vm._v("Ready on this page")])])]), _c('div', {
+    staticClass: "control-metrics"
+  }, _vm._l(_vm.controlMetrics, function (metric) {
+    return _c('div', {
+      key: metric.key,
+      staticClass: "control-metric",
+      class: {
+        'is-attention': metric.attention
+      }
+    }, [_c('span', {
+      staticClass: "metric-icon"
+    }, [_c('i', {
+      class: metric.icon
+    })]), _c('span', [_c('strong', [_vm._v(_vm._s(metric.value))]), _c('small', [_vm._v(_vm._s(metric.label))])])]);
+  }), 0)]), _vm.planInjectsSearch && _vm.planInjectsSearch.length > 0 ? _c('div', [_c('b-table', {
     attrs: {
       "data": _vm.planInjectsSearch,
       "striped": "",
@@ -45723,6 +45647,23 @@ var InjectsListvue_type_template_id_6b0ad67c_scoped_true_render = function rende
             "data-tooltip": props.row.events.name
           }
         }, [_vm._v(_vm._s(_vm._f("truncate")(props.row.events.name, 20)))])]) : _vm._e()], 1) : _vm._e()]), _c('b-table-column', {
+          attrs: {
+            "label": "Control Readiness"
+          }
+        }, [_c('div', {
+          staticClass: "control-chip-wrap"
+        }, _vm._l(_vm.injectReadinessItems(props.row), function (item) {
+          return _c('span', {
+            key: item.key,
+            staticClass: "control-chip",
+            class: item.complete ? 'is-complete' : 'is-missing',
+            attrs: {
+              "title": item.complete ? item.readyText : item.missingText
+            }
+          }, [_c('i', {
+            class: item.icon
+          }), _c('span', [_vm._v(_vm._s(item.label))])]);
+        }), 0)]), _c('b-table-column', {
           attrs: {
             "field": "updatedAt",
             "label": "Last Updated",
@@ -45899,6 +45840,20 @@ var InjectsListvue_type_template_id_6b0ad67c_scoped_true_render = function rende
           staticClass: "field"
         }, [_c('p', {
           staticClass: "title is-6"
+        }, [_vm._v("Controller Readiness")]), _c('div', {
+          staticClass: "control-chip-wrap is-detail"
+        }, _vm._l(_vm.injectReadinessItems(props.row), function (item) {
+          return _c('span', {
+            key: item.key,
+            staticClass: "control-chip",
+            class: item.complete ? 'is-complete' : 'is-missing'
+          }, [_c('i', {
+            class: item.icon
+          }), _c('span', [_vm._v(_vm._s(item.complete ? item.readyText : item.missingText))])]);
+        }), 0)]), _c('div', {
+          staticClass: "field"
+        }, [_c('p', {
+          staticClass: "title is-6"
         }, [_vm._v("Location")]), _c('p', {
           staticClass: "subtitle is-6"
         }, [props.row.location ? _c('geocode', {
@@ -45952,7 +45907,7 @@ var InjectsListvue_type_template_id_6b0ad67c_scoped_true_render = function rende
           }
         }, [_vm._v("Delete Inject")])])])])])])];
       }
-    }], null, false, 2079403341)
+    }], null, false, 984444060)
   })], 1) : _c('div', [_c('empty-state', {
     attrs: {
       "data": _vm.planInjectsSearch,
@@ -45989,7 +45944,7 @@ var InjectsListvue_type_template_id_6b0ad67c_scoped_true_render = function rende
     }
   })], 1);
 };
-var InjectsListvue_type_template_id_6b0ad67c_scoped_true_staticRenderFns = [function () {
+var InjectsListvue_type_template_id_1396fac2_scoped_true_staticRenderFns = [function () {
   var _vm = this,
     _c = _vm._self._c;
   return _c('span', {
@@ -46013,6 +45968,16 @@ var InjectsListvue_type_template_id_6b0ad67c_scoped_true_staticRenderFns = [func
   }, [_c('div', {
     staticClass: "level-item"
   })]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c('div', [_c('p', {
+    staticClass: "eyebrow"
+  }, [_vm._v("Exercise control")]), _c('h1', {
+    staticClass: "title is-4"
+  }, [_vm._v("MSEL readiness board")]), _c('p', {
+    staticClass: "subtitle is-6"
+  }, [_vm._v(" Review the control details that make each inject playable, observable, and useful during assessment. ")])]);
 }];
 
 // EXTERNAL MODULE: ./src/plan/components/cobra-connect.vue + 3 modules
@@ -46280,6 +46245,75 @@ var mediaCheck = __webpack_require__(6186);
       this.defaultSortOrder = btableData[1].toLowerCase();
     }
   },
+  computed: {
+    visibleInjects() {
+      return this.planInjectsSearch || [];
+    },
+    controlReadinessScore() {
+      if (!this.visibleInjects.length) {
+        return 0;
+      }
+      let possible = this.visibleInjects.length * this.readinessTemplate().length;
+      let complete = this.visibleInjects.reduce((count, inject) => {
+        return count + this.injectReadinessItems(inject).filter(item => item.complete).length;
+      }, 0);
+      return Math.round(complete / possible * 100);
+    },
+    controlScoreTone() {
+      if (this.controlReadinessScore >= 80) {
+        return 'is-strong';
+      }
+      if (this.controlReadinessScore >= 55) {
+        return 'is-building';
+      }
+      return 'is-starting';
+    },
+    controlMetrics() {
+      let total = this.visibleInjects.length;
+      let missingOwner = this.visibleInjects.filter(inject => !inject.owner || !inject.owner.title).length;
+      let missingTiming = this.visibleInjects.filter(inject => !inject.startDate).length;
+      let missingTrigger = this.visibleInjects.filter(inject => !inject.trigger).length;
+      let missingObjectives = this.visibleInjects.filter(inject => !inject.objectives || inject.objectives.length === 0).length;
+      let noResponseCapture = this.visibleInjects.filter(inject => !inject.response && !inject.mitigation).length;
+      return [{
+        key: 'total',
+        label: 'visible injects',
+        value: total,
+        icon: 'fas fa-stream',
+        attention: false
+      }, {
+        key: 'owner',
+        label: 'missing controller',
+        value: missingOwner,
+        icon: 'fas fa-headset',
+        attention: missingOwner > 0
+      }, {
+        key: 'timing',
+        label: 'missing timing',
+        value: missingTiming,
+        icon: 'fas fa-clock',
+        attention: missingTiming > 0
+      }, {
+        key: 'trigger',
+        label: 'missing trigger',
+        value: missingTrigger,
+        icon: 'fas fa-bolt',
+        attention: missingTrigger > 0
+      }, {
+        key: 'objectives',
+        label: 'without TO link',
+        value: missingObjectives,
+        icon: 'fas fa-bullseye',
+        attention: missingObjectives > 0
+      }, {
+        key: 'response',
+        label: 'missing response capture',
+        value: noResponseCapture,
+        icon: 'fas fa-clipboard-check',
+        attention: noResponseCapture > 0
+      }];
+    }
+  },
   watch: {
     eventName() {
       this.$router.push({
@@ -46318,6 +46352,58 @@ var mediaCheck = __webpack_require__(6186);
     }
   },
   methods: {
+    readinessTemplate() {
+      return [{
+        key: 'owner',
+        label: 'Owner',
+        icon: 'fas fa-headset',
+        readyText: 'Controller assigned',
+        missingText: 'Needs controller',
+        complete: inject => !!(inject.owner && inject.owner.title)
+      }, {
+        key: 'timing',
+        label: 'Time',
+        icon: 'fas fa-clock',
+        readyText: 'Start time set',
+        missingText: 'Needs start time',
+        complete: inject => !!inject.startDate
+      }, {
+        key: 'method',
+        label: 'Method',
+        icon: 'fas fa-share-alt',
+        readyText: 'Delivery method set',
+        missingText: 'Needs delivery method',
+        complete: inject => !!inject.method
+      }, {
+        key: 'trigger',
+        label: 'Trigger',
+        icon: 'fas fa-bolt',
+        readyText: 'Trigger defined',
+        missingText: 'Needs trigger',
+        complete: inject => !!inject.trigger
+      }, {
+        key: 'objectives',
+        label: 'TO',
+        icon: 'fas fa-bullseye',
+        readyText: 'Training objective linked',
+        missingText: 'Needs training objective',
+        complete: inject => !!(inject.objectives && inject.objectives.length)
+      }, {
+        key: 'response',
+        label: 'Response',
+        icon: 'fas fa-clipboard-check',
+        readyText: 'Expected or actual response captured',
+        missingText: 'Needs response capture',
+        complete: inject => !!(inject.response || inject.mitigation)
+      }];
+    },
+    injectReadinessItems(inject) {
+      return this.readinessTemplate().map(item => {
+        return Object.assign({}, item, {
+          complete: item.complete(inject || {})
+        });
+      });
+    },
     downloadInjects(type) {
       this.downloadInProgress = true;
       let currentDate = this.moment().format('DDMMYYYY HHmm');
@@ -46508,10 +46594,10 @@ var mediaCheck = __webpack_require__(6186);
 });
 ;// ./src/plan/views/prepare/InjectsList.vue?vue&type=script&lang=js
  /* harmony default export */ var prepare_InjectsListvue_type_script_lang_js = (InjectsListvue_type_script_lang_js); 
-;// ./node_modules/mini-css-extract-plugin/dist/loader.js??clonedRuleSet-22.use[0]!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-22.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-22.use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-22.use[3]!./node_modules/cache-loader/dist/cjs.js??ruleSet[0].use[0]!./node_modules/@vue/cli-service/lib/config/vue-loader-v15-resolve-compat/vue-loader.js??vue-loader-options!./src/plan/views/prepare/InjectsList.vue?vue&type=style&index=0&id=6b0ad67c&prod&lang=scss&scoped=true
+;// ./node_modules/mini-css-extract-plugin/dist/loader.js??clonedRuleSet-22.use[0]!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-22.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-22.use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-22.use[3]!./node_modules/cache-loader/dist/cjs.js??ruleSet[0].use[0]!./node_modules/@vue/cli-service/lib/config/vue-loader-v15-resolve-compat/vue-loader.js??vue-loader-options!./src/plan/views/prepare/InjectsList.vue?vue&type=style&index=0&id=1396fac2&prod&lang=scss&scoped=true
 // extracted by mini-css-extract-plugin
 
-;// ./src/plan/views/prepare/InjectsList.vue?vue&type=style&index=0&id=6b0ad67c&prod&lang=scss&scoped=true
+;// ./src/plan/views/prepare/InjectsList.vue?vue&type=style&index=0&id=1396fac2&prod&lang=scss&scoped=true
 
 ;// ./src/plan/views/prepare/InjectsList.vue
 
@@ -46524,11 +46610,11 @@ var mediaCheck = __webpack_require__(6186);
 
 var InjectsList_component = (0,componentNormalizer/* default */.A)(
   prepare_InjectsListvue_type_script_lang_js,
-  InjectsListvue_type_template_id_6b0ad67c_scoped_true_render,
-  InjectsListvue_type_template_id_6b0ad67c_scoped_true_staticRenderFns,
+  InjectsListvue_type_template_id_1396fac2_scoped_true_render,
+  InjectsListvue_type_template_id_1396fac2_scoped_true_staticRenderFns,
   false,
   null,
-  "6b0ad67c",
+  "1396fac2",
   null
   
 )
@@ -47109,12 +47195,18 @@ var InjectsCalendarvue_type_template_id_53a8e9ee_scoped_true_staticRenderFns = [
   })]);
 }];
 
+// EXTERNAL MODULE: ./node_modules/@fullcalendar/vue/main.esm.js
+var main_esm = __webpack_require__(65639);
 // EXTERNAL MODULE: ./node_modules/@fullcalendar/daygrid/main.esm.js
 var daygrid_main_esm = __webpack_require__(44357);
 // EXTERNAL MODULE: ./node_modules/@fullcalendar/timegrid/main.esm.js
 var timegrid_main_esm = __webpack_require__(81446);
 // EXTERNAL MODULE: ./node_modules/@fullcalendar/interaction/main.esm.js
 var interaction_main_esm = __webpack_require__(77087);
+// EXTERNAL MODULE: ./node_modules/@fullcalendar/list/main.esm.js
+var list_main_esm = __webpack_require__(30109);
+// EXTERNAL MODULE: ./node_modules/@fullcalendar/moment-timezone/main.esm.js
+var moment_timezone_main_esm = __webpack_require__(3111);
 ;// ./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib/index.js??clonedRuleSet-40.use[1]!./node_modules/cache-loader/dist/cjs.js??ruleSet[0].use[0]!./node_modules/@vue/cli-service/lib/config/vue-loader-v15-resolve-compat/vue-loader.js??vue-loader-options!./src/plan/views/prepare/InjectsCalendar.vue?vue&type=script&lang=js
 
 
@@ -47652,6 +47744,319 @@ var meeting_preview_component = (0,componentNormalizer/* default */.A)(
 )
 
 /* harmony default export */ var meeting_preview = (meeting_preview_component.exports);
+;// ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"27ccff72-vue-loader-template"}!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib/index.js??clonedRuleSet-40.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/templateLoader.js??ruleSet[1].rules[4]!./node_modules/cache-loader/dist/cjs.js??ruleSet[0].use[0]!./node_modules/@vue/cli-service/lib/config/vue-loader-v15-resolve-compat/vue-loader.js??vue-loader-options!./src/plan/components/exercise-information.vue?vue&type=template&id=1aa4fa22&scoped=true
+var exercise_informationvue_type_template_id_1aa4fa22_scoped_true_render = function render() {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c('article', {
+    class: {
+      'card': _vm.isCard
+    }
+  }, [_c('nav', {
+    staticClass: "level is-pulled-right"
+  }, [_vm.planEvents && _vm.planEvents.length > 0 ? _c('div', {
+    staticClass: "level-right"
+  }, [_c('div', {
+    staticClass: "level-item"
+  }, [_c('b-dropdown', {
+    attrs: {
+      "position": "is-bottom-left"
+    }
+  }, [_c('a', {
+    staticClass: "button is-small",
+    attrs: {
+      "slot": "trigger"
+    },
+    slot: "trigger"
+  }, [_c('span', {
+    staticClass: "icon is-small"
+  }, [_c('i', {
+    staticClass: "fas fa-ellipsis-v"
+  })])]), _c('b-dropdown-item', {
+    on: {
+      "click": function ($event) {
+        return _vm.editExercise();
+      }
+    }
+  }, [_c('span', {
+    staticClass: "icon is-small"
+  }, [_c('i', {
+    staticClass: "fas fa-pen"
+  })]), _c('span', [_vm._v("Edit Exercise Details")])])], 1)], 1)]) : _vm._e()]), _vm.bigHeader ? _c('p', {
+    staticClass: "px-2 py-2 title"
+  }, [_vm._v("Exercise Details")]) : _c('label', {
+    staticClass: "label"
+  }, [_vm._v(" Exercise Details ")]), _c('div', {
+    staticClass: "content"
+  }, [_vm.planEvents && _vm.planEvents.length > 0 ? _c('div', [_c('div', {
+    staticClass: "card-content"
+  }, [_c('div', {
+    staticClass: "content"
+  }, [_c('span', [_c('p', {
+    staticClass: "subtitle",
+    class: _vm.bigHeader ? 'is-size-5' : 'is-size-6'
+  }, [_c('strong', [_vm._v(_vm._s(_vm.truncate(_vm.currentExercise.name, 30)))])]), _c('p', {
+    staticClass: "subtitle",
+    class: _vm.bigHeader ? 'is-size-5' : 'is-size-6'
+  }, [_c('strong', [_c('span', {
+    staticClass: "tooltip",
+    attrs: {
+      "data-tooltip": _vm.formatDate(_vm.currentExercise.startDate, 'utc-dtg')
+    }
+  }, [_vm._v(_vm._s(_vm.formatDate(_vm.currentExercise.startDate, 'milDate')))]), _vm._v(" - "), _c('span', {
+    staticClass: "tooltip",
+    attrs: {
+      "data-tooltip": _vm.formatDate(_vm.currentExercise.endDate, 'utc-dtg')
+    }
+  }, [_vm._v(_vm._s(_vm.formatDate(_vm.currentExercise.endDate, 'milDate')))])])])]), _c('br'), _c('span', [_c('p', {
+    staticClass: "subtitle is-size-6"
+  }, [_vm._v(_vm._s(_vm.planExerciseObjectiveCount) + " Exercise Objectives")]), _c('p', {
+    staticClass: "subtitle is-size-6"
+  }, [_vm._v(_vm._s(_vm.participantsCount) + " Participants with " + _vm._s(_vm.platformsCount) + " Platforms")]), _c('p', {
+    staticClass: "subtitle is-size-6"
+  }, [_vm._v(_vm._s(_vm.planTrainingObjectivesCount) + " Training Objectives")]), _c('p', {
+    staticClass: "subtitle is-size-6"
+  }, [_vm._v(_vm._s(_vm.planEventsCount) + " Events")]), _c('p', {
+    staticClass: "subtitle is-size-6"
+  }, [_vm._v(_vm._s(_vm.planInjectsCount) + " MSEL Injects")])])])])]) : _c('div', {
+    staticClass: "py-1 px-1"
+  }, [_c('empty-state', {
+    attrs: {
+      "data": _vm.currentExercise,
+      "isLoading": _vm.$apollo.loading,
+      "isCard": false
+    }
+  }, [_c('template', {
+    slot: "custom-message"
+  }, [_c('p', {
+    staticClass: "subtitle has-text-centered"
+  }, [_vm._v("No exercise details found. Start planning by entering them now.")])]), _c('template', {
+    slot: "action-buttons"
+  }, [_c('div', {
+    staticClass: "buttons is-centered is-spaced"
+  }, [_c('button', {
+    staticClass: "button is-primary",
+    on: {
+      "click": function ($event) {
+        return _vm.editExercise();
+      }
+    }
+  }, [_vm._v(" Enter Details ")])])])], 2)], 1)])]);
+};
+var exercise_informationvue_type_template_id_1aa4fa22_scoped_true_staticRenderFns = [];
+
+;// ./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib/index.js??clonedRuleSet-40.use[1]!./node_modules/cache-loader/dist/cjs.js??ruleSet[0].use[0]!./node_modules/@vue/cli-service/lib/config/vue-loader-v15-resolve-compat/vue-loader.js??vue-loader-options!./src/plan/components/exercise-information.vue?vue&type=script&lang=js
+
+
+
+
+
+/* harmony default export */ var exercise_informationvue_type_script_lang_js = ({
+  name: 'exercise-information',
+  props: {
+    bigHeader: {
+      type: Boolean,
+      default: false
+    },
+    isCard: {
+      type: Boolean,
+      default: true
+    }
+  },
+  apollo: {
+    planEvents: {
+      query: PlanEvents.PlanEventsList,
+      variables() {
+        return {
+          where: {
+            type: this.exType
+          },
+          orderBy: 'startDate_ASC'
+        };
+      },
+      update(data) {
+        if (data && data.planEvents && data.planEvents[0]) {
+          this.currentExercise = JSON.parse(JSON.stringify(data.planEvents[0]), this.omitTypename);
+          return data.planEvents;
+        }
+      },
+      subscribeToMore: {
+        document: PlanEvents.PlanEventSubscription,
+        variables() {
+          return {
+            where: {
+              node: {
+                type: this.exType
+              }
+            }
+          };
+        },
+        // Mutate the previous result
+        updateQuery: (previousResult, {
+          subscriptionData
+        }) => {
+          // Here, return the new result from the previous with the new data
+          let mutationIn = subscriptionData.data.planEvent.mutation;
+          let newResult;
+          switch (mutationIn) {
+            case 'CREATED':
+              {
+                newResult = {
+                  planEvents: [subscriptionData.data.planEvent.node, ...previousResult.planEvents]
+                };
+                break;
+              }
+            case 'DELETED':
+              {
+                newResult = {
+                  planEvents: [...previousResult.planEvents.filter(obj => subscriptionData.data.planEvent.previousValues.id !== obj.id)]
+                };
+                break;
+              }
+            case 'UPDATED':
+              {
+                let newPlanEvents = JSON.parse(JSON.stringify(previousResult.planEvents));
+                let index = newPlanEvents.findIndex(x => x.id === subscriptionData.data.planEvent.node.id);
+                newPlanEvents[index] = subscriptionData.data.planEvent.node;
+                newResult = {
+                  planEvents: newPlanEvents
+                };
+                break;
+              }
+            default:
+              {
+                throw new Error(`Unknown mediaPost mutation`);
+              }
+          }
+          return newResult;
+        }
+      }
+    },
+    planEventsCount: {
+      query: PlanEvents.PlanEventsCounts,
+      variables() {
+        return {
+          where: {
+            type: null
+          }
+        };
+      },
+      update(data) {
+        if (data && data.planEventsConnection) {
+          return data.planEventsConnection.aggregate.count;
+        }
+      },
+      error(error) {
+        console.error(error);
+      }
+    },
+    planInjectsCount: {
+      query: PlanInjects.PlanInjectsCounts,
+      variables() {
+        return {
+          where: {
+            deletedAt: null
+          }
+        };
+      },
+      update(data) {
+        if (data && data.planInjectsConnection) {
+          return data.planInjectsConnection.aggregate.count;
+        }
+      },
+      error(error) {
+        console.error(error);
+      }
+    },
+    planExerciseObjectiveCount: {
+      query: PlanExerciseObjectives.PlanExerciseObjectivesCounts,
+      variables: {},
+      update(data) {
+        if (data && data.planExerciseObjectivesConnection) {
+          return data.planExerciseObjectivesConnection.aggregate.count;
+        }
+      },
+      error(error) {
+        console.error(error);
+      }
+    },
+    planTrainingObjectivesCount: {
+      query: PlanTrainingObjectives.PlanTrainingObjectiveCounts,
+      update(data) {
+        if (data && data.planTrainingObjectivesConnection && data.planTrainingObjectivesConnection.aggregate) {
+          return data.planTrainingObjectivesConnection.aggregate.count;
+        }
+      },
+      error(error) {
+        console.error(error);
+      }
+    },
+    participantsAndPlatforms: {
+      query: PlanParticipants.participantsAndPlatforms,
+      update(data) {
+        if (data) {
+          return data;
+        }
+      }
+    }
+  },
+  data() {
+    return {
+      exType: 'primary',
+      currentExercise: {
+        name: '',
+        command: null,
+        startDate: null,
+        endDate: null,
+        exerciseGuidance: ''
+      }
+    };
+  },
+  methods: {
+    editExercise() {
+      this.$router.push({
+        name: 'exercise-stepper',
+        query: {
+          from: this.$route.fullPath
+        }
+      });
+    }
+  },
+  computed: {
+    participantsCount() {
+      if (this.participantsAndPlatforms && this.participantsAndPlatforms.participantsCount) {
+        return this.participantsAndPlatforms.participantsCount.aggregate.count;
+      }
+    },
+    platformsCount() {
+      if (this.participantsAndPlatforms && this.participantsAndPlatforms.platformsCount) {
+        return this.participantsAndPlatforms.platformsCount.aggregate.count;
+      }
+    }
+  }
+});
+;// ./src/plan/components/exercise-information.vue?vue&type=script&lang=js
+ /* harmony default export */ var components_exercise_informationvue_type_script_lang_js = (exercise_informationvue_type_script_lang_js); 
+;// ./src/plan/components/exercise-information.vue
+
+
+
+
+
+/* normalize component */
+;
+var exercise_information_component = (0,componentNormalizer/* default */.A)(
+  components_exercise_informationvue_type_script_lang_js,
+  exercise_informationvue_type_template_id_1aa4fa22_scoped_true_render,
+  exercise_informationvue_type_template_id_1aa4fa22_scoped_true_staticRenderFns,
+  false,
+  null,
+  "1aa4fa22",
+  null
+  
+)
+
+/* harmony default export */ var exercise_information = (exercise_information_component.exports);
 // EXTERNAL MODULE: ./src/plan/graphql/PlanParticipantFundingSources.gql
 var PlanParticipantFundingSources = __webpack_require__(32626);
 ;// ./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib/index.js??clonedRuleSet-40.use[1]!./node_modules/cache-loader/dist/cjs.js??ruleSet[0].use[0]!./node_modules/@vue/cli-service/lib/config/vue-loader-v15-resolve-compat/vue-loader.js??vue-loader-options!./src/plan/views/prepare/Dashboard.vue?vue&type=script&lang=js
@@ -57205,8 +57610,8 @@ var manage_exercise_component = (0,componentNormalizer/* default */.A)(
 )
 
 /* harmony default export */ var manage_exercise = (manage_exercise_component.exports);
-;// ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"27ccff72-vue-loader-template"}!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib/index.js??clonedRuleSet-40.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/templateLoader.js??ruleSet[1].rules[4]!./node_modules/cache-loader/dist/cjs.js??ruleSet[0].use[0]!./node_modules/@vue/cli-service/lib/config/vue-loader-v15-resolve-compat/vue-loader.js??vue-loader-options!./src/plan/components/prepare/manage-inject.vue?vue&type=template&id=0a985492&scoped=true
-var manage_injectvue_type_template_id_0a985492_scoped_true_render = function render() {
+;// ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"27ccff72-vue-loader-template"}!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib/index.js??clonedRuleSet-40.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/templateLoader.js??ruleSet[1].rules[4]!./node_modules/cache-loader/dist/cjs.js??ruleSet[0].use[0]!./node_modules/@vue/cli-service/lib/config/vue-loader-v15-resolve-compat/vue-loader.js??vue-loader-options!./src/plan/components/prepare/manage-inject.vue?vue&type=template&id=32a92e7b&scoped=true
+var manage_injectvue_type_template_id_32a92e7b_scoped_true_render = function render() {
   var _vm = this,
     _c = _vm._self._c;
   return _c('div', {
@@ -57215,7 +57620,34 @@ var manage_injectvue_type_template_id_0a985492_scoped_true_render = function ren
     attrs: {
       "currentPage": _vm.planInjects ? '#' + _vm.planInjects.number + ' ' + _vm.planInjects.title : ''
     }
-  }), _vm.planInject && _vm.planInject.id != null ? _c('div', [_c('stepper', {
+  }), _vm.planInject && _vm.planInject.id != null ? _c('div', [_c('section', {
+    staticClass: "inject-readiness-panel"
+  }, [_c('div', {
+    staticClass: "readiness-summary"
+  }, [_vm._m(0), _c('div', {
+    staticClass: "readiness-score",
+    class: _vm.injectReadinessTone
+  }, [_c('span', [_vm._v(_vm._s(_vm.injectReadinessScore) + "%")]), _c('small', [_vm._v("Ready")])])]), _c('div', {
+    staticClass: "readiness-checks"
+  }, _vm._l(_vm.injectReadinessItems, function (item) {
+    return _c('button', {
+      key: item.key,
+      staticClass: "readiness-check",
+      class: item.complete ? 'is-complete' : 'is-missing',
+      attrs: {
+        "type": "button"
+      },
+      on: {
+        "click": function ($event) {
+          return _vm.goToReadinessStep(item.step);
+        }
+      }
+    }, [_c('span', {
+      staticClass: "check-icon"
+    }, [_c('i', {
+      class: item.icon
+    })]), _c('span', [_c('strong', [_vm._v(_vm._s(item.label))]), _c('small', [_vm._v(_vm._s(item.complete ? item.readyText : item.missingText))])])]);
+  }), 0)]), _c('stepper', {
     on: {
       "previousStep": _vm.onStepChange,
       "steps-completed": _vm.onStepsCompleted
@@ -58015,7 +58447,42 @@ var manage_injectvue_type_template_id_0a985492_scoped_true_render = function ren
     }
   }, [_c('div', {
     staticClass: "card-content"
+  }, [_c('section', {
+    staticClass: "objective-traceability"
   }, [_c('div', {
+    staticClass: "traceability-header"
+  }, [_c('div', [_c('p', {
+    staticClass: "eyebrow"
+  }, [_vm._v("Objective traceability")]), _c('h2', {
+    staticClass: "title is-5"
+  }, [_vm._v("Connect this inject to exercise outcomes")]), _c('p', {
+    staticClass: "subtitle is-6"
+  }, [_vm._v(" A strong MSEL inject should drive a training objective, create observable evidence, and support assessment or AAR findings. ")])]), _c('span', {
+    staticClass: "traceability-status",
+    class: _vm.assignedObjectives.length ? 'is-linked' : 'is-empty'
+  }, [_c('i', {
+    class: _vm.assignedObjectives.length ? 'fas fa-link' : 'fas fa-unlink'
+  }), _vm._v(" " + _vm._s(_vm.assignedObjectives.length ? 'Linked' : 'No objective linked') + " ")])]), _c('div', {
+    staticClass: "traceability-metrics"
+  }, _vm._l(_vm.objectiveTraceabilityMetrics, function (metric) {
+    return _c('button', {
+      key: metric.key,
+      staticClass: "traceability-metric",
+      class: metric.attention ? 'is-attention' : '',
+      attrs: {
+        "type": "button"
+      },
+      on: {
+        "click": function ($event) {
+          return _vm.goToReadinessStep(3);
+        }
+      }
+    }, [_c('span', {
+      staticClass: "metric-icon"
+    }, [_c('i', {
+      class: metric.icon
+    })]), _c('span', [_c('strong', [_vm._v(_vm._s(metric.value))]), _c('small', [_vm._v(_vm._s(metric.label))])])]);
+  }), 0)]), _c('div', {
     staticClass: "card objective-section"
   }, [_c('div', {
     staticClass: "card-header"
@@ -58116,6 +58583,23 @@ var manage_injectvue_type_template_id_0a985492_scoped_true_render = function ren
             "sortable": ""
           }
         }, [props.row.jmet ? _c('span', [_vm._v(_vm._s(props.row.jmet.description))]) : _vm._e()]), _c('b-table-column', {
+          attrs: {
+            "label": "Traceability"
+          }
+        }, [_c('div', {
+          staticClass: "traceability-chip-wrap"
+        }, _vm._l(_vm.objectiveTraceItems(props.row), function (item) {
+          return _c('span', {
+            key: item.key,
+            staticClass: "traceability-chip",
+            class: item.complete ? 'is-complete' : 'is-missing',
+            attrs: {
+              "title": item.complete ? item.readyText : item.missingText
+            }
+          }, [_c('i', {
+            class: item.icon
+          }), _c('span', [_vm._v(_vm._s(item.label))])]);
+        }), 0)]), _c('b-table-column', {
           attrs: {
             "field": "priorityLevel.title",
             "label": "Priority",
@@ -58227,7 +58711,17 @@ var manage_injectvue_type_template_id_0a985492_scoped_true_render = function ren
           staticClass: "column is-full"
         }, [_c('label', {
           staticClass: "label"
-        }, [_vm._v(" Measures ")]), props.row.measures.length > 0 ? _c('ul', {
+        }, [_vm._v(" Measures ")]), _c('div', {
+          staticClass: "traceability-chip-wrap is-detail"
+        }, _vm._l(_vm.objectiveTraceItems(props.row), function (item) {
+          return _c('span', {
+            key: item.key,
+            staticClass: "traceability-chip",
+            class: item.complete ? 'is-complete' : 'is-missing'
+          }, [_c('i', {
+            class: item.icon
+          }), _c('span', [_vm._v(_vm._s(item.complete ? item.readyText : item.missingText))])]);
+        }), 0), props.row.measures.length > 0 ? _c('ul', {
           staticClass: "bd-anchors-list"
         }, _vm._l(props.row.measures, function (measure, $index) {
           return _c('li', {
@@ -58317,7 +58811,7 @@ var manage_injectvue_type_template_id_0a985492_scoped_true_render = function ren
           staticClass: "subtitle is-6"
         }, [_vm._v("None")])])])])])])])];
       }
-    }], null, false, 2838072759)
+    }], null, false, 3092583762)
   }, [_c('template', {
     slot: "empty"
   }, [_c('div', {
@@ -58476,6 +58970,23 @@ var manage_injectvue_type_template_id_0a985492_scoped_true_render = function ren
           }
         }, [_vm._v(" " + _vm._s(props.row.jmet ? props.row.jmet.description : "None") + " ")]), _c('b-table-column', {
           attrs: {
+            "label": "Traceability"
+          }
+        }, [_c('div', {
+          staticClass: "traceability-chip-wrap"
+        }, _vm._l(_vm.objectiveTraceItems(props.row), function (item) {
+          return _c('span', {
+            key: item.key,
+            staticClass: "traceability-chip",
+            class: item.complete ? 'is-complete' : 'is-missing',
+            attrs: {
+              "title": item.complete ? item.readyText : item.missingText
+            }
+          }, [_c('i', {
+            class: item.icon
+          }), _c('span', [_vm._v(_vm._s(item.label))])]);
+        }), 0)]), _c('b-table-column', {
+          attrs: {
             "field": "priorityLevel.title",
             "label": "Priority",
             "centered": "",
@@ -58542,7 +59053,17 @@ var manage_injectvue_type_template_id_0a985492_scoped_true_render = function ren
           staticClass: "column is-full"
         }, [_c('label', {
           staticClass: "label"
-        }, [_vm._v(" Measures ")]), props.row.measures.length > 0 ? _c('ul', {
+        }, [_vm._v(" Measures ")]), _c('div', {
+          staticClass: "traceability-chip-wrap is-detail"
+        }, _vm._l(_vm.objectiveTraceItems(props.row), function (item) {
+          return _c('span', {
+            key: item.key,
+            staticClass: "traceability-chip",
+            class: item.complete ? 'is-complete' : 'is-missing'
+          }, [_c('i', {
+            class: item.icon
+          }), _c('span', [_vm._v(_vm._s(item.complete ? item.readyText : item.missingText))])]);
+        }), 0), props.row.measures.length > 0 ? _c('ul', {
           staticClass: "bd-anchors-list"
         }, _vm._l(props.row.measures, function (measure, $index) {
           return _c('li', {
@@ -58632,7 +59153,7 @@ var manage_injectvue_type_template_id_0a985492_scoped_true_render = function ren
           staticClass: "subtitle is-6"
         }, [_vm._v("None")])])])])])])])];
       }
-    }], null, false, 4143037354)
+    }], null, false, 1981708591)
   }, [_c('template', {
     slot: "empty"
   }, [_c('div', {
@@ -58673,6 +59194,22 @@ var manage_injectvue_type_template_id_0a985492_scoped_true_render = function ren
   }, [_c('div', {
     staticClass: "card-content"
   }, [_c('div', {
+    staticClass: "review-readiness"
+  }, [_c('div', [_c('p', {
+    staticClass: "eyebrow"
+  }, [_vm._v("Controller review")]), _c('h2', {
+    staticClass: "title is-5"
+  }, [_vm._v("Inject readiness before execution")])]), _c('div', {
+    staticClass: "review-readiness-grid"
+  }, _vm._l(_vm.injectReadinessItems, function (item) {
+    return _c('span', {
+      key: item.key,
+      staticClass: "readiness-pill",
+      class: item.complete ? 'is-complete' : 'is-missing'
+    }, [_c('i', {
+      class: item.icon
+    }), _vm._v(" " + _vm._s(item.complete ? item.readyText : item.missingText) + " ")]);
+  }), 0)]), _c('div', {
     staticClass: "columns is-multiline"
   }, [_c('div', {
     staticClass: "column is-full"
@@ -58915,7 +59452,17 @@ var manage_injectvue_type_template_id_0a985492_scoped_true_render = function ren
     }
   }) : _vm._e()], 1);
 };
-var manage_injectvue_type_template_id_0a985492_scoped_true_staticRenderFns = [];
+var manage_injectvue_type_template_id_32a92e7b_scoped_true_staticRenderFns = [function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c('div', [_c('p', {
+    staticClass: "eyebrow"
+  }, [_vm._v("MSEL control readiness")]), _c('h1', {
+    staticClass: "title is-4"
+  }, [_vm._v("Build a playable inject")]), _c('p', {
+    staticClass: "subtitle is-6"
+  }, [_vm._v(" Confirm the controller, timing, delivery method, trigger, training objective link, and response capture before exercise execution. ")])]);
+}];
 
 // EXTERNAL MODULE: ./src/plan/graphql/PlanTrainedMethodTypes.gql
 var PlanTrainedMethodTypes = __webpack_require__(75135);
@@ -59544,7 +60091,181 @@ var file_uploader_component = (0,componentNormalizer/* default */.A)(
       perPage: 15
     };
   },
+  computed: {
+    assignedObjectives() {
+      return this.planInject.objectives || [];
+    },
+    injectReadinessItems() {
+      return [{
+        key: 'owner',
+        label: 'Controller',
+        icon: 'fas fa-headset',
+        step: 0,
+        readyText: 'Controller assigned',
+        missingText: 'Assign a controller or cell owner',
+        complete: !!(this.injectOwner && this.injectOwner.title)
+      }, {
+        key: 'timing',
+        label: 'Timing',
+        icon: 'fas fa-clock',
+        step: 0,
+        readyText: 'Start time set',
+        missingText: 'Set planned inject date and time',
+        complete: !!this.planInject.startDate
+      }, {
+        key: 'method',
+        label: 'Delivery',
+        icon: 'fas fa-share-alt',
+        step: 0,
+        readyText: 'Delivery method set',
+        missingText: 'Select the inject delivery method',
+        complete: !!this.method
+      }, {
+        key: 'trigger',
+        label: 'Trigger',
+        icon: 'fas fa-bolt',
+        step: 1,
+        readyText: 'Trigger defined',
+        missingText: 'Describe what starts this inject',
+        complete: !!this.planInject.trigger
+      }, {
+        key: 'objectives',
+        label: 'Training Objective',
+        icon: 'fas fa-bullseye',
+        step: 3,
+        readyText: 'Training objective linked',
+        missingText: 'Link at least one training objective',
+        complete: !!(this.planInject.objectives && this.planInject.objectives.length)
+      }, {
+        key: 'response',
+        label: 'Response Capture',
+        icon: 'fas fa-clipboard-check',
+        step: 1,
+        readyText: 'Expected or actual response captured',
+        missingText: 'Capture expected or actual response',
+        complete: !!(this.planInject.response || this.planInject.mitigation)
+      }];
+    },
+    injectReadinessScore() {
+      if (!this.injectReadinessItems.length) {
+        return 0;
+      }
+      let complete = this.injectReadinessItems.filter(item => item.complete).length;
+      return Math.round(complete / this.injectReadinessItems.length * 100);
+    },
+    injectReadinessTone() {
+      if (this.injectReadinessScore >= 80) {
+        return 'is-strong';
+      }
+      if (this.injectReadinessScore >= 55) {
+        return 'is-building';
+      }
+      return 'is-starting';
+    },
+    objectiveTraceabilityMetrics() {
+      let objectives = this.assignedObjectives;
+      let participants = this.uniqueCount(objectives.map(objective => objective.participant ? objective.participant.id : null));
+      let platforms = this.uniqueCount(objectives.map(objective => objective.platform && objective.platform.platform ? objective.platform.platform.id : null));
+      let measures = objectives.reduce((count, objective) => {
+        return count + (objective.measures ? objective.measures.length : 0);
+      }, 0);
+      let priorityLinks = objectives.filter(objective => objective.exerciseObjective && objective.exerciseObjective.length > 0 || objective.commandTrainingPriority && objective.commandTrainingPriority.length > 0 || objective.jointStaffTrainingPriority && objective.jointStaffTrainingPriority.length > 0).length;
+      let runProgress = this.objectiveRunProgress(objectives);
+      return [{
+        key: 'objectives',
+        label: 'linked objectives',
+        value: objectives.length,
+        icon: 'fas fa-bullseye',
+        attention: objectives.length === 0
+      }, {
+        key: 'participants',
+        label: 'training audiences',
+        value: participants,
+        icon: 'fas fa-users',
+        attention: objectives.length > 0 && participants === 0
+      }, {
+        key: 'platforms',
+        label: 'platforms',
+        value: platforms,
+        icon: 'fas fa-layer-group',
+        attention: objectives.length > 0 && platforms === 0
+      }, {
+        key: 'measures',
+        label: 'assessment measures',
+        value: measures,
+        icon: 'fas fa-ruler-combined',
+        attention: objectives.length > 0 && measures === 0
+      }, {
+        key: 'priority',
+        label: 'priority links',
+        value: priorityLinks,
+        icon: 'fas fa-flag',
+        attention: objectives.length > 0 && priorityLinks === 0
+      }, {
+        key: 'runs',
+        label: 'run coverage',
+        value: runProgress,
+        icon: 'fas fa-redo-alt',
+        attention: objectives.length > 0 && runProgress !== 'Met'
+      }];
+    }
+  },
   methods: {
+    uniqueCount(values) {
+      return new Set(values.filter(value => !!value)).size;
+    },
+    objectiveRunProgress(objectives) {
+      if (!objectives || objectives.length === 0) {
+        return 'None';
+      }
+      let hasRequiredRuns = objectives.some(objective => objective.requiredRuns);
+      if (!hasRequiredRuns) {
+        return 'Not set';
+      }
+      let unmet = objectives.filter(objective => {
+        let required = Number(objective.requiredRuns || 0);
+        let current = objective.injects ? objective.injects.length : 0;
+        return required > 0 && current < required;
+      });
+      return unmet.length === 0 ? 'Met' : `${unmet.length} short`;
+    },
+    objectiveTraceItems(objective) {
+      let injectCount = objective && objective.injects ? objective.injects.length : 0;
+      let requiredRuns = Number(objective && objective.requiredRuns ? objective.requiredRuns : 0);
+      let runComplete = requiredRuns === 0 || injectCount >= requiredRuns;
+      return [{
+        key: 'measure',
+        label: 'Measure',
+        icon: 'fas fa-ruler-combined',
+        readyText: 'Assessment measure linked',
+        missingText: 'Needs assessment measure',
+        complete: !!(objective.measures && objective.measures.length)
+      }, {
+        key: 'audience',
+        label: 'Audience',
+        icon: 'fas fa-users',
+        readyText: 'Training audience linked',
+        missingText: 'Needs participant audience',
+        complete: !!objective.participant
+      }, {
+        key: 'priority',
+        label: 'Priority',
+        icon: 'fas fa-flag',
+        readyText: 'Priority or exercise objective linked',
+        missingText: 'Needs priority or exercise objective',
+        complete: !!(objective.exerciseObjective && objective.exerciseObjective.length || objective.commandTrainingPriority && objective.commandTrainingPriority.length || objective.jointStaffTrainingPriority && objective.jointStaffTrainingPriority.length)
+      }, {
+        key: 'runs',
+        label: 'Runs',
+        icon: 'fas fa-redo-alt',
+        readyText: requiredRuns ? `${injectCount}/${requiredRuns} required runs covered` : 'Required runs not set',
+        missingText: `${injectCount}/${requiredRuns} required runs covered`,
+        complete: runComplete
+      }];
+    },
+    goToReadinessStep(step) {
+      this.stepIndex = step;
+    },
     handleSelectStatusCheck() {
       this.injectStatusCheck(this.planInject);
     },
@@ -59993,10 +60714,10 @@ var file_uploader_component = (0,componentNormalizer/* default */.A)(
 });
 ;// ./src/plan/components/prepare/manage-inject.vue?vue&type=script&lang=js
  /* harmony default export */ var prepare_manage_injectvue_type_script_lang_js = (manage_injectvue_type_script_lang_js); 
-;// ./node_modules/mini-css-extract-plugin/dist/loader.js??clonedRuleSet-22.use[0]!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-22.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-22.use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-22.use[3]!./node_modules/cache-loader/dist/cjs.js??ruleSet[0].use[0]!./node_modules/@vue/cli-service/lib/config/vue-loader-v15-resolve-compat/vue-loader.js??vue-loader-options!./src/plan/components/prepare/manage-inject.vue?vue&type=style&index=0&id=0a985492&prod&lang=scss&scoped=true
+;// ./node_modules/mini-css-extract-plugin/dist/loader.js??clonedRuleSet-22.use[0]!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-22.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-22.use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-22.use[3]!./node_modules/cache-loader/dist/cjs.js??ruleSet[0].use[0]!./node_modules/@vue/cli-service/lib/config/vue-loader-v15-resolve-compat/vue-loader.js??vue-loader-options!./src/plan/components/prepare/manage-inject.vue?vue&type=style&index=0&id=32a92e7b&prod&lang=scss&scoped=true
 // extracted by mini-css-extract-plugin
 
-;// ./src/plan/components/prepare/manage-inject.vue?vue&type=style&index=0&id=0a985492&prod&lang=scss&scoped=true
+;// ./src/plan/components/prepare/manage-inject.vue?vue&type=style&index=0&id=32a92e7b&prod&lang=scss&scoped=true
 
 ;// ./src/plan/components/prepare/manage-inject.vue
 
@@ -60009,11 +60730,11 @@ var file_uploader_component = (0,componentNormalizer/* default */.A)(
 
 var manage_inject_component = (0,componentNormalizer/* default */.A)(
   prepare_manage_injectvue_type_script_lang_js,
-  manage_injectvue_type_template_id_0a985492_scoped_true_render,
-  manage_injectvue_type_template_id_0a985492_scoped_true_staticRenderFns,
+  manage_injectvue_type_template_id_32a92e7b_scoped_true_render,
+  manage_injectvue_type_template_id_32a92e7b_scoped_true_staticRenderFns,
   false,
   null,
-  "0a985492",
+  "32a92e7b",
   null
   
 )
@@ -66905,8 +67626,6 @@ var ObjectivesListvue_type_template_id_7ad3026d_scoped_true_staticRenderFns = [f
 
 // EXTERNAL MODULE: ./src/plan/graphql/PlanEvaluations.gql
 var PlanEvaluations = __webpack_require__(40687);
-// EXTERNAL MODULE: ./src/plan/graphql/PlanFeedback.gql
-var PlanFeedback = __webpack_require__(71459);
 ;// ./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib/index.js??clonedRuleSet-40.use[1]!./node_modules/cache-loader/dist/cjs.js??ruleSet[0].use[0]!./node_modules/@vue/cli-service/lib/config/vue-loader-v15-resolve-compat/vue-loader.js??vue-loader-options!./src/plan/views/prepare/ObjectivesList.vue?vue&type=script&lang=js
 
 
@@ -68322,8 +69041,8 @@ var AssessHome_component = (0,componentNormalizer/* default */.A)(
 )
 
 /* harmony default export */ var AssessHome = (AssessHome_component.exports);
-;// ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"27ccff72-vue-loader-template"}!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib/index.js??clonedRuleSet-40.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/templateLoader.js??ruleSet[1].rules[4]!./node_modules/cache-loader/dist/cjs.js??ruleSet[0].use[0]!./node_modules/@vue/cli-service/lib/config/vue-loader-v15-resolve-compat/vue-loader.js??vue-loader-options!./src/plan/views/assess/Overview.vue?vue&type=template&id=44c7c268&scoped=true
-var Overviewvue_type_template_id_44c7c268_scoped_true_render = function render() {
+;// ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"27ccff72-vue-loader-template"}!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib/index.js??clonedRuleSet-40.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/templateLoader.js??ruleSet[1].rules[4]!./node_modules/cache-loader/dist/cjs.js??ruleSet[0].use[0]!./node_modules/@vue/cli-service/lib/config/vue-loader-v15-resolve-compat/vue-loader.js??vue-loader-options!./src/plan/views/assess/Overview.vue?vue&type=template&id=18233862&scoped=true
+var Overviewvue_type_template_id_18233862_scoped_true_render = function render() {
   var _vm = this,
     _c = _vm._self._c;
   return _c('div', {
@@ -68526,7 +69245,28 @@ var Overviewvue_type_template_id_44c7c268_scoped_true_render = function render()
     }
   }, [_vm._v(" 100 per page ")])])])])])]), _vm.endAfterStartCheck ? _c('p', {
     staticClass: "help has-text-danger has-text-centered"
-  }, [_vm._v(_vm._s(_vm.endAfterStartCheck))]) : _vm._e(), _c('div', {
+  }, [_vm._v(_vm._s(_vm.endAfterStartCheck))]) : _vm._e(), _c('section', {
+    staticClass: "assessment-readiness"
+  }, [_c('div', {
+    staticClass: "readiness-header"
+  }, [_vm._m(1), _c('div', {
+    staticClass: "readiness-score",
+    class: _vm.assessmentReadinessTone
+  }, [_c('span', [_vm._v(_vm._s(_vm.assessmentReadinessScore) + "%")]), _c('small', [_vm._v("Evidence Ready")])])]), _c('div', {
+    staticClass: "readiness-metrics"
+  }, _vm._l(_vm.assessmentReadinessMetrics, function (metric) {
+    return _c('div', {
+      key: metric.key,
+      staticClass: "readiness-metric",
+      class: {
+        'is-attention': metric.attention
+      }
+    }, [_c('span', {
+      staticClass: "metric-icon"
+    }, [_c('i', {
+      class: metric.icon
+    })]), _c('span', [_c('strong', [_vm._v(_vm._s(metric.value))]), _c('small', [_vm._v(_vm._s(metric.label))])])]);
+  }), 0)]), _c('div', {
     staticClass: "columns is-mobile"
   }, [_vm.planTrainingObjectives && _vm.planTrainingObjectives.length > 0 ? _c('div', {
     staticClass: "column"
@@ -68580,6 +69320,23 @@ var Overviewvue_type_template_id_44c7c268_scoped_true_render = function render()
             "label": "Assessment Count"
           }
         }, [_vm._v(" " + _vm._s(props.row.assessments.length) + " ")]), _c('b-table-column', {
+          attrs: {
+            "label": "Evidence Readiness"
+          }
+        }, [_c('div', {
+          staticClass: "evidence-chip-wrap"
+        }, _vm._l(_vm.objectiveEvidenceItems(props.row), function (item) {
+          return _c('span', {
+            key: item.key,
+            staticClass: "evidence-chip",
+            class: item.complete ? 'is-complete' : 'is-missing',
+            attrs: {
+              "title": item.complete ? item.readyText : item.missingText
+            }
+          }, [_c('i', {
+            class: item.icon
+          }), _c('span', [_vm._v(_vm._s(item.label))])]);
+        }), 0)]), _c('b-table-column', {
           attrs: {
             "label": "Feedback Count"
           }
@@ -68722,7 +69479,17 @@ var Overviewvue_type_template_id_44c7c268_scoped_true_render = function render()
           staticClass: "column is-full"
         }, [_c('label', {
           staticClass: "label"
-        }, [_vm._v(" Measures ")]), props.row.measures.length > 0 ? _c('ul', {
+        }, [_vm._v(" Measures ")]), _c('div', {
+          staticClass: "evidence-chip-wrap is-detail"
+        }, _vm._l(_vm.objectiveEvidenceItems(props.row), function (item) {
+          return _c('span', {
+            key: item.key,
+            staticClass: "evidence-chip",
+            class: item.complete ? 'is-complete' : 'is-missing'
+          }, [_c('i', {
+            class: item.icon
+          }), _c('span', [_vm._v(_vm._s(item.complete ? item.readyText : item.missingText))])]);
+        }), 0), props.row.measures.length > 0 ? _c('ul', {
           staticClass: "bd-anchors-list"
         }, _vm._l(props.row.measures, function (measure, $index) {
           return _c('li', {
@@ -68931,7 +69698,7 @@ var Overviewvue_type_template_id_44c7c268_scoped_true_render = function render()
           }
         })], 1)], 1)])])];
       }
-    }], null, false, 3137195090)
+    }], null, false, 1937722711)
   })], 1) : _c('div', {
     staticClass: "column no-result apollo"
   }, [_c('empty-state', {
@@ -68950,7 +69717,7 @@ var Overviewvue_type_template_id_44c7c268_scoped_true_render = function render()
     }
   })], 1);
 };
-var Overviewvue_type_template_id_44c7c268_scoped_true_staticRenderFns = [function () {
+var Overviewvue_type_template_id_18233862_scoped_true_staticRenderFns = [function () {
   var _vm = this,
     _c = _vm._self._c;
   return _c('span', {
@@ -68958,10 +69725,18 @@ var Overviewvue_type_template_id_44c7c268_scoped_true_staticRenderFns = [functio
   }, [_c('i', {
     staticClass: "fas fa-search"
   })]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c('div', [_c('p', {
+    staticClass: "eyebrow"
+  }, [_vm._v("Assessment traceability")]), _c('h1', {
+    staticClass: "title is-4"
+  }, [_vm._v("Evidence readiness board")]), _c('p', {
+    staticClass: "subtitle is-6"
+  }, [_vm._v(" Track whether training objectives have MSEL coverage, assessment evidence, measures, and enough runs to support hot wash and AAR findings. ")])]);
 }];
 
-// EXTERNAL MODULE: ./src/plan/graphql/PlanAssessments.gql
-var PlanAssessments = __webpack_require__(2671);
 ;// ./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib/index.js??clonedRuleSet-40.use[1]!./node_modules/cache-loader/dist/cjs.js??ruleSet[0].use[0]!./node_modules/@vue/cli-service/lib/config/vue-loader-v15-resolve-compat/vue-loader.js??vue-loader-options!./src/plan/views/assess/Overview.vue?vue&type=script&lang=js
 
 
@@ -69147,6 +69922,79 @@ var PlanAssessments = __webpack_require__(2671);
       }
     };
   },
+  computed: {
+    visibleObjectives() {
+      return this.planTrainingObjectives || [];
+    },
+    assessmentReadinessScore() {
+      if (!this.visibleObjectives.length) {
+        return 0;
+      }
+      let possible = this.visibleObjectives.length * this.evidenceTemplateLength;
+      let complete = this.visibleObjectives.reduce((count, objective) => {
+        return count + this.objectiveEvidenceItems(objective).filter(item => item.complete).length;
+      }, 0);
+      return Math.round(complete / possible * 100);
+    },
+    assessmentReadinessTone() {
+      if (this.assessmentReadinessScore >= 80) {
+        return 'is-strong';
+      }
+      if (this.assessmentReadinessScore >= 55) {
+        return 'is-building';
+      }
+      return 'is-starting';
+    },
+    evidenceTemplateLength() {
+      return 5;
+    },
+    assessmentReadinessMetrics() {
+      let objectives = this.visibleObjectives;
+      let total = objectives.length;
+      let withInjects = objectives.filter(objective => objective.injects && objective.injects.length > 0).length;
+      let withMeasures = objectives.filter(objective => objective.measures && objective.measures.length > 0).length;
+      let withAssessments = objectives.filter(objective => objective.assessments && objective.assessments.length > 0).length;
+      let completeAssessments = objectives.filter(objective => this.hasCompleteAssessment(objective)).length;
+      let runCoverage = objectives.filter(objective => this.objectiveRunCovered(objective)).length;
+      return [{
+        key: 'objectives',
+        label: 'visible objectives',
+        value: total,
+        icon: 'fas fa-bullseye',
+        attention: total === 0
+      }, {
+        key: 'injects',
+        label: 'with MSEL coverage',
+        value: `${withInjects}/${total}`,
+        icon: 'fas fa-stream',
+        attention: total > 0 && withInjects < total
+      }, {
+        key: 'measures',
+        label: 'with measures',
+        value: `${withMeasures}/${total}`,
+        icon: 'fas fa-ruler-combined',
+        attention: total > 0 && withMeasures < total
+      }, {
+        key: 'assessments',
+        label: 'with assessments',
+        value: `${withAssessments}/${total}`,
+        icon: 'fas fa-clipboard-check',
+        attention: total > 0 && withAssessments < total
+      }, {
+        key: 'complete',
+        label: 'completed assessments',
+        value: `${completeAssessments}/${total}`,
+        icon: 'fas fa-check-circle',
+        attention: total > 0 && completeAssessments < total
+      }, {
+        key: 'runs',
+        label: 'run coverage',
+        value: `${runCoverage}/${total}`,
+        icon: 'fas fa-redo-alt',
+        attention: total > 0 && runCoverage < total
+      }];
+    }
+  },
   watch: {
     eventID() {
       this.$router.push({
@@ -69157,6 +70005,55 @@ var PlanAssessments = __webpack_require__(2671);
     }
   },
   methods: {
+    objectiveRunCovered(objective) {
+      let requiredRuns = Number(objective && objective.requiredRuns ? objective.requiredRuns : 0);
+      let injectCount = objective && objective.injects ? objective.injects.length : 0;
+      return requiredRuns === 0 || injectCount >= requiredRuns;
+    },
+    hasCompleteAssessment(objective) {
+      return !!(objective && objective.assessments && objective.assessments.some(assessment => assessment.complete));
+    },
+    objectiveEvidenceItems(objective) {
+      let requiredRuns = Number(objective && objective.requiredRuns ? objective.requiredRuns : 0);
+      let injectCount = objective && objective.injects ? objective.injects.length : 0;
+      let assessmentCount = objective && objective.assessments ? objective.assessments.length : 0;
+      return [{
+        key: 'injects',
+        label: 'MSEL',
+        icon: 'fas fa-stream',
+        readyText: `${injectCount} linked injects`,
+        missingText: 'No linked MSEL injects',
+        complete: injectCount > 0
+      }, {
+        key: 'measures',
+        label: 'Measures',
+        icon: 'fas fa-ruler-combined',
+        readyText: 'Assessment measures linked',
+        missingText: 'Needs assessment measures',
+        complete: !!(objective.measures && objective.measures.length)
+      }, {
+        key: 'assessments',
+        label: 'Assess',
+        icon: 'fas fa-clipboard-check',
+        readyText: `${assessmentCount} assessment records`,
+        missingText: 'Needs assessment record',
+        complete: assessmentCount > 0
+      }, {
+        key: 'complete',
+        label: 'Complete',
+        icon: 'fas fa-check-circle',
+        readyText: 'At least one complete assessment',
+        missingText: 'No complete assessment yet',
+        complete: this.hasCompleteAssessment(objective)
+      }, {
+        key: 'runs',
+        label: 'Runs',
+        icon: 'fas fa-redo-alt',
+        readyText: requiredRuns ? `${injectCount}/${requiredRuns} required runs covered` : 'Required runs not set',
+        missingText: `${injectCount}/${requiredRuns} required runs covered`,
+        complete: this.objectiveRunCovered(objective)
+      }];
+    },
     trainingObjectiveReadVariables() {
       let eventFilter;
       let mselFilter;
@@ -69508,10 +70405,10 @@ var PlanAssessments = __webpack_require__(2671);
 });
 ;// ./src/plan/views/assess/Overview.vue?vue&type=script&lang=js
  /* harmony default export */ var assess_Overviewvue_type_script_lang_js = (Overviewvue_type_script_lang_js); 
-;// ./node_modules/mini-css-extract-plugin/dist/loader.js??clonedRuleSet-22.use[0]!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-22.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-22.use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-22.use[3]!./node_modules/cache-loader/dist/cjs.js??ruleSet[0].use[0]!./node_modules/@vue/cli-service/lib/config/vue-loader-v15-resolve-compat/vue-loader.js??vue-loader-options!./src/plan/views/assess/Overview.vue?vue&type=style&index=0&id=44c7c268&prod&lang=scss&scoped=true
+;// ./node_modules/mini-css-extract-plugin/dist/loader.js??clonedRuleSet-22.use[0]!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-22.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-22.use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-22.use[3]!./node_modules/cache-loader/dist/cjs.js??ruleSet[0].use[0]!./node_modules/@vue/cli-service/lib/config/vue-loader-v15-resolve-compat/vue-loader.js??vue-loader-options!./src/plan/views/assess/Overview.vue?vue&type=style&index=0&id=18233862&prod&lang=scss&scoped=true
 // extracted by mini-css-extract-plugin
 
-;// ./src/plan/views/assess/Overview.vue?vue&type=style&index=0&id=44c7c268&prod&lang=scss&scoped=true
+;// ./src/plan/views/assess/Overview.vue?vue&type=style&index=0&id=18233862&prod&lang=scss&scoped=true
 
 ;// ./src/plan/views/assess/Overview.vue
 
@@ -69524,11 +70421,11 @@ var PlanAssessments = __webpack_require__(2671);
 
 var Overview_component = (0,componentNormalizer/* default */.A)(
   assess_Overviewvue_type_script_lang_js,
-  Overviewvue_type_template_id_44c7c268_scoped_true_render,
-  Overviewvue_type_template_id_44c7c268_scoped_true_staticRenderFns,
+  Overviewvue_type_template_id_18233862_scoped_true_render,
+  Overviewvue_type_template_id_18233862_scoped_true_staticRenderFns,
   false,
   null,
-  "44c7c268",
+  "18233862",
   null
   
 )
@@ -71496,8 +72393,6 @@ var feedback_createvue_type_template_id_be223624_scoped_true_render = function r
 };
 var feedback_createvue_type_template_id_be223624_scoped_true_staticRenderFns = [];
 
-// EXTERNAL MODULE: ./src/plan/graphql/PlanFeedbackRequests.gql
-var PlanFeedbackRequests = __webpack_require__(85537);
 ;// ./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib/index.js??clonedRuleSet-40.use[1]!./node_modules/cache-loader/dist/cjs.js??ruleSet[0].use[0]!./node_modules/@vue/cli-service/lib/config/vue-loader-v15-resolve-compat/vue-loader.js??vue-loader-options!./src/plan/components/assess/feedback-create.vue?vue&type=script&lang=js
 
 
@@ -74871,8 +75766,6 @@ var Reportsvue_type_template_id_61352570_staticRenderFns = [function () {
   }, [_vm._v(" Allocated Funding Source ")])])]);
 }];
 
-// EXTERNAL MODULE: ./src/plan/graphql/PlanCustomReports.gql
-var PlanCustomReports = __webpack_require__(50172);
 ;// ./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib/index.js??clonedRuleSet-40.use[1]!./node_modules/cache-loader/dist/cjs.js??ruleSet[0].use[0]!./node_modules/@vue/cli-service/lib/config/vue-loader-v15-resolve-compat/vue-loader.js??vue-loader-options!./src/plan/views/reports/Reports.vue?vue&type=script&lang=js
 
 
@@ -100546,23 +101439,34 @@ var timeline_views_Dashboard_component = (0,componentNormalizer/* default */.A)(
 )
 
 /* harmony default export */ var timeline_views_Dashboard = (timeline_views_Dashboard_component.exports);
-;// ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"27ccff72-vue-loader-template"}!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib/index.js??clonedRuleSet-40.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/templateLoader.js??ruleSet[1].rules[4]!./node_modules/cache-loader/dist/cjs.js??ruleSet[0].use[0]!./node_modules/@vue/cli-service/lib/config/vue-loader-v15-resolve-compat/vue-loader.js??vue-loader-options!./src/timeline/views/Home.vue?vue&type=template&id=7715588f&scoped=true
-var Homevue_type_template_id_7715588f_scoped_true_render = function render() {
+;// ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"27ccff72-vue-loader-template"}!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib/index.js??clonedRuleSet-40.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/templateLoader.js??ruleSet[1].rules[4]!./node_modules/cache-loader/dist/cjs.js??ruleSet[0].use[0]!./node_modules/@vue/cli-service/lib/config/vue-loader-v15-resolve-compat/vue-loader.js??vue-loader-options!./src/timeline/views/Home.vue?vue&type=template&id=48c9a1ca&scoped=true
+var Homevue_type_template_id_48c9a1ca_scoped_true_render = function render() {
   var _vm = this,
     _c = _vm._self._c;
   return _c('div', {
-    staticClass: "timeline-page"
+    staticClass: "timeline-page",
+    class: {
+      'has-detail': Boolean(_vm.selectedItem)
+    },
+    on: {
+      "click": function ($event) {
+        $event.stopPropagation();
+      }
+    }
   }, [_c('section', {
-    staticClass: "timeline-header"
+    staticClass: "timeline-hero"
   }, [_c('div', [_c('p', {
     staticClass: "overline"
   }, [_vm._v("Exercise Timeline")]), _c('h1', {
-    staticClass: "title is-3"
+    staticClass: "timeline-title",
+    attrs: {
+      "title": _vm.lifecycleTitle
+    }
   }, [_vm._v(_vm._s(_vm.lifecycleTitle))]), _c('p', {
     staticClass: "subtitle is-6"
-  }, [_vm._v("Events, injects, commands, observations, media, and chat in one scrollable view.")])]), _c('div', {
+  }, [_vm._v("MSEL control, live exercise activity, and AAR evidence in one operational view.")])]), _c('div', {
     staticClass: "timeline-stats"
-  }, [_c('div', [_c('span', [_vm._v(_vm._s(_vm.filteredItems.length))]), _c('small', [_vm._v("Items")])]), _c('div', [_c('span', [_vm._v(_vm._s(_vm.lanes.length))]), _c('small', [_vm._v("Lanes")])])])]), _vm.lifecycleSummary ? _c('section', {
+  }, [_c('div', [_c('span', [_vm._v(_vm._s(_vm.visibleItems.length))]), _c('small', [_vm._v("Shown")])]), _c('div', [_c('span', [_vm._v(_vm._s(_vm.flaggedItems.length))]), _c('small', [_vm._v("AAR Flags")])]), _c('div', [_c('span', [_vm._v(_vm._s(_vm.lateItems.length))]), _c('small', [_vm._v("Late")])])])]), _vm.lifecycleSummary ? _c('section', {
     staticClass: "lifecycle-strip"
   }, [_c('div', {
     staticClass: "lifecycle-primary"
@@ -100576,8 +101480,246 @@ var Homevue_type_template_id_7715588f_scoped_true_render = function render() {
       key: metric.label
     }, [_c('span', [_vm._v(_vm._s(metric.value))]), _c('small', [_vm._v(_vm._s(metric.label))])]);
   }), 0)]) : _vm._e(), _c('section', {
-    staticClass: "timeline-toolbar"
+    staticClass: "timeline-controls"
   }, [_c('div', {
+    staticClass: "control-row"
+  }, [_c('div', {
+    staticClass: "segmented-control",
+    attrs: {
+      "aria-label": "Timeline mode"
+    }
+  }, _vm._l(_vm.modes, function (mode) {
+    return _c('button', {
+      key: mode.value,
+      class: {
+        'is-active': _vm.activeMode === mode.value
+      },
+      attrs: {
+        "type": "button"
+      },
+      on: {
+        "click": function ($event) {
+          _vm.activeMode = mode.value;
+        }
+      }
+    }, [_c('i', {
+      class: mode.icon
+    }), _c('span', [_vm._v(_vm._s(mode.label))])]);
+  }), 0), _c('div', {
+    staticClass: "segmented-control",
+    attrs: {
+      "aria-label": "Role view"
+    }
+  }, _vm._l(_vm.roleViews, function (role) {
+    return _c('button', {
+      key: role.value,
+      class: {
+        'is-active': _vm.roleView === role.value
+      },
+      attrs: {
+        "type": "button"
+      },
+      on: {
+        "click": function ($event) {
+          _vm.roleView = role.value;
+        }
+      }
+    }, [_c('i', {
+      class: role.icon
+    }), _c('span', [_vm._v(_vm._s(role.label))])]);
+  }), 0), _c('div', {
+    staticClass: "toolbar-actions is-primary-actions"
+  }, [_c('button', {
+    staticClass: "button is-small",
+    attrs: {
+      "type": "button"
+    },
+    on: {
+      "click": _vm.jumpToNow
+    }
+  }, [_vm._m(0), _c('span', [_vm._v("Now")])]), _c('button', {
+    staticClass: "button is-small",
+    class: {
+      'is-primary': _vm.liveMode
+    },
+    attrs: {
+      "type": "button"
+    },
+    on: {
+      "click": _vm.toggleLiveMode
+    }
+  }, [_c('span', {
+    staticClass: "icon is-small"
+  }, [_c('i', {
+    class: _vm.liveMode ? 'fas fa-pause' : 'fas fa-play'
+  })]), _c('span', [_vm._v(_vm._s(_vm.liveMode ? 'Pause' : 'Live'))])]), _c('button', {
+    staticClass: "button is-small",
+    attrs: {
+      "type": "button"
+    },
+    on: {
+      "click": _vm.toggleReplay
+    }
+  }, [_vm._m(1), _c('span', [_vm._v(_vm._s(_vm.replayMode ? 'Stop' : 'Replay'))])]), _c('button', {
+    staticClass: "button is-small",
+    attrs: {
+      "type": "button"
+    },
+    on: {
+      "click": _vm.refreshTimeline
+    }
+  }, [_vm._m(2), _c('span', [_vm._v("Refresh")])]), _c('button', {
+    staticClass: "button is-small",
+    attrs: {
+      "type": "button"
+    },
+    on: {
+      "click": function ($event) {
+        _vm.showAdvancedControls = !_vm.showAdvancedControls;
+      }
+    }
+  }, [_vm._m(3), _c('span', [_vm._v(_vm._s(_vm.showAdvancedControls ? 'Hide Filters' : 'Filters'))])])])]), _vm.showAdvancedControls ? _c('div', {
+    staticClass: "control-grid"
+  }, [_c('label', [_c('span', [_vm._v("Exercise")]), _c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.selectedExerciseId,
+      expression: "selectedExerciseId"
+    }],
+    on: {
+      "change": function ($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
+          return o.selected;
+        }).map(function (o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val;
+        });
+        _vm.selectedExerciseId = $event.target.multiple ? $$selectedVal : $$selectedVal[0];
+      }
+    }
+  }, [_c('option', {
+    attrs: {
+      "value": ""
+    }
+  }, [_vm._v("Current workspace timeline")]), _vm._l(_vm.planEvents, function (exercise) {
+    return _c('option', {
+      key: exercise.id,
+      domProps: {
+        "value": exercise.id
+      }
+    }, [_vm._v(" " + _vm._s(exercise.name) + " ")]);
+  })], 2)]), _c('label', [_c('span', [_vm._v("Range")]), _c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.rangePreset,
+      expression: "rangePreset"
+    }],
+    on: {
+      "change": [function ($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
+          return o.selected;
+        }).map(function (o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val;
+        });
+        _vm.rangePreset = $event.target.multiple ? $$selectedVal : $$selectedVal[0];
+      }, _vm.applyRangePreset]
+    }
+  }, [_c('option', {
+    attrs: {
+      "value": "exercise"
+    }
+  }, [_vm._v("Exercise window")]), _c('option', {
+    attrs: {
+      "value": "hour"
+    }
+  }, [_vm._v("Last hour")]), _c('option', {
+    attrs: {
+      "value": "today"
+    }
+  }, [_vm._v("Today")]), _c('option', {
+    attrs: {
+      "value": "all"
+    }
+  }, [_vm._v("Full available timeline")]), _c('option', {
+    attrs: {
+      "value": "custom"
+    }
+  }, [_vm._v("Custom")])])]), _c('label', [_c('span', [_vm._v("Start")]), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.customStart,
+      expression: "customStart"
+    }],
+    attrs: {
+      "type": "datetime-local"
+    },
+    domProps: {
+      "value": _vm.customStart
+    },
+    on: {
+      "change": function ($event) {
+        _vm.rangePreset = 'custom';
+      },
+      "input": function ($event) {
+        if ($event.target.composing) return;
+        _vm.customStart = $event.target.value;
+      }
+    }
+  })]), _c('label', [_c('span', [_vm._v("End")]), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.customEnd,
+      expression: "customEnd"
+    }],
+    attrs: {
+      "type": "datetime-local"
+    },
+    domProps: {
+      "value": _vm.customEnd
+    },
+    on: {
+      "change": function ($event) {
+        _vm.rangePreset = 'custom';
+      },
+      "input": function ($event) {
+        if ($event.target.composing) return;
+        _vm.customEnd = $event.target.value;
+      }
+    }
+  })]), _c('label', {
+    staticClass: "search-field"
+  }, [_c('span', [_vm._v("Search")]), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model.trim",
+      value: _vm.searchText,
+      expression: "searchText",
+      modifiers: {
+        "trim": true
+      }
+    }],
+    attrs: {
+      "type": "search",
+      "placeholder": "Keyword, actor, objective, inject #"
+    },
+    domProps: {
+      "value": _vm.searchText
+    },
+    on: {
+      "input": function ($event) {
+        if ($event.target.composing) return;
+        _vm.searchText = $event.target.value.trim();
+      },
+      "blur": function ($event) {
+        return _vm.$forceUpdate();
+      }
+    }
+  })])]) : _vm._e(), _vm.showAdvancedControls ? _c('div', {
     staticClass: "source-filters"
   }, _vm._l(_vm.sourceOptions, function (source) {
     return _c('button', {
@@ -100598,7 +101740,26 @@ var Homevue_type_template_id_7715588f_scoped_true_render = function render() {
     }, [_c('span', {
       staticClass: "source-dot"
     }), _c('span', [_vm._v(_vm._s(source.label))])]);
-  }), 0), _c('div', {
+  }), 0) : _vm._e(), _vm.showAdvancedControls ? _c('div', {
+    staticClass: "quick-filters"
+  }, _vm._l(_vm.quickFilters, function (filter) {
+    return _c('button', {
+      key: filter.value,
+      class: {
+        'is-active': _vm.activeQuickFilters.includes(filter.value)
+      },
+      attrs: {
+        "type": "button"
+      },
+      on: {
+        "click": function ($event) {
+          return _vm.toggleQuickFilter(filter.value);
+        }
+      }
+    }, [_c('i', {
+      class: filter.icon
+    }), _c('span', [_vm._v(_vm._s(filter.label))])]);
+  }), 0) : _vm._e(), _vm.showAdvancedControls ? _c('div', {
     staticClass: "toolbar-actions"
   }, [_c('button', {
     staticClass: "button is-small",
@@ -100608,93 +101769,264 @@ var Homevue_type_template_id_7715588f_scoped_true_render = function render() {
     on: {
       "click": _vm.selectAllSources
     }
-  }, [_vm._v(" All ")]), _c('button', {
+  }, [_vm._v(" All Sources ")]), _c('button', {
     staticClass: "button is-small",
     attrs: {
       "type": "button"
     },
     on: {
-      "click": _vm.refreshTimeline
+      "click": _vm.exportCsv
     }
-  }, [_vm._m(0), _c('span', [_vm._v("Refresh")])])])]), _c('section', {
+  }, [_vm._m(4), _c('span', [_vm._v("Export")])])]) : _vm._e()]), _c('section', {
+    staticClass: "ops-summary"
+  }, _vm._l(_vm.opsCards, function (card) {
+    return _c('div', {
+      key: card.label,
+      class: card.className
+    }, [_c('span', [_vm._v(_vm._s(card.value))]), _c('small', [_vm._v(_vm._s(card.label))])]);
+  }), 0), _c('section', {
     staticClass: "timeline-shell",
     class: {
-      'is-loading': _vm.$apollo.queries.timelineItems && _vm.$apollo.queries.timelineItems.loading
+      'is-loading': _vm.isLoading
     }
-  }, [_vm.filteredItems.length ? _c('div', {
+  }, [_c('div', {
+    staticClass: "scroll-controls"
+  }, [_c('button', {
+    attrs: {
+      "type": "button",
+      "title": "Pan timeline left"
+    },
+    on: {
+      "click": function ($event) {
+        return _vm.scrollTimeline(-1);
+      }
+    }
+  }, [_c('i', {
+    staticClass: "fas fa-chevron-left"
+  })]), _c('span', [_vm._v("Scroll horizontally to review exercise play")]), _c('button', {
+    attrs: {
+      "type": "button",
+      "title": "Pan timeline right"
+    },
+    on: {
+      "click": function ($event) {
+        return _vm.scrollTimeline(1);
+      }
+    }
+  }, [_c('i', {
+    staticClass: "fas fa-chevron-right"
+  })])]), _vm.visibleItems.length ? _c('div', {
+    ref: "timelineScroll",
     staticClass: "timeline-scroll"
   }, [_c('div', {
     staticClass: "time-axis",
     style: _vm.axisStyle
-  }, _vm._l(_vm.ticks, function (tick) {
+  }, [_vm._l(_vm.ticks, function (tick) {
     return _c('span', {
       key: tick.label,
       style: {
         left: tick.left + '%'
       }
     }, [_vm._v(" " + _vm._s(tick.label) + " ")]);
-  }), 0), _vm._l(_vm.lanes, function (lane) {
+  }), _c('span', {
+    staticClass: "now-marker",
+    style: {
+      left: _vm.nowLeft + '%'
+    }
+  }, [_vm._v(" Now ")]), _vm.replayMode ? _c('span', {
+    staticClass: "replay-marker",
+    style: {
+      left: _vm.replayLeft + '%'
+    }
+  }, [_vm._v(" Replay ")]) : _vm._e()], 2), _vm._l(_vm.lanes, function (lane) {
     return _c('div', {
       key: lane.name,
       staticClass: "timeline-lane"
     }, [_c('div', {
       staticClass: "lane-label"
-    }, [_c('strong', [_vm._v(_vm._s(lane.name))]), _c('span', [_vm._v(_vm._s(lane.items.length))])]), _c('div', {
+    }, [_c('strong', [_vm._v(_vm._s(lane.name))]), _c('span', [_vm._v(_vm._s(lane.items.length) + " items")])]), _c('div', {
       staticClass: "lane-track",
       style: _vm.axisStyle
     }, _vm._l(lane.items, function (item) {
       return _c('button', {
         key: item.id,
         staticClass: "timeline-item",
-        class: {
-          'is-selected': _vm.selectedItem && _vm.selectedItem.id === item.id
-        },
+        class: _vm.itemClasses(item),
         style: _vm.itemStyle(item),
         attrs: {
           "type": "button"
         },
         on: {
           "click": function ($event) {
-            _vm.selectedItem = item;
+            return _vm.selectItem(item);
           }
         }
       }, [_c('span', {
+        staticClass: "item-meta"
+      }, [_c('span', {
         staticClass: "item-time"
-      }, [_vm._v(_vm._s(_vm.formatTime(item.start)))]), _c('span', {
+      }, [_vm._v(_vm._s(_vm.formatTime(item.start)))]), item.releaseStatus ? _c('span', {
+        staticClass: "mini-pill"
+      }, [_vm._v(_vm._s(item.releaseStatus))]) : _vm._e()]), _c('span', {
         staticClass: "item-title"
-      }, [_vm._v(_vm._s(item.title))])]);
+      }, [_vm._v(_vm._s(item.title))]), _vm.childCount(item) ? _c('span', {
+        staticClass: "item-related"
+      }, [_vm._v(_vm._s(_vm.childCount(item)) + " related")]) : _vm._e()]);
     }), 0)]);
   })], 2) : _c('div', {
     staticClass: "timeline-empty"
-  }, [_vm._m(1), _c('h2', {
+  }, [_vm._m(5), _c('h2', {
     staticClass: "title is-5"
-  }, [_vm._v("No timeline items yet")]), _c('p', [_vm._v("As exercise activity is created, it will appear here grouped by source.")])])]), _vm.selectedItem ? _c('aside', {
-    staticClass: "timeline-detail"
-  }, [_c('div', [_c('p', {
+  }, [_vm._v(_vm._s(_vm.emptyTitle))]), _c('p', [_vm._v(_vm._s(_vm.emptyMessage))])])]), _vm.selectedItem ? _c('aside', {
+    staticClass: "timeline-detail",
+    attrs: {
+      "aria-label": "Timeline item details"
+    }
+  }, [_c('header', [_c('div', [_c('p', {
     staticClass: "overline"
   }, [_vm._v(_vm._s(_vm.selectedItem.lane))]), _c('h2', {
     staticClass: "title is-4"
-  }, [_vm._v(_vm._s(_vm.selectedItem.title))]), _c('p', {
-    staticClass: "timeline-detail-time"
-  }, [_vm._v(_vm._s(_vm.formatDateTime(_vm.selectedItem.start)))])]), _vm.selectedItem.summary ? _c('p', {
-    staticClass: "timeline-detail-summary"
-  }, [_vm._v(_vm._s(_vm.selectedItem.summary))]) : _vm._e(), _c('dl', [_vm.selectedItem.actor ? [_c('dt', [_vm._v("Actor")]), _c('dd', [_vm._v(_vm._s(_vm.selectedItem.actor))])] : _vm._e(), _vm.selectedItem.status ? [_c('dt', [_vm._v("Status")]), _c('dd', [_vm._v(_vm._s(_vm.selectedItem.status))])] : _vm._e()], 2), _vm.selectedItem.routePath ? _c('button', {
-    staticClass: "button is-primary is-small",
+  }, [_vm._v(_vm._s(_vm.selectedItem.title))]), _c('p', [_vm._v(_vm._s(_vm.formatDateTime(_vm.selectedItem.start)))])]), _c('button', {
+    staticClass: "icon-button",
+    attrs: {
+      "type": "button",
+      "title": "Close details"
+    },
+    on: {
+      "click": function ($event) {
+        _vm.selectedItem = null;
+      }
+    }
+  }, [_c('i', {
+    staticClass: "fas fa-times"
+  })])]), _c('div', {
+    staticClass: "detail-actions"
+  }, [_c('button', {
+    staticClass: "button is-small",
+    class: {
+      'is-primary': _vm.isFlagged(_vm.selectedItem)
+    },
+    attrs: {
+      "type": "button"
+    },
+    on: {
+      "click": function ($event) {
+        return _vm.toggleAarFlag(_vm.selectedItem);
+      }
+    }
+  }, [_vm._m(6), _c('span', [_vm._v(_vm._s(_vm.isFlagged(_vm.selectedItem) ? 'Flagged For AAR' : 'Flag For AAR'))])]), _c('button', {
+    staticClass: "button is-small",
+    attrs: {
+      "type": "button"
+    },
+    on: {
+      "click": _vm.captureObservation
+    }
+  }, [_vm._m(7), _c('span', [_vm._v("Capture Observation")])]), _vm.selectedItem.routePath ? _c('button', {
+    staticClass: "button is-small",
     attrs: {
       "type": "button"
     },
     on: {
       "click": _vm.openSelectedItem
     }
-  }, [_c('span', [_vm._v("Open source")]), _vm._m(2)]) : _vm._e()]) : _vm._e()]);
+  }, [_vm._m(8), _c('span', [_vm._v("Open Source")])]) : _vm._e(), _vm.selectedItem.mapPath ? _c('button', {
+    staticClass: "button is-small",
+    attrs: {
+      "type": "button"
+    },
+    on: {
+      "click": function ($event) {
+        return _vm.$router.push(_vm.selectedItem.mapPath);
+      }
+    }
+  }, [_vm._m(9), _c('span', [_vm._v("View Map")])]) : _vm._e()]), _vm.selectedItem.summary ? _c('p', {
+    staticClass: "detail-summary"
+  }, [_vm._v(_vm._s(_vm.selectedItem.summary))]) : _vm._e(), _c('section', {
+    staticClass: "detail-grid"
+  }, _vm._l(_vm.detailFields, function (field) {
+    return field.value ? _c('div', {
+      key: field.label
+    }, [_c('small', [_vm._v(_vm._s(field.label))]), _c('strong', [_vm._v(_vm._s(field.value))])]) : _vm._e();
+  }), 0), _vm.selectedItem.expectedAction ? _c('section', {
+    staticClass: "detail-section"
+  }, [_c('h3', [_vm._v("Expected Action")]), _c('p', [_vm._v(_vm._s(_vm.selectedItem.expectedAction))])]) : _vm._e(), _vm.selectedItem.objective ? _c('section', {
+    staticClass: "detail-section"
+  }, [_c('h3', [_vm._v("Objective")]), _c('p', [_vm._v(_vm._s(_vm.selectedItem.objective))])]) : _vm._e(), _vm.relatedItems.length ? _c('section', {
+    staticClass: "detail-section"
+  }, [_c('h3', [_vm._v("Related Activity")]), _vm._l(_vm.relatedItems, function (item) {
+    return _c('button', {
+      key: item.id,
+      staticClass: "related-row",
+      attrs: {
+        "type": "button"
+      },
+      on: {
+        "click": function ($event) {
+          return _vm.selectItem(item);
+        }
+      }
+    }, [_c('span', [_vm._v(_vm._s(item.title))]), _c('small', [_vm._v(_vm._s(item.source) + " · " + _vm._s(_vm.formatTime(item.start)))])]);
+  })], 2) : _vm._e(), _c('section', {
+    staticClass: "detail-section"
+  }, [_c('h3', [_vm._v("AAR Tags")]), _c('div', {
+    staticClass: "aar-tags"
+  }, _vm._l(_vm.aarTags, function (tag) {
+    return _c('button', {
+      key: tag,
+      class: {
+        'is-active': _vm.selectedItemTags.includes(tag)
+      },
+      attrs: {
+        "type": "button"
+      },
+      on: {
+        "click": function ($event) {
+          return _vm.toggleAarTag(tag);
+        }
+      }
+    }, [_vm._v(" " + _vm._s(tag) + " ")]);
+  }), 0)])]) : _vm._e()]);
 };
-var Homevue_type_template_id_7715588f_scoped_true_staticRenderFns = [function () {
+var Homevue_type_template_id_48c9a1ca_scoped_true_staticRenderFns = [function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c('span', {
+    staticClass: "icon is-small"
+  }, [_c('i', {
+    staticClass: "fas fa-location-arrow"
+  })]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c('span', {
+    staticClass: "icon is-small"
+  }, [_c('i', {
+    staticClass: "fas fa-history"
+  })]);
+}, function () {
   var _vm = this,
     _c = _vm._self._c;
   return _c('span', {
     staticClass: "icon is-small"
   }, [_c('i', {
     staticClass: "fas fa-sync-alt"
+  })]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c('span', {
+    staticClass: "icon is-small"
+  }, [_c('i', {
+    staticClass: "fas fa-sliders-h"
+  })]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c('span', {
+    staticClass: "icon is-small"
+  }, [_c('i', {
+    staticClass: "fas fa-file-export"
   })]);
 }, function () {
   var _vm = this,
@@ -100710,7 +102042,31 @@ var Homevue_type_template_id_7715588f_scoped_true_staticRenderFns = [function ()
   return _c('span', {
     staticClass: "icon is-small"
   }, [_c('i', {
+    staticClass: "fas fa-flag"
+  })]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c('span', {
+    staticClass: "icon is-small"
+  }, [_c('i', {
+    staticClass: "fas fa-clipboard-check"
+  })]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c('span', {
+    staticClass: "icon is-small"
+  }, [_c('i', {
     staticClass: "fas fa-arrow-right"
+  })]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c('span', {
+    staticClass: "icon is-small"
+  }, [_c('i', {
+    staticClass: "fas fa-map-marked-alt"
   })]);
 }];
 
@@ -100722,6 +102078,7 @@ var Timeline = __webpack_require__(9094);
 // EXTERNAL MODULE: ./src/timeline/graphql/ExerciseLifecycle.gql
 var ExerciseLifecycle = __webpack_require__(92211);
 ;// ./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib/index.js??clonedRuleSet-40.use[1]!./node_modules/cache-loader/dist/cjs.js??ruleSet[0].use[0]!./node_modules/@vue/cli-service/lib/config/vue-loader-v15-resolve-compat/vue-loader.js??vue-loader-options!./src/timeline/views/Home.vue?vue&type=script&lang=js
+
 
 
 
@@ -100750,6 +102107,7 @@ const SOURCE_OPTIONS = [{
   label: 'Chat',
   accent: '#14b8a6'
 }];
+const AAR_STORAGE_KEY = 'epic.timeline.aarFlags';
 /* harmony default export */ var timeline_views_Homevue_type_script_lang_js = ({
   name: 'TimelineHome',
   apollo: {
@@ -100762,12 +102120,30 @@ const SOURCE_OPTIONS = [{
         console.error(error);
       }
     },
+    planEvents: {
+      query: PlanEvents.PlanEventsList,
+      variables() {
+        return {
+          first: 50,
+          orderBy: 'startDate_ASC'
+        };
+      },
+      update(data) {
+        return data.planEvents || [];
+      },
+      error(error) {
+        console.error(error);
+      }
+    },
     timelineItems: {
       query: Timeline.ExerciseTimelineItems,
       variables() {
         return {
+          exerciseId: this.selectedExerciseId || null,
           sources: this.selectedSources,
-          first: 180
+          start: this.queryStart,
+          end: this.queryEnd,
+          first: 240
         };
       },
       update(data) {
@@ -100782,19 +102158,109 @@ const SOURCE_OPTIONS = [{
     return {
       timelineItems: [],
       lifecycleSummary: null,
+      planEvents: [],
+      selectedExerciseId: '',
       selectedSources: SOURCE_OPTIONS.map(source => source.value),
       selectedItem: null,
-      sourceOptions: SOURCE_OPTIONS
+      sourceOptions: SOURCE_OPTIONS,
+      activeMode: 'live',
+      roleView: 'controller',
+      rangePreset: 'exercise',
+      customStart: '',
+      customEnd: '',
+      searchText: '',
+      activeQuickFilters: [],
+      liveMode: false,
+      replayMode: false,
+      replayTime: Date.now(),
+      replayTimer: null,
+      liveTimer: null,
+      showAdvancedControls: false,
+      now: Date.now(),
+      aarFlags: {},
+      modes: [{
+        value: 'planning',
+        label: 'Planning',
+        icon: 'fas fa-drafting-compass'
+      }, {
+        value: 'live',
+        label: 'Live',
+        icon: 'fas fa-broadcast-tower'
+      }, {
+        value: 'hotwash',
+        label: 'Hot Wash',
+        icon: 'fas fa-clipboard-list'
+      }],
+      roleViews: [{
+        value: 'controller',
+        label: 'Controller',
+        icon: 'fas fa-user-shield'
+      }, {
+        value: 'evaluator',
+        label: 'Evaluator',
+        icon: 'fas fa-clipboard-check'
+      }, {
+        value: 'player',
+        label: 'Player',
+        icon: 'fas fa-users'
+      }, {
+        value: 'leadership',
+        label: 'Leadership',
+        icon: 'fas fa-chart-line'
+      }],
+      quickFilters: [{
+        value: 'key',
+        label: 'Key Events',
+        icon: 'fas fa-star'
+      }, {
+        value: 'late',
+        label: 'Late',
+        icon: 'fas fa-clock'
+      }, {
+        value: 'flagged',
+        label: 'AAR Flagged',
+        icon: 'fas fa-flag'
+      }, {
+        value: 'pending',
+        label: 'Pending',
+        icon: 'fas fa-hourglass-half'
+      }],
+      aarTags: ['Strength', 'Issue', 'Decision', 'Delay', 'Missed Expected Action', 'Safety Concern', 'Corrective Action']
     };
   },
   computed: {
+    selectedExercise() {
+      return (this.planEvents || []).find(event => event.id === this.selectedExerciseId);
+    },
+    queryStart() {
+      if (this.rangePreset === 'all') return null;
+      if (this.rangePreset === 'hour') return moment_default()().subtract(1, 'hour').toDate();
+      if (this.rangePreset === 'today') return moment_default()().startOf('day').toDate();
+      if (this.rangePreset === 'custom') return this.customStart ? moment_default()(this.customStart).toDate() : null;
+      return this.selectedExercise && this.selectedExercise.startDate ? this.selectedExercise.startDate : null;
+    },
+    queryEnd() {
+      if (this.rangePreset === 'all') return null;
+      if (this.rangePreset === 'hour' || this.rangePreset === 'today') return moment_default()().toDate();
+      if (this.rangePreset === 'custom') return this.customEnd ? moment_default()(this.customEnd).toDate() : null;
+      return this.selectedExercise && this.selectedExercise.endDate ? this.selectedExercise.endDate : null;
+    },
     filteredItems() {
-      return (this.timelineItems || []).filter(item => this.selectedSources.includes(item.source)).filter(item => item.start);
+      const query = this.searchText.toLowerCase();
+      return (this.timelineItems || []).filter(item => this.selectedSources.includes(item.source)).filter(item => item.start).filter(item => this.matchesRoleView(item)).filter(item => this.matchesMode(item)).filter(item => this.matchesQuickFilters(item)).filter(item => {
+        if (!query) return true;
+        return [item.title, item.summary, item.actor, item.status, item.category, item.releaseStatus, item.objective, item.expectedAction, item.controller, item.recipient, item.parentTitle, item.metadata && item.metadata.number].filter(Boolean).join(' ').toLowerCase().includes(query);
+      });
+    },
+    visibleItems() {
+      if (!this.replayMode) return this.filteredItems;
+      return this.filteredItems.filter(item => new Date(item.start).getTime() <= this.replayTime);
     },
     lanes() {
-      const groups = this.filteredItems.reduce((result, item) => {
-        if (!result[item.lane]) result[item.lane] = [];
-        result[item.lane].push(item);
+      const groups = this.visibleItems.reduce((result, item) => {
+        const lane = this.laneForItem(item);
+        if (!result[lane]) result[lane] = [];
+        result[lane].push(item);
         return result;
       }, {});
       return Object.keys(groups).map(name => ({
@@ -100808,15 +102274,13 @@ const SOURCE_OPTIONS = [{
     },
     maxTime() {
       if (!this.filteredItems.length) return Date.now();
-      return Math.max(...this.filteredItems.map(item => {
-        return new Date(item.end || item.start).getTime();
-      }));
+      return Math.max(...this.filteredItems.map(item => new Date(item.end || item.start).getTime()));
     },
     timeRange() {
       return Math.max(this.maxTime - this.minTime, 60 * 60 * 1000);
     },
     axisWidth() {
-      return Math.max(1100, this.filteredItems.length * 54);
+      return Math.max(2400, this.filteredItems.length * 90);
     },
     axisStyle() {
       return {
@@ -100825,7 +102289,7 @@ const SOURCE_OPTIONS = [{
     },
     ticks() {
       if (!this.filteredItems.length) return [];
-      const count = 6;
+      const count = 7;
       return Array.from({
         length: count
       }).map((value, index) => {
@@ -100837,7 +102301,14 @@ const SOURCE_OPTIONS = [{
         };
       });
     },
+    nowLeft() {
+      return this.clampedPercent((this.now - this.minTime) / this.timeRange);
+    },
+    replayLeft() {
+      return this.clampedPercent((this.replayTime - this.minTime) / this.timeRange);
+    },
     lifecycleTitle() {
+      if (this.selectedExercise) return this.selectedExercise.name;
       return this.lifecycleSummary && this.lifecycleSummary.name ? this.lifecycleSummary.name : 'Operational timeline';
     },
     statusClass() {
@@ -100864,16 +102335,128 @@ const SOURCE_OPTIONS = [{
         label: 'Chat',
         value: counts.chatMessages || 0
       }];
+    },
+    lateItems() {
+      return this.filteredItems.filter(item => this.isLate(item));
+    },
+    flaggedItems() {
+      return this.filteredItems.filter(item => this.isFlagged(item));
+    },
+    pendingItems() {
+      return this.filteredItems.filter(item => this.isPending(item));
+    },
+    opsCards() {
+      return [{
+        label: 'Pending MSEL',
+        value: this.pendingItems.length,
+        className: 'is-pending'
+      }, {
+        label: 'Late/Unresolved',
+        value: this.lateItems.length,
+        className: 'is-late'
+      }, {
+        label: 'Key Events',
+        value: this.filteredItems.filter(item => item.keyEvent).length,
+        className: 'is-key'
+      }, {
+        label: 'AAR Evidence',
+        value: this.flaggedItems.length,
+        className: 'is-aar'
+      }];
+    },
+    relatedItems() {
+      if (!this.selectedItem) return [];
+      return this.filteredItems.filter(item => {
+        if (item.id === this.selectedItem.id) return false;
+        return item.parentId === this.selectedItem.id || this.selectedItem.parentId === item.id || item.parentId === this.selectedItem.parentId;
+      });
+    },
+    detailFields() {
+      if (!this.selectedItem) return [];
+      return [{
+        label: 'Category',
+        value: this.selectedItem.category
+      }, {
+        label: 'Status',
+        value: this.selectedItem.releaseStatus || this.selectedItem.status
+      }, {
+        label: 'Visibility',
+        value: this.selectedItem.visibility
+      }, {
+        label: 'Controller',
+        value: this.selectedItem.controller
+      }, {
+        label: 'Recipient',
+        value: this.selectedItem.recipient
+      }, {
+        label: 'Actor',
+        value: this.selectedItem.actor
+      }, {
+        label: 'Parent',
+        value: this.selectedItem.parentTitle
+      }, {
+        label: 'Planned',
+        value: this.selectedItem.plannedTime ? this.formatDateTime(this.selectedItem.plannedTime) : null
+      }, {
+        label: 'Actual',
+        value: this.selectedItem.actualTime ? this.formatDateTime(this.selectedItem.actualTime) : null
+      }];
+    },
+    selectedItemTags() {
+      if (!this.selectedItem || !this.aarFlags[this.selectedItem.id]) return [];
+      return this.aarFlags[this.selectedItem.id].tags || [];
+    },
+    isLoading() {
+      return Boolean(this.$apollo.queries.timelineItems && this.$apollo.queries.timelineItems.loading);
+    },
+    emptyTitle() {
+      if (this.searchText || this.activeQuickFilters.length) return 'No matching timeline items';
+      return 'No timeline items yet';
+    },
+    emptyMessage() {
+      if (this.selectedExerciseId) return 'Try a wider date range or fewer filters for this exercise.';
+      return 'As exercise activity is created, it will appear here grouped by source.';
     }
   },
   watch: {
-    filteredItems(items) {
+    visibleItems(items) {
       if (!items.length) {
         this.selectedItem = null;
-      } else if (!this.selectedItem || !items.find(item => item.id === this.selectedItem.id)) {
-        this.selectedItem = items[0];
+      } else if (this.selectedItem && !items.find(item => item.id === this.selectedItem.id)) {
+        this.selectedItem = null;
       }
+    },
+    selectedExercise(exercise) {
+      if (exercise && this.rangePreset === 'exercise') {
+        this.customStart = this.toInputDate(exercise.startDate);
+        this.customEnd = this.toInputDate(exercise.endDate);
+      }
+    },
+    activeMode(value) {
+      this.selectedItem = null;
+      if (value === 'live' && !this.liveMode) this.toggleLiveMode();
+      if (value !== 'live' && this.liveMode) this.toggleLiveMode();
+    },
+    roleView() {
+      this.selectedItem = null;
+    },
+    selectedSources() {
+      this.selectedItem = null;
+    },
+    activeQuickFilters() {
+      this.selectedItem = null;
     }
+  },
+  mounted() {
+    this.loadAarFlags();
+    this.nowTimer = setInterval(() => {
+      this.now = Date.now();
+    }, 30000);
+  },
+  beforeDestroy() {
+    clearInterval(this.nowTimer);
+    clearInterval(this.liveTimer);
+    clearInterval(this.replayTimer);
   },
   methods: {
     toggleSource(source) {
@@ -100886,10 +102469,64 @@ const SOURCE_OPTIONS = [{
     selectAllSources() {
       this.selectedSources = SOURCE_OPTIONS.map(source => source.value);
     },
+    toggleQuickFilter(filter) {
+      if (this.activeQuickFilters.includes(filter)) {
+        this.activeQuickFilters = this.activeQuickFilters.filter(item => item !== filter);
+      } else {
+        this.activeQuickFilters = [...this.activeQuickFilters, filter];
+      }
+    },
     refreshTimeline() {
       if (this.$apollo.queries.timelineItems) {
         this.$apollo.queries.timelineItems.refetch();
       }
+    },
+    applyRangePreset() {
+      if (this.rangePreset === 'exercise' && this.selectedExercise) {
+        this.customStart = this.toInputDate(this.selectedExercise.startDate);
+        this.customEnd = this.toInputDate(this.selectedExercise.endDate);
+      }
+    },
+    toggleLiveMode() {
+      this.liveMode = !this.liveMode;
+      clearInterval(this.liveTimer);
+      if (this.liveMode) {
+        this.refreshTimeline();
+        this.liveTimer = setInterval(this.refreshTimeline, 30000);
+      }
+    },
+    toggleReplay() {
+      this.replayMode = !this.replayMode;
+      clearInterval(this.replayTimer);
+      if (this.replayMode) {
+        this.replayTime = this.minTime;
+        this.replayTimer = setInterval(() => {
+          const step = Math.max(this.timeRange / 80, 60000);
+          this.replayTime = Math.min(this.replayTime + step, this.maxTime);
+          if (this.replayTime >= this.maxTime) clearInterval(this.replayTimer);
+        }, 650);
+      }
+    },
+    jumpToNow() {
+      this.now = Date.now();
+      this.$nextTick(() => {
+        if (this.$refs.timelineScroll) {
+          this.$refs.timelineScroll.scrollLeft = Math.max(0, this.nowLeft / 100 * this.axisWidth - 360);
+        }
+      });
+    },
+    scrollTimeline(direction) {
+      this.$nextTick(() => {
+        if (this.$refs.timelineScroll) {
+          this.$refs.timelineScroll.scrollBy({
+            left: direction * Math.max(420, this.$refs.timelineScroll.clientWidth * 0.65),
+            behavior: 'smooth'
+          });
+        }
+      });
+    },
+    selectItem(item) {
+      this.selectedItem = item;
     },
     chipStyle(source) {
       return {
@@ -100900,12 +102537,143 @@ const SOURCE_OPTIONS = [{
       const start = new Date(item.start).getTime();
       const end = new Date(item.end || item.start).getTime();
       const left = (start - this.minTime) / this.timeRange * 100;
-      const width = Math.max((end - start) / this.timeRange * 100, 7);
+      const width = Math.max((end - start) / this.timeRange * 100, 6);
       return {
         '--timeline-accent': item.accent || '#38bdf8',
         left: `${Math.min(Math.max(left, 0), 96)}%`,
-        width: `${Math.min(width, 28)}%`
+        width: `${Math.min(width, 30)}%`
       };
+    },
+    itemClasses(item) {
+      return {
+        'is-selected': this.selectedItem && this.selectedItem.id === item.id,
+        'is-flagged': this.isFlagged(item),
+        'is-late': this.isLate(item),
+        'is-key': item.keyEvent
+      };
+    },
+    laneForItem(item) {
+      if (this.activeMode === 'hotwash' && this.isFlagged(item)) return 'AAR Evidence';
+      if (this.roleView === 'leadership' && item.keyEvent) return 'Key Events';
+      return item.lane;
+    },
+    childCount(item) {
+      return this.filteredItems.filter(child => child.parentId === item.id).length;
+    },
+    matchesMode(item) {
+      if (this.activeMode === 'planning') return ['PLAN_EVENT', 'PLAN_INJECT'].includes(item.source);
+      if (this.activeMode === 'hotwash') return this.isFlagged(item) || ['OBSERVE', 'COMMAND', 'MEDIA'].includes(item.source);
+      return true;
+    },
+    matchesRoleView(item) {
+      if (this.roleView === 'controller') return true;
+      const visibility = String(item.visibility || '').toLowerCase();
+      if (this.roleView === 'player') return visibility.includes('player') || visibility.includes('participant') || item.source === 'COMMAND';
+      if (this.roleView === 'evaluator') return ['PLAN_INJECT', 'OBSERVE', 'COMMAND', 'MEDIA'].includes(item.source);
+      if (this.roleView === 'leadership') return item.keyEvent || this.isLate(item) || this.isFlagged(item) || ['PLAN_EVENT', 'COMMAND'].includes(item.source);
+      return true;
+    },
+    matchesQuickFilters(item) {
+      if (!this.activeQuickFilters.length) return true;
+      return this.activeQuickFilters.every(filter => {
+        if (filter === 'key') return item.keyEvent;
+        if (filter === 'late') return this.isLate(item);
+        if (filter === 'flagged') return this.isFlagged(item);
+        if (filter === 'pending') return this.isPending(item);
+        return true;
+      });
+    },
+    isLate(item) {
+      const status = String(item.releaseStatus || item.status || '').toLowerCase();
+      const planned = item.plannedTime || item.start;
+      if (!planned) return false;
+      return new Date(planned).getTime() < Date.now() && ['planned', 'pending', 'due', 'sent', 'in_progress'].includes(status);
+    },
+    isPending(item) {
+      const status = String(item.releaseStatus || item.status || '').toLowerCase();
+      return ['planned', 'pending', 'due', 'draft', 'sent', 'in_progress'].includes(status);
+    },
+    isFlagged(item) {
+      return Boolean(item && this.aarFlags[item.id]);
+    },
+    toggleAarFlag(item) {
+      if (!item) return;
+      const flags = {
+        ...this.aarFlags
+      };
+      if (flags[item.id]) {
+        delete flags[item.id];
+      } else {
+        flags[item.id] = {
+          id: item.id,
+          source: item.source,
+          title: item.title,
+          tags: ['Issue'],
+          flaggedAt: new Date().toISOString()
+        };
+      }
+      this.aarFlags = flags;
+      this.saveAarFlags();
+    },
+    toggleAarTag(tag) {
+      if (!this.selectedItem) return;
+      if (!this.aarFlags[this.selectedItem.id]) {
+        this.toggleAarFlag(this.selectedItem);
+      }
+      const flags = {
+        ...this.aarFlags
+      };
+      const current = flags[this.selectedItem.id] || {
+        tags: []
+      };
+      const tags = current.tags || [];
+      flags[this.selectedItem.id] = {
+        ...current,
+        tags: tags.includes(tag) ? tags.filter(item => item !== tag) : [...tags, tag]
+      };
+      this.aarFlags = flags;
+      this.saveAarFlags();
+    },
+    loadAarFlags() {
+      try {
+        this.aarFlags = JSON.parse(localStorage.getItem(AAR_STORAGE_KEY) || '{}');
+      } catch (error) {
+        this.aarFlags = {};
+      }
+    },
+    saveAarFlags() {
+      localStorage.setItem(AAR_STORAGE_KEY, JSON.stringify(this.aarFlags));
+    },
+    captureObservation() {
+      if (!this.selectedItem) return;
+      const text = encodeURIComponent(`Observation related to ${this.selectedItem.title}`);
+      this.$router.push(`/observe/post?timeline=${this.selectedItem.id}&text=${text}`);
+    },
+    openSelectedItem() {
+      if (this.selectedItem && this.selectedItem.routePath) {
+        this.$router.push(this.selectedItem.routePath);
+      }
+    },
+    exportCsv() {
+      const columns = ['time', 'source', 'title', 'category', 'status', 'actor', 'controller', 'recipient', 'objective', 'expectedAction', 'aarTags'];
+      const rows = this.visibleItems.map(item => columns.map(column => {
+        if (column === 'time') return this.formatDateTime(item.start);
+        if (column === 'aarTags') return this.aarFlags[item.id] ? (this.aarFlags[item.id].tags || []).join('; ') : '';
+        return item[column] || '';
+      }));
+      const csv = [columns, ...rows].map(row => row.map(value => `"${String(value).replace(/"/g, '""')}"`).join(',')).join('\r\n');
+      const blob = new Blob([csv], {
+        type: 'text/csv;charset=utf-8;'
+      });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `epic-timeline-${moment_default()().format('YYYYMMDD-HHmm')}.csv`;
+      link.click();
+      URL.revokeObjectURL(url);
+    },
+    clampedPercent(value) {
+      return Math.min(Math.max(value * 100, 0), 100);
     },
     formatTime(value) {
       return moment_default()(value).format('HH:mm');
@@ -100913,19 +102681,18 @@ const SOURCE_OPTIONS = [{
     formatDateTime(value) {
       return moment_default()(value).format('MMM D, YYYY HH:mm');
     },
-    openSelectedItem() {
-      if (this.selectedItem && this.selectedItem.routePath) {
-        this.$router.push(this.selectedItem.routePath);
-      }
+    toInputDate(value) {
+      if (!value) return '';
+      return moment_default()(value).format('YYYY-MM-DDTHH:mm');
     }
   }
 });
 ;// ./src/timeline/views/Home.vue?vue&type=script&lang=js
  /* harmony default export */ var src_timeline_views_Homevue_type_script_lang_js = (timeline_views_Homevue_type_script_lang_js); 
-;// ./node_modules/mini-css-extract-plugin/dist/loader.js??clonedRuleSet-22.use[0]!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-22.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-22.use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-22.use[3]!./node_modules/cache-loader/dist/cjs.js??ruleSet[0].use[0]!./node_modules/@vue/cli-service/lib/config/vue-loader-v15-resolve-compat/vue-loader.js??vue-loader-options!./src/timeline/views/Home.vue?vue&type=style&index=0&id=7715588f&prod&lang=scss&scoped=true
+;// ./node_modules/mini-css-extract-plugin/dist/loader.js??clonedRuleSet-22.use[0]!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-22.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-22.use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-22.use[3]!./node_modules/cache-loader/dist/cjs.js??ruleSet[0].use[0]!./node_modules/@vue/cli-service/lib/config/vue-loader-v15-resolve-compat/vue-loader.js??vue-loader-options!./src/timeline/views/Home.vue?vue&type=style&index=0&id=48c9a1ca&prod&lang=scss&scoped=true
 // extracted by mini-css-extract-plugin
 
-;// ./src/timeline/views/Home.vue?vue&type=style&index=0&id=7715588f&prod&lang=scss&scoped=true
+;// ./src/timeline/views/Home.vue?vue&type=style&index=0&id=48c9a1ca&prod&lang=scss&scoped=true
 
 ;// ./src/timeline/views/Home.vue
 
@@ -100938,11 +102705,11 @@ const SOURCE_OPTIONS = [{
 
 var timeline_views_Home_component = (0,componentNormalizer/* default */.A)(
   src_timeline_views_Homevue_type_script_lang_js,
-  Homevue_type_template_id_7715588f_scoped_true_render,
-  Homevue_type_template_id_7715588f_scoped_true_staticRenderFns,
+  Homevue_type_template_id_48c9a1ca_scoped_true_render,
+  Homevue_type_template_id_48c9a1ca_scoped_true_staticRenderFns,
   false,
   null,
-  "7715588f",
+  "48c9a1ca",
   null
   
 )
@@ -108352,7 +110119,7 @@ module.exports = __webpack_require__.p + "img/logo.544ce9c8.png";
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
-/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, [504], function() { return __webpack_require__(21300); })
+/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, [504], function() { return __webpack_require__(55826); })
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 /******/ 	
 /******/ })()
